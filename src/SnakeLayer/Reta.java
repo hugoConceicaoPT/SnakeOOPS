@@ -1,3 +1,4 @@
+package SnakeLayer;
 /**	Classe que representa uma reta no plano cartesiano
     Responsabilidade: Representar uma reta no plano cartesiano 
     e verificar se os pontos formam uma reta válida

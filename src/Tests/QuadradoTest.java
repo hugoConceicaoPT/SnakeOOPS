@@ -1,5 +1,10 @@
+package Tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
+
+import SnakeLayer.Poligono;
+import SnakeLayer.Ponto;
+import SnakeLayer.Quadrado;
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe Quadrado
     Responsabilidade: Testar as funcionalidades da classe Quadrado

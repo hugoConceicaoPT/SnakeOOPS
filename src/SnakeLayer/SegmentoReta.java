@@ -1,3 +1,4 @@
+package SnakeLayer;
 import java.util.Objects;
 
 /**	Classe que representa um segmento de reta no plano cartesiano

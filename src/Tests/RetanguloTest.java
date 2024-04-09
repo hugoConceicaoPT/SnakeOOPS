@@ -1,5 +1,9 @@
+package Tests;
 import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
+
+import SnakeLayer.Ponto;
+import SnakeLayer.Retangulo;
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe Retângulo
     Responsabilidade: Testar as funcionalidades da classe Retângulo
