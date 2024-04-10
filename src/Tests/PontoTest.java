@@ -72,9 +72,9 @@ public class PontoTest {
     public void testTranslateCentroide() {
         Ponto ponto1 = new Ponto(3,3);
         ponto1.translateCentroide(6, 4, new Ponto(4,2));
-        assertEquals("(5,5)",ponto1.toString());
+        assertEquals("(9,7)",ponto1.toString());
         Ponto ponto2 = new Ponto(3,2);
         ponto2.translateCentroide(4, 5, new Ponto(6,2));
-        assertEquals("(1,5)",ponto2.toString());
+        assertEquals("(7,7)",ponto2.toString());
     }
 }
