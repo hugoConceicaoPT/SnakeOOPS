@@ -28,8 +28,7 @@ public class SegmentoReta {
      */
     private void check(Ponto ponto1,Ponto ponto2){
         if (ponto1.getX() == ponto2.getX() && ponto1.getY() == ponto2.getY()){
-            System.out.println("Segmento:vi");
-            System.exit(0);
+            throw new IllegalArgumentException("Segmento:vi");
         }
     }
 

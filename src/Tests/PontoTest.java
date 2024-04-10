@@ -1,6 +1,7 @@
 package Tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -16,12 +17,16 @@ public class PontoTest {
 
     @Test
     public void testConstrutor0() {
-        new Ponto(-1,1);
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Ponto(-1,1);
+        });
     }
 
     @Test
     public void testConstrutor1() {
-        new Ponto(1,-1);
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Ponto(1,-1);
+        });
     }
 
     @Test

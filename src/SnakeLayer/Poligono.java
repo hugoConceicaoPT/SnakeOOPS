@@ -21,8 +21,7 @@ public class Poligono implements IFiguraGeometrica {
     public Poligono(List<Ponto> pontos) {
         if (pontos.size() < 3)
         {
-            System.out.println("Poligono:vi");
-            System.exit(0);
+            throw new IllegalArgumentException("Poligono:vi");
         }
         this.aresta = new ArrayList<>();
         for(int i = 0; i < pontos.size(); i++)
@@ -30,8 +29,7 @@ public class Poligono implements IFiguraGeometrica {
             Reta reta = new Reta(pontos.get(i), pontos.get((i+1) % pontos.size()));
             if(reta.colineares(pontos.get((i+2) % pontos.size())))
             {
-                System.out.println("Poligono:vi");
-                System.exit(0);
+                throw new IllegalArgumentException("Poligono:vi");
             }
             aresta.add(new SegmentoReta(pontos.get(i), pontos.get((i+1) % pontos.size())));
         }
@@ -39,8 +37,7 @@ public class Poligono implements IFiguraGeometrica {
         {
             if(aresta.get(i).seCruzam(aresta.get((i+2) % aresta.size())))
             {
-                System.out.println("Poligono:vi");
-                System.exit(0);
+                throw new IllegalArgumentException("Poligono:vi");
             }
         }
         this.pontos = pontos;

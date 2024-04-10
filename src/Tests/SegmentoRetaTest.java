@@ -16,7 +16,9 @@ public class SegmentoRetaTest {
     public void testConstrutorPontosIguais0() {
 
         Ponto ponto = new Ponto(2, 2);
-        new SegmentoReta(ponto,ponto);     
+        assertThrows(IllegalArgumentException.class, () -> {
+            new SegmentoReta(ponto,ponto);
+        });   
     }
 
     @Test

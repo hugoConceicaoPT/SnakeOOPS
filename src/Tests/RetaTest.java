@@ -1,6 +1,8 @@
 package Tests;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
 import SnakeLayer.Ponto;
@@ -17,7 +19,9 @@ public class RetaTest {
     public void testConstrutorPontosIguais0() {
 
         Ponto ponto = new Ponto(1, 1);
-        new Reta(ponto,ponto);
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Reta(ponto,ponto);
+        });
     }
 
     @Test

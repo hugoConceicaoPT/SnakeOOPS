@@ -1,5 +1,7 @@
 package Tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import SnakeLayer.Ponto;
@@ -14,13 +16,17 @@ public class TrianguloTest {
     @Test
     public void testConstrutor0() {
         String input = "2 0 4 0 6 0";
-        new Triangulo(input);
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Triangulo(input);
+        });
     }
 
     @Test
     public void testConstrutor1() {
         String input = "2 0 4 0 6 0 6 0";
-        new Triangulo(input);
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Triangulo(input);
+        });
     }
     
     @Test       

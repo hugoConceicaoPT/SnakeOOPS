@@ -20,8 +20,7 @@ public class Quadrado extends Retangulo{
             double lengthAresta = pontos.get(i).dist(pontos.get((i+1) % 4));
             if(lado != lengthAresta)
             {
-                System.out.println("Quadrado:vi");
-                System.exit(0);
+                throw new IllegalArgumentException("Quadrado:vi");
             }
         }
     } 
@@ -37,8 +36,7 @@ public class Quadrado extends Retangulo{
             double lengthAresta = pontos.get(i).dist(pontos.get((i+1) % 4));
             if(lado != lengthAresta)
             {
-                System.out.println("Quadrado:vi");
-                System.exit(0);
+                throw new IllegalArgumentException("Quadrado:vi");
             }
         }
     } 

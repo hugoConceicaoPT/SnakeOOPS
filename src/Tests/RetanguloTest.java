@@ -15,13 +15,17 @@ public class RetanguloTest {
     @Test
     public void testConstrutor0() {
         String input = "4 0 4 2 0 2 2 0";
-        new Retangulo(input);
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Retangulo(input);
+        });
     }
 
     @Test
     public void testConstrutor1() {
         String input = "4 0 4 2 0 2";
-        new Retangulo(input);
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Retangulo(input);
+        });
     }
 
     @Test

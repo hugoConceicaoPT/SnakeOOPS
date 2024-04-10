@@ -27,8 +27,7 @@ public class Reta {
      */
     private void check(Ponto ponto1,Ponto ponto2){
         if (ponto1.getX() == ponto2.getX() && ponto1.getY() == ponto2.getY()){
-            System.out.println("Reta:vi");
-            System.exit(0);
+            throw new IllegalArgumentException("Reta:vi");
         }
     }
 

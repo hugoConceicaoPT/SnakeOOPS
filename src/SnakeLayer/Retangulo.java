@@ -16,16 +16,14 @@ public class Retangulo extends Poligono {
     public Retangulo(List<Ponto> pontos) {
         super(pontos);
         if(pontos.size() != 4) {
-            System.out.println("Retangulo:vi");
-            System.exit(0);
+            throw new IllegalArgumentException("Retangulo:vi");
         }
         for(int i = 0; i < getPontos().size(); i++) {
             Ponto a = getPontos().get(i);
             Ponto b = getPontos().get((i+1) % getPontos().size());
             Ponto c = getPontos().get((i+2) % getPontos().size());
             if((int) calcularAngulo(a, b,c) != 90) {
-                System.out.println("Retângulo:vi");
-                System.exit(0);
+                throw new IllegalArgumentException("Retângulo:vi");
             }
         }
     }

@@ -17,8 +17,7 @@ public class Triangulo extends Poligono {
     public Triangulo(List<Ponto> pontos) {
         super(pontos);
         if(pontos.size() != 3) {
-            System.out.println("Triangulo:vi");
-            System.exit(0);
+            throw new IllegalArgumentException("Triangulo:vi");
         }
     }
 
@@ -28,8 +27,7 @@ public class Triangulo extends Poligono {
     public Triangulo(String input) {
         super(toInt(input));
         if(pontos.size() != 3) {
-            System.out.println("Triangulo:vi");
-            System.exit(0);
+            throw new IllegalArgumentException("Triangulo:vi");
         }
     }
     

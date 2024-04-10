@@ -19,13 +19,17 @@ public class PoligonoTest {
     @Test    
     public void testConstrutor3Pontos0() {
         String input = "2 1 0 2 1";
-        new Poligono(input);
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Poligono(input);
+        });
     }
 
     @Test    
     public void testConstrutor3Pontos1() {
-        String input = "2 1 0 2 1 1 2";
-        new Poligono(input);
+        String input = "1 1 0";
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Poligono(input);
+        });
     }
 
 

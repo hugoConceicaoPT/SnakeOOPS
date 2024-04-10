@@ -79,8 +79,7 @@ public class Ponto {
     public void setX(int x) {
         if(x < 0)
         {
-            System.out.println("Ponto:vi");
-            System.exit(0);
+            throw new IllegalArgumentException("Ponto:vi");
         }
         this.x = x;
     }
@@ -91,8 +90,7 @@ public class Ponto {
     public void setX(double xDouble) {
         if(xDouble < 0.0)
         {
-            System.out.println("Ponto:vi");
-            System.exit(0);
+            throw new IllegalArgumentException("Ponto:vi");
         }
         this.xDouble = xDouble;
     }
@@ -103,8 +101,7 @@ public class Ponto {
     public void setY(int y) {
         if(y < 0)
         {
-            System.out.println("Ponto:vi");
-            System.exit(0);
+            throw new IllegalArgumentException("Ponto:vi");
         }
         this.y = y;
     }
@@ -115,8 +112,7 @@ public class Ponto {
     public void setY(double yDouble) {
         if(yDouble < 0.0)
         {
-            System.out.println("Ponto:vi");
-            System.exit(0);
+            throw new IllegalArgumentException("Ponto:vi");
         }
         this.yDouble = yDouble;
     }

@@ -1,5 +1,7 @@
 package Tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
 import SnakeLayer.Poligono;
@@ -15,7 +17,9 @@ public class QuadradoTest {
     @Test
     public void testConstrutor0() {
         String input = "1 0 1 1 5 1 5 0";
-        new Quadrado(input);
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Quadrado(input);
+        });
     }
 
     @Test
