@@ -50,19 +50,31 @@ public class PontoTest {
 
     @Test
     public void testRotate() {
-        assertEquals("(1,4)",new Ponto(3,3).rotate(45, new Ponto(1.0,1.0)).toString());
-        assertEquals("(2,5)",new Ponto(1,2).rotate(90, new Ponto(0.0,4.0)).toString());
+        Ponto ponto1 = new Ponto(3,3);
+        ponto1.rotate(45, new Ponto(1.0,1.0));
+        assertEquals("(1,4)",ponto1.toString());
+        Ponto ponto2 = new Ponto(1,2);
+        ponto2.rotate(90, new Ponto(0.0, 4.0));
+        assertEquals("(2,5)",ponto2.toString());
     }
 
     @Test
     public void testTranslate() {
-        assertEquals("(4,5)",new Ponto(3,3).translate(1,2).toString());
-        assertEquals("(3,4)",new Ponto(1,2).translate(2,2).toString());
+        Ponto ponto1 = new Ponto(4,5);
+        ponto1.translate(1, 2);
+        assertEquals("(4,5)",ponto1.toString());
+        Ponto ponto2 = new Ponto(1,2);
+        ponto2.translate(2, 2);
+        assertEquals("(3,4)",ponto2.toString());
     }
 
     @Test
     public void testTranslateCentroide() {
-        assertEquals("(5,5)",new Ponto(3,3).translateCentroide(6,4,new Ponto(4,2)).toString());
-        assertEquals("(1,5)",new Ponto(3,2).translateCentroide(4,5,new Ponto(6,2)).toString());
+        Ponto ponto1 = new Ponto(3,3);
+        ponto1.translateCentroide(6, 4, new Ponto(4,2));
+        assertEquals("(5,5)",ponto1.toString());
+        Ponto ponto2 = new Ponto(3,2);
+        ponto2.translateCentroide(4, 5, new Ponto(6,2));
+        assertEquals("(1,5)",ponto2.toString());
     }
 }

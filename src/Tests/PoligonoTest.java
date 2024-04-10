@@ -92,14 +92,20 @@ public class PoligonoTest {
         poligono1.translate(-1, 3);
         assertEquals("Poligono de 4 vertices: [(0,5), (4,9), (7,10), (11,17)]",poligono1.toString());
         String input2 = "3 2 2 3 4 4 2";
-        assertEquals("Poligono de 3 vertices: [(5,5), (6,7), (7,5)]", new Poligono(input2).translate(3,3).toString());
+        Poligono poligono2 = new Poligono(input2);
+        poligono2.translate(3, 3);
+        assertEquals("Poligono de 3 vertices: [(5,5), (6,7), (7,5)]", poligono2.toString());
     }
 
     @Test    
     public void testTranslateCentroide() {
         String input1 = "4 1 3 1 1 5 1 5 3";
-        assertEquals("Poligono de 4 vertices: [(6,3), (6,1), (10,1), (10,3)]",new Poligono(input1).translateCentroide(8, 2).toString());
+        Poligono poligono1 = new Poligono(input1);
+        poligono1.translateCentroide(8, 2);
+        assertEquals("Poligono de 4 vertices: [(6,3), (6,1), (10,1), (10,3)]",poligono1.toString());
         String input2 = "3 2 2 4 4 4 2";
-        assertEquals("Poligono de 3 vertices: [(2,4), (4,6), (4,4)]", new Poligono(input2).translateCentroide(4,5).toString());
+        Poligono poligono2 = new Poligono(input2);
+        poligono2.translateCentroide(4, 5);
+        assertEquals("Poligono de 3 vertices: [(2,4), (4,6), (4,4)]", poligono2.toString());
     }
 }

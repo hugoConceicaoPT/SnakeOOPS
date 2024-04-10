@@ -42,26 +42,35 @@ public class QuadradoTest {
     public void testRotate() {
         String input1 = "0 0 2 0 2 2 0 2";
         Quadrado quadrado1 = new Quadrado(input1);
-        assertEquals("Quadrado: [(2,0), (2,2), (0,2), (0,0)]", quadrado1.rotateAngle(90).toString());
+        quadrado1.rotateAngle(90);
+        assertEquals("Quadrado: [(2,0), (2,2), (0,2), (0,0)]", quadrado1.toString());
         String input2 = "1 1 3 1 3 3 1 3";
         Quadrado quadrado2 = new Quadrado(input2);
-        assertEquals("Quadrado: [(2,1), (3,2), (2,3), (1,2)]", quadrado2.rotateAngle(45).toString());
-        assertEquals("Quadrado: [(1,4), (2,3), (4,4), (2,6)]", new Quadrado(input2).rotate(-45, new Ponto(5,3)).toString());
+        quadrado2.rotate(-45,new Ponto(5,3));
+        assertEquals("Quadrado: [(1,4), (2,3), (4,4), (2,6)]", quadrado2.toString());
     }
 
     @Test    
     public void testTranslate() {
         String input1 = "0 0 2 0 2 2 0 2";
-        assertEquals("Quadrado: [(2,0), (4,0), (4,2), (2,2)]", new Poligono(input1).translate(2,0).toString());
+        Quadrado quadrado1 = new Quadrado(input1);
+        quadrado1.translate(2, 0);
+        assertEquals("Quadrado: [(2,0), (4,0), (4,2), (2,2)]", quadrado1.toString());
         String input2 = "1 1 3 1 3 3 1 3";
-        assertEquals("Quadrado: [(1,6), (3,6), (3,8), (1,8)]", new Poligono(input2).translate(0,5).toString());
+        Quadrado quadrado2 = new Quadrado(input2);
+        quadrado2.translate(0, 5);
+        assertEquals("Quadrado: [(1,6), (3,6), (3,8), (1,8)]", quadrado2.toString());
     }
 
     @Test    
     public void testTranslateCentroide() {
         String input1 = "0 0 2 0 2 2 0 2";
-        assertEquals("Quadrado: [(3,2), (5,2), (5,4), (3,4)]", new Quadrado(input1).translateCentroide(4,3).toString());
+        Quadrado quadrado1 = new Quadrado(input1);
+        quadrado1.translateCentroide(4, 3);
+        assertEquals("Quadrado: [(3,2), (5,2), (5,4), (3,4)]", quadrado1.toString());
         String input2 = "1 1 3 1 3 3 1 3";
-        assertEquals("Quadrado: [(6,1), (8,1), (8,3), (6,3)]", new Quadrado(input2).translateCentroide(7,2).toString());
+        Quadrado quadrado2 = new Quadrado(input2);
+        quadrado2.translateCentroide(7, 2);
+        assertEquals("Quadrado: [(6,1), (8,1), (8,3), (6,3)]", quadrado2.toString());
     }
 }
