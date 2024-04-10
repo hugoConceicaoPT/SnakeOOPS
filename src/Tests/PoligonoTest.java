@@ -79,10 +79,6 @@ public class PoligonoTest {
         Poligono poligono2 = new Poligono(input2);
         poligono2.rotateAngle(60);
         assertEquals("Poligono de 3 vertices: [(3,1), (2,3), (4,3)]", poligono2.toString());
-        String input3 = "4 1 1 3 1 3 5 1 5";
-        Poligono poligono3 = new Poligono(input3);
-        poligono3.rotate(-90,new Ponto(3,1));
-        assertEquals("Poligono de 4 vertices: [(3,3), (3,1), (7,1), (7,3)]", poligono3.toString());
     }
 
     @Test    

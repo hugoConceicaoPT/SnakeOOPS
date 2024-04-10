@@ -17,19 +17,20 @@ public class Snake {
         Ponto ponto1 = ultimoQuadrado.pontos.get(0);
         Ponto ponto2 = ultimoQuadrado.pontos.get(1);
         int arestaLength = ponto1.dist(ponto2);
+        Quadrado novoQuadrado = new Quadrado(ultimoQuadrado.getPontos());
         if (direction == Direction.UP) {
-            Quadrado quadradoTranslado = null;
-            this.listaQuadrados.add();
+            novoQuadrado.translate(0, -arestaLength);
         } 
         else if(direction == Direction.LEFT) {
-            this.listaQuadrados.add(ultimoQuadrado.translate(arestaLength, 0));
+            novoQuadrado.translate(arestaLength, 0);
         }
         else if(direction == Direction.RIGHT) {
-            this.listaQuadrados.add(ultimoQuadrado.translate(-arestaLength, 0));
+            novoQuadrado.translate(-arestaLength, 0);
         }
         else {
-            this.listaQuadrados.add(ultimoQuadrado.translate(0, arestaLength));
+            novoQuadrado.translate(0, arestaLength);
         }
+        this.listaQuadrados.add(novoQuadrado);
     }
     public boolean collidedWithHerself() {return true;}
     public void move() {

@@ -13,5 +13,5 @@ public class SnakeGame {
 
     public void runGame(boolean gameOver) {}
     public void endGame() {}
-    public Snake changeSnakeDirection() {}
+    public Snake changeSnakeDirection() {return null;}
 }

@@ -11,5 +11,5 @@ public class Score {
 
     public void increaseScore() {}
     public String getRank(File file) {return "a";}
-    public File setRank() {};
+    public File setRank() {return null;};
 }

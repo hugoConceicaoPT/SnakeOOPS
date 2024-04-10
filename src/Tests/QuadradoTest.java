@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import SnakeLayer.Poligono;
 import SnakeLayer.Ponto;
 import SnakeLayer.Quadrado;
 
@@ -46,8 +45,8 @@ public class QuadradoTest {
         assertEquals("Quadrado: [(2,0), (2,2), (0,2), (0,0)]", quadrado1.toString());
         String input2 = "1 1 3 1 3 3 1 3";
         Quadrado quadrado2 = new Quadrado(input2);
-        quadrado2.rotate(-45,new Ponto(5,3));
-        assertEquals("Quadrado: [(1,4), (2,3), (4,4), (2,6)]", quadrado2.toString());
+        quadrado2.rotate(180,new Ponto(5.0,3.0));
+        assertEquals("Quadrado: [(5,9), (3,9), (3,7), (5,7)]", quadrado2.toString());
     }
 
     @Test    

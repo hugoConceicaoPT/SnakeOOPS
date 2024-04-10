@@ -62,7 +62,7 @@ public class PontoTest {
     public void testTranslate() {
         Ponto ponto1 = new Ponto(4,5);
         ponto1.translate(1, 2);
-        assertEquals("(4,5)",ponto1.toString());
+        assertEquals("(5,7)",ponto1.toString());
         Ponto ponto2 = new Ponto(1,2);
         ponto2.translate(2, 2);
         assertEquals("(3,4)",ponto2.toString());
