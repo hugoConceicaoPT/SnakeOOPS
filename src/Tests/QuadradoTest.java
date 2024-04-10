@@ -46,7 +46,7 @@ public class QuadradoTest {
         String input2 = "1 1 3 1 3 3 1 3";
         Quadrado quadrado2 = new Quadrado(input2);
         quadrado2.rotate(180,new Ponto(5.0,3.0));
-        assertEquals("Quadrado: [(5,9), (3,9), (3,7), (5,7)]", quadrado2.toString());
+        assertEquals("Quadrado: [(9,5), (7,5), (7,3), (9,3)]", quadrado2.toString());
     }
 
     @Test    

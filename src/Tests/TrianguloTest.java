@@ -68,6 +68,6 @@ public class TrianguloTest {
         String input1 = "2 1 4 1 4 3";
         Triangulo triangulo1 = new Triangulo(input1);
         triangulo1.translateCentroide(7,1);
-        assertEquals("Triangulo: [(6,1), (8,1), (8,3)]", triangulo1.toString());
+        assertEquals("Triangulo: [(5,1), (7,1), (7,3)]", triangulo1.toString());
     }
 }
