@@ -9,7 +9,7 @@ import java.util.Objects;
     @inv  O poligono é válido se não existirem três pontos consecutivos colineares 
     ,se cada par de aresta não se cruzar e se tiver pelo menos 3 pontos
 */
-public class Poligono {
+public class Poligono implements IFiguraGeometrica {
     protected final List<Ponto> pontos;
     protected final List<SegmentoReta> aresta;
     protected final Ponto centroide;
