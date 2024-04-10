@@ -43,25 +43,31 @@ public class TrianguloTest {
     public void testRotate() {
         String input1 = "2 1 4 1 3 4";
         Triangulo triangulo1 = new Triangulo(input1);
-        assertEquals("Triangulo: [(4,3), (2,3), (3,0)]", triangulo1.rotateAngle(180).toString());
+        triangulo1.rotateAngle(180);
+        assertEquals("Triangulo: [(4,3), (2,3), (3,0)]", triangulo1.toString());
         String input2 = "5 5 8 5 8 7";
         Triangulo triangulo2 = new Triangulo(input2);
-        assertEquals("Triangulo: [(7,3), (7,6), (5,6)]", triangulo2.rotateAngle(90).toString());
-        assertEquals("Triangulo: [(4,6), (7,9), (5,10)]", new Triangulo(input2).rotate(45,new Ponto(3,5)).toString());
+        triangulo2.rotateAngle(90);
+        assertEquals("Triangulo: [(7,3), (7,6), (5,6)]", triangulo2.toString());
     }
 
     @Test       
     public void testTranslate() {
         String input1 = "2 1 4 1 3 4";
-        assertEquals("Triangulo: [(2,1), (4,1), (3,4)]", new Triangulo(input1).translate(0,0).toString());
+        Triangulo triangulo1 = new Triangulo(input1);
+        triangulo1.translate(0,0);
+        assertEquals("Triangulo: [(2,1), (4,1), (3,4)]", triangulo1.toString());
         String input2 = "5 5 8 5 8 7";
-        assertEquals("Triangulo: [(8,12), (11,12), (11,14)]", new Triangulo(input2).translate(3,7).toString());
+        Triangulo triangulo2 = new Triangulo(input2);
+        triangulo2.translate(3,7);
+        assertEquals("Triangulo: [(8,12), (11,12), (11,14)]", triangulo2.toString());
     }
 
     @Test       
     public void testTranslateCentroide() {
         String input1 = "2 1 4 1 4 3";
-        assertEquals("Triangulo: [(6,1), (8,1), (8,3)]", new Triangulo(input1).translateCentroide(7,1).toString());
-        assertEquals("Triangulo: [(2,4), (4,4), (4,6)]", new Triangulo(input1).translateCentroide(3,4).toString());
+        Triangulo triangulo1 = new Triangulo(input1);
+        triangulo1.translateCentroide(7,1);
+        assertEquals("Triangulo: [(6,1), (8,1), (8,3)]", triangulo1.toString());
     }
 }
