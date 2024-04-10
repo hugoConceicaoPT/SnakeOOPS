@@ -10,9 +10,9 @@ import java.util.Objects;
     ,se cada par de aresta não se cruzar e se tiver pelo menos 3 pontos
 */
 public class Poligono implements IFiguraGeometrica {
-    protected final List<Ponto> pontos;
-    protected final List<SegmentoReta> aresta;
-    protected final Ponto centroide;
+    protected List<Ponto> pontos;
+    protected List<SegmentoReta> aresta;
+    protected Ponto centroide;
 
 
     /** Costrutor para criar um polígono com uma lista de pontos
@@ -95,11 +95,9 @@ public class Poligono implements IFiguraGeometrica {
      * @return um novo polígono com o movimento de rotação já aplicado
      * @see http://www.java2s.com/example/java-utility-method/polygon-rotate/rotatepolygon-polygon-pg-double-rotangle-point-centroid-polygon-original-ee480.html
      */
-    public Poligono rotateAngle(int angle) {
-        List<Ponto> pontosPoligono = new ArrayList<>();
+    public void rotateAngle(int angle) {
         for (Ponto ponto : pontos) 
-            pontosPoligono.add(ponto.rotate(angle,this.centroide));
-        return new Poligono(pontosPoligono);
+            ponto.rotate(angle,this.centroide);   
     }
 
     /** Aplica-se um movimento de rotação ao polígono a partir do ângulo de rotação e um ponto de rotação 
@@ -108,11 +106,9 @@ public class Poligono implements IFiguraGeometrica {
      * @return um novo polígono com o movimento de rotação já aplicado
      * @see http://www.java2s.com/example/java-utility-method/polygon-rotate/rotatepolygon-polygon-pg-double-rotangle-point-centroid-polygon-original-ee480.html
      */
-    public Poligono rotate(int angle, Ponto pontoPivo) {
-        List<Ponto> pontosPoligono = new ArrayList<>();
+    public void rotate(int angle, Ponto pontoPivo) {
         for (Ponto ponto : pontos)
-            pontosPoligono.add(ponto.rotate(angle, pontoPivo));
-        return new Poligono(pontosPoligono);
+            ponto.rotate(angle, pontoPivo);
     }
 
     /** Aplica-se um movimento de translação ao polígono a partir de um deslocamento x e um deslocamento y
@@ -120,12 +116,10 @@ public class Poligono implements IFiguraGeometrica {
      * @param dy deslocamento y
      * @return um novo polígono com o movimento de translação já aplicado
      */
-    public Poligono translate(int dx, int dy) {
-        List<Ponto> pontosPoligono = new ArrayList<>();
-        for (Ponto ponto : pontos) {
-            pontosPoligono.add(ponto.translate(dx, dy));
-        }  
-        return new Poligono(pontosPoligono);
+    @Override
+    public void translate(int dx, int dy) {
+        for (Ponto ponto : pontos) 
+            ponto.translate(dx, dy);
     }
 
     /** Aplica-se um movimento de translação ao polígono a partir das coordenadas x e y do novo centróide
@@ -133,11 +127,10 @@ public class Poligono implements IFiguraGeometrica {
      * @param centroY coordenada y do novo centróide
      * @return um novo polígono com o movimento de translação já aplicado
      */
-    public Poligono translateCentroide(int centroX, int centroY) {
-        List<Ponto> pontosPoligono = new ArrayList<>();
+    @Override
+    public void translateCentroide(int centroX, int centroY) {
         for (Ponto ponto : pontos) 
-            pontosPoligono.add(ponto.translateCentroide(centroX, centroY, centroide));
-        return new Poligono(pontosPoligono);
+            ponto.translateCentroide(centroX, centroY, centroide);
     }
 
     @Override
@@ -189,5 +182,17 @@ public class Poligono implements IFiguraGeometrica {
      */
     public List<SegmentoReta> getAresta() {
         return aresta;
+    }
+
+    public void setPontos(List<Ponto> pontos) {
+        this.pontos = pontos;
+    }
+
+    public void setAresta(List<SegmentoReta> aresta) {
+        this.aresta = aresta;
+    }
+
+    public void setCentroide(Ponto centroide) {
+        this.centroide = centroide;
     }
 }

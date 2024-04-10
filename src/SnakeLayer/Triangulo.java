@@ -46,30 +46,6 @@ public class Triangulo extends Poligono {
     }
 
     @Override
-    public Triangulo rotate(int angle, Ponto pontoPivo) {
-        Poligono poligonoRodado = super.rotate(angle, pontoPivo);
-        return new Triangulo(poligonoRodado.getPontos());
-    }
-
-    @Override
-    public Triangulo rotateAngle(int angle) {
-        Poligono poligonoRodado = super.rotateAngle(angle);
-        return new Triangulo(poligonoRodado.getPontos());
-    }
-
-    @Override
-    public Triangulo translate(int dx, int dy) {
-        Poligono poligonoTranslado = super.translate(dx, dy);
-        return new Triangulo(poligonoTranslado.getPontos());
-    }
-
-    @Override
-    public Triangulo translateCentroide(int centroX, int centroY) {
-        Poligono poligonoTranslado = super.translateCentroide(centroX, centroY);
-        return new Triangulo(poligonoTranslado.getPontos());
-    }
-
-    @Override
     public String toString() {
         return "Triangulo: " + pontos.toString();
     }

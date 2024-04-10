@@ -75,30 +75,6 @@ public class Retangulo extends Poligono {
     }
 
     @Override
-    public Retangulo rotate(int angle, Ponto pontoPivo) {
-        Poligono poligonoRodado = super.rotate(angle, pontoPivo);
-        return new Retangulo(poligonoRodado.getPontos());
-    }
-
-    @Override
-    public Retangulo rotateAngle(int angle) {
-        Poligono poligonoRodado = super.rotateAngle(angle);
-        return new Retangulo(poligonoRodado.getPontos());
-    }
-
-    @Override
-    public Retangulo translate(int dx, int dy) {
-        Poligono poligonoTranslado = super.translate(dx, dy);
-        return new Retangulo(poligonoTranslado.getPontos());
-    }
-
-    @Override
-    public Retangulo translateCentroide(int centroX, int centroY) {
-        Poligono poligonoTranslado = super.translateCentroide(centroX, centroY);
-        return new Retangulo(poligonoTranslado.getPontos());
-    }
-
-    @Override
     public String toString() {
         return "Retangulo: " + pontos.toString();
     }

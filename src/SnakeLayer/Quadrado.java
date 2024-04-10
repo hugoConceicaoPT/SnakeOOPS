@@ -42,30 +42,6 @@ public class Quadrado extends Retangulo{
     } 
 
     @Override
-    public Quadrado rotate(int angle, Ponto pontoPivo) {
-        Poligono poligonoRodado = super.rotate(angle, pontoPivo);
-        return new Quadrado(poligonoRodado.getPontos());
-    }
-
-    @Override
-    public Quadrado rotateAngle(int angle) {
-        Poligono poligonoRodado = super.rotateAngle(angle);
-        return new Quadrado(poligonoRodado.getPontos());
-    }
-
-    @Override
-    public Quadrado translate(int dx, int dy) {
-        Poligono poligonoTranslado = super.translate(dx, dy);
-        return new Quadrado(poligonoTranslado.getPontos());
-    }
-
-    @Override
-    public Quadrado translateCentroide(int centroX, int centroY) {
-        Poligono poligonoTranslado = super.translateCentroide(centroX, centroY);
-        return new Quadrado(poligonoTranslado.getPontos());
-    }
-
-    @Override
     public String toString() {
         return "Quadrado: " + pontos.toString();
     }

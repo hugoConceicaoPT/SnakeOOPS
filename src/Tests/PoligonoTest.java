@@ -73,18 +73,24 @@ public class PoligonoTest {
     public void testRotate() {
         String input1 = "4 1 1 3 1 3 5 1 5";
         Poligono poligono1 = new Poligono(input1);
-        assertEquals("Poligono de 4 vertices: [(4,2), (4,4), (0,4), (0,2)]",poligono1.rotateAngle(90).toString());
+        poligono1.rotateAngle(90);
+        assertEquals("Poligono de 4 vertices: [(4,2), (4,4), (0,4), (0,2)]",poligono1.toString());
         String input2 = "3 2 2 3 4 4 2";
         Poligono poligono2 = new Poligono(input2);
-        assertEquals("Poligono de 3 vertices: [(3,1), (2,3), (4,3)]", poligono2.rotateAngle(60).toString());
+        poligono2.rotateAngle(60);
+        assertEquals("Poligono de 3 vertices: [(3,1), (2,3), (4,3)]", poligono2.toString());
         String input3 = "4 1 1 3 1 3 5 1 5";
-        assertEquals("Poligono de 4 vertices: [(3,3), (3,1), (7,1), (7,3)]", new Poligono(input3).rotate(-90,new Ponto(3,1)).toString());
+        Poligono poligono3 = new Poligono(input3);
+        poligono3.rotate(-90,new Ponto(3,1));
+        assertEquals("Poligono de 4 vertices: [(3,3), (3,1), (7,1), (7,3)]", poligono3.toString());
     }
 
     @Test    
     public void testTranslate() {
         String input1 = "4 1 2 5 6 8 7 12 14";
-        assertEquals("Poligono de 4 vertices: [(0,5), (4,9), (7,10), (11,17)]",new Poligono(input1).translate(-1, 3).toString());
+        Poligono poligono1 = new Poligono(input1);
+        poligono1.translate(-1, 3);
+        assertEquals("Poligono de 4 vertices: [(0,5), (4,9), (7,10), (11,17)]",poligono1.toString());
         String input2 = "3 2 2 3 4 4 2";
         assertEquals("Poligono de 3 vertices: [(5,5), (6,7), (7,5)]", new Poligono(input2).translate(3,3).toString());
     }

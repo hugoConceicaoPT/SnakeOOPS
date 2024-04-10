@@ -12,14 +12,14 @@ public class Circunferencia implements IFiguraGeometrica {
         }
     }
     
-    public Circunferencia translate(int dx, int dy) {
-        Ponto novoCentro = this.centro.translate(dx, dy);
-        return new Circunferencia(novoCentro,this.raio);
+    @Override
+    public void translate(int dx, int dy) {
+        this.centro.translate(dx, dy);
     }
-
-    public Circunferencia translateCentroide(int centroX, int centroY) {
-        Ponto novoCentro = this.centro.translateCentroide(centroX, centroY, this.centro);
-        return new Circunferencia(novoCentro, this.raio);
+    
+    @Override
+    public void translateCentroide(int centroX, int centroY) {
+        this.centro.translateCentroide(centroX, centroY, this.centro);
     }
 
     @Override

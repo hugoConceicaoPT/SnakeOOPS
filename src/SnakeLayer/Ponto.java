@@ -139,11 +139,12 @@ public class Ponto {
      * @return um novo ponto com o movimento de rotação já aplicado
      * @see http://www.java2s.com/example/java-utility-method/polygon-rotate/rotatepolygon-polygon-pg-double-rotangle-point-centroid-polygon-original-ee480.html
      */
-    public Ponto rotate(int angle, Ponto centroide) {
+    public void rotate(int angle, Ponto centroide) {
         double angleRadians = Math.toRadians(angle);
         int x = (int) Math.round((centroide.getxDouble() + ((this.x - centroide.getxDouble()) * Math.cos(angleRadians) - (this.y - centroide.getyDouble()) * Math.sin(angleRadians))));
         int y = (int) Math.round((centroide.getyDouble() + ((this.x - centroide.getxDouble()) * Math.sin(angleRadians) + (this.y - centroide.getyDouble()) * Math.cos(angleRadians))));
-        return new Ponto(x,y);
+        setX(x);
+        setY(y);
     }
 
     /** Aplica-se um movimento de translação ao ponto a partir de um deslocamento dx e dy
@@ -151,10 +152,11 @@ public class Ponto {
      * @param dy
      * @return um novo ponto com o movimento de translação já aplicado
      */
-    public Ponto translate(int dx, int dy) {
+    public void translate(int dx, int dy) {
         int x = this.x + dx;
         int y = this.y + dy;
-        return new Ponto(x,y);
+        setX(x);
+        setY(y);
     }
 
     /** Aplica-se um movimento de translação ao ponto a partir das coordenadas x e y do novo centróide
@@ -162,12 +164,13 @@ public class Ponto {
      * @param centroY coordenada y do novo centróide
      * @return um novo ponto com o movimento de translação já aplicado
      */
-    public Ponto translateCentroide(int centroX, int centroY, Ponto centroide) {
+    public void translateCentroide(int centroX, int centroY, Ponto centroide) {
         int dx = (int) (centroX - centroide.getxDouble());
         int dy = (int) (centroY - centroide.getyDouble());
         int x = this.x + dx;
         int y = this.y + dy;
-        return new Ponto(x,y);
+        setX(x);
+        setY(y);
     }
 
     @Override
