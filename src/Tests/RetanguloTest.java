@@ -50,9 +50,8 @@ public class RetanguloTest {
         Retangulo retangulo = new Retangulo(input1);
         retangulo.rotateAngle(90);
         assertEquals("Retangulo: [(4,2), (4,4), (0,4), (0,2)]",retangulo.toString());
-        String input2 = "1 1 3 1 3 5 1 5";
-        Retangulo retangulo2 = new Retangulo(input2);
-        retangulo2.rotate(90, new Ponto(3,1));
+        Retangulo retangulo2 = new Retangulo(input1);
+        retangulo2.rotate(270, new Ponto(3.0,1.0));
         assertEquals("Retangulo: [(3,3), (3,1), (7,1), (7,3)]", retangulo2.toString());
     }
 
@@ -74,7 +73,7 @@ public class RetanguloTest {
         assertEquals("Retangulo: [(5,2), (7,2), (7,6), (5,6)]",retangulo.toString());
         String input2 = "1 1 3 1 3 5 1 5";
         Retangulo retangulo2 = new Retangulo(input2);
-        retangulo.translateCentroide(7,2);
+        retangulo2.translateCentroide(7,2);
         assertEquals("Retangulo: [(6,0), (8,0), (8,4), (6,4)]", retangulo2.toString());
     }
 }
