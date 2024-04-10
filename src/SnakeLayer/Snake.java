@@ -18,7 +18,8 @@ public class Snake {
         Ponto ponto2 = ultimoQuadrado.pontos.get(1);
         int arestaLength = ponto1.dist(ponto2);
         if (direction == Direction.UP) {
-            this.listaQuadrados.add(ultimoQuadrado.translate(0, -arestaLength));
+            Quadrado quadradoTranslado = null;
+            this.listaQuadrados.add();
         } 
         else if(direction == Direction.LEFT) {
             this.listaQuadrados.add(ultimoQuadrado.translate(arestaLength, 0));

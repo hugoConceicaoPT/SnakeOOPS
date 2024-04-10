@@ -15,8 +15,8 @@ public class GameBoard {
         this.food = food;
     }
 
-    public boolean snakeCollided() {}
-    public boolean foodContainedInSnake() {}
+    public boolean snakeCollided() {return true;}
+    public boolean foodContainedInSnake() {return true;}
     public void generateFood() {}
     public void generateObstacle() {}
 }
