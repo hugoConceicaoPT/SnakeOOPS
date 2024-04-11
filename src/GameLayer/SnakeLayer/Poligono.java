@@ -73,6 +73,24 @@ public class Poligono implements IFiguraGeometrica {
         return pontos;
     }
     
+    /** Verifica se a arestas de um polígono intersetam com outro
+     * @param that o outro polígono
+     * @return true se houver interseção, false se não houver
+     */
+    public boolean interseta (Poligono that)
+    {
+        for(SegmentoReta aresta1 : this.aresta)
+        {
+            for(SegmentoReta aresta2 : that.aresta)
+            {
+                if (aresta1.seCruzam(aresta2))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+
     /** Calcula o centróide de um poligono
      * @see https://math.stackexchange.com/questions/90463/how-can-i-calculate-the-centroid-of-polygon
      * @return o centróide 
