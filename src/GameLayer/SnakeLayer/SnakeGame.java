@@ -18,7 +18,22 @@ public class SnakeGame implements KeyListener {
     
     @Override
     public void keyReleased(KeyEvent e) {
-        System.out.printf("Tecla Solta!");
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:
+                snake.move(Direction.UP);
+                break;
+            case KeyEvent.VK_DOWN:
+                snake.move(Direction.DOWN);
+                break;
+            case KeyEvent.VK_LEFT:
+                snake.move(Direction.LEFT);
+                break;
+            case KeyEvent.VK_RIGHT:
+                snake.move(Direction.RIGHT);
+                break;
+            default:
+                break;
+        }
     }
     @Override
     public void keyPressed(KeyEvent e) {}

@@ -30,6 +30,8 @@ public class Snake {
             case RIGHT:
                 novoQuadrado.translate(-arestaLength, 0);
                 break;
+            default:
+                break;
         }
         this.listaQuadrados.add(novoQuadrado);
     }
