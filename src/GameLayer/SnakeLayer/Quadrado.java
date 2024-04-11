@@ -43,6 +43,6 @@ public class Quadrado extends Retangulo{
 
     @Override
     public String toString() {
-        return "Quadrado: " + pontos.toString();
+        return pontos.toString();
     }
 }

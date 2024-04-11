@@ -1,5 +1,6 @@
 package GameLayer.SnakeLayer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -9,18 +10,23 @@ public class Snake {
     private Direction direction;
     private int arestaLength;
     
-    public Snake(List<Quadrado> tail) {
-        this.head = tail.get(0);
-        tail.remove(0);
-        this.tail = tail;
+    public Snake(List<Quadrado> listaQuadrados) {
+        this.tail = listaQuadrados;
+        this.head = listaQuadrados.get(0);
         Random random = new Random();
         this.direction = Direction.values()[random.nextInt(Direction.values().length)];
-        arestaLength = this.tail.get(this.tail.size()-1).pontos.get(0).dist(this.tail.get(this.tail.size()-1).pontos.get(1));
+        arestaLength = this.head.pontos.get(0).dist(this.head.pontos.get(1));
     }
 
     public void increaseSize() {
-        Quadrado ultimoQuadrado = this.tail.get(this.tail.size()-1);
-        Quadrado novoQuadrado = new Quadrado(ultimoQuadrado.getPontos());
+        int size = tail.size() -1;
+        List<Ponto> pontosCopia = new ArrayList<>();
+        for (Ponto ponto : head.getPontos()) {
+            pontosCopia.add(new Ponto(ponto.getX(), ponto.getY()));
+        }
+        Quadrado novoQuadrado = new Quadrado(pontosCopia);
+        if(size == 0)
+            tail.remove(0);
         switch (direction) {
             case UP:
                 novoQuadrado.translate(0, -arestaLength); 
@@ -138,12 +144,20 @@ public class Snake {
         this.head = head;
     }
 
-    public List<Quadrado> gettail() {
+    public List<Quadrado> getTail() {
         return tail;
     }
 
-    public void settail(List<Quadrado> tail) {
+    public void setTail(List<Quadrado> tail) {
         this.tail = tail;
+    }
+
+    public int getArestaLength() {
+        return arestaLength;
+    }
+
+    public void setArestaLength(int arestaLength) {
+        this.arestaLength = arestaLength;
     }
 
     public Direction getDirection() {
