@@ -8,9 +8,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import SnakeLayer.Direction;
-import SnakeLayer.Quadrado;
-import SnakeLayer.Snake;
+import GameLayer.SnakeLayer.Direction;
+import GameLayer.SnakeLayer.Quadrado;
+import GameLayer.SnakeLayer.Snake;
 
 public class SnakeTest {
     @Test

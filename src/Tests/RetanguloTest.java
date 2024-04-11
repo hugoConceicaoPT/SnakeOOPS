@@ -1,9 +1,11 @@
 package Tests;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
-import SnakeLayer.Ponto;
-import SnakeLayer.Retangulo;
+import GameLayer.SnakeLayer.Ponto;
+import GameLayer.SnakeLayer.Retangulo;
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe Retângulo
     Responsabilidade: Testar as funcionalidades da classe Retângulo

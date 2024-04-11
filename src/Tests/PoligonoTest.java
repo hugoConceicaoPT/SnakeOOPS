@@ -1,13 +1,14 @@
 package Tests;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import SnakeLayer.Poligono;
-import SnakeLayer.Ponto;
-import SnakeLayer.Quadrado;
-import SnakeLayer.Triangulo;
+import GameLayer.SnakeLayer.Poligono;
+import GameLayer.SnakeLayer.Quadrado;
+import GameLayer.SnakeLayer.Triangulo;
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe Poligono
     Responsabilidade: Testar as funcionalidades da classe Poligono

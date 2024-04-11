@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import SnakeLayer.Triangulo;
+import GameLayer.SnakeLayer.Triangulo;
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe Triângulo
     Responsabilidade: Testar as funcionalidades da classe Triângulo

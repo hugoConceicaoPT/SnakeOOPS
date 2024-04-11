@@ -2,7 +2,6 @@ package Tests;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.Component;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -12,9 +11,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import SnakeLayer.Quadrado;
-import SnakeLayer.Snake;
-import SnakeLayer.SnakeGame;
+import GameLayer.SnakeLayer.Quadrado;
+import GameLayer.SnakeLayer.Snake;
+import GameLayer.SnakeLayer.SnakeGame;
+import javafx.scene.input.KeyCode;
+
+import java.awt.Component;
+import java.awt.event.KeyEvent;
 
 public class SnakeGameTest{
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -41,8 +44,9 @@ public class SnakeGameTest{
         quadrado.add(new Quadrado(input3));
         Snake snake = new Snake(quadrado);
         SnakeGame snakeGame = new SnakeGame(snake);
-        snakeGame.keyPressed(null);
-
-        assertEquals("Tecla Solta!", outContent.toString());
+        Component source = new Component() {};
+        KeyEvent keyEvent = new KeyEvent(source, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_UP);
+        snakeGame.keyReleased(keyEvent);
+        assertEquals("Tecla Solta!", outContent.toString().trim());
     }    
 }
