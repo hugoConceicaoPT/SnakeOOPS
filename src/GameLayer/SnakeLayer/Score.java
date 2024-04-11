@@ -8,8 +8,21 @@ public class Score {
     public Score(int score) {
         this.score = score;
     }
+    
 
-    public void increaseScore() {}
+    public void increaseScore() {
+        setScore(score+1);
+    }
     public String getRank(File file) {return "a";}
-    public File setRank() {return null;};
+    public File setRank() {return null;}
+
+
+    public int getScore() {
+        return score;
+    }
+
+
+    public void setScore(int score) {
+        this.score = score;
+    };
 }
