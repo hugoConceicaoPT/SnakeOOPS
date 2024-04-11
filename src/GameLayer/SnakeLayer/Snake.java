@@ -7,19 +7,18 @@ public class Snake {
     private Quadrado head;
     private List<Quadrado> listaQuadrados;
     private Direction direction;
+    private int arestaLength;
     
     public Snake(List<Quadrado> listaQuadrados) {
         this.listaQuadrados = listaQuadrados;
         this.head = listaQuadrados.get(0);
         Random random = new Random();
         this.direction = Direction.values()[random.nextInt(Direction.values().length)];
+        arestaLength = this.listaQuadrados.get(this.listaQuadrados.size()-1).pontos.get(0).dist(this.listaQuadrados.get(this.listaQuadrados.size()-1).pontos.get(1));
     }
 
     public void increaseSize() {
         Quadrado ultimoQuadrado = this.listaQuadrados.get(this.listaQuadrados.size()-1);
-        Ponto ponto1 = ultimoQuadrado.pontos.get(0);
-        Ponto ponto2 = ultimoQuadrado.pontos.get(1);
-        int arestaLength = ponto1.dist(ponto2);
         Quadrado novoQuadrado = new Quadrado(ultimoQuadrado.getPontos());
         switch (direction) {
             case UP:
@@ -101,16 +100,16 @@ public class Snake {
 
             switch (nextDirection) {
                 case UP:
-                    head.translate(0, -DISTANCIA_ENTRE_QUADRADOS); 
+                    head.translate(0, -arestaLength); 
                     break;
                 case DOWN:
-                    head.translate(0, DISTANCIA_ENTRE_QUADRADOS);
+                    head.translate(0, arestaLength);
                     break;
                 case LEFT:
-                    head.translate(-DISTANCIA_ENTRE_QUADRADOS, 0);
+                    head.translate(-arestaLength, 0);
                     break;
                 case RIGHT:
-                    head.translate(DISTANCIA_ENTRE_QUADRADOS, 0);
+                    head.translate(arestaLength, 0);
                     break;
                 default:
                     break;
