@@ -34,7 +34,7 @@ public class Snake {
         this.listaQuadrados.add(novoQuadrado);
     }
     public boolean collidedWithHerself() {return true;}
-    public void move() {
+    public void move(Direction direction) {
 
     }
 
@@ -52,5 +52,13 @@ public class Snake {
 
     public void setListaQuadrados(List<Quadrado> listaQuadrados) {
         this.listaQuadrados = listaQuadrados;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 }

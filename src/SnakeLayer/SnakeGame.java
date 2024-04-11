@@ -1,17 +1,28 @@
 package SnakeLayer;
 
-public class SnakeGame {
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+public class SnakeGame implements KeyListener {
     private boolean gameOver;
     private Score score;
     private Snake snake;
 
-    public SnakeGame (Snake snake, Score score, boolean gameOver) {
+    public SnakeGame (Snake snake) {
         this.snake = snake;
-        this.score = score;
-        this.gameOver = gameOver;
+        this.score = new Score(0);
+        this.gameOver = false;
     }
 
-    public void runGame(boolean gameOver) {}
+    public void runGame() {}
     public void endGame() {}
-    public Snake changeSnakeDirection() {return null;}
+    
+    @Override
+    public void keyReleased(KeyEvent e) {
+        System.out.println("Tecla Solta!");
+    }
+    @Override
+    public void keyPressed(KeyEvent e) {}
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
 }
