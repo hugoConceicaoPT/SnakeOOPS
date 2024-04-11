@@ -5,21 +5,21 @@ import java.util.Random;
 
 public class Snake {
     private Quadrado head;
-    private List<Quadrado> listaQuadrados;
+    private List<Quadrado> tail;
     private Direction direction;
     private int arestaLength;
     
-    public Snake(List<Quadrado> listaQuadrados) {
-        this.head = listaQuadrados.get(0);
-        listaQuadrados.remove(0);
-        this.listaQuadrados = listaQuadrados;
+    public Snake(List<Quadrado> tail) {
+        this.head = tail.get(0);
+        tail.remove(0);
+        this.tail = tail;
         Random random = new Random();
         this.direction = Direction.values()[random.nextInt(Direction.values().length)];
-        arestaLength = this.listaQuadrados.get(this.listaQuadrados.size()-1).pontos.get(0).dist(this.listaQuadrados.get(this.listaQuadrados.size()-1).pontos.get(1));
+        arestaLength = this.tail.get(this.tail.size()-1).pontos.get(0).dist(this.tail.get(this.tail.size()-1).pontos.get(1));
     }
 
     public void increaseSize() {
-        Quadrado ultimoQuadrado = this.listaQuadrados.get(this.listaQuadrados.size()-1);
+        Quadrado ultimoQuadrado = this.tail.get(this.tail.size()-1);
         Quadrado novoQuadrado = new Quadrado(ultimoQuadrado.getPontos());
         switch (direction) {
             case UP:
@@ -36,9 +36,15 @@ public class Snake {
             default:
                 break;
         }
-        this.listaQuadrados.add(novoQuadrado);
+        this.tail.add(novoQuadrado);
     }
-    public boolean collidedWithHerself() {return true;}
+    public boolean collidedWithHerself() {
+        for (int i = 0; i < tail.size(); i++) {
+            if(head.interseta(tail.get(i)))
+            return true;
+        }
+        return false;
+    }
     private void moveHead(Direction nextDirection) {
         switch (this.direction) {
             case UP:
@@ -116,10 +122,10 @@ public class Snake {
         }
         setDirection(nextDirection);
 
-        listaQuadrados.get(0).translateCentroide((int) centroHeadSnake.getxDouble(), (int) centroHeadSnake.getyDouble());
-        for(int i = 1; i < listaQuadrados.size()-2; i++) {
-            Quadrado previousSquare = listaQuadrados.get(i-1);
-            Quadrado currentSquare = listaQuadrados.get(i);
+        tail.get(0).translateCentroide((int) centroHeadSnake.getxDouble(), (int) centroHeadSnake.getyDouble());
+        for(int i = 1; i < tail.size()-2; i++) {
+            Quadrado previousSquare = tail.get(i-1);
+            Quadrado currentSquare = tail.get(i);
             currentSquare.translateCentroide((int) previousSquare.getCentroide().getxDouble(), (int) previousSquare.getCentroide().getyDouble());
         }
     }
@@ -132,12 +138,12 @@ public class Snake {
         this.head = head;
     }
 
-    public List<Quadrado> getListaQuadrados() {
-        return listaQuadrados;
+    public List<Quadrado> gettail() {
+        return tail;
     }
 
-    public void setListaQuadrados(List<Quadrado> listaQuadrados) {
-        this.listaQuadrados = listaQuadrados;
+    public void settail(List<Quadrado> tail) {
+        this.tail = tail;
     }
 
     public Direction getDirection() {
@@ -150,6 +156,6 @@ public class Snake {
 
     @Override
     public String toString() {
-        return "Cabeça: " + head.toString() + "Tail: " + listaQuadrados.toString();
+        return "Cabeça: " + head.toString() + "Tail: " + tail.toString();
     }
 }
