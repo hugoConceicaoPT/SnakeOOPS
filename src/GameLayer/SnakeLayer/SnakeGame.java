@@ -3,6 +3,8 @@ package GameLayer.SnakeLayer;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 public class SnakeGame implements KeyListener {
+    private int widthBoard;
+    private int heightBoard;
     private boolean gameOver;
     private Score score;
     private Snake snake;
