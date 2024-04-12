@@ -2,6 +2,11 @@ package GameLayer.BoardLayer;
 
 import java.util.List;
 
+import GameLayer.SnakeLayer.Retangulo;
+import GameLayer.SnakeLayer.Score;
+import GameLayer.SnakeLayer.Snake;
+import GameLayer.SnakeLayer.SnakeGame;
+
 public class GameBoard {
     private List<Obstacle> listOfObstacles; 
     private Food food;
@@ -9,7 +14,9 @@ public class GameBoard {
     private int columns;
     private String foodType;
     private Cell [][] board;
-    
+    private SnakeGame snake;
+
+
     public GameBoard (List<Obstacle> listofObstacles,String foodType,int rows, int columns) {
         this.listOfObstacles = listofObstacles;
         this.foodType = foodType;
@@ -24,7 +31,14 @@ public class GameBoard {
     }
 
     public boolean snakeCollided() {return true;}
-    public boolean foodContainedInSnake() {return true;}
+    public boolean foodContainedInSnake() {
+        if (food.FoodIntersetaHead(snake.getSnake())) {
+            snake.getSnake().increaseSize();
+            snake.getScore().increaseScore();
+           return true; 
+        }
+        return false; 
+    }
  /*   public void generateFood() {
 
         boolean isEmpty = true;

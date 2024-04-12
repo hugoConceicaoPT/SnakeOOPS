@@ -15,6 +15,44 @@ public class SnakeGame implements KeyListener {
         this.gameOver = false;
     }
 
+
+    
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
+
+
+
+    public Score getScore() {
+        return score;
+    }
+
+
+
+    public void setScore(Score score) {
+        this.score = score;
+    }
+
+
+
+    public Snake getSnake() {
+        return snake;
+    }
+
+
+
+    public void setSnake(Snake snake) {
+        this.snake = snake;
+    }
+
+
+
     public void runGame() {}
     public void endGame() {}
     
@@ -37,6 +75,8 @@ public class SnakeGame implements KeyListener {
                 break;
         }
     }
+
+
     @Override
     public void keyPressed(KeyEvent e) {}
     @Override
