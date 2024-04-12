@@ -7,11 +7,12 @@ public class GameBoard {
     private Food food;
     private int rows;
     private int columns;
+    private String foodType;
     private Cell [][] board;
     
-    public GameBoard (List<Obstacle> listofObstacles, Food food,int rows, int columns) {
+    public GameBoard (List<Obstacle> listofObstacles,String foodType,int rows, int columns) {
         this.listOfObstacles = listofObstacles;
-        this.food = food;
+        this.foodType = foodType;
         this.rows = rows;
         this.columns = columns;
         this.board = new Cell[rows][columns];
@@ -24,6 +25,19 @@ public class GameBoard {
 
     public boolean snakeCollided() {return true;}
     public boolean foodContainedInSnake() {return true;}
-    public void generateFood() {}
+ /*   public void generateFood() {
+
+        boolean isEmpty = true;
+        while (isEmpty) {
+            int row = (int)(Math.random * rows);
+            int column = (int)(Math.random *columns);
+            Cell cellFood = new Cell(row, column);
+            if (cellFood.getCellType() == CellType.EMPTY) {
+                cellFood.setCellType(CellType.FOOD);
+                isEmpty = false;
+            }
+        }
+    }
+    */
     public void generateObstacle() {}
 }

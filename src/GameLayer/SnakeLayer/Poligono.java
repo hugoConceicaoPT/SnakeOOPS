@@ -77,6 +77,7 @@ public class Poligono implements IFiguraGeometrica {
      * @param that o outro polígono
      * @return true se houver interseção, false se não houver
      */
+    @Override
     public boolean interseta (Poligono that)
     {
         for(SegmentoReta aresta1 : this.aresta)
