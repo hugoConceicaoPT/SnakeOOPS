@@ -15,6 +15,11 @@ public class GameBoard {
         this.rows = rows;
         this.columns = columns;
         this.board = new Cell[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                board[i][j] = new Cell(i,j);
+            }
+        }
     }
 
     public boolean snakeCollided() {return true;}
