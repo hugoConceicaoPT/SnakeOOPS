@@ -73,9 +73,4 @@ public class Retangulo extends Poligono {
         
         return angulo;
     }
-
-    @Override
-    public String toString() {
-        return "Retangulo: " + pontos.toString();
-    }
 }

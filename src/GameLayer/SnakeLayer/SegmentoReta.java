@@ -8,7 +8,7 @@ import java.util.Objects;
     @author Hugo Conceição
     @inv  Os pontos não podem ser iguais
 */
-public class SegmentoReta {
+public class SegmentoReta implements Cloneable {
     private Ponto a;
     private Ponto b;
 
@@ -77,6 +77,11 @@ public class SegmentoReta {
     @Override
     public int hashCode() {
         return Objects.hash(this.a,this.b);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+            return super.clone();
     }
 
     /** Obtém o ponto a da reta

@@ -44,9 +44,4 @@ public class Triangulo extends Poligono {
             pontos.add(new Ponto(Integer.parseInt(parts[i]),Integer.parseInt(parts[i+1])));
         return pontos;
     }
-
-    @Override
-    public String toString() {
-        return "Triangulo: " + pontos.toString();
-    }
 }

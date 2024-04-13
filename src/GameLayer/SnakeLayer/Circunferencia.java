@@ -40,13 +40,11 @@ public class Circunferencia implements IFiguraGeometrica {
             Ponto ponto1 = verticesPoligono.get(i);
             Ponto ponto2 = verticesPoligono.get((i + 1) % verticesPoligono.size());
 
-            // Verifica se algum vértice do polígono está dentro do círculo
             if (pontoDentroCirculo(this.centro.getX(), this.centro.getY(), this.raio, ponto1.getX(), ponto1.getY()) ||
                     pontoDentroCirculo(this.centro.getX(), this.centro.getY(), this.raio, ponto2.getX(), ponto2.getY())) {
                 return true;
             }
 
-            // Verifica se alguma aresta do polígono intersecta o círculo
             double d = distanciaEntrePontos(ponto1.getX(), ponto1.getY(), ponto2.getX(), ponto2.getY());
             double u = ((this.centro.getX() - ponto1.getX()) * (ponto2.getX() - ponto1.getX()) + (this.centro.getY() - ponto1.getY()) * (ponto2.getY() - ponto1.getY())) / (d * d);
             double xInterseccao = ponto1.getX() + u * (ponto2.getX() - ponto1.getX());

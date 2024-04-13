@@ -1,7 +1,5 @@
 package GameLayer.SnakeLayer;
 
-import org.omg.PortableServer.POA;
-
 public interface IFiguraGeometrica {
     String toString();
     void translate(int dx, int dy);

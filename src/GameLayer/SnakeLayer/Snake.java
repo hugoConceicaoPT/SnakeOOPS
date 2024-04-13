@@ -1,6 +1,5 @@
 package GameLayer.SnakeLayer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -11,22 +10,21 @@ public class Snake {
     private int arestaLength;
     
     public Snake(List<Quadrado> listaQuadrados) {
-        this.tail = listaQuadrados;
+        this.tail = listaQuadrados.subList(1, listaQuadrados.size());
         this.head = listaQuadrados.get(0);
         Random random = new Random();
         this.direction = Direction.values()[random.nextInt(Direction.values().length)];
         arestaLength = this.head.pontos.get(0).dist(this.head.pontos.get(1));
     }
 
-    public void increaseSize() {
-        int size = tail.size() -1;
-        List<Ponto> pontosCopia = new ArrayList<>();
-        for (Ponto ponto : head.getPontos()) {
-            pontosCopia.add(new Ponto(ponto.getX(), ponto.getY()));
+    public void increaseSize() throws CloneNotSupportedException {
+        Quadrado novoQuadrado;
+        if(this.tail.isEmpty()) {
+            novoQuadrado = (Quadrado) head.clone();
         }
-        Quadrado novoQuadrado = new Quadrado(pontosCopia);
-        if(size == 0)
-            tail.remove(0);
+        else {
+            novoQuadrado = (Quadrado) this.tail.get(this.tail.size()-1).clone();
+        }
         switch (direction) {
             case UP:
                 novoQuadrado.translate(0, -arestaLength); 
@@ -47,7 +45,7 @@ public class Snake {
     public boolean collidedWithHerself() {
         for (int i = 0; i < tail.size(); i++) {
             if(head.interseta(tail.get(i)))
-            return true;
+                return true;
         }
         return false;
     }
@@ -56,10 +54,10 @@ public class Snake {
             case UP:
                 switch (nextDirection) {
                     case RIGHT:
-                        head.rotateAngle(90);
+                        head.rotateAngle(-90);
                         break; 
                     case LEFT:
-                        head.rotateAngle(-90);
+                        head.rotateAngle(90);
                         break;
                     default:
                         break;
@@ -68,10 +66,10 @@ public class Snake {
             case DOWN:
                 switch (nextDirection) {
                     case RIGHT:
-                        head.rotateAngle(-90);
+                        head.rotateAngle(90);
                         break;
                     case LEFT:
-                        head.rotateAngle(90);
+                        head.rotateAngle(-90);
                         break;
                     default:
                         break;
@@ -128,12 +126,12 @@ public class Snake {
         }
         setDirection(nextDirection);
 
-        tail.get(0).translateCentroide((int) centroHeadSnake.getxDouble(), (int) centroHeadSnake.getyDouble());
-        for(int i = 1; i < tail.size()-2; i++) {
-            Quadrado previousSquare = tail.get(i-1);
+        for (int i = tail.size() - 1; i > 0; i--) {
+            Quadrado previousSquare = tail.get(i - 1);
             Quadrado currentSquare = tail.get(i);
             currentSquare.translateCentroide((int) previousSquare.getCentroide().getxDouble(), (int) previousSquare.getCentroide().getyDouble());
         }
+        tail.get(0).translateCentroide((int) centroHeadSnake.getxDouble(), (int) centroHeadSnake.getyDouble());
     }
 
     public Quadrado getHead() {
@@ -170,6 +168,6 @@ public class Snake {
 
     @Override
     public String toString() {
-        return "Cabeça: " + head.toString() + "Tail: " + tail.toString();
+        return "Cabeça: " + head.toString() + " Tail: " + tail.toString();
     }
 }

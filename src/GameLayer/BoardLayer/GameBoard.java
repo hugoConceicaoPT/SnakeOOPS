@@ -31,7 +31,7 @@ public class GameBoard {
     }
 
     public boolean snakeCollided() {return true;}
-    public boolean foodContainedInSnake() {
+    public boolean foodContainedInSnake() throws CloneNotSupportedException {
         if (food.FoodIntersetaHead(snake.getSnake())) {
             snake.getSnake().increaseSize();
             snake.getScore().increaseScore();

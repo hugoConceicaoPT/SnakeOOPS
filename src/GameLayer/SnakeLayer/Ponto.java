@@ -7,7 +7,7 @@ import java.util.Objects;
     @author Hugo Conceição
     @inv  As coordenadas devem estar localizadas no primeiro quadrante do plano cartesiano
 */
-public class Ponto {
+public class Ponto implements Cloneable {
     private int x;
     private int y;
     private double xDouble;
@@ -178,6 +178,10 @@ public class Ponto {
         return "(" + this.x + "," + this.y + ")";
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+            return super.clone();
+    }
     /** Obtém a coordenada xDouble do ponto
      * @return A coordenada xDouble do ponto
      */

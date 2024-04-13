@@ -9,7 +9,7 @@ import java.util.Objects;
     @inv  O poligono é válido se não existirem três pontos consecutivos colineares 
     ,se cada par de aresta não se cruzar e se tiver pelo menos 3 pontos
 */
-public class Poligono implements IFiguraGeometrica {
+public class Poligono implements IFiguraGeometrica, Cloneable {
     protected List<Ponto> pontos;
     protected List<SegmentoReta> aresta;
     protected Ponto centroide;
@@ -139,6 +139,7 @@ public class Poligono implements IFiguraGeometrica {
     public void translate(int dx, int dy) {
         for (Ponto ponto : pontos) 
             ponto.translate(dx, dy);
+        setCentroide(getCentroide());
     }
 
     /** Aplica-se um movimento de translação ao polígono a partir das coordenadas x e y do novo centróide
@@ -149,7 +150,8 @@ public class Poligono implements IFiguraGeometrica {
     @Override
     public void translateCentroide(int centroX, int centroY) {
         for (Ponto ponto : pontos) 
-            ponto.translateCentroide(centroX, centroY, centroide);
+            ponto.translateCentroide(centroX, centroY, this.centroide);
+        setCentroide(getCentroide());
     }
 
     @Override
@@ -186,9 +188,26 @@ public class Poligono implements IFiguraGeometrica {
 
     @Override
     public String toString() {
-        return "Poligono de " + pontos.size() + " vertices: " + pontos.toString();
+        return pontos.toString();
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Poligono novoPoligono = (Poligono) super.clone();
+        novoPoligono.pontos = new ArrayList<>();
+        for (Ponto ponto : this.pontos) {
+            novoPoligono.pontos.add((Ponto) ponto.clone());
+        }
+
+        novoPoligono.aresta = new ArrayList<>();
+        for (SegmentoReta aresta : this.aresta) {
+            novoPoligono.aresta.add((SegmentoReta) aresta.clone());
+        }
+
+        novoPoligono.centroide = (Ponto) this.centroide.clone();
+
+        return novoPoligono;
+    }
     /** Obtém a lista de pontos do polígono
      * @return A lista de pontos do polígono
      */
