@@ -61,14 +61,10 @@ public class SnakeTest {
         snake.increaseSize();
         Direction direction = Direction.UP;
         snake.move(direction);
-<<<<<<< Updated upstream
         assertEquals("Cabeça: [(6,6), (8,6), (8,4), (6,4)] Tail: [[(8,4), (8,2), (6,2), (6,4)]]", snake.toString());
         snake.increaseSize();
         snake.move(Direction.RIGHT);
         assertEquals("Cabeça: [(10,6), (10,4), (8,4), (8,6)] Tail: [[(8,6), (8,4), (6,4), (6,6)], [(8,4), (8,2), (6,2), (6,4)]]", snake.toString());
-=======
-        assertEquals("Cabeça: [(6,6), (8,6), (8,4), (6,4)]Tail: [(6,4), (8,4), (8,2), (6,2)]", snake.toString());
->>>>>>> Stashed changes
         snake.move(Direction.DOWN);
         assertEquals("Cabeça: [(10,2), (8,2), (8,4), (10,4)] Tail: [[(10,6), (10,4), (8,4), (8,6)], [(8,6), (8,4), (6,4), (6,6)]]", snake.toString());
         snake.move(Direction.LEFT);
