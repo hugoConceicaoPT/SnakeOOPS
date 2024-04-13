@@ -27,15 +27,15 @@ public class Snake {
         }
         switch (direction) {
             case UP:
-                novoQuadrado.translate(0, -arestaLength); 
+                novoQuadrado.translateLastTwoPoints(0, -arestaLength); 
                 break;
             case DOWN:
-                novoQuadrado.translate(0, arestaLength);
+                novoQuadrado.translateLastTwoPoints(0, arestaLength);
             case LEFT:
-                novoQuadrado.translate(arestaLength, 0);
+                novoQuadrado.translateLastTwoPoints(arestaLength, 0);
                 break;
             case RIGHT:
-                novoQuadrado.translate(-arestaLength, 0);
+                novoQuadrado.translateLastTwoPoints(-arestaLength, 0);
                 break;
             default:
                 break;

@@ -154,6 +154,10 @@ public class Poligono implements IFiguraGeometrica, Cloneable {
         setCentroide(getCentroide());
     }
 
+    public void translateLastTwoPoints(int dx, int dy) {
+        for (int i = pontos.size()-1; i > pontos.size()-3; i--) 
+            pontos.get(i).translate(dx, dy);
+    }
     @Override
     public boolean equals(Object obj) {
 
