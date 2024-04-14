@@ -7,16 +7,22 @@ public class Snake {
     private Quadrado head;
     private List<Quadrado> tail;
     private Direction direction;
-    private int arestaLength;
+    private int arestaHeadLength;
     
+    /** Construtor para criar uma cobra 
+     * @param listaQuadrados a lista de quadrados que contém os quadrados da cobra
+     */
     public Snake(List<Quadrado> listaQuadrados) {
         this.tail = listaQuadrados.subList(1, listaQuadrados.size());
         this.head = listaQuadrados.get(0);
         Random random = new Random();
         this.direction = Direction.values()[random.nextInt(Direction.values().length)];
-        arestaLength = this.head.pontos.get(0).dist(this.head.pontos.get(1));
+        arestaHeadLength = this.head.pontos.get(0).dist(this.head.pontos.get(1));
     }
 
+    /** Aumenta o tamanho da cobra 
+     * @throws CloneNotSupportedException caso a duplicação do quadrado falhe
+     */
     public void increaseSize() throws CloneNotSupportedException {
         Quadrado novoQuadrado;
         if(this.tail.isEmpty()) {
@@ -27,21 +33,25 @@ public class Snake {
         }
         switch (direction) {
             case UP:
-                novoQuadrado.translateLastTwoPoints(0, -arestaLength); 
+                novoQuadrado.translateLastTwoPoints(0, -arestaHeadLength); 
                 break;
             case DOWN:
-                novoQuadrado.translateLastTwoPoints(0, arestaLength);
+                novoQuadrado.translateLastTwoPoints(0, arestaHeadLength);
             case LEFT:
-                novoQuadrado.translateLastTwoPoints(arestaLength, 0);
+                novoQuadrado.translateLastTwoPoints(arestaHeadLength, 0);
                 break;
             case RIGHT:
-                novoQuadrado.translateLastTwoPoints(-arestaLength, 0);
+                novoQuadrado.translateLastTwoPoints(-arestaHeadLength, 0);
                 break;
             default:
                 break;
         }
         this.tail.add(novoQuadrado);
     }
+
+    /** Verifica se a cobra colida consigo própria 
+     * @return verdadeiro se acontecer, falso se não
+     */
     public boolean collidedWithHerself() {
         for (int i = 0; i < tail.size(); i++) {
             if(head.interseta(tail.get(i)))
@@ -49,6 +59,9 @@ public class Snake {
         }
         return false;
     }
+    /** Move a cabeça da cobra
+     * @param nextDirection a próxima direção que a cobra vai tomar
+     */
     private void moveHead(Direction nextDirection) {
         switch (this.direction) {
             case UP:
@@ -103,6 +116,9 @@ public class Snake {
         }
     }
 
+    /** Move a cobra 
+     * @param nextDirection a próxima direção que a cobra vai tomar 
+     */
     public void move(Direction nextDirection) {
         Ponto centroHeadSnake = head.getCentroide();
         if(this.direction != nextDirection) 
@@ -110,16 +126,16 @@ public class Snake {
 
         switch (nextDirection) {
             case UP:
-                head.translate(0, arestaLength); 
+                head.translate(0, arestaHeadLength); 
                 break;
             case DOWN:
-                head.translate(0, -arestaLength);
+                head.translate(0, -arestaHeadLength);
                 break;
             case LEFT:
-                head.translate(-arestaLength, 0);
+                head.translate(-arestaHeadLength, 0);
                 break;
             case RIGHT:
-                head.translate(arestaLength, 0);
+                head.translate(arestaHeadLength, 0);
                 break;
             default:
                 break;
@@ -134,40 +150,64 @@ public class Snake {
         tail.get(0).translateCentroide((int) centroHeadSnake.getxDouble(), (int) centroHeadSnake.getyDouble());
     }
 
+    @Override
+    public String toString() {
+        return "Cabeça: " + head.toString() + " Tail: " + tail.toString();
+    }
+
+    /** Obtém a cabeça da cobra
+     * @return a cabeça da cobra
+     */
     public Quadrado getHead() {
         return head;
     }
 
+    /** Atualiza a cabeça da cobra
+     * @param head a nova cabeça da cobra
+     */
     public void setHead(Quadrado head) {
         this.head = head;
     }
 
+    /** Obtém a tail da cobra
+     * @return a tail da cobra
+     */
     public List<Quadrado> getTail() {
         return tail;
     }
 
+    /** Atualiza a tail da cobra
+     * @param tail a nova tail da cobra
+     */
     public void setTail(List<Quadrado> tail) {
         this.tail = tail;
     }
 
-    public int getArestaLength() {
-        return arestaLength;
-    }
-
-    public void setArestaLength(int arestaLength) {
-        this.arestaLength = arestaLength;
-    }
-
+    /** Obtém a direção da cobra
+     * @return a direção da cobra
+     */
     public Direction getDirection() {
         return direction;
     }
 
+    /** Atualiza a direção da cobra
+     * @param direction a nova direção da cobra
+     */
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
 
-    @Override
-    public String toString() {
-        return "Cabeça: " + head.toString() + " Tail: " + tail.toString();
+    /** Obtém o comprimento de uma aresta da cabeça
+     * @return o comprimento de uma aresta da cabeça
+     */
+    public int getArestaHeadLength() {
+        return arestaHeadLength;
+    }
+
+    /** Atualiza o comprimento de uma aresta da cabeça
+     * @param arestaHeadLength o comprimento de uma aresta da cabeça
+     */
+    public void setArestaHeadLength(int arestaHeadLength) {
+        this.arestaHeadLength = arestaHeadLength;
     }
 }

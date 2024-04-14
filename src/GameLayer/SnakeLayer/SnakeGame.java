@@ -9,37 +9,60 @@ public class SnakeGame implements KeyListener {
     private Score score;
     private Snake snake;
 
+    /** Construtor para criar um jogo da cobra        
+     * @param snake a cobra do jogo 
+     */
     public SnakeGame (Snake snake) {
         this.snake = snake;
         this.score = new Score(0);
         this.gameOver = false;
     }
 
+    /** Obtém se acabou o jogo ou não
+     * @return se acabou o jogo ou não
+     */
     public boolean isGameOver() {
         return gameOver;
     }
 
+    /** Atualiza o estado do gameOver
+     * @param gameOver o novo estado do gameOver
+     */
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
     }
 
+    /** Obtém o score do jogo
+     * @return o score do jogo
+     */
     public Score getScore() {
         return score;
     }
 
+    /** Atualiza o score do jogo
+     * @param score o novo score do jogo
+     */
     public void setScore(Score score) {
         this.score = score;
     }
 
+    /** Obtém a snake do jogo                                                                       
+     * @return a snake do jogo
+     */
     public Snake getSnake() {
         return snake;
     }
 
+    /** Atualiza a snake do jogo
+     * @param snake a nova snake do jogo
+     */
     public void setSnake(Snake snake) {
         this.snake = snake;
     }
 
+    /** Inicializa o jogo */
     public void runGame() {}
+    /** Para o jogo */
     public void endGame() {}
     
     @Override
@@ -61,10 +84,38 @@ public class SnakeGame implements KeyListener {
                 break;
         }
     }
-    
+
     @Override
     public void keyPressed(KeyEvent e) {}
     @Override
     public void keyTyped(KeyEvent e) {}
+
+    /** Obtém a width da board
+     * @return o valor da width
+     */
+    public int getWidthBoard() {
+        return widthBoard;
+    }
+
+    /** Atualiza a width da board
+     * @param widthBoard a nova width da board
+     */
+    public void setWidthBoard(int widthBoard) {
+        this.widthBoard = widthBoard;
+    }
+
+    /** Obtém a heigth da board
+     * @return a heigth da board
+     */
+    public int getHeightBoard() {
+        return heightBoard;
+    }
+
+    /** Atualiza a height da board
+     * @param heightBoard a nova height da board
+     */
+    public void setHeightBoard(int heightBoard) {
+        this.heightBoard = heightBoard;
+    }
 
 }

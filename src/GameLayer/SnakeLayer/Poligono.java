@@ -73,10 +73,6 @@ public class Poligono implements IFiguraGeometrica, Cloneable {
         return pontos;
     }
     
-    /** Verifica se a arestas de um polígono intersetam com outro
-     * @param that o outro polígono
-     * @return true se houver interseção, false se não houver
-     */
     @Override
     public boolean interseta (Poligono that)
     {
@@ -130,11 +126,6 @@ public class Poligono implements IFiguraGeometrica, Cloneable {
             ponto.rotate(angle, pontoPivo);
     }
 
-    /** Aplica-se um movimento de translação ao polígono a partir de um deslocamento x e um deslocamento y
-     * @param dx deslocamento x
-     * @param dy deslocamento y
-     * @return um novo polígono com o movimento de translação já aplicado
-     */
     @Override
     public void translate(int dx, int dy) {
         for (Ponto ponto : pontos) 
@@ -142,11 +133,6 @@ public class Poligono implements IFiguraGeometrica, Cloneable {
         setCentroide(getCentroide());
     }
 
-    /** Aplica-se um movimento de translação ao polígono a partir das coordenadas x e y do novo centróide
-     * @param centroX coordenada x do novo centróide
-     * @param centroY coordenada y do novo centróide
-     * @return um novo polígono com o movimento de translação já aplicado
-     */
     @Override
     public void translateCentroide(int centroX, int centroY) {
         for (Ponto ponto : pontos) 

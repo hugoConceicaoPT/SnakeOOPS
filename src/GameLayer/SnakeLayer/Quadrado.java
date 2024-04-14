@@ -41,11 +41,11 @@ public class Quadrado extends Retangulo{
         }
     } 
 
-    /** Verifica se um retângulo se interseta com outro
+    /** Verifica se um retângulo está contido noutro
      * @param that o outro retângulo
      * @return true se os retângulos se intersetarem, false se não
      */
-    public boolean interseta (Quadrado that)
+    public boolean contido (Quadrado that)
     {
 
         int thisMinX = Integer.MAX_VALUE;
