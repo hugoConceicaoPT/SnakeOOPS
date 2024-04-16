@@ -1,9 +1,11 @@
 package Tests;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import GameLayer.SnakeLayer.Poligono;
@@ -37,11 +39,11 @@ public class PoligonoTest {
     @Test    
     public void testToString0() {
         String input1 = "4 5 5 8 6 8 7 5 7";
-        assertEquals("Poligono de 4 vertices: [(5,5), (8,6), (8,7), (5,7)]", new Poligono(input1).toString());
+        assertEquals("[(5,5), (8,6), (8,7), (5,7)]", new Poligono(input1).toString());
         String input2 = "3 9 3 7 1 9 1";
-        assertEquals("Poligono de 3 vertices: [(9,3), (7,1), (9,1)]", new Poligono(input2).toString());
+        assertEquals("[(9,3), (7,1), (9,1)]", new Poligono(input2).toString());
         String input3 = "4 1 2 5 6 8 7 12 14";
-        assertEquals("Poligono de 4 vertices: [(1,2), (5,6), (8,7), (12,14)]", new Poligono(input3).toString());
+        assertEquals("[(1,2), (5,6), (8,7), (12,14)]", new Poligono(input3).toString());
     }
 
     @Test    
@@ -75,11 +77,11 @@ public class PoligonoTest {
         String input1 = "4 1 1 3 1 3 5 1 5";
         Poligono poligono1 = new Poligono(input1);
         poligono1.rotateAngle(90);
-        assertEquals("Poligono de 4 vertices: [(4,2), (4,4), (0,4), (0,2)]",poligono1.toString());
+        assertEquals("[(4,2), (4,4), (0,4), (0,2)]",poligono1.toString());
         String input2 = "3 2 2 3 4 4 2";
         Poligono poligono2 = new Poligono(input2);
         poligono2.rotateAngle(60);
-        assertEquals("Poligono de 3 vertices: [(3,1), (2,3), (4,3)]", poligono2.toString());
+        assertEquals("[(3,1), (2,3), (4,3)]", poligono2.toString());
     }
 
     @Test    
@@ -87,11 +89,11 @@ public class PoligonoTest {
         String input1 = "4 1 2 5 6 8 7 12 14";
         Poligono poligono1 = new Poligono(input1);
         poligono1.translate(-1, 3);
-        assertEquals("Poligono de 4 vertices: [(0,5), (4,9), (7,10), (11,17)]",poligono1.toString());
+        assertEquals("[(0,5), (4,9), (7,10), (11,17)]",poligono1.toString());
         String input2 = "3 2 2 3 4 4 2";
         Poligono poligono2 = new Poligono(input2);
         poligono2.translate(3, 3);
-        assertEquals("Poligono de 3 vertices: [(5,5), (6,7), (7,5)]", poligono2.toString());
+        assertEquals("[(5,5), (6,7), (7,5)]", poligono2.toString());
     }
 
     @Test    
@@ -99,10 +101,24 @@ public class PoligonoTest {
         String input1 = "4 1 3 1 1 5 1 5 3";
         Poligono poligono1 = new Poligono(input1);
         poligono1.translateCentroide(8, 2);
-        assertEquals("Poligono de 4 vertices: [(6,3), (6,1), (10,1), (10,3)]",poligono1.toString());
+        assertEquals("[(6,3), (6,1), (10,1), (10,3)]",poligono1.toString());
         String input2 = "3 2 2 4 4 4 2";
         Poligono poligono2 = new Poligono(input2);
         poligono2.translateCentroide(4, 5);
-        assertEquals("Poligono de 3 vertices: [(2,4), (4,6), (4,4)]", poligono2.toString());
+        assertEquals("[(2,4), (4,6), (4,4)]", poligono2.toString());
+    }
+    @Test
+    public void testInterseta() {
+        String input1 = "4 1 3 1 1 5 1 5 3";
+        Poligono Poligono1 = new Poligono(input1);
+        String input2 = "3 2 2 4 4 4 2";
+        Poligono Poligono2 = new Poligono(input2);
+        Assertions.assertTrue(Poligono2.interseta(Poligono1));
+
+        String input3 = "4 1 3 1 1 5 1 5 3";
+        Poligono Poligono3 = new Poligono(input3);
+        String input4 = "3 0 4 0 5 3 4 3 5";
+        Poligono Poligono4 = new Poligono(input4);
+        assertFalse(Poligono4.interseta(Poligono3));
     }
 }
