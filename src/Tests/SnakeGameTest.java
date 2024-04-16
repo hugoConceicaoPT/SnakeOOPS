@@ -14,7 +14,6 @@ import org.junit.Test;
 import GameLayer.SnakeLayer.Quadrado;
 import GameLayer.SnakeLayer.Snake;
 import GameLayer.SnakeLayer.SnakeGame;
-import javafx.scene.input.KeyCode;
 
 import java.awt.Component;
 import java.awt.event.KeyEvent;
@@ -45,6 +44,7 @@ public class SnakeGameTest{
         Snake snake = new Snake(quadrado);
         SnakeGame snakeGame = new SnakeGame(snake);
         Component source = new Component() {};
+        @SuppressWarnings("deprecation")
         KeyEvent keyEvent = new KeyEvent(source, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_UP);
         snakeGame.keyReleased(keyEvent);
         assertEquals("Tecla Solta!", outContent.toString().trim());

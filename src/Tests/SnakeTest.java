@@ -15,22 +15,18 @@ import GameLayer.SnakeLayer.Snake;
 public class SnakeTest {
     @Test
     public void increaseSizeTest() throws CloneNotSupportedException{
-        String input1 = "1 1 1 3 3 3 3 1";
-        String input2 = "3 3 3 1 5 1 5 3";
-        String input3 = "5 3 5 1 7 1 7 3";
+        String input1 = "14 6 14 4 12 4 12 6";
         List<Quadrado> quadrado = new ArrayList<>();
         quadrado.add(new Quadrado(input1));
-        quadrado.add(new Quadrado(input2));
-        quadrado.add(new Quadrado(input3));
         Snake snake = new Snake(quadrado);
         snake.increaseSize();
-        assertEquals(4,snake.getTail().size() + 1);
+        assertEquals(2,snake.getTail().size() + 1);
         snake.increaseSize();
-        assertEquals(5, snake.getTail().size() + 1);
+        assertEquals(3, snake.getTail().size() + 1);
         snake.increaseSize();
         snake.increaseSize();
         snake.increaseSize();
-        assertEquals(8, snake.getTail().size() + 1);     
+        assertEquals(6, snake.getTail().size() + 1);     
     }
 
     @Test   
