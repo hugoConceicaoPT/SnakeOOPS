@@ -6,6 +6,10 @@ public class Circunferencia implements IFiguraGeometrica {
     private Ponto centro;
     private int raio;
 
+    /** Construtor para criar uma circunferência
+     * @param centro centro da circunferência
+     * @param raio raio da circunferência
+     */
     public Circunferencia (Ponto centro, int raio) {
         this.centro = centro;
         this.raio = raio;
@@ -24,14 +28,11 @@ public class Circunferencia implements IFiguraGeometrica {
         this.centro.translateCentroide(centroX, centroY, this.centro);
     }
 
-    private double distanciaEntrePontos(double x1, double y1, double x2, double y2) {
-        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-    }
-
-    private boolean pontoDentroCirculo(double xCirculo, double yCirculo, double raio, double xPonto, double yPonto) {
-        double distancia = distanciaEntrePontos(xCirculo, yCirculo, xPonto, yPonto);
+    private boolean pontoDentroCirculo(Ponto centro, double raio, Ponto ponto) {
+        double distancia = centro.dist(ponto);
         return distancia <= raio;
     }
+
     @Override
     public boolean interseta(Poligono poligono) {
         List<Ponto> verticesPoligono = poligono.getPontos();
@@ -40,17 +41,18 @@ public class Circunferencia implements IFiguraGeometrica {
             Ponto ponto1 = verticesPoligono.get(i);
             Ponto ponto2 = verticesPoligono.get((i + 1) % verticesPoligono.size());
 
-            if (pontoDentroCirculo(this.centro.getX(), this.centro.getY(), this.raio, ponto1.getX(), ponto1.getY()) ||
-                    pontoDentroCirculo(this.centro.getX(), this.centro.getY(), this.raio, ponto2.getX(), ponto2.getY())) {
+            if (pontoDentroCirculo(this.centro, this.raio, ponto1) ||
+                    pontoDentroCirculo(this.centro, this.raio, ponto2)) {
                 return true;
             }
 
-            double d = distanciaEntrePontos(ponto1.getX(), ponto1.getY(), ponto2.getX(), ponto2.getY());
+            double d = ponto1.dist(ponto2);
             double u = ((this.centro.getX() - ponto1.getX()) * (ponto2.getX() - ponto1.getX()) + (this.centro.getY() - ponto1.getY()) * (ponto2.getY() - ponto1.getY())) / (d * d);
             double xInterseccao = ponto1.getX() + u * (ponto2.getX() - ponto1.getX());
             double yInterseccao = ponto1.getY() + u * (ponto2.getY() - ponto1.getY());
+            Ponto interseccaoPonto = new Ponto(xInterseccao,yInterseccao);
 
-            if (pontoDentroCirculo(this.centro.getX(), this.centro.getY(), this.raio, xInterseccao, yInterseccao)) {
+            if (pontoDentroCirculo(this.centro, this.raio, interseccaoPonto)) {
                 return true;
             }
         }

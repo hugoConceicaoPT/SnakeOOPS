@@ -26,6 +26,17 @@ public class Cell {
 
     @Override
     public String toString() {
-        return null;
+        switch (this.cellType) {
+            case HEAD:
+                return "H";
+            case TAIL:
+                return "T";
+            case FOOD:
+                return "F";
+            case OBSTACLE:
+                return "O";
+            default:
+                return ".";
+        }
     }
 }
