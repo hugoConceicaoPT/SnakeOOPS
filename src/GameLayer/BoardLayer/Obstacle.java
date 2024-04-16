@@ -1,6 +1,7 @@
 package GameLayer.BoardLayer;
 
 import GameLayer.SnakeLayer.IFiguraGeometrica;
+import GameLayer.SnakeLayer.Snake;
 
 public class Obstacle {
 
@@ -15,7 +16,14 @@ public class Obstacle {
         this.figuraGeometrica = figuraGeometrica;
         this.isDynamic = isDynamic;
     }
+    
+    public boolean osbtacleIntersect(Snake snake){
 
+    if (figuraGeometrica.interseta(snake.getHead())) {
+        return true;
+    }
+    return false;
+    }
     public IFiguraGeometrica getFiguraGeometrica() {
         return figuraGeometrica;
     }

@@ -41,7 +41,14 @@ public class GameBoard {
     /** Verifica se a cobra colida com as paredes da board ou com o obstáculo
      * @return
      */
-    public boolean snakeCollided() {return true;}
+    public boolean snakeCollided() {
+        for (int i = 0; i < listOfObstacles.size(); i++) {
+            if (listOfObstacles.get(i).osbtacleIntersect(snake)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /** Verifica se a comida esta contida na cobra
      * @return verdadeiro se estiver contido, falso se não
@@ -72,7 +79,19 @@ public class GameBoard {
     }
 
     /** Gera um obstáculo aleatório na board */
-    public void generateObstacle() {}
+    public void generateObstacle() {
+        Random random = new Random();
+        boolean isEmpty = true;
+        while(isEmpty){
+            int row = random.nextInt(rows);
+            int column = random.nextInt(columns);
+            Cell cellObstacle = new Cell(row, column);
+            if (cellObstacle.getCellType() == CellType.EMPTY) {
+                cellObstacle.setCellType(CellType.OBSTACLE);
+                isEmpty = false;
+            }
+        }
+    }
 
     public List<Obstacle> getListOfObstacles() {
         return listOfObstacles;
