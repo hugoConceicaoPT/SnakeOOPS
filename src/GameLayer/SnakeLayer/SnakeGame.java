@@ -2,20 +2,24 @@ package GameLayer.SnakeLayer;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import GameLayer.BoardLayer.GameBoard;
 public class SnakeGame implements KeyListener {
     private int widthBoard;
     private int heightBoard;
     private boolean gameOver;
     private Score score;
     private Snake snake;
+    private GameBoard gameBoard;
 
     /** Construtor para criar um jogo da cobra        
      * @param snake a cobra do jogo 
      */
-    public SnakeGame (Snake snake) {
+    public SnakeGame (Snake snake, GameBoard gameBoard) {
         this.snake = snake;
         this.score = new Score(0);
         this.gameOver = false;
+        this.gameBoard = gameBoard;
     }
 
     /** Obtém se acabou o jogo ou não
@@ -90,6 +94,11 @@ public class SnakeGame implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {}
 
+    @Override
+    public String toString() {
+        return "a";
+    }
+
     /** Obtém a width da board
      * @return o valor da width
      */
@@ -116,6 +125,14 @@ public class SnakeGame implements KeyListener {
      */
     public void setHeightBoard(int heightBoard) {
         this.heightBoard = heightBoard;
+    }
+
+    public GameBoard getGameBoard() {
+        return gameBoard;
+    }
+
+    public void setGameBoard(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
     }
 
 }

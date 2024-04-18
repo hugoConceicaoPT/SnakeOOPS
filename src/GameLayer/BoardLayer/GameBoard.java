@@ -1,8 +1,11 @@
 package GameLayer.BoardLayer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import GameLayer.SnakeLayer.Ponto;
+import GameLayer.SnakeLayer.Quadrado;
 import GameLayer.SnakeLayer.Score;
 import GameLayer.SnakeLayer.Snake;
 
@@ -11,7 +14,6 @@ public class GameBoard {
     private Food food;
     private int rows;
     private int columns;
-    private String foodType;
     private Cell [][] board;
     private Snake snake;
     private Score score;
@@ -23,9 +25,7 @@ public class GameBoard {
      * @param rows linhas
      * @param columns colunas
      */
-    public GameBoard (List<Obstacle> listofObstacles,String foodType,Snake snake, int rows, int columns) {
-        this.listOfObstacles = listofObstacles;
-        this.foodType = foodType;
+    public GameBoard (Snake snake, int rows, int columns) {
         this.rows = rows;
         this.score = new Score(0);
         this.snake = snake;
@@ -36,6 +36,8 @@ public class GameBoard {
                 board[i][j] = new Cell(i,j);
             }
         }
+        generateObstacles();
+        generateFood();
     }
 
     /** Verifica se a cobra colida com as paredes da board ou com o obstáculo
@@ -58,7 +60,7 @@ public class GameBoard {
         if (food.FoodIntersetaHead(snake)) {
             snake.increaseSize();
             score.increaseScore();
-           return true; 
+            return true; 
         }
         return false; 
     }
@@ -70,15 +72,22 @@ public class GameBoard {
         while (isEmpty) {
             int row = random.nextInt(rows);
             int column = random.nextInt(columns);
-            Cell cellFood = new Cell(row, column);
-            if (cellFood.getCellType() == CellType.EMPTY) {
+            if (board[row][column].getCellType() == CellType.EMPTY) {
+                Cell cellFood = new Cell(row, column);
                 cellFood.setCellType(CellType.FOOD);
+                List<Ponto> pontos = new ArrayList<>();
+                pontos.add(new Ponto(row,column));
+                pontos.add(new Ponto(row,column+1));
+                pontos.add(new Ponto(row+1,column+1));
+                pontos.add(new Ponto(row+1,column));
+                FoodSquare food = new FoodSquare(new Quadrado(pontos));
                 isEmpty = false;
             }
         }
     }
 
     /** Gera um obstáculo aleatório na board */
+<<<<<<< Updated upstream
     public void generateObstacle() {
         Random random = new Random();
         boolean isEmpty = true;
@@ -87,6 +96,16 @@ public class GameBoard {
             int column = random.nextInt(columns);
             Cell cellObstacle = new Cell(row, column);
             if (cellObstacle.getCellType() == CellType.EMPTY) {
+=======
+    public void generateObstacles() {
+        Random random = new Random();
+        boolean isEmpty = true;
+        while (isEmpty) {
+            int row = random.nextInt(rows);
+            int column = random.nextInt(columns);
+            if (board[row][column].getCellType() == CellType.EMPTY) {
+                Cell cellObstacle = new Cell(row, column);
+>>>>>>> Stashed changes
                 cellObstacle.setCellType(CellType.OBSTACLE);
                 isEmpty = false;
             }
@@ -123,14 +142,6 @@ public class GameBoard {
 
     public void setColumns(int columns) {
         this.columns = columns;
-    }
-
-    public String getFoodType() {
-        return foodType;
-    }
-
-    public void setFoodType(String foodType) {
-        this.foodType = foodType;
     }
 
     public Cell[][] getBoard() {

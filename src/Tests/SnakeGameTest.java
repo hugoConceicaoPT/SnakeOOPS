@@ -33,16 +33,14 @@ public class SnakeGameTest{
     }
     
     @Test
-    public void keyReleasedTest() {
+    public void keyReleasedTest() throws CloneNotSupportedException {
         String input1 = "1 1 1 3 3 3 3 1";
-        String input2 = "3 3 3 1 5 1 5 3";
-        String input3 = "5 3 5 1 7 1 7 3";
         List<Quadrado> quadrado = new ArrayList<>();
         quadrado.add(new Quadrado(input1));
-        quadrado.add(new Quadrado(input2));
-        quadrado.add(new Quadrado(input3));
         Snake snake = new Snake(quadrado);
-        SnakeGame snakeGame = new SnakeGame(snake);
+        snake.increaseSize();
+        snake.increaseSize();
+        SnakeGame snakeGame = new SnakeGame(snake,null);
         Component source = new Component() {};
         @SuppressWarnings("deprecation")
         KeyEvent keyEvent = new KeyEvent(source, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_UP);

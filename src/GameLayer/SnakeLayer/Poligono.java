@@ -9,7 +9,7 @@ import java.util.Objects;
     @inv  O poligono é válido se não existirem três pontos consecutivos colineares 
     ,se cada par de aresta não se cruzar e se tiver pelo menos 3 pontos
 */
-public class Poligono implements IFiguraGeometrica, Cloneable {
+public class Poligono implements Cloneable {
     protected List<Ponto> pontos;
     protected List<SegmentoReta> aresta;
     protected Ponto centroide;
@@ -73,7 +73,6 @@ public class Poligono implements IFiguraGeometrica, Cloneable {
         return pontos;
     }
     
-    @Override
     public boolean interseta (Poligono that)
     {
         for(SegmentoReta aresta1 : this.aresta)
@@ -87,6 +86,40 @@ public class Poligono implements IFiguraGeometrica, Cloneable {
         return false;
     }
 
+    /** Verifica se um retângulo está contido noutro
+     * @param that o outro retângulo
+     * @return true se os retângulos se intersetarem, false se não
+     */
+    public boolean contida (Poligono that)
+    {
+        int thisMinX = Integer.MAX_VALUE;
+        int thisMinY = Integer.MAX_VALUE;
+        int thisMaxX = Integer.MIN_VALUE;
+        int thisMaxY = Integer.MIN_VALUE;
+        int thatMinX = Integer.MAX_VALUE;
+        int thatMinY = Integer.MAX_VALUE;
+        int thatMaxX = Integer.MIN_VALUE;
+        int thatMaxY = Integer.MIN_VALUE;
+
+        for (Ponto ponto : this.pontos) {
+            thisMinX = Math.min(thisMinX, ponto.getX());
+            thisMaxX = Math.max(thisMaxX, ponto.getX());
+            thisMinY = Math.min(thisMinY, ponto.getY());
+            thisMaxY = Math.max(thisMaxY, ponto.getY());
+        }
+
+        for (Ponto ponto : that.pontos) {
+            thatMinX = Math.min(thatMinX, ponto.getX());
+            thatMaxX = Math.max(thatMaxX, ponto.getX());
+            thatMinY = Math.min(thatMinY, ponto.getY());
+            thatMaxY = Math.max(thatMaxY, ponto.getY());
+    }
+
+        boolean overlapX = thisMaxX > thatMinX && thisMinX < thatMaxX;
+        boolean overlapY = thisMaxY > thatMinY && thisMinY < thatMaxY;
+    
+        return overlapX && overlapY;
+    }
 
     /** Calcula o centróide de um poligono
      * @see https://math.stackexchange.com/questions/90463/how-can-i-calculate-the-centroid-of-polygon
@@ -126,14 +159,12 @@ public class Poligono implements IFiguraGeometrica, Cloneable {
             ponto.rotate(angle, pontoPivo);
     }
 
-    @Override
     public void translate(int dx, int dy) {
         for (Ponto ponto : pontos) 
             ponto.translate(dx, dy);
         setCentroide(getCentroide());
     }
 
-    @Override
     public void translateCentroide(int centroX, int centroY) {
         for (Ponto ponto : pontos) 
             ponto.translateCentroide(centroX, centroY, this.centroide);

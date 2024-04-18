@@ -54,7 +54,7 @@ public class Snake {
      */
     public boolean collidedWithHerself() {
         for (int i = 0; i < tail.size(); i++) {
-            if(head.contido(tail.get(i)))
+            if(head.contida(tail.get(i)))
                 return true;
         }
         return false;

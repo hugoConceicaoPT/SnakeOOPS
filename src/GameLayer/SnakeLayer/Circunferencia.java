@@ -2,7 +2,7 @@ package GameLayer.SnakeLayer;
 
 import java.util.List;
 
-public class Circunferencia implements IFiguraGeometrica {
+public class Circunferencia {
     private Ponto centro;
     private int raio;
 
@@ -18,12 +18,11 @@ public class Circunferencia implements IFiguraGeometrica {
         }
     }
     
-    @Override
     public void translate(int dx, int dy) {
         this.centro.translate(dx, dy);
     }
     
-    @Override
+    
     public void translateCentroide(int centroX, int centroY) {
         this.centro.translateCentroide(centroX, centroY, this.centro);
     }
@@ -33,8 +32,8 @@ public class Circunferencia implements IFiguraGeometrica {
         return distancia <= raio;
     }
 
-    @Override
-    public boolean interseta(Poligono poligono) {
+    /*public boolean interseta(Circunferencia that) {
+        Poligono poligono = (Poligono) that;
         List<Ponto> verticesPoligono = poligono.getPontos();
 
         for (int i = 0; i < verticesPoligono.size(); i++) {
@@ -57,7 +56,21 @@ public class Circunferencia implements IFiguraGeometrica {
             }
         }
         return false;
+    }*/
+
+    /** Verifica se uma circunferência está contido noutra
+     * @param that a outra circunferência 
+     * @return true se a circunferencia estiver contida noutra, false se não
+     */
+    public boolean contida(Circunferencia that) { 
+        Circunferencia thatCircunferencia = (Circunferencia) that;
+
+        double distanciaCentros = this.centro.dist(thatCircunferencia.centro);
+        boolean contida = distanciaCentros + this.raio <= thatCircunferencia.raio;
+
+        return contida;
     }
+
 
     @Override
     public String toString() {

@@ -121,4 +121,15 @@ public class PoligonoTest {
         Poligono Poligono4 = new Poligono(input4);
         assertFalse(Poligono4.interseta(Poligono3));
     }
+
+    @Test
+    public void testClone() throws CloneNotSupportedException {
+        String input1 = "4 1 3 1 1 5 1 5 3";
+        Poligono poligono1 = new Poligono(input1);
+        Poligono poligono2 = (Poligono) poligono1.clone();
+        assertTrue(poligono2.equals(poligono1));
+        String input2 = "3 2 2 4 4 4 2";
+        Poligono poligono3 = new Poligono(input2);
+        assertFalse(poligono2.equals(poligono3));
+    }
 }
