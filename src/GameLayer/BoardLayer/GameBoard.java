@@ -45,7 +45,7 @@ public class GameBoard {
      */
     public boolean snakeCollided() {
         for (int i = 0; i < listOfObstacles.size(); i++) {
-            if (listOfObstacles.get(i).osbtacleIntersect(snake)) {
+            if (listOfObstacles.get(i).obstacleIntersect(snake)) {
                 return true;
             }
         }
@@ -87,16 +87,6 @@ public class GameBoard {
     }
 
     /** Gera um obstáculo aleatório na board */
-<<<<<<< Updated upstream
-    public void generateObstacle() {
-        Random random = new Random();
-        boolean isEmpty = true;
-        while(isEmpty){
-            int row = random.nextInt(rows);
-            int column = random.nextInt(columns);
-            Cell cellObstacle = new Cell(row, column);
-            if (cellObstacle.getCellType() == CellType.EMPTY) {
-=======
     public void generateObstacles() {
         Random random = new Random();
         boolean isEmpty = true;
@@ -104,8 +94,7 @@ public class GameBoard {
             int row = random.nextInt(rows);
             int column = random.nextInt(columns);
             if (board[row][column].getCellType() == CellType.EMPTY) {
-                Cell cellObstacle = new Cell(row, column);
->>>>>>> Stashed changes
+                  Cell cellObstacle = new Cell(row, column);
                 cellObstacle.setCellType(CellType.OBSTACLE);
                 isEmpty = false;
             }

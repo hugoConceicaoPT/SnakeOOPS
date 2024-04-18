@@ -1,11 +1,7 @@
 package GameLayer.BoardLayer;
 
-<<<<<<< Updated upstream
-import GameLayer.SnakeLayer.IFiguraGeometrica;
-import GameLayer.SnakeLayer.Snake;
-=======
 import GameLayer.SnakeLayer.Poligono;
->>>>>>> Stashed changes
+import GameLayer.SnakeLayer.Snake;
 
 public class Obstacle {
 
@@ -21,24 +17,13 @@ public class Obstacle {
         this.isDynamic = isDynamic;
     }
     
-    public boolean osbtacleIntersect(Snake snake){
+    public boolean obstacleIntersect(Snake snake){
 
-<<<<<<< Updated upstream
-    if (figuraGeometrica.interseta(snake.getHead())) {
-        return true;
-    }
-    return false;
-    }
-    public IFiguraGeometrica getFiguraGeometrica() {
-        return figuraGeometrica;
+        if (poligono.interseta(snake.getHead())) 
+            return true;
+        return false;
     }
 
-    public void setFiguraGeometrica(IFiguraGeometrica figuraGeometrica) {
-        this.figuraGeometrica = figuraGeometrica;
-    }
-
-=======
->>>>>>> Stashed changes
     public boolean isDynamic() {
         return isDynamic;
     }
