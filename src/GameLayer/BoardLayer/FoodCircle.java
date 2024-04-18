@@ -14,9 +14,8 @@ public class FoodCircle extends Food {
 
     @Override
     public boolean FoodIntersetaHead(Snake snake){
-        if(circunferencia.contida(snake.getHead())) {
-           return true; 
-        }
+        if(circunferencia.contidaNoPoligono(snake.getHead()))
+            return true;
         return false;
     }
 

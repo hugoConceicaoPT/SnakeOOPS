@@ -32,9 +32,8 @@ public class Circunferencia {
         return distancia <= raio;
     }
 
-    /*public boolean interseta(Circunferencia that) {
-        Poligono poligono = (Poligono) that;
-        List<Ponto> verticesPoligono = poligono.getPontos();
+    public boolean interseta(Poligono that) {
+        List<Ponto> verticesPoligono = that.getPontos();
 
         for (int i = 0; i < verticesPoligono.size(); i++) {
             Ponto ponto1 = verticesPoligono.get(i);
@@ -56,19 +55,30 @@ public class Circunferencia {
             }
         }
         return false;
-    }*/
+    }
 
     /** Verifica se uma circunferência está contido noutra
      * @param that a outra circunferência 
      * @return true se a circunferencia estiver contida noutra, false se não
      */
-    public boolean contida(Circunferencia that) { 
-        Circunferencia thatCircunferencia = (Circunferencia) that;
+    public boolean contidaNaCircunferencia(Circunferencia that) { 
 
-        double distanciaCentros = this.centro.dist(thatCircunferencia.centro);
-        boolean contida = distanciaCentros + this.raio <= thatCircunferencia.raio;
+        double distanciaCentros = this.centro.dist(that.centro);
+        boolean contida = distanciaCentros + this.raio <= that.raio;
 
         return contida;
+    }
+
+    public boolean contidaNoPoligono(Poligono that) { 
+
+        for (Ponto ponto : that.getPontos()) {
+            double distancia = this.centro.dist(ponto);
+            if (distancia > this.raio) {
+                return false; 
+            }
+        }
+
+        return true;
     }
 
 
