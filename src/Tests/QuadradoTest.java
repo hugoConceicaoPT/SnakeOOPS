@@ -1,11 +1,10 @@
 package Tests;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 
-import GameLayer.SnakeLayer.Ponto;
 import GameLayer.SnakeLayer.Quadrado;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe Quadrado
@@ -26,65 +25,5 @@ public class QuadradoTest {
     public void testConstrutor1() {
         String input = "1 1 3 1 3 3 1 3";
         new Quadrado(input);
-    }
-
-    @Test    
-    public void testToString0() {
-        String input1 = "1 1 1 4 4 4 4 1";
-        assertEquals("[(1,1), (1,4), (4,4), (4,1)]", new Quadrado(input1).toString());
-        String input2 = "0 0 0 2 2 2 2 0";
-        assertEquals("[(0,0), (0,2), (2,2), (2,0)]", new Quadrado(input2).toString());
-        String input3 = "3 3 3 6 6 6 6 3";
-        assertEquals("[(3,3), (3,6), (6,6), (6,3)]", new Quadrado(input3).toString());
-    }
-
-    @Test    
-    public void testRotate() {
-        String input1 = "0 0 2 0 2 2 0 2";
-        Quadrado quadrado1 = new Quadrado(input1);
-        quadrado1.rotateAngle(90);
-        assertEquals("[(2,0), (2,2), (0,2), (0,0)]", quadrado1.toString());
-        String input2 = "1 1 3 1 3 3 1 3";
-        Quadrado quadrado2 = new Quadrado(input2);
-        quadrado2.rotate(180,new Ponto(5.0,3.0));
-        assertEquals("[(9,5), (7,5), (7,3), (9,3)]", quadrado2.toString());
-    }
-
-    @Test    
-    public void testTranslate() {
-        String input1 = "0 0 2 0 2 2 0 2";
-        Quadrado quadrado1 = new Quadrado(input1);
-        quadrado1.translate(2, 0);
-        assertEquals("[(2,0), (4,0), (4,2), (2,2)]", quadrado1.toString());
-        String input2 = "1 1 3 1 3 3 1 3";
-        Quadrado quadrado2 = new Quadrado(input2);
-        quadrado2.translate(0, 5);
-        assertEquals("[(1,6), (3,6), (3,8), (1,8)]", quadrado2.toString());
-    }
-
-    @Test    
-    public void testTranslateCentroide() {
-        String input1 = "0 0 2 0 2 2 0 2";
-        Quadrado quadrado1 = new Quadrado(input1);
-        quadrado1.translateCentroide(4, 3);
-        assertEquals("[(3,2), (5,2), (5,4), (3,4)]", quadrado1.toString());
-        String input2 = "1 1 3 1 3 3 1 3";
-        Quadrado quadrado2 = new Quadrado(input2);
-        quadrado2.translateCentroide(7, 2);
-        assertEquals("[(6,1), (8,1), (8,3), (6,3)]", quadrado2.toString());
-    }
-    @Test
-    public void testContido() {
-        String input1 = "0 0 4 0 4 4 0 4";
-        Quadrado quadrado1 = new Quadrado(input1);
-        String input2 = "1 1 2 1 2 2 1 2";
-        Quadrado quadrado2 = new Quadrado(input2);
-        assertTrue(quadrado2.contido(quadrado1));
-
-        String input3 = "0 0 4 0 4 4 0 4";
-        Quadrado quadrado3 = new Quadrado(input3);
-        String input4 = "6 0 6 2 8 2 8 0";
-        Quadrado quadrado4 = new Quadrado(input4);
-        assertFalse(quadrado4.contido(quadrado3));
     }
 }

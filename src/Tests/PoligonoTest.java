@@ -5,7 +5,6 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import GameLayer.SnakeLayer.Poligono;
@@ -113,8 +112,7 @@ public class PoligonoTest {
         Poligono Poligono1 = new Poligono(input1);
         String input2 = "3 2 2 4 4 4 2";
         Poligono Poligono2 = new Poligono(input2);
-        Assertions.assertTrue(Poligono2.interseta(Poligono1));
-
+        assertTrue(Poligono2.interseta(Poligono1));
         String input3 = "4 1 3 1 1 5 1 5 3";
         Poligono Poligono3 = new Poligono(input3);
         String input4 = "3 0 4 0 5 3 4 3 5";

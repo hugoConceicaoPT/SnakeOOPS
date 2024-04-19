@@ -15,10 +15,12 @@ public class SnakeGame implements KeyListener {
     /** Construtor para criar um jogo da cobra        
      * @param snake a cobra do jogo 
      */
-    public SnakeGame (Snake snake, GameBoard gameBoard) {
+    public SnakeGame (Snake snake, GameBoard gameBoard, int widthBoard, int heightBoard) {
         this.snake = snake;
         this.score = new Score(0);
         this.gameOver = false;
+        this.widthBoard = widthBoard;
+        this.heightBoard = heightBoard;
         this.gameBoard = gameBoard;
     }
 
