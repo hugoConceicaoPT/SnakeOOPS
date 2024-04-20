@@ -8,34 +8,22 @@ import java.util.Objects;
     @inv  As coordenadas devem estar localizadas no primeiro quadrante do plano cartesiano
 */
 public class Ponto implements Cloneable {
-    private int x;
-    private int y;
-    private double xDouble;
-    private double yDouble;
+    private double x;
+    private double y;
     
     public Ponto() {
-        this.x = 0;
-        this.y = 0;
-    }
-
-    /** Construtor para criar um ponto com as coordenadas especificadas
-     * @param x A coordenada x do ponto
-     * @param y A coordenada y do ponto
-     */
-    public Ponto(int x, int y) {
-        check(x, y);
-        setX(x);
-        setY(y);
+        this.x = 0.0;
+        this.y = 0.0;
     }
 
     /** Construtor para criar um ponto com as coordenadas especificadas
      * @param xDouble A coordenada x do ponto
      * @param yDouble A coordenada y do ponto
      */
-    public Ponto(double xDouble, double yDouble) {
-        check(xDouble, yDouble);
-        setX(xDouble);
-        setY(yDouble);
+    public Ponto(double x, double y) {
+        check(x, y);
+        setX(x);
+        setY(y);
     }
 
     /** Verifica se a diferença entre as duas coordenadas é inferior a 10^-9, caso seja 
@@ -53,68 +41,33 @@ public class Ponto implements Cloneable {
      * @param p Ponto no plano cartesiano
      * @return distância entre os 2 pontos
      */
-    int dist (Ponto p) {
+    public double dist (Ponto p) {
         double dx = x-p.x;
         double dy = y-p.y;
-        return (int) Math.sqrt(dx*dx+dy*dy);
-    }
-
-    /** Obtém a coordenada x do ponto
-     * @return A coordenada x do ponto
-     */
-    public int getX() {
-        return x;
-    }
-
-    /** Obtém a coordenada y do ponto
-     * @return A coordenada y do ponto
-     */
-    public int getY() {
-        return y;
+        return Math.sqrt(dx*dx+dy*dy);
     }
     
+
     /** Define a coordenada x do ponto
-     * @param x O novo valor para a coordenada x
+     * @param xDouble O novo valor para a coordenada x
      */
-    public void setX(int x) {
-        if(x < 0)
+    public void setX(double x) {
+        if(x < 0.0)
         {
             throw new IllegalArgumentException("Ponto:vi");
         }
         this.x = x;
     }
 
-    /** Define a coordenada xDouble do ponto
-     * @param xDouble O novo valor para a coordenada xDouble
+    /** Define a coordenada yDouble do ponto
+     * @param yDouble O novo valor para a coordenada yDouble
      */
-    public void setX(double xDouble) {
-        if(xDouble < 0.0)
-        {
-            throw new IllegalArgumentException("Ponto:vi");
-        }
-        this.xDouble = xDouble;
-    }
-
-    /** Define a coordenada y do ponto
-     * @param y O novo valor para a coordenada y
-     */
-    public void setY(int y) {
-        if(y < 0)
+    public void setY(double y) {
+        if(y < 0.0)
         {
             throw new IllegalArgumentException("Ponto:vi");
         }
         this.y = y;
-    }
-
-    /** Define a coordenada yDouble do ponto
-     * @param yDouble O novo valor para a coordenada yDouble
-     */
-    public void setY(double yDouble) {
-        if(yDouble < 0.0)
-        {
-            throw new IllegalArgumentException("Ponto:vi");
-        }
-        this.yDouble = yDouble;
     }
 
     @Override
@@ -141,8 +94,8 @@ public class Ponto implements Cloneable {
      */
     public void rotate(int angle, Ponto centroide) {
         double angleRadians = Math.toRadians(angle);
-        int x = (int) Math.round((centroide.getxDouble() + ((this.x - centroide.getxDouble()) * Math.cos(angleRadians) - (this.y - centroide.getyDouble()) * Math.sin(angleRadians))));
-        int y = (int) Math.round((centroide.getyDouble() + ((this.x - centroide.getxDouble()) * Math.sin(angleRadians) + (this.y - centroide.getyDouble()) * Math.cos(angleRadians))));
+        double x = Math.round(centroide.getX() + ((this.x - centroide.getX()) * Math.cos(angleRadians) - (this.y - centroide.getY()) * Math.sin(angleRadians)));
+        double y = Math.round(centroide.getY() + ((this.x - centroide.getX()) * Math.sin(angleRadians) + (this.y - centroide.getY()) * Math.cos(angleRadians)));
         setX(x);
         setY(y);
     }
@@ -153,8 +106,8 @@ public class Ponto implements Cloneable {
      * @return um novo ponto com o movimento de translação já aplicado
      */
     public void translate(int dx, int dy) {
-        int x = this.x + dx;
-        int y = this.y + dy;
+        double x = this.x + dx;
+        double y = this.y + dy;
         setX(x);
         setY(y);
     }
@@ -165,10 +118,10 @@ public class Ponto implements Cloneable {
      * @return um novo ponto com o movimento de translação já aplicado
      */
     public void translateCentroide(int centroX, int centroY, Ponto centroide) {
-        int dx = (int) (centroX - centroide.getxDouble());
-        int dy = (int) (centroY - centroide.getyDouble());
-        int x = this.x + dx;
-        int y = this.y + dy;
+        double dx = centroX - centroide.getX();
+        double dy = centroY - centroide.getY();
+        double x = Math.round(this.x + dx);
+        double y = Math.round(this.y + dy);
         setX(x);
         setY(y);
     }
@@ -182,17 +135,17 @@ public class Ponto implements Cloneable {
     public Object clone() throws CloneNotSupportedException {
             return super.clone();
     }
-    /** Obtém a coordenada xDouble do ponto
-     * @return A coordenada xDouble do ponto
+    /** Obtém a coordenada x do ponto
+     * @return A coordenada x do ponto
      */
-    public double getxDouble() {
-        return xDouble;
+    public double getX() {
+        return x;
     }
 
-    /** Obtém a coordenada yDouble do ponto
-     * @return A coordenada yDouble do ponto
+    /** Obtém a coordenada y do ponto
+     * @return A coordenada y do ponto
      */
-    public double getyDouble() {
-        return yDouble;
+    public double getY() {
+        return y;
     }
 }

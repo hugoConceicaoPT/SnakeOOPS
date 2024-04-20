@@ -48,14 +48,14 @@ public class Poligono implements Cloneable {
      * @param input A string com os pontos do polígono
      */
     public Poligono(String input) {
-        this(toInt(input)); 
+        this(toDouble(input)); 
     }
 
     /** Converte a string recebida em uma lista de pontos 
      * @param input String com os pontos do polígono
      * @return lista de pontos
      */
-    private static List<Ponto> toInt (String input) {
+    private static List<Ponto> toDouble (String input) {
         String [] parts = input.split(" ");
         if(parts.length-2 % 2 == 0)
             System.exit(0);
@@ -65,7 +65,7 @@ public class Poligono implements Cloneable {
         int count = 0;
         while(count < n)
         {
-            pontos.add(new Ponto(Integer.parseInt(parts[i]),Integer.parseInt(parts[i+1])));
+            pontos.add(new Ponto(Double.parseDouble(parts[i]),Double.parseDouble(parts[i+1])));
             i+=2;
             count++;
         }
@@ -92,14 +92,14 @@ public class Poligono implements Cloneable {
      */
     public boolean contida (Poligono that)
     {
-        int thisMinX = Integer.MAX_VALUE;
-        int thisMinY = Integer.MAX_VALUE;
-        int thisMaxX = Integer.MIN_VALUE;
-        int thisMaxY = Integer.MIN_VALUE;
-        int thatMinX = Integer.MAX_VALUE;
-        int thatMinY = Integer.MAX_VALUE;
-        int thatMaxX = Integer.MIN_VALUE;
-        int thatMaxY = Integer.MIN_VALUE;
+        double thisMinX = Double.MAX_VALUE;
+        double thisMinY = Double.MAX_VALUE;
+        double thisMaxX = Double.MIN_VALUE;
+        double thisMaxY = Double.MIN_VALUE;
+        double thatMinX = Double.MAX_VALUE;
+        double thatMinY = Double.MAX_VALUE;
+        double thatMaxX = Double.MIN_VALUE;
+        double thatMaxY = Double.MIN_VALUE;
 
         for (Ponto ponto : this.pontos) {
             thisMinX = Math.min(thisMinX, ponto.getX());
@@ -197,6 +197,20 @@ public class Poligono implements Cloneable {
 
         return thatArestasCopy.isEmpty();
     }      
+
+    public boolean contemPonto(Ponto ponto) {
+        int intersectCount = 0;
+        SegmentoReta centro = new SegmentoReta(ponto, new Ponto(Double.MAX_VALUE, ponto.getY()));
+    
+        for (SegmentoReta segmento : this.aresta) {
+            if (segmento.seCruzam(centro)) {
+                intersectCount++;
+            }
+        }
+    
+        return intersectCount % 2 == 1;
+    }
+    
 
     @Override
     public int hashCode() {

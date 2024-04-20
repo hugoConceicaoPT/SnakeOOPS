@@ -17,7 +17,7 @@ public class Snake {
         this.head = listaQuadrados.get(0);
         Random random = new Random();
         this.direction = Direction.values()[random.nextInt(Direction.values().length)];
-        arestaHeadLength = this.head.pontos.get(0).dist(this.head.pontos.get(1));
+        arestaHeadLength = (int) this.head.pontos.get(0).dist(this.head.pontos.get(1));
     }
 
     /** Aumenta o tamanho da cobra 
@@ -145,9 +145,9 @@ public class Snake {
         for (int i = tail.size() - 1; i > 0; i--) {
             Quadrado previousSquare = tail.get(i - 1);
             Quadrado currentSquare = tail.get(i);
-            currentSquare.translateCentroide((int) previousSquare.getCentroide().getxDouble(), (int) previousSquare.getCentroide().getyDouble());
+            currentSquare.translateCentroide((int) previousSquare.getCentroide().getX(), (int) previousSquare.getCentroide().getY());
         }
-        tail.get(0).translateCentroide((int) centroHeadSnake.getxDouble(), (int) centroHeadSnake.getyDouble());
+        tail.get(0).translateCentroide((int) centroHeadSnake.getX(), (int) centroHeadSnake.getY());
     }
 
     @Override

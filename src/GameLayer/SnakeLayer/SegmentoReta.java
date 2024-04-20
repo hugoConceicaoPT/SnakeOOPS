@@ -27,7 +27,7 @@ public class SegmentoReta implements Cloneable {
      * @param ponto2 segundo ponto do segmento de reta
      */
     private void check(Ponto ponto1,Ponto ponto2){
-        if (ponto1.getX() == ponto2.getX() && ponto1.getY() == ponto2.getY()){
+        if (ponto1.getX() == ponto2.getX() && ponto1.getY() == ponto2.getY()) {
             throw new IllegalArgumentException("Segmento:vi");
         }
     }

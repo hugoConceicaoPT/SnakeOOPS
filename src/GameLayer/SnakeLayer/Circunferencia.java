@@ -4,13 +4,13 @@ import java.util.List;
 
 public class Circunferencia {
     private Ponto centro;
-    private int raio;
+    private double raio;
 
     /** Construtor para criar uma circunferência
      * @param centro centro da circunferência
      * @param raio raio da circunferência
      */
-    public Circunferencia (Ponto centro, int raio) {
+    public Circunferencia (Ponto centro, double raio) {
         this.centro = centro;
         this.raio = raio;
         if(raio <= 0) {
@@ -69,11 +69,15 @@ public class Circunferencia {
         return contida;
     }
 
+
     public boolean contidaNoPoligono(Poligono that) { 
+
+        if(!that.contemPonto(this.centro))
+            return false;
 
         for (Ponto ponto : that.getPontos()) {
             double distancia = this.centro.dist(ponto);
-            if (distancia > this.raio) {
+            if (distancia < this.raio) {
                 return false; 
             }
         }

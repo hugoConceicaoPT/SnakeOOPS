@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import GameLayer.SnakeLayer.Circunferencia;
 import GameLayer.SnakeLayer.Ponto;
 import GameLayer.SnakeLayer.Quadrado;
 import GameLayer.SnakeLayer.Score;
@@ -17,6 +18,7 @@ public class GameBoard {
     private Cell [][] board;
     private Snake snake;
     private Score score;
+    private boolean isFoodCircle;
 
     /** Construtor para criar uma board no jogo
      * @param listofObstacles lista de obstáculos
@@ -25,11 +27,12 @@ public class GameBoard {
      * @param rows linhas
      * @param columns colunas
      */
-    public GameBoard (Snake snake, int rows, int columns) {
+    public GameBoard (Snake snake, int rows, int columns, boolean isFoodCircle) {
         this.rows = rows;
         this.score = new Score(0);
         this.snake = snake;
         this.columns = columns;
+        this.isFoodCircle = isFoodCircle;
         this.board = new Cell[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -57,7 +60,7 @@ public class GameBoard {
      * @throws CloneNotSupportedException
      */
     public boolean foodContainedInSnake() throws CloneNotSupportedException {
-        if (food.FoodIntersetaHead(snake)) {
+        if (food.foodIntersetaHead(snake)) {
             snake.increaseSize();
             score.increaseScore();
             return true; 
@@ -75,12 +78,20 @@ public class GameBoard {
             if (board[row][column].getCellType() == CellType.EMPTY) {
                 Cell cellFood = new Cell(row, column);
                 cellFood.setCellType(CellType.FOOD);
-                List<Ponto> pontos = new ArrayList<>();
-                pontos.add(new Ponto(row,column));
-                pontos.add(new Ponto(row,column+1));
-                pontos.add(new Ponto(row+1,column+1));
-                pontos.add(new Ponto(row+1,column));
-                FoodSquare food = new FoodSquare(new Quadrado(pontos));
+                if(isFoodCircle) {
+                    Ponto raio = new Ponto((column+(column-1)) / 2, row);
+                    Ponto centro = new Ponto((column+(column-1)) / 2, (row+row-1) / 2);
+                    Circunferencia circunferencia = new Circunferencia(centro, centro.dist(raio));
+                    FoodCircle foodCircle = new FoodCircle(null);
+                }
+                else {
+                    List<Ponto> pontos = new ArrayList<>();
+                    pontos.add(new Ponto(row,column));
+                    pontos.add(new Ponto(row,column+1));
+                    pontos.add(new Ponto(row+1,column+1));
+                    pontos.add(new Ponto(row+1,column));
+                    FoodSquare foodSquare = new FoodSquare(new Quadrado(pontos));
+                }
                 isEmpty = false;
             }
         }

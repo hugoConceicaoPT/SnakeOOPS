@@ -13,7 +13,7 @@ public class FoodSquare extends Food {
     }
 
     @Override
-    public boolean FoodIntersetaHead(Snake snake){
+    public boolean foodIntersetaHead(Snake snake){
         if(quadrado.contida(snake.getHead())) {
            return true; 
         }

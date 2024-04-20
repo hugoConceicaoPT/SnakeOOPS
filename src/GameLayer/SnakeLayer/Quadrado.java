@@ -14,7 +14,7 @@ public class Quadrado extends Retangulo{
      */
     public Quadrado (List<Ponto> pontos) {
         super(pontos);
-        int lado = pontos.get(0).dist(pontos.get(1));
+        int lado = (int) pontos.get(0).dist(pontos.get(1));
         for(int i = 1; i < 4; i++)
         {
             double lengthAresta = pontos.get(i).dist(pontos.get((i+1) % 4));
@@ -30,7 +30,7 @@ public class Quadrado extends Retangulo{
      */
     public Quadrado (String input) {
         super(input);
-        int lado = pontos.get(0).dist(pontos.get(1));
+        int lado = (int) pontos.get(0).dist(pontos.get(1));
         for(int i = 1; i < 4; i++)
         {
             double lengthAresta = pontos.get(i).dist(pontos.get((i+1) % 4));
