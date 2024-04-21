@@ -27,7 +27,7 @@ public class GameBoardTest {
         snake.setDirection(Direction.RIGHT);
         snake.increaseSize();
         snake.increaseSize();
-        GameBoard gameBoard = new GameBoard(snake, 200, 100,true);
+        GameBoard gameBoard = new GameBoard(snake, 200, 100,true,1,1,false);
         FoodCircle foodCircle = new FoodCircle(new Circunferencia(new Ponto(9.5,4.5), 0.5));
         gameBoard.setFood(foodCircle);
         snake.move(Direction.RIGHT);
