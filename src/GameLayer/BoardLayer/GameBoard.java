@@ -40,7 +40,7 @@ public class GameBoard {
             }
         }
         generateObstacles();
-        generateFood();
+        generateFood(2);
     }
 
     /** Verifica se a cobra colida com as paredes da board ou com o obstáculo
@@ -73,28 +73,45 @@ public class GameBoard {
         return false; 
     }
 
-    /** Gera uma comida aleatória na board */
-    public void generateFood() {
+    /** Gera uma comida aleatória na board
+     * @param foodSize tamanho da comida a ser implementada
+     */
+    public void generateFood(int foodSize) {
         Random random = new Random();
         boolean isEmpty = true;
         while (isEmpty) {
-            int row = random.nextInt(rows);
-            int column = random.nextInt(columns);
-            if (board[row][column].getCellType() == CellType.EMPTY) {
-                Cell cellFood = new Cell(row, column);
-                cellFood.setCellType(CellType.FOOD);
+            int row = random.nextInt(rows - (foodSize - 1));
+            int column = random.nextInt(columns - (foodSize - 1));
+            boolean isAvailable = true;
+            for (int i = row; i < row + foodSize; i++ ) {
+                for(int j = column; j < row + foodSize; j++) {
+                    if(board[i][j].getCellType() != CellType.EMPTY) {
+                        isAvailable = false;
+                        break;
+                    }
+                }
+            }
+
+            if(isAvailable) {
+                for (int i = row; i < row + foodSize; i++) {
+                    for (int j = column; j < column + foodSize; j++) {
+                        board[i][j].setCellType(CellType.FOOD);
+                    }
+                }
+
                 if(isFoodCircle) {
-                    Ponto raio = new Ponto((column+(column-1)) / 2, row);
-                    Ponto centro = new Ponto((column+(column-1)) / 2, (row+row-1) / 2);
-                    Circunferencia circunferencia = new Circunferencia(centro, centro.dist(raio));
+                    double centroX = column + (foodSize - 1) / 2;
+                    double centroY = row + (foodSize - 1) / 2;
+                    Circunferencia circunferencia = new Circunferencia(new Ponto(centroX,centroY), foodSize/2);
                     this.food = new FoodCircle(circunferencia);
                 }
                 else {
                     List<Ponto> pontos = new ArrayList<>();
-                    pontos.add(new Ponto(row,column));
-                    pontos.add(new Ponto(row,column+1));
-                    pontos.add(new Ponto(row+1,column+1));
-                    pontos.add(new Ponto(row+1,column));
+                    for (int i = row; i <= row + foodSize; i++) {
+                        for (int j = column; j <= column + foodSize; j++) {
+                            pontos.add(new Ponto(i, j));
+                        }
+                    }
                     this.food = new FoodSquare(new Quadrado(pontos));
                 }
                 isEmpty = false;
