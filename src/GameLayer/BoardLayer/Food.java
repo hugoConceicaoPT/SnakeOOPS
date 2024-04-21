@@ -6,7 +6,6 @@ public abstract class Food {
     private Color color;
 
     /** Construtor para criar uma comida na board
-     * @param figuraGeometrica uma figura geométrica
      */
     public Food() {
         this.color = Color.YELLOW;
