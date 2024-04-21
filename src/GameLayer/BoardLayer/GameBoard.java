@@ -27,13 +27,13 @@ public class GameBoard {
      * @param rows linhas
      * @param columns colunas
      */
-    public GameBoard (Snake snake, int rows, int columns, boolean isFoodCircle) {
+    public GameBoard (Snake snake, int columns, int rows, boolean isFoodCircle) {
         this.rows = rows;
         this.score = new Score(0);
         this.snake = snake;
         this.columns = columns;
         this.isFoodCircle = isFoodCircle;
-        this.board = new Cell[rows][columns];
+        this.board = new Cell[columns][rows];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 board[i][j] = new Cell(i,j);
@@ -52,6 +52,11 @@ public class GameBoard {
                 return true;
             }
         }
+        if(snake.collidedWithHerself())
+            return true;
+        if(snake.getHead().getPontos().get(0).getX() < 0 || snake.getHead().getPontos().get(0).getX() > columns 
+            || snake.getHead().getPontos().get(0).getY() < 0 || snake.getHead().getPontos().get(0).getY() > rows)
+            return true;
         return false;
     }
 
@@ -82,7 +87,7 @@ public class GameBoard {
                     Ponto raio = new Ponto((column+(column-1)) / 2, row);
                     Ponto centro = new Ponto((column+(column-1)) / 2, (row+row-1) / 2);
                     Circunferencia circunferencia = new Circunferencia(centro, centro.dist(raio));
-                    FoodCircle foodCircle = new FoodCircle(null);
+                    this.food = new FoodCircle(circunferencia);
                 }
                 else {
                     List<Ponto> pontos = new ArrayList<>();
@@ -90,7 +95,7 @@ public class GameBoard {
                     pontos.add(new Ponto(row,column+1));
                     pontos.add(new Ponto(row+1,column+1));
                     pontos.add(new Ponto(row+1,column));
-                    FoodSquare foodSquare = new FoodSquare(new Quadrado(pontos));
+                    this.food = new FoodSquare(new Quadrado(pontos));
                 }
                 isEmpty = false;
             }
@@ -105,7 +110,7 @@ public class GameBoard {
             int row = random.nextInt(rows);
             int column = random.nextInt(columns);
             if (board[row][column].getCellType() == CellType.EMPTY) {
-                  Cell cellObstacle = new Cell(row, column);
+                Cell cellObstacle = new Cell(row, column);
                 cellObstacle.setCellType(CellType.OBSTACLE);
                 isEmpty = false;
             }

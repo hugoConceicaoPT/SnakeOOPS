@@ -1,7 +1,6 @@
 package Tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -14,26 +13,6 @@ import GameLayer.SnakeLayer.Ponto;
     @author Hugo Conceição
 */
 public class PontoTest {
-
-    @Test
-    public void testConstrutor0() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Ponto(-1,1);
-        });
-    }
-
-    @Test
-    public void testConstrutor1() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Ponto(1,-1);
-        });
-    }
-
-    @Test
-    public void testConstrutor2() {
-        new Ponto(1,1);
-    }
-
     @Test    
     public void testToString() {
         assertEquals("(2.0,2.0)", new Ponto(2,2).toString());

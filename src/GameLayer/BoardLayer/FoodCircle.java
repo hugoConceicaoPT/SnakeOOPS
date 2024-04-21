@@ -19,4 +19,12 @@ public class FoodCircle extends Food {
         return false;
     }
 
+    public Circunferencia getCircunferencia() {
+        return circunferencia;
+    }
+
+    public void setCircunferencia(Circunferencia circunferencia) {
+        this.circunferencia = circunferencia;
+    }
+
 }

@@ -19,4 +19,12 @@ public class FoodSquare extends Food {
         }
         return false;
     }
+
+    public Quadrado getQuadrado() {
+        return quadrado;
+    }
+
+    public void setQuadrado(Quadrado quadrado) {
+        this.quadrado = quadrado;
+    }
 }

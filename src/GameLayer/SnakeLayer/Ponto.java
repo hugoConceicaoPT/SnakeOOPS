@@ -52,10 +52,6 @@ public class Ponto implements Cloneable {
      * @param xDouble O novo valor para a coordenada x
      */
     public void setX(double x) {
-        if(x < 0.0)
-        {
-            throw new IllegalArgumentException("Ponto:vi");
-        }
         this.x = x;
     }
 
@@ -63,10 +59,6 @@ public class Ponto implements Cloneable {
      * @param yDouble O novo valor para a coordenada yDouble
      */
     public void setY(double y) {
-        if(y < 0.0)
-        {
-            throw new IllegalArgumentException("Ponto:vi");
-        }
         this.y = y;
     }
 
