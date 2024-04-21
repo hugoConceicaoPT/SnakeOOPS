@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import GameLayer.SnakeLayer.Circunferencia;
+import GameLayer.SnakeLayer.Poligono;
 import GameLayer.SnakeLayer.Ponto;
 import GameLayer.SnakeLayer.Quadrado;
 import GameLayer.SnakeLayer.Score;
@@ -19,6 +20,9 @@ public class GameBoard {
     private Snake snake;
     private Score score;
     private boolean isFoodCircle;
+    private int foodSize;
+    private int obstacleSize;
+    private boolean isObstacleDynamic;
 
     /** Construtor para criar uma board no jogo
      * @param listofObstacles lista de obstáculos
@@ -27,24 +31,27 @@ public class GameBoard {
      * @param rows linhas
      * @param columns colunas
      */
-    public GameBoard (Snake snake, int columns, int rows, boolean isFoodCircle) {
+    public GameBoard (Snake snake, int columns, int rows, boolean isFoodCircle, int foodSize, int obstacleSize, boolean isObstacleDynamic) {
         this.rows = rows;
         this.score = new Score(0);
         this.snake = snake;
         this.columns = columns;
-        this.isFoodCircle = isFoodCircle;
         this.board = new Cell[columns][rows];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 board[i][j] = new Cell(i,j);
             }
         }
+        this.isFoodCircle = isFoodCircle;
+        this.foodSize = foodSize;
+        this.obstacleSize = obstacleSize;
+        this.isObstacleDynamic = isObstacleDynamic;
         generateObstacles();
-        generateFood(2);
+        generateFood();
     }
 
-    /** Verifica se a cobra colida com as paredes da board ou com o obstáculo
-     * @return
+    /** Verifica se a cobra colida com as paredes da board, ou com o obstáculo, ou com ela própria
+     * @return verdadeiro se colidir, falso se não
      */
     public boolean snakeCollided() {
         for (int i = 0; i < listOfObstacles.size(); i++) {
@@ -68,15 +75,14 @@ public class GameBoard {
         if (food.foodIntersetaHead(snake)) {
             snake.increaseSize();
             score.increaseScore();
+            generateFood();
             return true; 
         }
         return false; 
     }
 
-    /** Gera uma comida aleatória na board
-     * @param foodSize tamanho da comida a ser implementada
-     */
-    public void generateFood(int foodSize) {
+    /** Gera uma comida aleatória na board */
+    public void generateFood() {
         Random random = new Random();
         boolean isEmpty = true;
         while (isEmpty) {
@@ -124,15 +130,36 @@ public class GameBoard {
         Random random = new Random();
         boolean isEmpty = true;
         while (isEmpty) {
-            int row = random.nextInt(rows);
-            int column = random.nextInt(columns);
-            if (board[row][column].getCellType() == CellType.EMPTY) {
-                Cell cellObstacle = new Cell(row, column);
-                cellObstacle.setCellType(CellType.OBSTACLE);
+            int row = random.nextInt(rows - (obstacleSize - 1)); 
+            int column = random.nextInt(columns - (obstacleSize - 1));
+            boolean isAvailable = true;
+            for (int i = row; i < row + obstacleSize; i++) {
+                for (int j = column; j < column + obstacleSize; j++) {
+                    if (board[i][j].getCellType() != CellType.EMPTY) {
+                        isAvailable = false;
+                        break;
+                    }
+                }
+            }
+            if (isAvailable) {
+                for (int i = row; i < row + obstacleSize; i++) {
+                    for (int j = column; j < column + obstacleSize; j++) {
+                        board[i][j].setCellType(CellType.OBSTACLE);
+                    }
+                }
+
+                List<Ponto> pontos = new ArrayList<>();
+                for (int i = row; i <= row + foodSize; i++) {
+                    for (int j = column; j <= column + foodSize; j++) {
+                        pontos.add(new Ponto(i, j));
+                    }
+                }
+                this.listOfObstacles.add(new Obstacle(new Poligono(pontos), this.isObstacleDynamic));
                 isEmpty = false;
             }
         }
     }
+    
 
     public List<Obstacle> getListOfObstacles() {
         return listOfObstacles;
