@@ -75,10 +75,22 @@ public class GameBoard {
         if (food.foodIntersetaHead(snake)) {
             snake.increaseSize();
             score.increaseScore();
+            removeFood();
             generateFood();
             return true; 
         }
         return false; 
+    }
+
+    public void removeFood(){
+        this.food = null;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if(board[i][j].getCellType() == CellType.FOOD) {
+                    board[i][j].setCellType(CellType.EMPTY);
+                }
+            }
+        }
     }
 
     /** Gera uma comida aleatória na board */

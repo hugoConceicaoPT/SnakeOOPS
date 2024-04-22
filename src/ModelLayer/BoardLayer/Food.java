@@ -16,6 +16,7 @@ public abstract class Food {
      * @return verdadeiro se estiver contido, falso se não
      */
     public abstract boolean foodIntersetaHead(Snake snake);
+    
 
     public Color getColor() {
         return color;
