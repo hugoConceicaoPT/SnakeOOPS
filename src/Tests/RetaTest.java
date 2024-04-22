@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import GameLayer.SnakeLayer.Ponto;
-import GameLayer.SnakeLayer.Reta;
+import ModelLayer.SnakeLayer.Ponto;
+import ModelLayer.SnakeLayer.Reta;
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe Reta
     Responsabilidade: Testar as funcionalidades da classe Reta

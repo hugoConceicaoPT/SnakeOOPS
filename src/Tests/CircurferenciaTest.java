@@ -8,9 +8,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import GameLayer.SnakeLayer.Circunferencia;
-import GameLayer.SnakeLayer.Poligono;
-import GameLayer.SnakeLayer.Ponto;
+import ModelLayer.SnakeLayer.Circunferencia;
+import ModelLayer.SnakeLayer.Poligono;
+import ModelLayer.SnakeLayer.Ponto;
 
 public class CircurferenciaTest {
     @Test

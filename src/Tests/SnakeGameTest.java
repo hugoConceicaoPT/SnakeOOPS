@@ -2,6 +2,8 @@ package Tests;
 
 import static org.junit.Assert.assertEquals;
 
+import java.awt.Component;
+import java.awt.event.KeyEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -11,12 +13,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import GameLayer.SnakeLayer.Quadrado;
-import GameLayer.SnakeLayer.Snake;
-import GameLayer.SnakeLayer.SnakeGame;
-
-import java.awt.Component;
-import java.awt.event.KeyEvent;
+import ControllerLayer.SnakeGame;
+import ModelLayer.SnakeLayer.Quadrado;
+import ModelLayer.SnakeLayer.Snake;
 
 public class SnakeGameTest{
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();

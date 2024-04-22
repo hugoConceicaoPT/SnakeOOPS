@@ -8,12 +8,12 @@ import java.util.List;
 
 import org.junit.Test;
 
-import GameLayer.BoardLayer.FoodCircle;
-import GameLayer.SnakeLayer.Circunferencia;
-import GameLayer.SnakeLayer.Direction;
-import GameLayer.SnakeLayer.Ponto;
-import GameLayer.SnakeLayer.Quadrado;
-import GameLayer.SnakeLayer.Snake;
+import ModelLayer.BoardLayer.FoodCircle;
+import ModelLayer.SnakeLayer.Circunferencia;
+import ModelLayer.SnakeLayer.Direction;
+import ModelLayer.SnakeLayer.Ponto;
+import ModelLayer.SnakeLayer.Quadrado;
+import ModelLayer.SnakeLayer.Snake;
 
 public class FoodCircleTest {
     @Test

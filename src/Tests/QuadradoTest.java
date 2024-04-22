@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import GameLayer.SnakeLayer.Quadrado;
+import ModelLayer.SnakeLayer.Quadrado;
 
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe Quadrado

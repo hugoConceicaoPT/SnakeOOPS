@@ -1,8 +1,9 @@
 package Tests;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
-import GameLayer.SnakeLayer.Score;
+import ModelLayer.SnakeLayer.Score;
 
 public class ScoreTest {
     @Test

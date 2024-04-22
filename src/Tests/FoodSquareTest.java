@@ -8,10 +8,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import GameLayer.BoardLayer.FoodSquare;
-import GameLayer.SnakeLayer.Direction;
-import GameLayer.SnakeLayer.Quadrado;
-import GameLayer.SnakeLayer.Snake;
+import ModelLayer.BoardLayer.FoodSquare;
+import ModelLayer.SnakeLayer.Direction;
+import ModelLayer.SnakeLayer.Quadrado;
+import ModelLayer.SnakeLayer.Snake;
 
 public class FoodSquareTest {
     @Test

@@ -3,7 +3,7 @@ import static org.junit.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import GameLayer.SnakeLayer.Retangulo;
+import ModelLayer.SnakeLayer.Retangulo;
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe Retângulo
     Responsabilidade: Testar as funcionalidades da classe Retângulo
