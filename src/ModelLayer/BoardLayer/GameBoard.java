@@ -108,8 +108,8 @@ public class GameBoard {
                 if(isFoodCircle) {
                     double centroX = column + (foodSize - 1) / 2;
                     double centroY = row + (foodSize - 1) / 2;
-                    Circunferencia circunferencia = new Circunferencia(new Ponto(centroX,centroY), foodSize/2);
-                    this.food = new FoodCircle(circunferencia);
+                    FactoryFood factory = new FactoryFood();
+                    this.food = factory.createFood(new Circunferencia(new Ponto(centroX,centroY), foodSize/2));
                 }
                 else {
                     List<Ponto> pontos = new ArrayList<>();
@@ -118,7 +118,8 @@ public class GameBoard {
                             pontos.add(new Ponto(i, j));
                         }
                     }
-                    this.food = new FoodSquare(new Quadrado(pontos));
+                    FactoryFood factory = new FactoryFood();
+                    this.food = factory.createFood(new Quadrado(pontos));
                 }
                 isEmpty = false;
             }
