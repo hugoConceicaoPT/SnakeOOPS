@@ -18,7 +18,7 @@ public class FoodSquareTest {
         String input = "8 5 8 3 6 3 6 5";
         LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
         listaQuadrados.add(new Quadrado(input));
-        Snake snake = new Snake(listaQuadrados);
+        Snake snake = new Snake(listaQuadrados, true);
         snake.setDirection(Direction.RIGHT);
         snake.increaseSize();
         snake.increaseSize();

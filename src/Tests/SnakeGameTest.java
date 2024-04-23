@@ -35,7 +35,7 @@ public class SnakeGameTest{
         String input1 = "1 1 1 3 3 3 3 1";
         LinkedList<Quadrado> quadrado = new LinkedList<>();
         quadrado.add(new Quadrado(input1));
-        Snake snake = new Snake(quadrado);
+        Snake snake = new Snake(quadrado, true);
         snake.increaseSize();
         snake.increaseSize();
         SnakeGame snakeGame = new SnakeGame(snake,null,3,4);

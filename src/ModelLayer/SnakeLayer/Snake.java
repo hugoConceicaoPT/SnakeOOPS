@@ -7,17 +7,22 @@ public class Snake {
     private LinkedList<Quadrado> body;
     private Quadrado head;
     private Direction direction;
+    private MovementStrategy movementStrategy;
     private int arestaHeadLength;
     
     /** Construtor para criar uma cobra 
      * @param listaQuadrados a lista de quadrados que contém os quadrados da cobra
      */
-    public Snake(LinkedList<Quadrado> listaQuadrados) {
+    public Snake(LinkedList<Quadrado> listaQuadrados, boolean isManualMovement) {
         this.body = listaQuadrados;
         this.head = this.body.getFirst();
         Random random = new Random();
         this.direction = Direction.values()[random.nextInt(Direction.values().length)];
         arestaHeadLength = (int) this.head.pontos.get(0).dist(this.head.pontos.get(1));
+        if(isManualMovement)
+            this.movementStrategy = new ManualMovementStrategy();
+        else
+            this.movementStrategy = new AutomatedMovementStrategy();
     }
 
     /** Aumenta o tamanho da cobra 
@@ -59,107 +64,14 @@ public class Snake {
         }
         return false;
     }
-    /** Move a cabeça da cobra
-     * @param nextDirection a próxima direção que a cobra vai tomar
-     */
-    private void moveSquare(Quadrado quadrado, Direction nextDirection) {
-        switch (this.direction) {
-            case UP:
-                switch (nextDirection) {
-                    case RIGHT:
-                        quadrado.rotateAngle(-90);
-                        break; 
-                    case LEFT:
-                        quadrado.rotateAngle(90);
-                        break;
-                    default:
-                        break;
-            }
-            break;
-            case DOWN:
-                switch (nextDirection) {
-                    case RIGHT:
-                        quadrado.rotateAngle(90);
-                        break;
-                    case LEFT:
-                        quadrado.rotateAngle(-90);
-                        break;
-                    default:
-                        break;
-            }
-            break;
-            case LEFT:
-                switch (nextDirection) {
-                    case UP:
-                        quadrado.rotateAngle(-90);
-                        break;
-                    case DOWN:
-                        quadrado.rotateAngle(90);
-                        default:
-                            break;
-                }
-            break;
-            case RIGHT:
-                switch (nextDirection) {
-                    case UP:
-                        quadrado.rotateAngle(90);
-                        break;
-                    case DOWN:
-                        quadrado.rotateAngle(-90);
-                        default:
-                            break;
-                }
-                break;
-            default:
-                break;
-            
-        }
-    }
 
     /** Move a cobra 
      * @param nextDirection a próxima direção que a cobra vai tomar 
      */
     public void move(Direction nextDirection) {
-
-        if(isOppositeDirection(nextDirection, this.direction))
-            return;
-
-        Ponto centroHeadSnake = this.head.getCentroide();
-
-        Quadrado ultimoQuadrado = this.body.getLast();
-        ultimoQuadrado.translateCentroide(((int) centroHeadSnake.getX()),(int) centroHeadSnake.getY());
-
-        if(this.direction != nextDirection) 
-            moveSquare(ultimoQuadrado, nextDirection);
-
-        switch (nextDirection) {
-            case UP:
-                ultimoQuadrado.translate(0, arestaHeadLength); 
-                break;
-            case DOWN:
-                ultimoQuadrado.translate(0, -arestaHeadLength);
-                break;
-            case LEFT:
-                ultimoQuadrado.translate(-arestaHeadLength, 0);
-                break;
-            case RIGHT:
-                ultimoQuadrado.translate(arestaHeadLength, 0);
-                break;
-            default:
-                break;
-        }
-
-        this.body.removeLast();
-        this.body.addFirst(ultimoQuadrado);
+        this.movementStrategy.move(nextDirection, this.body,this.direction,this.arestaHeadLength);
         this.head = this.body.getFirst();
         setDirection(nextDirection);
-    }
-
-    private boolean isOppositeDirection(Direction nextDirection, Direction currentDirection) {
-        return (nextDirection == Direction.UP && currentDirection == Direction.DOWN) ||
-               (nextDirection == Direction.DOWN && currentDirection == Direction.UP) ||
-               (nextDirection == Direction.LEFT && currentDirection == Direction.RIGHT) ||
-               (nextDirection == Direction.RIGHT && currentDirection == Direction.LEFT);
     }
 
     @Override

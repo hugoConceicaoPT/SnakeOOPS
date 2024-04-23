@@ -17,7 +17,7 @@ public class SnakeTest {
         String input1 = "14 6 14 4 12 4 12 6";
         LinkedList<Quadrado> quadrado = new LinkedList<>();
         quadrado.add(new Quadrado(input1));
-        Snake snake = new Snake(quadrado);
+        Snake snake = new Snake(quadrado,true);
         snake.increaseSize();
         assertEquals(2,snake.getBody().size());
         snake.increaseSize();
@@ -33,7 +33,7 @@ public class SnakeTest {
         String input1 = "10 4 10 2 8 2 8 4";
         LinkedList<Quadrado> quadrado = new LinkedList<>();
         quadrado.add(new Quadrado(input1));
-        Snake snake = new Snake(quadrado);
+        Snake snake = new Snake(quadrado,true);
         snake.setDirection(Direction.RIGHT);
         snake.increaseSize();
         snake.increaseSize();
@@ -51,7 +51,7 @@ public class SnakeTest {
         String input1 = "8 4 8 2 6 2 6 4";
         LinkedList<Quadrado> quadrado = new LinkedList<>();
         quadrado.add(new Quadrado(input1));
-        Snake snake = new Snake(quadrado);
+        Snake snake = new Snake(quadrado, true);
         snake.setDirection(Direction.RIGHT);
         snake.increaseSize();
         Direction direction = Direction.UP;
@@ -62,16 +62,16 @@ public class SnakeTest {
         snake.move(Direction.LEFT);
         assertEquals("Cabeça: [(10.0,4.0), (8.0,4.0), (8.0,6.0), (10.0,6.0)] Tail: [[(6.0,6.0), (8.0,6.0), (8.0,4.0), (6.0,4.0)], [(8.0,4.0), (8.0,2.0), (6.0,2.0), (6.0,4.0)]]", snake.toString());
         snake.move(Direction.DOWN);
-        assertEquals("Cabeça: [(10.0,2.0), (8.0,2.0), (8.0,4.0), (10.0,4.0)] Tail: [[(10.0,4.0), (8.0,4.0), (8.0,6.0), (10.0,6.0)], [(6.0,6.0), (8.0,6.0), (8.0,4.0), (6.0,4.0)]]", snake.toString());
+        assertEquals("Cabeça: [(8.0,4.0), (10.0,4.0), (10.0,2.0), (8.0,2.0)] Tail: [[(10.0,4.0), (8.0,4.0), (8.0,6.0), (10.0,6.0)], [(6.0,6.0), (8.0,6.0), (8.0,4.0), (6.0,4.0)]]", snake.toString());
         snake.move(Direction.LEFT);
-        assertEquals("Cabeça: [(8.0,4.0), (8.0,2.0), (6.0,2.0), (6.0,4.0)] Tail: [[(10.0,2.0), (8.0,2.0), (8.0,4.0), (10.0,4.0)], [(10.0,4.0), (8.0,4.0), (8.0,6.0), (10.0,6.0)]]", snake.toString());
+        assertEquals("Cabeça: [(8.0,4.0), (8.0,2.0), (6.0,2.0), (6.0,4.0)] Tail: [[(8.0,4.0), (10.0,4.0), (10.0,2.0), (8.0,2.0)], [(10.0,4.0), (8.0,4.0), (8.0,6.0), (10.0,6.0)]]", snake.toString());
     }
     @Test
     public void toStringTest() throws CloneNotSupportedException{
         String input1 = "8 4 8 2 6 2 6 4";
         LinkedList<Quadrado> quadrado = new LinkedList<>();
         quadrado.add(new Quadrado(input1));
-        Snake snake = new Snake(quadrado);
+        Snake snake = new Snake(quadrado, true);
         snake.setDirection(Direction.RIGHT);
         snake.increaseSize();
         assertEquals("Cabeça: [(8.0,4.0), (8.0,2.0), (6.0,2.0), (6.0,4.0)] Tail: [[(6.0,4.0), (6.0,2.0), (4.0,2.0), (4.0,4.0)]]", snake.toString());
