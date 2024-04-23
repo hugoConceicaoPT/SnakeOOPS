@@ -14,6 +14,7 @@ public class SnakeGame implements KeyListener {
     private Score score;
     private Snake snake;
     private GameBoard gameBoard;
+    private RasterizionStragety rasterizionStragety;
 
     /** Construtor para criar um jogo da cobra        
      * @param snake a cobra do jogo 
