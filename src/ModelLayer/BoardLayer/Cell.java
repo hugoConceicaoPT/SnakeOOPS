@@ -4,15 +4,11 @@ package ModelLayer.BoardLayer;
 public class Cell {
 
     private CellType cellType;
-    private final int row;
-    private final int column;
     /** Construtor para criar uma célula para ser colocada na board 
      * @param row a linha da célula
      * @param column a coluna da célula
      */
-    public Cell(int row, int column){
-        this.row = row;
-        this.column = column;
+    public Cell(){
         this.cellType = CellType.EMPTY;
     }
     
@@ -38,13 +34,5 @@ public class Cell {
             default:
                 return ".";
         }
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getColumn() {
-        return column;
     }
 }

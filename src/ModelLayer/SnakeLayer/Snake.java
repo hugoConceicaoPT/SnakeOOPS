@@ -1,20 +1,20 @@
 package ModelLayer.SnakeLayer;
 
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class Snake {
+    private LinkedList<Quadrado> body;
     private Quadrado head;
-    private List<Quadrado> tail;
     private Direction direction;
     private int arestaHeadLength;
     
     /** Construtor para criar uma cobra 
      * @param listaQuadrados a lista de quadrados que contém os quadrados da cobra
      */
-    public Snake(List<Quadrado> listaQuadrados) {
-        this.tail = listaQuadrados.subList(1, listaQuadrados.size());
-        this.head = listaQuadrados.get(0);
+    public Snake(LinkedList<Quadrado> listaQuadrados) {
+        this.body = listaQuadrados;
+        this.head = this.body.getFirst();
         Random random = new Random();
         this.direction = Direction.values()[random.nextInt(Direction.values().length)];
         arestaHeadLength = (int) this.head.pontos.get(0).dist(this.head.pontos.get(1));
@@ -25,11 +25,11 @@ public class Snake {
      */
     public void increaseSize() throws CloneNotSupportedException {
         Quadrado novoQuadrado;
-        if(this.tail.isEmpty()) {
-            novoQuadrado = (Quadrado) head.clone();
+        if(this.body.size() == 1) {
+            novoQuadrado = (Quadrado) this.head.clone();
         }
         else {
-            novoQuadrado = (Quadrado) this.tail.get(this.tail.size()-1).clone();
+            novoQuadrado = (Quadrado) this.body.getLast().clone();
         }
         switch (direction) {
             case UP:
@@ -46,15 +46,15 @@ public class Snake {
             default:
                 break;
         }
-        this.tail.add(novoQuadrado);
+        this.body.addLast(novoQuadrado);
     }
 
     /** Verifica se a cobra colida consigo própria 
      * @return verdadeiro se acontecer, falso se não
      */
     public boolean collidedWithHerself() {
-        for (int i = 0; i < tail.size(); i++) {
-            if(head.contida(tail.get(i)))
+        for (int i = 1; i < this.body.size(); i++) {
+            if(this.head.contida(this.body.get(i)))
                 return true;
         }
         return false;
@@ -62,15 +62,15 @@ public class Snake {
     /** Move a cabeça da cobra
      * @param nextDirection a próxima direção que a cobra vai tomar
      */
-    private void moveHead(Direction nextDirection) {
+    private void moveSquare(Quadrado quadrado, Direction nextDirection) {
         switch (this.direction) {
             case UP:
                 switch (nextDirection) {
                     case RIGHT:
-                        head.rotateAngle(-90);
+                        quadrado.rotateAngle(-90);
                         break; 
                     case LEFT:
-                        head.rotateAngle(90);
+                        quadrado.rotateAngle(90);
                         break;
                     default:
                         break;
@@ -79,10 +79,10 @@ public class Snake {
             case DOWN:
                 switch (nextDirection) {
                     case RIGHT:
-                        head.rotateAngle(90);
+                        quadrado.rotateAngle(90);
                         break;
                     case LEFT:
-                        head.rotateAngle(-90);
+                        quadrado.rotateAngle(-90);
                         break;
                     default:
                         break;
@@ -91,10 +91,10 @@ public class Snake {
             case LEFT:
                 switch (nextDirection) {
                     case UP:
-                        head.rotateAngle(-90);
+                        quadrado.rotateAngle(-90);
                         break;
                     case DOWN:
-                        head.rotateAngle(90);
+                        quadrado.rotateAngle(90);
                         default:
                             break;
                 }
@@ -102,10 +102,10 @@ public class Snake {
             case RIGHT:
                 switch (nextDirection) {
                     case UP:
-                        head.rotateAngle(90);
+                        quadrado.rotateAngle(90);
                         break;
                     case DOWN:
-                        head.rotateAngle(-90);
+                        quadrado.rotateAngle(-90);
                         default:
                             break;
                 }
@@ -120,39 +120,53 @@ public class Snake {
      * @param nextDirection a próxima direção que a cobra vai tomar 
      */
     public void move(Direction nextDirection) {
-        Ponto centroHeadSnake = head.getCentroide();
+
+        if(isOppositeDirection(nextDirection, this.direction))
+            return;
+
+        Ponto centroHeadSnake = this.head.getCentroide();
+
+        Quadrado ultimoQuadrado = this.body.getLast();
+        ultimoQuadrado.translateCentroide(((int) centroHeadSnake.getX()),(int) centroHeadSnake.getY());
+
         if(this.direction != nextDirection) 
-            moveHead(nextDirection);
+            moveSquare(ultimoQuadrado, nextDirection);
 
         switch (nextDirection) {
             case UP:
-                head.translate(0, arestaHeadLength); 
+                ultimoQuadrado.translate(0, arestaHeadLength); 
                 break;
             case DOWN:
-                head.translate(0, -arestaHeadLength);
+                ultimoQuadrado.translate(0, -arestaHeadLength);
                 break;
             case LEFT:
-                head.translate(-arestaHeadLength, 0);
+                ultimoQuadrado.translate(-arestaHeadLength, 0);
                 break;
             case RIGHT:
-                head.translate(arestaHeadLength, 0);
+                ultimoQuadrado.translate(arestaHeadLength, 0);
                 break;
             default:
                 break;
         }
-        setDirection(nextDirection);
 
-        for (int i = tail.size() - 1; i > 0; i--) {
-            Quadrado previousSquare = tail.get(i - 1);
-            Quadrado currentSquare = tail.get(i);
-            currentSquare.translateCentroide((int) previousSquare.getCentroide().getX(), (int) previousSquare.getCentroide().getY());
-        }
-        tail.get(0).translateCentroide((int) centroHeadSnake.getX(), (int) centroHeadSnake.getY());
+        this.body.removeLast();
+        this.body.addFirst(ultimoQuadrado);
+        this.head = this.body.getFirst();
+        setDirection(nextDirection);
+    }
+
+    private boolean isOppositeDirection(Direction nextDirection, Direction currentDirection) {
+        return (nextDirection == Direction.UP && currentDirection == Direction.DOWN) ||
+               (nextDirection == Direction.DOWN && currentDirection == Direction.UP) ||
+               (nextDirection == Direction.LEFT && currentDirection == Direction.RIGHT) ||
+               (nextDirection == Direction.RIGHT && currentDirection == Direction.LEFT);
     }
 
     @Override
     public String toString() {
-        return "Cabeça: " + head.toString() + " Tail: " + tail.toString();
+        StringBuilder sb = new StringBuilder();
+        sb.append("Cabeça: ").append(this.head).append(" Tail: ").append(this.body.subList(1, this.body.size()));
+        return sb.toString();
     }
 
     /** Obtém a cabeça da cobra
@@ -172,15 +186,15 @@ public class Snake {
     /** Obtém a tail da cobra
      * @return a tail da cobra
      */
-    public List<Quadrado> getTail() {
-        return tail;
+    public LinkedList<Quadrado> getBody() {
+        return body;
     }
 
     /** Atualiza a tail da cobra
      * @param tail a nova tail da cobra
      */
-    public void setTail(List<Quadrado> tail) {
-        this.tail = tail;
+    public void setBody(LinkedList<Quadrado> body) {
+        this.body = body;
     }
 
     /** Obtém a direção da cobra

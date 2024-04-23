@@ -6,8 +6,7 @@ import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 import org.junit.After;
 import org.junit.Before;
@@ -34,7 +33,7 @@ public class SnakeGameTest{
     @Test
     public void keyReleasedTest() throws CloneNotSupportedException {
         String input1 = "1 1 1 3 3 3 3 1";
-        List<Quadrado> quadrado = new ArrayList<>();
+        LinkedList<Quadrado> quadrado = new LinkedList<>();
         quadrado.add(new Quadrado(input1));
         Snake snake = new Snake(quadrado);
         snake.increaseSize();

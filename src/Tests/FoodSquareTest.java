@@ -3,8 +3,7 @@ package Tests;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 import org.junit.Test;
 
@@ -17,7 +16,7 @@ public class FoodSquareTest {
     @Test
     public void foodContainedInSnakeTest() throws CloneNotSupportedException {
         String input = "8 5 8 3 6 3 6 5";
-        List<Quadrado> listaQuadrados = new ArrayList<>();
+        LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
         listaQuadrados.add(new Quadrado(input));
         Snake snake = new Snake(listaQuadrados);
         snake.setDirection(Direction.RIGHT);

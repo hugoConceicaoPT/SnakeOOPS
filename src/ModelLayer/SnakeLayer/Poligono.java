@@ -113,7 +113,7 @@ public class Poligono implements Cloneable {
             thatMaxX = Math.max(thatMaxX, ponto.getX());
             thatMinY = Math.min(thatMinY, ponto.getY());
             thatMaxY = Math.max(thatMaxY, ponto.getY());
-    }
+        }
 
         boolean overlapX = thisMaxX > thatMinX && thisMinX < thatMaxX;
         boolean overlapY = thisMaxY > thatMinY && thisMinY < thatMaxY;

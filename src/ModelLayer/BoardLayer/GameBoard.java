@@ -37,9 +37,9 @@ public class GameBoard {
         this.snake = snake;
         this.columns = columns;
         this.board = new Cell[columns][rows];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                board[i][j] = new Cell(i,j);
+        for (int i = 0; i < columns; i++) {
+            for (int j = 0; j < rows; j++) {
+                board[i][j] = new Cell();
             }
         }
         this.isFoodCircle = isFoodCircle;
