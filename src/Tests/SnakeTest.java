@@ -69,7 +69,7 @@ public class SnakeTest {
     @Test
     public void toStringTest() throws CloneNotSupportedException{
         String input1 = "8 4 8 2 6 2 6 4";
-        List<Quadrado> quadrado = new ArrayList<>();
+        LinkedList<Quadrado> quadrado = new LinkedList<>();
         quadrado.add(new Quadrado(input1));
         Snake snake = new Snake(quadrado);
         snake.setDirection(Direction.RIGHT);
