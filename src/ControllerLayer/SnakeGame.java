@@ -14,7 +14,7 @@ public class SnakeGame implements KeyListener {
     private Score score;
     private Snake snake;
     private GameBoard gameBoard;
-    private RasterizionStragety rasterizionStragety;
+    private RasterizationStrategy rasterizionStragety;
 
     /** Construtor para criar um jogo da cobra        
      * @param snake a cobra do jogo 
@@ -139,6 +139,14 @@ public class SnakeGame implements KeyListener {
 
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
+    }
+
+    public RasterizationStrategy getRasterizionStragety() {
+        return rasterizionStragety;
+    }
+
+    public void setRasterizionStragety(RasterizationStrategy rasterizionStragety) {
+        this.rasterizionStragety = rasterizionStragety;
     }
 
 }

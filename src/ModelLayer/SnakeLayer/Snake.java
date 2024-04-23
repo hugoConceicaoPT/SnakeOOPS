@@ -136,4 +136,12 @@ public class Snake {
     public void setArestaHeadLength(int arestaHeadLength) {
         this.arestaHeadLength = arestaHeadLength;
     }
+
+    public MovementStrategy getMovementStrategy() {
+        return movementStrategy;
+    }
+
+    public void setMovementStrategy(MovementStrategy movementStrategy) {
+        this.movementStrategy = movementStrategy;
+    }
 }
