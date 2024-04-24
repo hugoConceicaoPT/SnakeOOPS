@@ -102,7 +102,7 @@ public class SnakeGame implements KeyListener {
 
     @Override
     public String toString() {
-        return "a";
+        return null;
     }
 
     /** Obtém a width da board
