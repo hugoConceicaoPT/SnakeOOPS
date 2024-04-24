@@ -24,6 +24,9 @@ public class Obstacle {
         return false;
     }
 
+    public void rotateObstacle(boolean isDynamic){
+    }
+
     public boolean isDynamic() {
         return isDynamic;
     }
