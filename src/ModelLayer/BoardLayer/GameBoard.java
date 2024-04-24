@@ -72,7 +72,7 @@ public class GameBoard {
      * @throws CloneNotSupportedException
      */
     public boolean foodContainedInSnake() throws CloneNotSupportedException {
-        if (food.foodIntersetaHead(snake)) {
+        if (food.foodContainedInHead(snake)) {
             snake.increaseSize();
             score.increaseScore();
             removeFood();

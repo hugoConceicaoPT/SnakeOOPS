@@ -4,7 +4,7 @@ import java.io.File;
 
 public class Score {
     private int score;
-    
+    private File fileRank;
     /** Construtor para criar um score
      * @param score o score
      */
@@ -21,7 +21,7 @@ public class Score {
      * @param file ficheiro com o top n
      * @return o rank com top
      */
-    public String getRank(File file) {return "a";}
+    public String getRank(File file) {return null;}
     /** Atualiza o rank para um ficheiro
      * @return o ficheiro atualiza com o ranking
      */
@@ -39,5 +39,15 @@ public class Score {
      */
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public File getFileRank() {
+        return fileRank;
+    }
+
+    public void setFileRank(File fileRank) {
+        this.fileRank = fileRank;
     };
+
+    
 }

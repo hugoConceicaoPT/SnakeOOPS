@@ -13,10 +13,17 @@ public class FoodSquare extends Food {
     }
 
     @Override
-    public boolean foodIntersetaHead(Snake snake){
+    public boolean foodContainedInHead(Snake snake){
         if(quadrado.contida(snake.getHead())) {
            return true; 
         }
+        return false;
+    }
+    @Override
+    public boolean foodIntersectObstacle(Obstacle obstacle){
+        if (quadrado.interseta(obstacle.getPoligono())) {
+            return true;
+        }     
         return false;
     }
 

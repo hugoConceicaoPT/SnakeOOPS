@@ -50,6 +50,7 @@ public class GameBoardTest {
         assertNotNull(gameBoard.getListOfObstacles());
         assertTrue(gameBoard.getListOfObstacles().size() > 0);
         assertFalse(snake.getHead().contida(gameBoard.getListOfObstacles().get(0).getPoligono()));
+        assertFalse(gameBoard.getFood().foodIntersectObstacle(gameBoard.getListOfObstacles().get(0)));
     }
     @Test
     public void generateFoodTest() throws CloneNotSupportedException{
@@ -62,5 +63,7 @@ public class GameBoardTest {
         GameBoard gameBoard = new GameBoard(snake, 200, 100,true,1,1,false);  
         gameBoard.generateFood();
         assertNotNull(gameBoard.getFood());
+        assertFalse(gameBoard.getFood().foodContainedInHead(snake));
+        assertFalse(gameBoard.getFood().foodIntersectObstacle(gameBoard.getListOfObstacles().get(0)));
     }
 }
