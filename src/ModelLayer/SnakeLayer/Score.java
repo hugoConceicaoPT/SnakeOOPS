@@ -22,6 +22,7 @@ public class Score {
      * @return o rank com top
      */
     public String getRank(File file) {return null;}
+    
     /** Atualiza o rank para um ficheiro
      * @return o ficheiro atualiza com o ranking
      */

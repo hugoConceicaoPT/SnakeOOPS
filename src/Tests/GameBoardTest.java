@@ -49,9 +49,9 @@ public class GameBoardTest {
         gameBoard.generateObstacles();
         assertNotNull(gameBoard.getListOfObstacles());
         assertTrue(gameBoard.getListOfObstacles().size() > 0);
-        assertFalse(snake.getHead().contida(gameBoard.getListOfObstacles().get(0).getPoligono()));
-        assertFalse(gameBoard.getFood().foodIntersectObstacle(gameBoard.getListOfObstacles().get(0)));
+        assertFalse(snake.getHead().interseta(gameBoard.getListOfObstacles().get(0).getPoligono()));
     }
+
     @Test
     public void generateFoodTest() throws CloneNotSupportedException{
         String input = "8 5 8 3 6 3 6 5";
