@@ -50,6 +50,5 @@ public class GameBoardTest {
         assertNotNull(gameBoard.getListOfObstacles());
         assertTrue(gameBoard.getListOfObstacles().size() > 0);
         assertFalse(snake.getHead().contida(gameBoard.getListOfObstacles().get(0).getPoligono()));
-
     }
 }
