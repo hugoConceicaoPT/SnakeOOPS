@@ -84,8 +84,8 @@ public class GameBoard {
 
     public void removeFood(){
         this.food = null;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
+        for (int i = 0; i < columns; i++) {
+            for (int j = 0; j < rows; j++) {
                 if(board[i][j].getCellType() == CellType.FOOD) {
                     board[i][j].setCellType(CellType.EMPTY);
                 }
@@ -101,8 +101,8 @@ public class GameBoard {
             int row = random.nextInt(rows - (foodSize - 1));
             int column = random.nextInt(columns - (foodSize - 1));
             boolean isAvailable = true;
-            for (int i = row; i < row + foodSize; i++ ) {
-                for(int j = column; j < row + foodSize; j++) {
+            for (int i = column; i < column + foodSize; i++ ) {
+                for(int j = row; j < row + foodSize; j++) {
                     if(board[i][j].getCellType() != CellType.EMPTY) {
                         isAvailable = false;
                         break;
@@ -111,8 +111,8 @@ public class GameBoard {
             }
 
             if(isAvailable) {
-                for (int i = row; i < row + foodSize; i++) {
-                    for (int j = column; j < column + foodSize; j++) {
+                for (int i = column; i < column + foodSize; i++) {
+                    for (int j = row; j < row + foodSize; j++) {
                         board[i][j].setCellType(CellType.FOOD);
                     }
                 }
@@ -125,8 +125,8 @@ public class GameBoard {
                 }
                 else {
                     List<Ponto> pontos = new ArrayList<>();
-                    for (int i = row; i <= row + foodSize; i++) {
-                        for (int j = column; j <= column + foodSize; j++) {
+                    for (int i = column; i <= column + foodSize; i++) {
+                        for (int j = row; j <= row + foodSize; j++) {
                             pontos.add(new Ponto(i, j));
                         }
                     }
@@ -146,8 +146,8 @@ public class GameBoard {
             int row = random.nextInt(rows - (obstacleSize - 1)); 
             int column = random.nextInt(columns - (obstacleSize - 1));
             boolean isAvailable = true;
-            for (int i = row; i < row + obstacleSize; i++) {
-                for (int j = column; j < column + obstacleSize; j++) {
+            for (int i = column; i < column + obstacleSize; i++) {
+                for (int j = row; j < row + obstacleSize; j++) {
                     if (board[i][j].getCellType() != CellType.EMPTY) {
                         isAvailable = false;
                         break;
@@ -155,15 +155,15 @@ public class GameBoard {
                 }
             }
             if (isAvailable) {
-                for (int i = row; i < row + obstacleSize; i++) {
-                    for (int j = column; j < column + obstacleSize; j++) {
+                for (int i = column; i < column + obstacleSize; i++) {
+                    for (int j = row; j < row + obstacleSize; j++) {
                         board[i][j].setCellType(CellType.OBSTACLE);
                     }
                 }
 
                 List<Ponto> pontos = new ArrayList<>();
-                for (int i = row; i <= row + foodSize; i++) {
-                    for (int j = column; j <= column + foodSize; j++) {
+                for (int i = column; i <= column + obstacleSize; i++) {
+                    for (int j = row; j <= row + obstacleSize; j++) {
                         pontos.add(new Ponto(i, j));
                     }
                 }

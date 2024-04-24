@@ -39,4 +39,9 @@ public class Obstacle {
     public void setPoligono(Poligono poligono) {
         this.poligono = poligono;
     }
+
+    @Override
+    public String toString() {
+        return "Obstáculo: " + poligono.toString();
+    }
 }
