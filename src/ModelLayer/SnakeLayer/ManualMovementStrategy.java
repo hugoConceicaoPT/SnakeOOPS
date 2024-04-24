@@ -2,7 +2,7 @@ package ModelLayer.SnakeLayer;
 
 import java.util.LinkedList;
 
-public class ManualMovementStrategy implements MovementStrategy{
+public class ManualMovementStrategy implements MovementStrategy {
     
     /** Move a cabeça da cobra
      * @param nextDirection a próxima direção que a cobra vai tomar

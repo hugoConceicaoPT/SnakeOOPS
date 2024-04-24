@@ -49,21 +49,21 @@ public class GameBoard {
         generateObstacles();
         generateFood();
     }
-    public boolean snakeObstacle(){
+    public boolean snakeIntersectsObstacle(){
         for (int i = 0; i < listOfObstacles.size(); i++) {
             if (listOfObstacles.get(i).obstacleIntersect(snake)) {
                 return true;
             }
-            return false;  
-    }
-    return false;  
-}
+        }
+        return false;  
+    }   
 
     /** Verifica se a cobra colida com as paredes da board, ou com o obstáculo, ou com ela própria
      * @return verdadeiro se colidir, falso se não
      */
     public boolean snakeCollided() {
-        snakeObstacle();
+        if(snakeIntersectsObstacle())
+            return true;
         if(snake.collidedWithHerself())
             return true;
         if(snake.getHead().getPontos().get(0).getX() < 0 || snake.getHead().getPontos().get(0).getX() > columns 

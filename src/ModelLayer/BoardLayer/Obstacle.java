@@ -6,7 +6,7 @@ import ModelLayer.SnakeLayer.Snake;
 public class Obstacle {
 
     private Poligono poligono;
-    private boolean isDynamic;
+    private ObstacleMovement obstacleMovement;
 
     /** Construtor para criar um obstáculo
      * @param figuraGeometrica figura geométrica
@@ -14,7 +14,10 @@ public class Obstacle {
      */
     public Obstacle(Poligono poligono, boolean isDynamic) {
         this.poligono = poligono;
-        this.isDynamic = isDynamic;
+        if(isDynamic)
+            this.obstacleMovement = new DynamicMovement();
+        else
+            this.obstacleMovement = new StaticMovement();
     }
     
     public boolean obstacleIntersect(Snake snake){
@@ -25,14 +28,6 @@ public class Obstacle {
     }
 
     public void rotateObstacle(boolean isDynamic){
-    }
-
-    public boolean isDynamic() {
-        return isDynamic;
-    }
-
-    public void setDynamic(boolean isDynamic) {
-        this.isDynamic = isDynamic;
     }
 
     public Poligono getPoligono() {
@@ -46,5 +41,13 @@ public class Obstacle {
     @Override
     public String toString() {
         return "Obstáculo: " + poligono.toString();
+    }
+
+    public ObstacleMovement getObstacleMovement() {
+        return obstacleMovement;
+    }
+
+    public void setObstacleMovement(ObstacleMovement obstacleMovement) {
+        this.obstacleMovement = obstacleMovement;
     }
 }
