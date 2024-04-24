@@ -66,6 +66,7 @@ public class SnakeTest {
         snake.move(Direction.LEFT);
         assertEquals("Cabeça: [(8.0,4.0), (8.0,2.0), (6.0,2.0), (6.0,4.0)] Tail: [[(8.0,4.0), (10.0,4.0), (10.0,2.0), (8.0,2.0)], [(10.0,4.0), (8.0,4.0), (8.0,6.0), (10.0,6.0)]]", snake.toString());
     }
+    
     @Test
     public void toStringTest() throws CloneNotSupportedException{
         String input1 = "8 4 8 2 6 2 6 4";
@@ -75,8 +76,5 @@ public class SnakeTest {
         snake.setDirection(Direction.RIGHT);
         snake.increaseSize();
         assertEquals("Cabeça: [(8.0,4.0), (8.0,2.0), (6.0,2.0), (6.0,4.0)] Tail: [[(6.0,4.0), (6.0,2.0), (4.0,2.0), (4.0,4.0)]]", snake.toString());
-
-
-
     }
 }

@@ -8,7 +8,7 @@ public class Cell {
      * @param row a linha da célula
      * @param column a coluna da célula
      */
-    public Cell(){
+    public Cell() {
         this.cellType = CellType.EMPTY;
     }
     

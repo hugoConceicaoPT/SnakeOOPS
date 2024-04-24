@@ -21,9 +21,15 @@ public class Obstacle {
     }
     
     public boolean obstacleIntersect(Snake snake){
-
-        if (poligono.interseta(snake.getHead())) 
+        if (this.poligono.interseta(snake.getHead())) 
             return true;
+        return false;
+    }
+
+    public boolean obstacleContained(Snake snake) {
+        if (this.poligono.contida(snake.getHead())) {
+            return true;
+        }
         return false;
     }
 

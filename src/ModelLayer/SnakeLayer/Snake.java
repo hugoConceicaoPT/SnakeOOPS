@@ -87,7 +87,6 @@ public class Snake {
     public Quadrado getHead() {
         return head;
     }
-
     /** Atualiza a cabeça da cobra
      * @param head a nova cabeça da cobra
      */
