@@ -32,7 +32,7 @@ public class Retangulo extends Poligono {
      * @param input String com os pontos do retângulo
      */
     public Retangulo(String input) {
-        super(toInt(input));
+        this(toInt(input));
     }
 
     /** Converte a string recebida em uma lista de pontos 

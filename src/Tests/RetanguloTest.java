@@ -14,7 +14,7 @@ public class RetanguloTest {
     
     @Test
     public void testConstrutor0() {
-        String input = "4 0 4 2 0 2 2 0";
+        String input = "4 0 4 2 0 2 2 1";
         assertThrows(IllegalArgumentException.class, () -> {
             new Retangulo(input);
         });

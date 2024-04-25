@@ -36,6 +36,9 @@ public class GameBoard {
      * @param columns colunas
      */
     public GameBoard (Snake snake, int columns, int rows, FoodType foodType, ObstacleType obstacleType ,boolean isObstacleDynamic, long seed) {
+        if(columns <= 0 || rows <= 0) {
+            throw new IllegalArgumentException("O número de linhas e colunas deve ser maior que zero.");
+        }
         this.rows = rows;
         this.score = new Score(0);
         this.snake = snake;
@@ -183,6 +186,12 @@ public class GameBoard {
                 }
             }
             if (isAvailable) {
+                for (int i = column; i <= column + obstacleSize; i++) {
+                    for (int j = row; j <= row + obstacleSize; j++) {
+                        board[i][j].setCellType(CellType.FOOD);
+                    }
+                }
+
                 List<Ponto> pontos = new ArrayList<>();
                 switch (obstacleType) {
                     case POLYGON:
@@ -207,10 +216,6 @@ public class GameBoard {
                         break;
                     default:
                         break;
-                }
-
-                for (Ponto ponto : pontos) {
-                    board[(int) ponto.getX()][(int) ponto.getY()].setCellType(CellType.OBSTACLE);
                 }
             }
         }

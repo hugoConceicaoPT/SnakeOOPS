@@ -20,15 +20,19 @@ public class Obstacle {
             this.obstacleMovement = new StaticMovement();
     }
     
-    public boolean obstacleIntersect(Snake snake){
-        if (this.poligono.interseta(snake.getHead())) 
-            return true;
+    public boolean obstacleIntersect(Snake snake) {
+        for(int i = 0; i < snake.getBody().size(); i++) {
+            if (this.poligono.interseta(snake.getBody().get(i))) 
+                return true;
+        }
         return false;
     }
 
     public boolean obstacleContained(Snake snake) {
-        if (this.poligono.contida(snake.getHead())) {
-            return true;
+        for(int i = 0; i < snake.getBody().size(); i++) {
+            if (this.poligono.contida(snake.getBody().get(i))) {
+                return true;
+            }
         }
         return false;
     }

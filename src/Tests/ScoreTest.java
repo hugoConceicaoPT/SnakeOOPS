@@ -10,11 +10,11 @@ public class ScoreTest {
     public void increaseScoreTest(){
         Score score = new Score(0);
         score.increaseScore();
-        assertEquals(1, score);
+        assertEquals(1, score.getScore());
         score.increaseScore();
         score.increaseScore();
         score.increaseScore();
-        assertEquals(4, score);
+        assertEquals(4, score.getScore());
     }
 }
 
