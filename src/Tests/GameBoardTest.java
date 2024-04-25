@@ -31,8 +31,8 @@ public class GameBoardTest {
         snake.setDirection(Direction.RIGHT);
         snake.increaseSize();
         snake.increaseSize();
-        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.CIRCULO,1,1,ObstacleType.POLIGONO,false,seed);
-        FoodCircle foodCircle = new FoodCircle(new Circunferencia(new Ponto(9.5,4.5), 0.5));
+        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.CIRCLE,ObstacleType.POLYGON,false,seed);
+        FoodCircle foodCircle = new FoodCircle(new Circunferencia(new Ponto(7,4), 0.5));
         gameBoard.setFood(foodCircle);
         snake.move(Direction.RIGHT);
         assertTrue(gameBoard.foodContainedInSnake());
@@ -50,11 +50,13 @@ public class GameBoardTest {
         snake.setDirection(Direction.RIGHT);
         snake.increaseSize();
         snake.increaseSize();
-        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.CIRCULO,1,1,ObstacleType.QUADRADO,false,seed);   
+        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.CIRCLE,ObstacleType.SQUARE,false,seed);   
         gameBoard.generateObstacles();
         assertNotNull(gameBoard.getListOfObstacles());
         assertTrue(gameBoard.getListOfObstacles().size() > 0);
         assertFalse(gameBoard.snakeIntersectsObstacle());
+        assertFalse(gameBoard.obstacleContainedInSnake());
+        assertFalse(gameBoard.foodIntersectObstacle());
     }
 
     @Test
@@ -66,11 +68,11 @@ public class GameBoardTest {
         Snake snake = new Snake(listaQuadrados, true);
         snake.setDirection(Direction.RIGHT);
         snake.increaseSize();
-        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.QUADRADO,1,1,ObstacleType.TRIANGULO,false,seed);  
+        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.SQUARE,ObstacleType.TRIANGLE,false,seed);  
         gameBoard.generateFood();
         assertNotNull(gameBoard.getFood());
-        assertFalse(gameBoard.getFood().foodContainedInHead(snake));
-        assertFalse(gameBoard.getFood().foodIntersectObstacle(gameBoard.getListOfObstacles().get(0)));
+        assertFalse(gameBoard.foodContainedInSnake());
+        assertFalse(gameBoard.foodIntersectObstacle());
     }
 
     @Test
@@ -82,7 +84,7 @@ public class GameBoardTest {
         Snake snake = new Snake(listaQuadrados, true);
         snake.setDirection(Direction.RIGHT);
         snake.increaseSize();
-        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.QUADRADO,1,1,ObstacleType.TRIANGULO,false,seed); 
+        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.SQUARE,ObstacleType.TRIANGLE,false,seed); 
         assertFalse(gameBoard.snakeCollided());
         Obstacle obstacle = new Obstacle(new Quadrado("8 5 8 4 7 4 7 5"), false);
         gameBoard.getListOfObstacles().add(obstacle);
