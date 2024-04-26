@@ -6,5 +6,6 @@ public class StaticMovement implements ObstacleMovement {
     
     @Override
     public void rotateObstacle(int angle, Ponto pontoPivo) {
+        return;
     }
 }
