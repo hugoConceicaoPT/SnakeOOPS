@@ -1,7 +1,8 @@
 package ModelLayer.BoardLayer;
 
+import ModelLayer.SnakeLayer.Poligono;
 import ModelLayer.SnakeLayer.Ponto;
 
 public interface ObstacleMovement {
-    void rotateObstacle(int angle, Ponto pontoPivo);
+    void rotateObstacle(Poligono poligono, Ponto pontoPivo);
 }

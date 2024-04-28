@@ -6,11 +6,11 @@ import java.util.Random;
 
 
 import ModelLayer.SnakeLayer.Circunferencia;
+import ModelLayer.SnakeLayer.Direction;
 import ModelLayer.SnakeLayer.Poligono;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Retangulo;
-import ModelLayer.SnakeLayer.Score;
 import ModelLayer.SnakeLayer.Snake;
 import ModelLayer.SnakeLayer.Triangulo;
 
@@ -21,11 +21,10 @@ public class GameBoard {
     private int columns;
     private Cell [][] board;
     private Snake snake;
-    private Score score;
     private FoodType foodType;
+    private int foodDimension;
+    private int obstaclesQuantity;
     private ObstacleType obstacleType;
-    private boolean isObstacleDynamic;
-    private long seed;
     private Random random;
 
     /** Construtor para criar uma board no jogo
@@ -35,12 +34,12 @@ public class GameBoard {
      * @param rows linhas
      * @param columns colunas
      */
-    public GameBoard (Snake snake, int columns, int rows, FoodType foodType, ObstacleType obstacleType ,boolean isObstacleDynamic, long seed) {
+    public GameBoard (Snake snake, int columns, int rows, FoodType foodType, int foodDimension,int obstaclesQuantity, Ponto obstacleRotacionPoint, boolean isObstacleMovementAroundCenter ,boolean isObstacleDynamic, Random random) {
         if(columns <= 0 || rows <= 0) {
             throw new IllegalArgumentException("O número de linhas e colunas deve ser maior que zero.");
         }
+        this.random = random;
         this.rows = rows;
-        this.score = new Score(0);
         this.snake = snake;
         this.columns = columns;
         this.listOfObstacles = new ArrayList<>();
@@ -51,13 +50,13 @@ public class GameBoard {
             }
         }
         this.foodType = foodType;
-        this.obstacleType = obstacleType;
-        this.isObstacleDynamic = isObstacleDynamic;
-        this.seed = seed;
-        this.random = new Random(this.seed);
-        generateObstacles();
+        this.foodDimension = foodDimension;
+        this.obstaclesQuantity = obstaclesQuantity;
+        this.obstacleType = ObstacleType.values()[random.nextInt(Direction.values().length)];
+        generateObstacles(obstacleRotacionPoint,isObstacleDynamic,isObstacleMovementAroundCenter);
         generateFood();
     }
+
     public boolean snakeIntersectsObstacle(){
         for (int i = 0; i < listOfObstacles.size(); i++) {
             if (listOfObstacles.get(i).obstacleIntersect(snake)) {
@@ -85,23 +84,12 @@ public class GameBoard {
         return false;
     }
 
-    /** Verifica se a cobra colida com as paredes da board, ou com o obstáculo, ou com ela própria
-     * @return verdadeiro se colidir, falso se não
-     */
-    public boolean snakeCollided() {
-        if(snakeIntersectsObstacle() || obstacleContainedInSnake() || this.snake.collidedWithHerself() || snakeLeftBoard())
-            return true;
-        return false;
-    }
-
     /** Verifica se a comida esta contida na cobra
      * @return verdadeiro se estiver contido, falso se não
      * @throws CloneNotSupportedException
      */
-    public boolean foodContainedInSnake() throws CloneNotSupportedException {
+    public boolean foodContainedInSnake() {
         if (food.foodContainedInHead(snake)) {
-            snake.increaseSize();
-            score.increaseScore();
             removeFood();
             generateFood();
             return true; 
@@ -130,14 +118,13 @@ public class GameBoard {
 
     /** Gera uma comida aleatória na board */
     public void generateFood() {
-        int foodSize = this.snake.getArestaHeadLength() - 1;
         boolean isEmpty = true;
         while (isEmpty) {
-            int row = this.random.nextInt(rows - (foodSize - 1));
-            int column = this.random.nextInt(columns - (foodSize - 1));
+            int row = this.random.nextInt(rows - (this.foodDimension - 1));
+            int column = this.random.nextInt(columns - (this.foodDimension - 1));
             boolean isAvailable = true;
-            for (int i = column; i <= column + foodSize; i++ ) {
-                for(int j = row; j <= row + foodSize; j++) {
+            for (int i = column; i <= column + this.foodDimension; i++ ) {
+                for(int j = row; j <= row + this.foodDimension; j++) {
                     if(board[i][j].getCellType() != CellType.EMPTY) {
                         isAvailable = false;
                         break;
@@ -146,21 +133,21 @@ public class GameBoard {
             }
 
             if(isAvailable) {
-                for (int i = column; i <= column + foodSize; i++) {
-                    for (int j = row; j <= row + foodSize; j++) {
+                for (int i = column; i <= column + this.foodDimension; i++) {
+                    for (int j = row; j <= row + this.foodDimension; j++) {
                         board[i][j].setCellType(CellType.FOOD);
                     }
                 }
 
                 if(this.foodType == FoodType.CIRCLE) {
-                    double centroX = column + (foodSize - 1) / 2;
-                    double centroY = row + (foodSize - 1) / 2;
+                    double centroX = column + (this.foodDimension - 1) / 2;
+                    double centroY = row + (this.foodDimension - 1) / 2;
                     FactoryFood factory = new FactoryFood();
-                    this.food = factory.createFood(new Circunferencia(new Ponto(centroX,centroY), (foodSize/2.0)));
+                    this.food = factory.createFood(new Circunferencia(new Ponto(centroX,centroY), (this.foodDimension/2.0)));
                 }
                 else if (this.foodType == FoodType.SQUARE) {
                     List<Ponto> pontos = new ArrayList<>();
-                    pontos = createSquarePoints(column, row, foodSize);
+                    pontos = createSquarePoints(column, row, this.foodDimension);
                     FactoryFood factory = new FactoryFood();
                     this.food = factory.createFood(new Quadrado(pontos));
                 }
@@ -170,57 +157,65 @@ public class GameBoard {
     }
 
     /** Gera um obstáculo aleatório na board */
-    public void generateObstacles() {
-        boolean isEmpty = true;
+    public void generateObstacles(Ponto rotacionPoint, boolean isDynamic, boolean isMovementAroundCenter) {
+        boolean isEmpty = true; 
         int obstacleSize = this.snake.getArestaHeadLength();
-        while (isEmpty) {
-            int row = this.random.nextInt(rows - (obstacleSize - 1)); 
-            int column = this.random.nextInt(columns - (obstacleSize - 1));
-            boolean isAvailable = true;
-            for (int i = column; i <= column + obstacleSize; i++) {
-                for (int j = row; j <= row + obstacleSize; j++) {
-                    if (board[i][j].getCellType() != CellType.EMPTY) {
-                        isAvailable = false;
-                        break;
-                    }
-                }
-            }
-            if (isAvailable) {
+        for(int w = 0; w < this.obstaclesQuantity; w++) {
+            while (isEmpty) {
+                int row = this.random.nextInt(rows - (obstacleSize - 1)); 
+                int column = this.random.nextInt(columns - (obstacleSize - 1));
+                boolean isAvailable = true;
                 for (int i = column; i <= column + obstacleSize; i++) {
                     for (int j = row; j <= row + obstacleSize; j++) {
-                        board[i][j].setCellType(CellType.FOOD);
+                        if (board[i][j].getCellType() != CellType.EMPTY) {
+                            isAvailable = false;
+                            break;
+                        }
                     }
                 }
+                if (isAvailable) {
+                    for (int i = column; i <= column + obstacleSize; i++) {
+                        for (int j = row; j <= row + obstacleSize; j++) {
+                            board[i][j].setCellType(CellType.FOOD);
+                        }
+                    }
 
-                List<Ponto> pontos = new ArrayList<>();
-                switch (obstacleType) {
-                    case POLYGON:
-                        pontos = createPolygonPoints(column, row, obstacleSize);
-                        this.listOfObstacles.add(new Obstacle(new Poligono(pontos), this.isObstacleDynamic));
-                        isEmpty = false;
-                        break;
-                    case SQUARE:
-                        pontos = createSquarePoints(column, row, obstacleSize); 
-                        this.listOfObstacles.add(new Obstacle(new Quadrado(pontos), this.isObstacleDynamic));
-                        isEmpty = false;
-                        break;
-                    case RECTANGLE:
-                        pontos = createRectanglePoints(column, row, obstacleSize);
-                        this.listOfObstacles.add(new Obstacle(new Retangulo(pontos), this.isObstacleDynamic));
-                        isEmpty = false;
-                        break;
-                    case TRIANGLE:
-                        pontos = createTrianglePoints(column, row, obstacleSize);
-                        this.listOfObstacles.add(new Obstacle(new Triangulo(pontos), this.isObstacleDynamic));
-                        isEmpty = false;
-                        break;
-                    default:
-                        break;
+                    List<Ponto> pontos = new ArrayList<>();
+                    switch (obstacleType) {
+                        case POLYGON:
+                            pontos = createPolygonPoints(column, row, obstacleSize);
+                            this.listOfObstacles.add(new Obstacle(new Poligono(pontos), rotacionPoint ,isDynamic, isMovementAroundCenter));
+                            isEmpty = false;
+                            break;
+                        case SQUARE:
+                            pontos = createSquarePoints(column, row, obstacleSize); 
+                            this.listOfObstacles.add(new Obstacle(new Quadrado(pontos), rotacionPoint ,isDynamic, isMovementAroundCenter));
+                            isEmpty = false;
+                            break;
+                        case RECTANGLE:
+                            pontos = createRectanglePoints(column, row, obstacleSize);
+                            this.listOfObstacles.add(new Obstacle(new Retangulo(pontos), rotacionPoint ,isDynamic, isMovementAroundCenter));
+                            isEmpty = false;
+                            break;
+                        case TRIANGLE:
+                            pontos = createTrianglePoints(column, row, obstacleSize);
+                            this.listOfObstacles.add(new Obstacle(new Triangulo(pontos), rotacionPoint ,isDynamic, isMovementAroundCenter));
+                            isEmpty = false;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
     }
     
+    public void rotateObstacles() {
+        for(int i = 0; i < this.listOfObstacles.size(); i++) {
+            this.listOfObstacles.get(i).rotateObstacle();
+        }
+    }
+
     private List<Ponto> createPolygonPoints (int column, int row, int size) {
         List<Ponto> pontos = new ArrayList<>();
         int sides = this.random.nextInt(size) + 3;
@@ -267,6 +262,18 @@ public class GameBoard {
         pontos.add(new Ponto(column, row + size));
 
         return pontos;
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+        for(int i = 0; i <= this.columns; i++) {
+            for(int j = 0; j <= this.rows; j++) {
+                result+= board[i][j].toString() + " ";
+            }
+            result += "\n";
+        }
+        return result;
     }
 
     public List<Obstacle> getListOfObstacles() {
@@ -317,36 +324,43 @@ public class GameBoard {
         this.snake = snake;
     }
 
-    public Score getScore() {
-        return score;
-    }
-
-    public void setScore(Score score) {
-        this.score = score;
-    }
     public FoodType getFoodType() {
         return foodType;
     }
+
     public void setFoodType(FoodType foodType) {
         this.foodType = foodType;
     }
+
     public ObstacleType getObstacleType() {
         return obstacleType;
     }
+
     public void setObstacleType(ObstacleType obstacleType) {
         this.obstacleType = obstacleType;
     }
 
-    public boolean isObstacleDynamic() {
-        return isObstacleDynamic;
+    public Random getRandom() {
+        return random;
     }
-    public void setObstacleDynamic(boolean isObstacleDynamic) {
-        this.isObstacleDynamic = isObstacleDynamic;
+
+    public void setRandom(Random random) {
+        this.random = random;
     }
-    public long getSeed() {
-        return seed;
+
+    public int getFoodDimension() {
+        return foodDimension;
     }
-    public void setSeed(long seed) {
-        this.seed = seed;
+
+    public void setFoodDimension(int foodDimension) {
+        this.foodDimension = foodDimension;
+    }
+
+    public int getObstaclesQuantity() {
+        return obstaclesQuantity;
+    }
+
+    public void setObstaclesQuantity(int obstaclesQuantity) {
+        this.obstaclesQuantity = obstaclesQuantity;
     }
 }

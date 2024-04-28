@@ -8,7 +8,7 @@ import ModelLayer.SnakeLayer.Score;
 public class ScoreTest {
     @Test
     public void increaseScoreTest(){
-        Score score = new Score(0);
+        Score score = new Score(0,1);
         score.increaseScore();
         assertEquals(1, score.getScore());
         score.increaseScore();

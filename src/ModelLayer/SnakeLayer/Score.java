@@ -4,17 +4,19 @@ import java.io.File;
 
 public class Score {
     private int score;
+    private int scorePerFood;
     private File fileRank;
     /** Construtor para criar um score
      * @param score o score
      */
-    public Score(int score) {
+    public Score(int score, int scorePerFood) {
         this.score = score;
+        this.scorePerFood = scorePerFood;
     }
     
     /** Aumenta o score por um */
     public void increaseScore() {
-        setScore(score+1);
+        setScore(this.score+this.scorePerFood);
     }
 
     /** Obtém o rank a partir de um ficheiro

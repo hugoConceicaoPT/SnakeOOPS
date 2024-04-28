@@ -1,0 +1,24 @@
+package ViewLayer;
+
+import java.awt.event.KeyListener;
+
+import javax.swing.JFrame;
+
+import ModelLayer.BoardLayer.GameBoard;
+
+public class GraphicalUI extends JFrame implements UI {
+
+    public GraphicalUI() {
+    }
+
+    public void display(GameBoard gameBoard) {
+        
+    }
+
+    public void addKeyListener(KeyListener listener) {
+        super.addKeyListener(listener);
+    }
+
+    public void close() {
+    }
+}
