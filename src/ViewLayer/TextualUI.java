@@ -2,7 +2,6 @@ package ViewLayer;
 
 import ControllerLayer.ContourRasterization;
 import ControllerLayer.RasterizationStrategy;
-import ControllerLayer.SnakeGame;
 import ModelLayer.BoardLayer.GameBoard;
 import ModelLayer.SnakeLayer.Score;
 
