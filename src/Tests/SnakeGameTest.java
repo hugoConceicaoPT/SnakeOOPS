@@ -1,7 +1,12 @@
 package Tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import org.junit.Test;
@@ -9,6 +14,8 @@ import org.junit.Test;
 import ControllerLayer.SnakeGame;
 import ModelLayer.BoardLayer.CellType;
 import ModelLayer.SnakeLayer.Direction;
+import ModelLayer.SnakeLayer.Ponto;
+import ModelLayer.SnakeLayer.Snake;
 
 public class SnakeGameTest{
     @Test
@@ -29,5 +36,13 @@ public class SnakeGameTest{
         assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[6][14].getCellType());
         assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[5][15].getCellType());
         assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[6][15].getCellType());
+    }
+
+    @Test
+    public void testFoodConsumption() throws CloneNotSupportedException {
+        SnakeGame game = new SnakeGame(100, 100, 10, true, "contorno", 5, "quadrados", 100, 5, new Ponto(50, 50), true, true, "textual", new Scanner(System.in));
+        game.foodContainedInSnake(); 
+        assertEquals(100, game.getScore());
+        assertEquals(1, game.getSnake().getBody().size());
     }
 }
