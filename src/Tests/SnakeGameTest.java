@@ -15,7 +15,6 @@ import ControllerLayer.SnakeGame;
 import ModelLayer.BoardLayer.CellType;
 import ModelLayer.SnakeLayer.Direction;
 import ModelLayer.SnakeLayer.Ponto;
-import ModelLayer.SnakeLayer.Snake;
 
 public class SnakeGameTest{
     @Test
@@ -39,7 +38,7 @@ public class SnakeGameTest{
     }
 
     @Test
-    public void testFoodConsumption() throws CloneNotSupportedException {
+    public void foodContainedInSnakeTest() throws CloneNotSupportedException {
         SnakeGame game = new SnakeGame(100, 100, 10, true, "contorno", 5, "quadrados", 100, 5, new Ponto(50, 50), true, true, "textual", new Scanner(System.in));
         game.foodContainedInSnake(); 
         assertEquals(100, game.getScore());

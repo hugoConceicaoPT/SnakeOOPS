@@ -76,7 +76,6 @@ public class SnakeGame implements KeyListener {
         this.gameBoard = new GameBoard(this.snake, this.widthBoard, this.heightBoard, this.foodType,this.foodDimension, this.obstaclesQuantity, this.obstacleRotacionPoint, this.isObstacleMovementAroundCenter, this.isObstacleDynamic,this.random);
         if(userInterface instanceof GraphicalUI) 
             ((GraphicalUI) userInterface).addKeyListener(this);
-        runGame();
     }
 
     /** Obtém se acabou o jogo ou não
