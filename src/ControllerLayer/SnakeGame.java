@@ -37,13 +37,12 @@ public class SnakeGame implements KeyListener {
     private GameBoard gameBoard;
     private RasterizationStrategy rasterizionStragety;
     private UI userInterface;
-    private Scanner sc;
 
     /** Construtor para criar um jogo da cobra        
      * @param snake a cobra do jogo 
      */
-    public SnakeGame (int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, Ponto obstacleRotacionPoint, boolean isObstacleMovementAroundCenter, boolean isObstacleDynamic, String UIMode, Scanner sc) {
-        this.random = new Random();
+    public SnakeGame (int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, Ponto obstacleRotacionPoint, boolean isObstacleMovementAroundCenter, boolean isObstacleDynamic, String UIMode, long seed) {
+        this.random = new Random(seed);
         this.isGameOver = false;
         this.widthBoard = widthBoard;
         this.heightBoard = heightBoard;
@@ -67,7 +66,6 @@ public class SnakeGame implements KeyListener {
             this.userInterface = new TextualUI(this.rasterizionStragety);
         else
             this.userInterface = new GraphicalUI();
-        this.sc = sc;
         LinkedList<Quadrado> bodySnake = new LinkedList<>();
         Quadrado quadrado = new Quadrado(createSquarePoints(this.widthBoard, this.heightBoard, this.headSnakeDimension));
         this.score = new Score(0,this.scorePerFood);
@@ -77,6 +75,7 @@ public class SnakeGame implements KeyListener {
         if(userInterface instanceof GraphicalUI) 
             ((GraphicalUI) userInterface).addKeyListener(this);
     }
+
 
     /** Obtém se acabou o jogo ou não
      * @return se acabou o jogo ou não
@@ -121,7 +120,7 @@ public class SnakeGame implements KeyListener {
     }
 
     /** Inicializa o jogo */
-    public void runGame() {
+    public void runGame(Scanner sc) {
         int iterationCount = 0;
         while(!this.isGameOver) {
             if(iterationCount == 0) 
@@ -386,13 +385,4 @@ public class SnakeGame implements KeyListener {
     public void setScorePerFood(int scorePerFood) {
         this.scorePerFood = scorePerFood;
     }
-
-    public Scanner getSc() {
-        return sc;
-    }
-
-    public void setSc(Scanner sc) {
-        this.sc = sc;
-    }
-
 }
