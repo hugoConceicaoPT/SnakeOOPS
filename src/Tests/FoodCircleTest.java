@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 import org.junit.Test;
 
@@ -19,8 +20,9 @@ public class FoodCircleTest {
     public void foodContainedInSnakeTest() throws CloneNotSupportedException {
         String input = "8 5 8 3 6 3 6 5";
         LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
+        Random random = new Random(122);
         listaQuadrados.add(new Quadrado(input));
-        Snake snake = new Snake(listaQuadrados, true);
+        Snake snake = new Snake(listaQuadrados, true,random);
         snake.setDirection(Direction.RIGHT);
         snake.increaseSize();
         snake.increaseSize();

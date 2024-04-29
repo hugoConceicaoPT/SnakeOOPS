@@ -9,14 +9,15 @@ public class Snake {
     private Direction direction;
     private MovementStrategy movementStrategy;
     private int arestaHeadLength;
+    private Random random;
     
     /** Construtor para criar uma cobra 
      * @param listaQuadrados a lista de quadrados que contém os quadrados da cobra
      */
-    public Snake(LinkedList<Quadrado> listaQuadrados, boolean isManualMovement) {
+    public Snake(LinkedList<Quadrado> listaQuadrados, boolean isManualMovement, Random random) {
         this.body = listaQuadrados;
         this.head = this.body.getFirst();
-        Random random = new Random();
+        this.random = random;
         this.direction = Direction.values()[random.nextInt(Direction.values().length)];
         arestaHeadLength = (int) this.head.pontos.get(0).dist(this.head.pontos.get(1));
         if(isManualMovement)
@@ -69,9 +70,18 @@ public class Snake {
      * @param nextDirection a próxima direção que a cobra vai tomar 
      */
     public void move(Direction nextDirection) {
+        if(isOppositeDirection(nextDirection, this.direction))
+            return;
         this.movementStrategy.move(nextDirection, this.body,this.direction,this.arestaHeadLength);
         this.head = this.body.getFirst();
         setDirection(nextDirection);
+    }
+
+    private boolean isOppositeDirection(Direction nextDirection, Direction currentDirection) {
+        return (nextDirection == Direction.UP && currentDirection == Direction.DOWN) ||
+               (nextDirection == Direction.DOWN && currentDirection == Direction.UP) ||
+               (nextDirection == Direction.LEFT && currentDirection == Direction.RIGHT) ||
+               (nextDirection == Direction.RIGHT && currentDirection == Direction.LEFT);
     }
 
     @Override
@@ -142,5 +152,13 @@ public class Snake {
 
     public void setMovementStrategy(MovementStrategy movementStrategy) {
         this.movementStrategy = movementStrategy;
+    }
+
+    public Random getRandom() {
+        return random;
+    }
+
+    public void setRandom(Random random) {
+        this.random = random;
     }
 }

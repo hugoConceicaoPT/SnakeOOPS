@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import ModelLayer.BoardLayer.FoodType;
 import ModelLayer.BoardLayer.GameBoard;
@@ -36,11 +37,12 @@ public class SnakeGame implements KeyListener {
     private GameBoard gameBoard;
     private RasterizationStrategy rasterizionStragety;
     private UI userInterface;
+    private Scanner sc;
 
     /** Construtor para criar um jogo da cobra        
      * @param snake a cobra do jogo 
      */
-    public SnakeGame (int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, Ponto obstacleRotacionPoint, boolean isObstacleMovementAroundCenter, boolean isObstacleDynamic, String UIMode) {
+    public SnakeGame (int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, Ponto obstacleRotacionPoint, boolean isObstacleMovementAroundCenter, boolean isObstacleDynamic, String UIMode, Scanner sc) {
         this.random = new Random();
         this.isGameOver = false;
         this.widthBoard = widthBoard;
@@ -52,7 +54,7 @@ public class SnakeGame implements KeyListener {
         else
             this.rasterizionStragety = new FullRasterization();
         this.foodDimension = foodDimension;
-        if(foodType.equals("quadrado"))
+        if(foodType.equals("quadrados"))
             this.foodType = FoodType.SQUARE;
         else
             this.foodType = FoodType.CIRCLE;
@@ -62,9 +64,18 @@ public class SnakeGame implements KeyListener {
         this.isObstacleMovementAroundCenter = isObstacleMovementAroundCenter;
         this.isObstacleDynamic = isObstacleDynamic;
         if(UIMode.equals("textual"))
-            this.userInterface = new TextualUI();
+            this.userInterface = new TextualUI(this.rasterizionStragety);
         else
             this.userInterface = new GraphicalUI();
+        this.sc = sc;
+        LinkedList<Quadrado> bodySnake = new LinkedList<>();
+        Quadrado quadrado = new Quadrado(createSquarePoints(this.widthBoard, this.heightBoard, this.headSnakeDimension));
+        this.score = new Score(0,this.scorePerFood);
+        bodySnake.addFirst(quadrado);
+        this.snake = new Snake(bodySnake, isSnakeManualMovement,this.random);
+        this.gameBoard = new GameBoard(this.snake, this.widthBoard, this.heightBoard, this.foodType,this.foodDimension, this.obstaclesQuantity, this.obstacleRotacionPoint, this.isObstacleMovementAroundCenter, this.isObstacleDynamic,this.random);
+        if(userInterface instanceof GraphicalUI) 
+            ((GraphicalUI) userInterface).addKeyListener(this);
         runGame();
     }
 
@@ -112,20 +123,39 @@ public class SnakeGame implements KeyListener {
 
     /** Inicializa o jogo */
     public void runGame() {
-        LinkedList<Quadrado> bodySnake = new LinkedList<>();
-        Quadrado quadrado = new Quadrado(createSquarePoints(this.widthBoard, this.heightBoard, this.headSnakeDimension));
-        this.score = new Score(0,this.scorePerFood);
-        bodySnake.add(quadrado);
-        this.snake = new Snake(bodySnake, isSnakeManualMovement);
-        this.gameBoard = new GameBoard(this.snake, this.widthBoard, this.heightBoard, this.foodType,this.foodDimension, this.obstaclesQuantity, this.obstacleRotacionPoint, this.isObstacleMovementAroundCenter, this.isObstacleDynamic,this.random);
-        if(userInterface instanceof GraphicalUI) 
-            ((GraphicalUI) userInterface).addKeyListener(this);
+        int iterationCount = 0;
         while(!this.isGameOver) {
-            userInterface.display(gameBoard);
-
+            if(iterationCount == 0) 
+                userInterface.display(score,gameBoard);
+            System.out.println("Pressione as teclas 'W' para cima, 'A' para esquerda, 'S' para baixo, 'D' para direita.");
+            System.out.print("Digite a direção desejada ou pressione Enter para manter a direção atual: ");
+            String input = sc.nextLine();
+            if(!input.isEmpty()) {
+                char directionInput = input.toUpperCase().charAt(0);
+                switch (directionInput) {
+                    case 'W':
+                        moveSnake(Direction.UP);
+                        break;
+                    case 'A':
+                        moveSnake(Direction.LEFT);
+                        break;
+                    case 'S':
+                        moveSnake(Direction.DOWN);
+                        break;
+                    case 'D':
+                        moveSnake(Direction.RIGHT);
+                        break;
+                    default:
+                        moveSnake(this.snake.getDirection());
+                        break;
+                }
+            }
+            else 
+                moveSnake(this.snake.getDirection());
+                
             if(snakeCollided()) {
                 this.isGameOver = true;
-                System.out.println("Game Over!Pontuação final: " + score.getScore());
+                System.out.println("Game Over! Pontuação final: " + score.getScore());
                 break;
             }
 
@@ -144,13 +174,16 @@ public class SnakeGame implements KeyListener {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
+            this.gameBoard.updateSnakeCells();
 
+            userInterface.display(score,gameBoard);
+            iterationCount++;
+        }
+        sc.close();
         endGame();
     }
     /** Para o jogo */
     public void endGame() {
-        System.out.println("O jogo terminou");
         if(this.userInterface instanceof GraphicalUI) 
             ((GraphicalUI) userInterface).close();  
         this.rasterizionStragety = null;
@@ -164,6 +197,7 @@ public class SnakeGame implements KeyListener {
     public void foodContainedInSnake() throws CloneNotSupportedException {
         if(this.gameBoard.foodContainedInSnake()) {
             this.snake.increaseSize();
+            this.gameBoard.updateSnakeCells();
             this.score.increaseScore();
         }
     }
@@ -181,25 +215,33 @@ public class SnakeGame implements KeyListener {
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
-                snake.move(Direction.UP);
+                this.snake.move(Direction.UP);
+                this.gameBoard.updateSnakeCells();
                 break;
             case KeyEvent.VK_DOWN:
-                snake.move(Direction.DOWN);
+                this.snake.move(Direction.DOWN);
+                this.gameBoard.updateSnakeCells();
                 break;
             case KeyEvent.VK_LEFT:
                 snake.move(Direction.LEFT);
+                this.gameBoard.updateSnakeCells();
                 break;
             case KeyEvent.VK_RIGHT:
-                snake.move(Direction.RIGHT);
+                this.snake.move(Direction.RIGHT);
+                this.gameBoard.updateSnakeCells();
                 break;
             default:
                 break;
         }
     }
 
+    public void moveSnake(Direction nextDirection) {
+        this.snake.move(nextDirection);
+    }
+
     private List<Ponto> createSquarePoints(int widthBoard, int heightBoard, int size) {
-        int column = random.nextInt(widthBoard - size);
-        int row = random.nextInt(heightBoard - size); 
+        int column = random.nextInt(widthBoard - (size*2)) + 1;
+        int row = random.nextInt(heightBoard - (size*2)) + 1; 
         List<Ponto> pontos = new ArrayList<>();
         pontos.add(new Ponto(column, row));
         pontos.add(new Ponto(column + size, row));
@@ -213,11 +255,6 @@ public class SnakeGame implements KeyListener {
     public void keyPressed(KeyEvent e) {}
     @Override
     public void keyTyped(KeyEvent e) {}
-
-    @Override
-    public String toString() {
-        return null;
-    }
 
     /** Obtém a width da board
      * @return o valor da width
@@ -325,6 +362,38 @@ public class SnakeGame implements KeyListener {
 
     public void setUserInterface(UI userInterface) {
         this.userInterface = userInterface;
+    }
+
+    public Random getRandom() {
+        return random;
+    }
+
+    public void setRandom(Random random) {
+        this.random = random;
+    }
+
+    public boolean isSnakeManualMovement() {
+        return isSnakeManualMovement;
+    }
+
+    public void setSnakeManualMovement(boolean isSnakeManualMovement) {
+        this.isSnakeManualMovement = isSnakeManualMovement;
+    }
+
+    public int getScorePerFood() {
+        return scorePerFood;
+    }
+
+    public void setScorePerFood(int scorePerFood) {
+        this.scorePerFood = scorePerFood;
+    }
+
+    public Scanner getSc() {
+        return sc;
+    }
+
+    public void setSc(Scanner sc) {
+        this.sc = sc;
     }
 
 }

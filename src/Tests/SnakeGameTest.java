@@ -1,48 +1,33 @@
 package Tests;
 
 import static org.junit.Assert.assertEquals;
-
-import java.awt.Component;
-import java.awt.event.KeyEvent;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.LinkedList;
+import java.util.Scanner;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import ControllerLayer.SnakeGame;
-import ModelLayer.SnakeLayer.Quadrado;
-import ModelLayer.SnakeLayer.Snake;
+import ModelLayer.BoardLayer.CellType;
+import ModelLayer.SnakeLayer.Direction;
 
 public class SnakeGameTest{
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
-
-    @Before
-    public void setUpStreams() {
-        System.setOut(new PrintStream(outContent));
-    }
-
-    @After
-    public void restoreStreams() {
-        System.setOut(originalOut);
-    }
-    
     @Test
-    public void keyReleasedTest() throws CloneNotSupportedException {
-        String input1 = "1 1 1 3 3 3 3 1";
-        LinkedList<Quadrado> quadrado = new LinkedList<>();
-        quadrado.add(new Quadrado(input1));
-        Snake snake = new Snake(quadrado, true);
-        snake.increaseSize();
-        snake.increaseSize();
-        //SnakeGame snakeGame = new SnakeGame(snake,null,3,4);
-        Component source = new Component() {};
-        @SuppressWarnings("deprecation")
-        KeyEvent keyEvent = new KeyEvent(source, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, KeyEvent.VK_UP);
-        //snakeGame.keyReleased(keyEvent);
-        assertEquals("Tecla Solta!", outContent.toString().trim());
-    }    
+    public void moveSnakeTest() {
+        Scanner sc = new Scanner(System.in);
+        SnakeGame snakeGame = new SnakeGame(20, 10, 2, true, "completa", 1, "quadrados", 5, 2, null, true, false, "textual", sc);
+        snakeGame.getRandom().setSeed(0);
+        System.out.println(snakeGame.getSnake().toString() + " " + snakeGame.getSnake().getDirection());
+        snakeGame.moveSnake(Direction.DOWN);
+        assertEquals("Cabeça: [(12.0,5.0), (14.0,5.0), (14.0,7.0), (12.0,7.0)] Tail: []", snakeGame.getSnake().toString());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[5][12].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[6][12].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[5][13].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[6][13].getCellType());
+        snakeGame.moveSnake(Direction.RIGHT);
+        assertEquals("Cabeça: [(14.0,7.0), (14.0,5.0), (16.0,5.0), (16.0,7.0)] Tail: []", snakeGame.getSnake().toString());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[5][14].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[6][14].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[5][15].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[6][15].getCellType());
+    }
 }

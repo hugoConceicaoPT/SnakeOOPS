@@ -43,9 +43,9 @@ public class GameBoard {
         this.snake = snake;
         this.columns = columns;
         this.listOfObstacles = new ArrayList<>();
-        this.board = new Cell[columns+1][rows+1];
-        for (int i = 0; i <= columns; i++) {
-            for (int j = 0; j <= rows; j++) {
+        this.board = new Cell[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
                 board[i][j] = new Cell();
             }
         }
@@ -53,6 +53,7 @@ public class GameBoard {
         this.foodDimension = foodDimension;
         this.obstaclesQuantity = obstaclesQuantity;
         this.obstacleType = ObstacleType.values()[random.nextInt(Direction.values().length)];
+        updateSnakeCells();
         generateObstacles(obstacleRotacionPoint,isObstacleDynamic,isObstacleMovementAroundCenter);
         generateFood();
     }
@@ -99,8 +100,8 @@ public class GameBoard {
 
     public void removeFood(){
         this.food = null;
-        for (int i = 0; i <= columns; i++) {
-            for (int j = 0; j <= rows; j++) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
                 if(board[i][j].getCellType() == CellType.FOOD) {
                     board[i][j].setCellType(CellType.EMPTY);
                 }
@@ -120,11 +121,11 @@ public class GameBoard {
     public void generateFood() {
         boolean isEmpty = true;
         while (isEmpty) {
-            int row = this.random.nextInt(rows - (this.foodDimension - 1));
-            int column = this.random.nextInt(columns - (this.foodDimension - 1));
+            int row = this.random.nextInt(rows - this.foodDimension - 1);
+            int column = this.random.nextInt(columns - this.foodDimension - 1);
             boolean isAvailable = true;
-            for (int i = column; i <= column + this.foodDimension; i++ ) {
-                for(int j = row; j <= row + this.foodDimension; j++) {
+            for (int i = row; i < row + this.foodDimension; i++ ) {
+                for(int j = column; j < column + this.foodDimension; j++) {
                     if(board[i][j].getCellType() != CellType.EMPTY) {
                         isAvailable = false;
                         break;
@@ -133,15 +134,15 @@ public class GameBoard {
             }
 
             if(isAvailable) {
-                for (int i = column; i <= column + this.foodDimension; i++) {
-                    for (int j = row; j <= row + this.foodDimension; j++) {
+                for (int i = row; i < row + this.foodDimension; i++) {
+                    for (int j = column; j < column + this.foodDimension; j++) {
                         board[i][j].setCellType(CellType.FOOD);
                     }
                 }
 
                 if(this.foodType == FoodType.CIRCLE) {
-                    double centroX = column + (this.foodDimension - 1) / 2;
-                    double centroY = row + (this.foodDimension - 1) / 2;
+                    double centroX = row + (this.foodDimension - 1) / 2;
+                    double centroY = column + (this.foodDimension - 1) / 2;
                     FactoryFood factory = new FactoryFood();
                     this.food = factory.createFood(new Circunferencia(new Ponto(centroX,centroY), (this.foodDimension/2.0)));
                 }
@@ -158,15 +159,15 @@ public class GameBoard {
 
     /** Gera um obstáculo aleatório na board */
     public void generateObstacles(Ponto rotacionPoint, boolean isDynamic, boolean isMovementAroundCenter) {
-        boolean isEmpty = true; 
         int obstacleSize = this.snake.getArestaHeadLength();
         for(int w = 0; w < this.obstaclesQuantity; w++) {
+            boolean isEmpty = true; 
             while (isEmpty) {
-                int row = this.random.nextInt(rows - (obstacleSize - 1)); 
-                int column = this.random.nextInt(columns - (obstacleSize - 1));
+                int row = this.random.nextInt(rows - obstacleSize - 1); 
+                int column = this.random.nextInt(columns - obstacleSize - 1);
                 boolean isAvailable = true;
-                for (int i = column; i <= column + obstacleSize; i++) {
-                    for (int j = row; j <= row + obstacleSize; j++) {
+                for (int i = row; i < row + obstacleSize; i++) {
+                    for (int j = column; j < column + obstacleSize; j++) {
                         if (board[i][j].getCellType() != CellType.EMPTY) {
                             isAvailable = false;
                             break;
@@ -174,9 +175,9 @@ public class GameBoard {
                     }
                 }
                 if (isAvailable) {
-                    for (int i = column; i <= column + obstacleSize; i++) {
-                        for (int j = row; j <= row + obstacleSize; j++) {
-                            board[i][j].setCellType(CellType.FOOD);
+                    for (int i = row; i < row + obstacleSize; i++) {
+                        for (int j = column; j < column + obstacleSize; j++) {
+                            board[i][j].setCellType(CellType.OBSTACLE);
                         }
                     }
 
@@ -215,6 +216,52 @@ public class GameBoard {
             this.listOfObstacles.get(i).rotateObstacle();
         }
     }
+    public void updateSnakeCells() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (board[i][j].getCellType() == CellType.HEAD || board[i][j].getCellType() == CellType.TAIL) {
+                    board[i][j].setCellType(CellType.EMPTY);
+                }
+            }
+        }
+    
+        for (int i = 1; i < snake.getBody().size(); i++) {
+            int maxX = Integer.MIN_VALUE;
+            int maxY = Integer.MIN_VALUE;
+            int minX = Integer.MAX_VALUE;
+            int minY = Integer.MAX_VALUE;
+            for(int x = 0; x < snake.getBody().get(i).getPontos().size(); x++) {
+                maxX = (int) Math.max(maxX, snake.getBody().get(i).getPontos().get(x).getX());
+                maxY = (int) Math.max(maxY, snake.getBody().get(i).getPontos().get(x).getY());
+                minX = (int) Math.min(minX, snake.getBody().get(i).getPontos().get(x).getX());
+                minY = (int) Math.min(minY, snake.getBody().get(i).getPontos().get(x).getY());
+            }
+            for(int w = minY; w < maxY; w++) {
+                for(int j = minX ; j < maxX; j++) {
+                    board[w][j].setCellType(CellType.TAIL);
+                }
+            }
+        }
+    
+        Quadrado head = snake.getHead();
+        int maxHeadX = Integer.MIN_VALUE;
+        int maxHeadY = Integer.MIN_VALUE;
+        int minHeadX = Integer.MAX_VALUE;
+        int minHeadY = Integer.MAX_VALUE;
+        for(int x = 0; x < head.getPontos().size(); x++) {
+            maxHeadX = (int) Math.max(maxHeadX, head.getPontos().get(x).getX());
+            maxHeadY = (int) Math.max(maxHeadY, head.getPontos().get(x).getY());
+            minHeadX = (int) Math.min(minHeadX, head.getPontos().get(x).getX());
+            minHeadY = (int) Math.min(minHeadY, head.getPontos().get(x).getY());
+        }
+        for(int w = minHeadY; w < maxHeadY; w++) {
+            for(int j = minHeadX; j < maxHeadX; j++) {
+                board[w][j].setCellType(CellType.HEAD);
+            }
+        }
+    }
+    
+    
 
     private List<Ponto> createPolygonPoints (int column, int row, int size) {
         List<Ponto> pontos = new ArrayList<>();
@@ -237,7 +284,8 @@ public class GameBoard {
         int width = this.random.nextInt(size-1) + 1;
         int height = this.random.nextInt(size-1) + 1;
         if(width == height)
-            createPolygonPoints(column, row, size); 
+            width = this.random.nextInt(size-1) + 1;
+            height = this.random.nextInt(size-1) + 1;
         pontos.add(new Ponto(column, row));
         pontos.add(new Ponto(column, row + height));
         pontos.add(new Ponto(column + width, row + height));
@@ -267,8 +315,8 @@ public class GameBoard {
     @Override
     public String toString() {
         String result = "";
-        for(int i = 0; i <= this.columns; i++) {
-            for(int j = 0; j <= this.rows; j++) {
+        for(int i = this.rows - 1; i >= 0; i--) {
+            for(int j = 0; j < this.columns; j++) {
                 result+= board[i][j].toString() + " ";
             }
             result += "\n";

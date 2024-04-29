@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 import org.junit.Test;
 
@@ -18,7 +19,8 @@ public class FoodSquareTest {
         String input = "8 5 8 3 6 3 6 5";
         LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
         listaQuadrados.add(new Quadrado(input));
-        Snake snake = new Snake(listaQuadrados, true);
+        Random random = new Random(120);
+        Snake snake = new Snake(listaQuadrados, true,random);
         snake.setDirection(Direction.RIGHT);
         snake.increaseSize();
         snake.increaseSize();

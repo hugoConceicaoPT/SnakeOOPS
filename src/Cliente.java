@@ -14,7 +14,7 @@ public class Cliente {
         System.out.print("Digite a dimensão da cabeça: ");
         int headDimension = sc.nextInt();
         sc.nextLine();
-        System.out.println("Deseja o movimento da cobra manual (sim/nao)? ");
+        System.out.print("Deseja o movimento da cobra manual (sim/nao)? ");
         String movementSnake = sc.nextLine();
         boolean isSnakeManualMovement = false;
         if(movementSnake.equals("sim"))
@@ -29,25 +29,28 @@ public class Cliente {
         System.out.print("Defina a pontuação por cada comida: ");
         int foodScore = sc.nextInt();
         sc.nextLine();
-        System.out.print("Indique quantos obstáculos deseja aparecer na arena e o seu movimento de rotação (se houver): ");
-        String obstacles = sc.nextLine();
-        String [] obstaclesParts = obstacles.split(" ");
-        int obstaclesQuantity = Integer.parseInt(obstaclesParts[0]);
-        Ponto obstacleRotacionPoint = null;
-        boolean isObstacleMovementAroundCenter = false;
-        if(obstaclesParts.length > 1)
-            obstacleRotacionPoint = new Ponto(Double.parseDouble(obstaclesParts[1]), Double.parseDouble(obstaclesParts[2]));
-        else
-            isObstacleMovementAroundCenter = true;
+        System.out.print("Indique quantos obstáculos deseja aparecer na arena: ");
+        int obstaclesQuantity = sc.nextInt();
+        sc.nextLine();
         System.out.print("Deseja que os obstáculos sejam dinâmicos (sim/nao): ");
         String obstacleMovement = sc.nextLine();
         boolean isObstacleDynamic = false;
         if(obstacleMovement.equals("sim"))
             isObstacleDynamic = true;
+        Ponto obstacleRotacionPoint = null;
+        boolean isObstacleMovementAroundCenter = false;
+        if(isObstacleDynamic) {
+            System.out.println("Indique ou não o movimento de rotação desses obstáculos: ");
+            String obstacleRotacionString = sc.nextLine(); 
+            String [] obstaclesParts = obstacleRotacionString.split(" ");
+            if(obstaclesParts.length > 2)
+                obstacleRotacionPoint = new Ponto(Double.parseDouble(obstaclesParts[1]), Double.parseDouble(obstaclesParts[2]));
+            else
+                isObstacleMovementAroundCenter = true;
+        }
         System.out.print("Indique o modo de interface (textual/grafica): ");
         String UIMode = sc.nextLine();
-        sc.close();
-        SnakeGame snakeGame = new SnakeGame(width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, obstacleRotacionPoint, isObstacleMovementAroundCenter, isObstacleDynamic, UIMode);
+        SnakeGame snakeGame = new SnakeGame(width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, obstacleRotacionPoint, isObstacleMovementAroundCenter, isObstacleDynamic, UIMode, sc);
         snakeGame.runGame();
     }
 }

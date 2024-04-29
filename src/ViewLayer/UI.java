@@ -1,7 +1,8 @@
 package ViewLayer;
 
 import ModelLayer.BoardLayer.GameBoard;
+import ModelLayer.SnakeLayer.Score;
 
 public interface UI {
-    void display(GameBoard gameBoard);
+    void display(Score score,GameBoard gameBoard);
 }

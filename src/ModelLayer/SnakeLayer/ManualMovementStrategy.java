@@ -64,9 +64,6 @@ public class ManualMovementStrategy implements MovementStrategy {
     @Override
     public void move(Direction nextDirection,  LinkedList<Quadrado> body, Direction currentDirection, int arestaHeadLength) {
 
-        if(isOppositeDirection(nextDirection, currentDirection))
-            return;
-
         Ponto centroHeadSnake = body.getFirst().getCentroide();
 
         Quadrado ultimoQuadrado = body.getLast();
@@ -94,12 +91,5 @@ public class ManualMovementStrategy implements MovementStrategy {
 
         body.removeLast();
         body.addFirst(ultimoQuadrado);
-    }
-
-    private boolean isOppositeDirection(Direction nextDirection, Direction currentDirection) {
-        return (nextDirection == Direction.UP && currentDirection == Direction.DOWN) ||
-               (nextDirection == Direction.DOWN && currentDirection == Direction.UP) ||
-               (nextDirection == Direction.LEFT && currentDirection == Direction.RIGHT) ||
-               (nextDirection == Direction.RIGHT && currentDirection == Direction.LEFT);
     }
 }
