@@ -163,16 +163,23 @@ public class SnakeGame implements KeyListener {
 
             try {
                 foodContainedInSnake();
+                if(snakeCollided()) {
+                    this.isGameOver = true;
+                    System.out.println("Game Over! Pontuação final: " + score.getScore());
+                    break;
+                }
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
+
+            this.gameBoard.updateSnakeCells();
 
             try {
                 Thread.sleep(100); 
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            this.gameBoard.updateSnakeCells();
+
 
             userInterface.display(score,gameBoard);
             iterationCount++;
@@ -195,7 +202,6 @@ public class SnakeGame implements KeyListener {
     public void foodContainedInSnake() throws CloneNotSupportedException {
         if(this.gameBoard.foodContainedInSnake()) {
             this.snake.increaseSize();
-            this.gameBoard.updateSnakeCells();
             this.score.increaseScore();
         }
     }

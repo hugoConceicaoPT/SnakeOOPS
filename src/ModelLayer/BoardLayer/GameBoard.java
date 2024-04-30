@@ -130,6 +130,8 @@ public class GameBoard {
                         isAvailable = false;
                         break;
                     }
+                    else
+                        isAvailable = true;
                 }
             }
 

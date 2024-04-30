@@ -19,6 +19,7 @@ public class Snake {
         this.head = this.body.getFirst();
         this.random = random;
         this.direction = Direction.values()[random.nextInt(Direction.values().length)];
+        this.head.setDirection(direction);
         arestaHeadLength = (int) this.head.pontos.get(0).dist(this.head.pontos.get(1));
         if(isManualMovement)
             this.movementStrategy = new ManualMovementStrategy();
@@ -33,27 +34,46 @@ public class Snake {
         Quadrado novoQuadrado;
         if(this.body.size() == 1) {
             novoQuadrado = (Quadrado) this.head.clone();
+            switch (this.direction) {
+                case UP:
+                    novoQuadrado.translate(0, -arestaHeadLength); 
+                    break;
+                case DOWN:
+                    novoQuadrado.translate(0, arestaHeadLength);
+                    break;
+                case LEFT:
+                    novoQuadrado.translate(arestaHeadLength, 0);
+                    break;
+                case RIGHT:
+                    novoQuadrado.translate(-arestaHeadLength, 0);
+                    break;
+                default:
+                    break;
+            }
         }
         else {
             novoQuadrado = (Quadrado) this.body.getLast().clone();
-        }
-        switch (direction) {
-            case UP:
-                novoQuadrado.translate(0, -arestaHeadLength); 
-                break;
-            case DOWN:
-                novoQuadrado.translate(0, arestaHeadLength);
-            case LEFT:
-                novoQuadrado.translate(arestaHeadLength, 0);
-                break;
-            case RIGHT:
-                novoQuadrado.translate(-arestaHeadLength, 0);
-                break;
-            default:
-                break;
+            novoQuadrado.getDirectionFromPreviousSquare(this.body.get(this.body.size()-2));
+            switch (novoQuadrado.getDirection()) {
+                case UP:
+                    novoQuadrado.translate(0, -arestaHeadLength); 
+                    break;
+                case DOWN:
+                    novoQuadrado.translate(0, arestaHeadLength);
+                    break;
+                case LEFT:
+                    novoQuadrado.translate(arestaHeadLength, 0);
+                    break;
+                case RIGHT:
+                    novoQuadrado.translate(-arestaHeadLength, 0);
+                    break;
+                default:
+                    break;
+            }
         }
         this.body.addLast(novoQuadrado);
     }
+
 
     /** Verifica se a cobra colida consigo própria 
      * @return verdadeiro se acontecer, falso se não
