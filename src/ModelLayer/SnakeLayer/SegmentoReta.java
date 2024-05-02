@@ -46,7 +46,7 @@ public class SegmentoReta implements Cloneable {
      * @return o produto vetorial entre os três pontos
      */
     private double produtoVetorial(Ponto a, Ponto b, Ponto c) {
-        return (b.getX() - a.getX()) * (c.getY() - a.getY()) - (b.getY() - a.getY()) * (c.getX() - a.getX());
+        return ((b.getX() - a.getX()) * (c.getY() - a.getY())) - ((b.getY() - a.getY()) * (c.getX() - a.getX()));
     }
 
     /** Verifica se dois segmentos se cruzam

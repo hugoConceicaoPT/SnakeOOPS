@@ -54,7 +54,7 @@ public class Quadrado extends Retangulo{
                 else if(previousSquare.getPontos().get(i).getY() > this.getPontos().get(j).getY() && previousSquare.getPontos().get(i).getX() == this.getPontos().get(j).getX()) {
                     this.setDirection(Direction.UP);
                 }
-                else if(previousSquare.getPontos().get(i).getY() < this.getPontos().get(j).getY() && previousSquare.getPontos().get(i).getX() == this.getPontos().get(j).getX())
+                else 
                     this.setDirection(Direction.DOWN);
             }   
         }

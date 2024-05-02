@@ -159,17 +159,19 @@ public class SnakeGame implements KeyListener {
 
             if(this.isObstacleDynamic) {
                 this.gameBoard.rotateObstacles();
+                this.gameBoard.updateObstacleCells();
             }
 
             try {
                 foodContainedInSnake();
-                if(snakeCollided()) {
-                    this.isGameOver = true;
-                    System.out.println("Game Over! Pontuação final: " + score.getScore());
-                    break;
-                }
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
+            }
+
+            if(snakeCollided()) {
+                this.isGameOver = true;
+                System.out.println("Game Over! Pontuação final: " + score.getScore());
+                break;
             }
 
             this.gameBoard.updateSnakeCells();
@@ -244,8 +246,8 @@ public class SnakeGame implements KeyListener {
     }
 
     private List<Ponto> createSquarePoints(int widthBoard, int heightBoard, int size) {
-        int column = random.nextInt(widthBoard - (size*2)) + 1;
-        int row = random.nextInt(heightBoard - (size*2)) + 1; 
+        int column = random.nextInt(widthBoard - size);
+        int row = random.nextInt(heightBoard - size); 
         List<Ponto> pontos = new ArrayList<>();
         pontos.add(new Ponto(column, row));
         pontos.add(new Ponto(column + size, row));

@@ -27,6 +27,11 @@ public class FoodSquare extends Food {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "Comida com: " + quadrado.toString();
+    } 
+
     public Quadrado getQuadrado() {
         return quadrado;
     }

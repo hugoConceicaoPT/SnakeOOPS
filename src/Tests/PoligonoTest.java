@@ -144,19 +144,20 @@ public class PoligonoTest {
         Poligono Poligono1 = new Poligono(input1);
         String input2 = "4 2 2 2 4 4 4 4 2";
         Poligono Poligono2 = new Poligono(input2);
-        assertTrue(Poligono1.contida(Poligono2));
+        assertTrue(Poligono2.contida(Poligono1));
     
         String input3 = "4 10 10 10 15 15 15 15 10";
         Poligono Poligono3 = new Poligono(input3);
         String input4 = "4 12 12 12 13 13 13 13 12";
         Poligono Poligono4 = new Poligono(input4);
-        assertTrue(Poligono3.contida(Poligono4));
+        assertTrue(Poligono4.contida(Poligono3));
 
         String input5 = "4 1 1 1 5 5 5 5 1";
         Poligono Poligono5 = new Poligono(input5);
         String input6 = "4 10 10 10 15 15 15 15 10";
         Poligono Poligono6 = new Poligono(input6);
         assertFalse(Poligono5.contida(Poligono6)); 
+        assertFalse(new Poligono("4 7 6 7 4 9 4 9 6").contida(new Poligono("4 5 8 5 5 8 5 8 8")));
     }
     
 

@@ -21,8 +21,12 @@ public class Cliente {
             isSnakeManualMovement = true;
         System.out.print("Digite o modo de rasterização (contorno/completa): ");
         String rasterizationMode = sc.nextLine();
-        System.out.print("Digite a dimensão da comida (menor do que a dimensão da cabeça): ");   
+        System.out.print("Digite a dimensão da comida (menor do que a dimensão da cabeça): ");
         int foodDimension = sc.nextInt(); 
+        while(foodDimension >= headDimension) {
+            System.out.print("Digite a dimensão da comida (menor do que a dimensão da cabeça): ");
+            foodDimension = sc.nextInt(); 
+        }
         sc.nextLine();
         System.out.print("Indique o tipo de comida (podem ser quadrados ou círculos): ");
         String foodType = sc.nextLine();
@@ -40,11 +44,11 @@ public class Cliente {
         Ponto obstacleRotacionPoint = null;
         boolean isObstacleMovementAroundCenter = false;
         if(isObstacleDynamic) {
-            System.out.println("Indique ou não o movimento de rotação desses obstáculos: ");
+            System.out.print("Indique ou não o movimento de rotação desses obstáculos: ");
             String obstacleRotacionString = sc.nextLine(); 
             String [] obstaclesParts = obstacleRotacionString.split(" ");
-            if(obstaclesParts.length > 2)
-                obstacleRotacionPoint = new Ponto(Double.parseDouble(obstaclesParts[1]), Double.parseDouble(obstaclesParts[2]));
+            if(obstaclesParts.length > 1)
+                obstacleRotacionPoint = new Ponto(Double.parseDouble(obstaclesParts[0]), Double.parseDouble(obstaclesParts[1]));
             else
                 isObstacleMovementAroundCenter = true;
         }

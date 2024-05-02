@@ -101,10 +101,15 @@ public class GameBoardTest {
         Snake snake = new Snake(listaQuadrados, true,random);
         snake.setDirection(Direction.RIGHT);
         snake.increaseSize();
-        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.SQUARE,1,1,new Ponto(1,1),false,false,random);
+        GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,1,new Ponto(1,1),false,false,random);
         assertNotNull(gameBoard.getFood());
         assertFalse(gameBoard.foodContainedInSnake());
         assertFalse(gameBoard.foodIntersectObstacle());
+        gameBoard.removeFood();
+        gameBoard.generateFood();
+        System.out.println(snake.toString());
+        System.out.println(gameBoard.getFood().toString());
+
     }
 
     @Test

@@ -11,6 +11,7 @@ import org.junit.Test;
 import ModelLayer.SnakeLayer.Circunferencia;
 import ModelLayer.SnakeLayer.Poligono;
 import ModelLayer.SnakeLayer.Ponto;
+import ModelLayer.SnakeLayer.Quadrado;
 
 public class CircurferenciaTest {
     @Test
@@ -39,18 +40,17 @@ public class CircurferenciaTest {
 
     @Test
     public void contidaNoPoligonoTest(){
-        List<Ponto> verticesPoligono = new ArrayList<>();
-        verticesPoligono.add(new Ponto(0, 0));
-        verticesPoligono.add(new Ponto(10, 0));
-        verticesPoligono.add(new Ponto(10, 10));
-        verticesPoligono.add(new Ponto(0, 10));
-        Poligono poligono = new Poligono(verticesPoligono);
+        Poligono poligono = new Poligono("4 0 0 10 0 10 10 0 10");
         Circunferencia circuloInterno = new Circunferencia(new Ponto(5, 5), 2);
         assertTrue(circuloInterno.contidaNoPoligono(poligono));
         Circunferencia circuloParcial = new Circunferencia(new Ponto(8, 8), 4);
         assertFalse(circuloParcial.contidaNoPoligono(poligono));
         Circunferencia circuloExterno = new Circunferencia(new Ponto(15, 15), 1);
         assertFalse(circuloExterno.contidaNoPoligono(poligono));
+        Quadrado quadrado = new Quadrado("8 0 10 0 10 2 8 2");
+        Circunferencia circunferencia1 = new Circunferencia(new Ponto(8.5,0.5), 0.5);
+        assertTrue(circunferencia1.contidaNoPoligono(quadrado));
+
     }
 
 

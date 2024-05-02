@@ -34,4 +34,8 @@ public class FoodCircle extends Food {
         this.circunferencia = circunferencia;
     }
 
+    @Override
+    public String toString() {
+        return "Comida com: " + circunferencia.toString();
+    } 
 }

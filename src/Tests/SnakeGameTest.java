@@ -16,19 +16,21 @@ public class SnakeGameTest{
     public void moveSnakeTest() {
         long seed = 0;
         SnakeGame snakeGame = new SnakeGame(20, 10, 2, true, "completa", 1, "quadrados", 5, 2, null, true, false, "textual", seed);
-        snakeGame.moveSnake(Direction.DOWN);
-        assertEquals("Cabeça: [(12.0,5.0), (14.0,5.0), (14.0,7.0), (12.0,7.0)] Tail: []", snakeGame.getSnake().toString());
-        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[5][12].getCellType());
-        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[6][12].getCellType());
-        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[5][13].getCellType());
-        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[6][13].getCellType());
+        System.out.println(snakeGame.getSnake().toString());
+        snakeGame.moveSnake(Direction.UP);
+        snakeGame.getGameBoard().updateSnakeCells();
+        assertEquals("Cabeça: [(6.0,8.0), (8.0,8.0), (8.0,10.0), (6.0,10.0)] Tail: []", snakeGame.getSnake().toString());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[8][6].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[8][7].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[9][6].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[9][7].getCellType());
         snakeGame.moveSnake(Direction.RIGHT);
         snakeGame.getGameBoard().updateSnakeCells();
-        assertEquals("Cabeça: [(14.0,7.0), (14.0,5.0), (16.0,5.0), (16.0,7.0)] Tail: []", snakeGame.getSnake().toString());
-        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[5][14].getCellType());
-        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[6][14].getCellType());
-        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[5][15].getCellType());
-        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[6][15].getCellType());
+        assertEquals("Cabeça: [(8.0,10.0), (8.0,8.0), (10.0,8.0), (10.0,10.0)] Tail: []", snakeGame.getSnake().toString());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[8][8].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[8][9].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[9][8].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getGameBoard().getBoard()[9][9].getCellType());
     }
 
     @Test

@@ -88,6 +88,6 @@ public class Circunferencia {
 
     @Override
     public String toString() {
-        return "Círcunferencia de centro: " + centro.toString() + "e raio: " + raio;
+        return "Circunferência de centro: " + centro.toString() + "e raio: " + raio;
     }
 }

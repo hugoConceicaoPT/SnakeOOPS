@@ -13,6 +13,10 @@ public class Poligono implements Cloneable {
     protected List<Ponto> pontos;
     protected List<SegmentoReta> aresta;
     protected Ponto centroide;
+    protected double minX;
+    protected double minY;
+    protected double maxX;
+    protected double maxY;
 
 
     /** Costrutor para criar um polígono com uma lista de pontos
@@ -41,6 +45,7 @@ public class Poligono implements Cloneable {
             }
         }
         this.pontos = pontos;
+        setMaxCoordinates();
         this.centroide = getCentroide();
     }
 
@@ -73,6 +78,23 @@ public class Poligono implements Cloneable {
         return pontos;
     }
     
+    private void setMaxCoordinates() {
+        double minX = Double.MAX_VALUE;
+        double minY = Double.MAX_VALUE;
+        double maxX = Double.MIN_VALUE;
+        double maxY = Double.MIN_VALUE;
+        for (Ponto ponto : this.pontos) {
+            minX = Math.min(minX, ponto.getX());
+            maxX = Math.max(maxX, ponto.getX());
+            minY = Math.min(minY, ponto.getY());
+            maxY = Math.max(maxY, ponto.getY());
+        }
+        setMaxX(maxX);
+        setMaxY(maxY);
+        setMinX(minX);
+        setMinY(minY);
+    }
+
     public boolean interseta (Poligono that)
     {
         for(SegmentoReta aresta1 : this.aresta)
@@ -92,31 +114,9 @@ public class Poligono implements Cloneable {
      */
     public boolean contida (Poligono that)
     {
-        double thisMinX = Double.MAX_VALUE;
-        double thisMinY = Double.MAX_VALUE;
-        double thisMaxX = Double.MIN_VALUE;
-        double thisMaxY = Double.MIN_VALUE;
-        double thatMinX = Double.MAX_VALUE;
-        double thatMinY = Double.MAX_VALUE;
-        double thatMaxX = Double.MIN_VALUE;
-        double thatMaxY = Double.MIN_VALUE;
 
-        for (Ponto ponto : this.pontos) {
-            thisMinX = Math.min(thisMinX, ponto.getX());
-            thisMaxX = Math.max(thisMaxX, ponto.getX());
-            thisMinY = Math.min(thisMinY, ponto.getY());
-            thisMaxY = Math.max(thisMaxY, ponto.getY());
-        }
-
-        for (Ponto ponto : that.pontos) {
-            thatMinX = Math.min(thatMinX, ponto.getX());
-            thatMaxX = Math.max(thatMaxX, ponto.getX());
-            thatMinY = Math.min(thatMinY, ponto.getY());
-            thatMaxY = Math.max(thatMaxY, ponto.getY());
-        }
-
-        boolean overlapX = thisMaxX > thatMinX && thisMinX < thatMaxX;
-        boolean overlapY = thisMaxY > thatMinY && thisMinY < thatMaxY;
+        boolean overlapX = this.minX >= that.minX && this.maxX <= that.maxX;
+        boolean overlapY = this.minY >= that.minY && this.maxY <= that.maxY;
     
         return overlapX && overlapY;
     }
@@ -145,7 +145,8 @@ public class Poligono implements Cloneable {
      */
     public void rotateAngle(int angle) {
         for (Ponto ponto : pontos) 
-            ponto.rotate(angle,this.centroide);   
+            ponto.rotate(angle,this.centroide);  
+        setMaxCoordinates(); 
     }
 
     /** Aplica-se um movimento de rotação ao polígono a partir do ângulo de rotação e um ponto de rotação 
@@ -157,18 +158,21 @@ public class Poligono implements Cloneable {
     public void rotate(int angle, Ponto pontoPivo) {
         for (Ponto ponto : pontos)
             ponto.rotate(angle, pontoPivo);
+        setMaxCoordinates();
     }
 
     public void translate(int dx, int dy) {
         for (Ponto ponto : pontos) 
             ponto.translate(dx, dy);
         setCentroide(getCentroide());
+        setMaxCoordinates();
     }
 
     public void translateCentroide(int centroX, int centroY) {
         for (Ponto ponto : pontos) 
             ponto.translateCentroide(centroX, centroY, this.centroide);
         setCentroide(getCentroide());
+        setMaxCoordinates();
     }
 
     @Override
@@ -263,5 +267,37 @@ public class Poligono implements Cloneable {
 
     public void setCentroide(Ponto centroide) {
         this.centroide = centroide;
+    }
+
+    public double getMinX() {
+        return minX;
+    }
+
+    public void setMinX(double minX) {
+        this.minX = minX;
+    }
+
+    public double getMinY() {
+        return minY;
+    }
+
+    public void setMinY(double minY) {
+        this.minY = minY;
+    }
+
+    public double getMaxX() {
+        return maxX;
+    }
+
+    public void setMaxX(double maxX) {
+        this.maxX = maxX;
+    }
+
+    public double getMaxY() {
+        return maxY;
+    }
+
+    public void setMaxY(double maxY) {
+        this.maxY = maxY;
     }
 }
