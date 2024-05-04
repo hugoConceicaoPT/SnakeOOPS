@@ -1,5 +1,6 @@
 package ModelLayer.BoardLayer;
 
+import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Snake;
 import javafx.scene.paint.Color;
 public abstract class Food {
@@ -18,6 +19,13 @@ public abstract class Food {
     public abstract boolean foodContainedInHead(Snake snake);
     
     public abstract boolean foodIntersectObstacle(Obstacle obstacle);
+
+    public abstract Ponto getCentroide();
+
+    public abstract boolean foodIntersectSnake(Snake snake);
+
+    @Override
+    public abstract String toString();
 
     public Color getColor() {
         return color;

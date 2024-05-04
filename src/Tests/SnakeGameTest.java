@@ -11,9 +11,9 @@ import ModelLayer.SnakeLayer.Direction;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 
-public class SnakeGameTest{
+public class SnakeGameTest {
     @Test
-    public void moveSnakeTest() {
+    public void moveSnakeTest() throws CloneNotSupportedException {
         long seed = 0;
         SnakeGame snakeGame = new SnakeGame(20, 10, 2, true, "completa", 1, "quadrados", 5, 2, null, true, false, "textual", seed);
         System.out.println(snakeGame.getSnake().toString());

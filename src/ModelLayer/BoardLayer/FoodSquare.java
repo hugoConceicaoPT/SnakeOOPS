@@ -1,5 +1,6 @@
 package ModelLayer.BoardLayer;
 
+import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Snake;
 
@@ -28,9 +29,19 @@ public class FoodSquare extends Food {
     }
 
     @Override
+    public boolean foodIntersectSnake(Snake snake) {
+        return snake.getHead().interseta(this.quadrado);
+    }
+
+    @Override
     public String toString() {
         return "Comida com: " + quadrado.toString();
     } 
+
+    @Override
+    public Ponto getCentroide() {
+        return this.quadrado.getCentroide();
+    }
 
     public Quadrado getQuadrado() {
         return quadrado;

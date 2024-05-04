@@ -3,7 +3,7 @@ package ModelLayer.SnakeLayer;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class Snake {
+public class Snake implements Cloneable {
     private LinkedList<Quadrado> body;
     private Quadrado head;
     private Direction direction;
@@ -102,6 +102,17 @@ public class Snake {
                (nextDirection == Direction.DOWN && currentDirection == Direction.UP) ||
                (nextDirection == Direction.LEFT && currentDirection == Direction.RIGHT) ||
                (nextDirection == Direction.RIGHT && currentDirection == Direction.LEFT);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Snake clonedSnake = (Snake) super.clone();
+        clonedSnake.body = new LinkedList<>();
+        for (Quadrado quadrado : this.body) {
+            clonedSnake.body.add((Quadrado) quadrado.clone());
+        }
+        clonedSnake.head = clonedSnake.body.getFirst();
+        return clonedSnake;
     }
 
     @Override

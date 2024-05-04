@@ -82,6 +82,21 @@ public class SnakeTest {
     }
     
     @Test
+    public void cloneTest() throws CloneNotSupportedException {
+        long seed = 115;
+        Random random = new Random(seed); 
+        String input1 = "8 4 8 2 6 2 6 4";
+        LinkedList<Quadrado> quadrado = new LinkedList<>();
+        quadrado.add(new Quadrado(input1));
+        Snake snake = new Snake(quadrado, true,random);
+        Snake snake1 = (Snake) snake.clone();
+        assertTrue(snake.getBody().getFirst().equals(snake1.getBody().getFirst()));
+        assertTrue(snake.getBody().getFirst().getAresta().equals(snake1.getBody().getFirst().getAresta()));
+        snake1.move(Direction.LEFT);
+        assertFalse(snake.getBody().getFirst().getAresta().equals(snake1.getBody().getFirst().getAresta()));
+    }
+
+    @Test
     public void toStringTest() throws CloneNotSupportedException {
         long seed = 116;
         Random random = new Random(seed); 

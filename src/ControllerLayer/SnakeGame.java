@@ -41,7 +41,7 @@ public class SnakeGame implements KeyListener {
     /** Construtor para criar um jogo da cobra        
      * @param snake a cobra do jogo 
      */
-    public SnakeGame (int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, Ponto obstacleRotacionPoint, boolean isObstacleMovementAroundCenter, boolean isObstacleDynamic, String UIMode, long seed) {
+    public SnakeGame (int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, Ponto obstacleRotacionPoint, boolean isObstacleMovementAroundCenter, boolean isObstacleDynamic, String UIMode, long seed) throws CloneNotSupportedException {
         this.random = new Random(seed);
         this.isGameOver = false;
         this.widthBoard = widthBoard;

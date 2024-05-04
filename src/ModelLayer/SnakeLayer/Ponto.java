@@ -125,7 +125,7 @@ public class Ponto implements Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-            return super.clone();
+        return super.clone();
     }
     /** Obtém a coordenada x do ponto
      * @return A coordenada x do ponto

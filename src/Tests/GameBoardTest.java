@@ -214,7 +214,7 @@ public class GameBoardTest {
     }
 
     @Test
-    public void toStringTest() {
+    public void toStringTest() throws CloneNotSupportedException {
         long seed = 117;
         Random random = new Random(seed);
         String input = "6 3 8 3 8 5 6 5";

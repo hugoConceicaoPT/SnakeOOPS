@@ -90,4 +90,20 @@ public class Circunferencia {
     public String toString() {
         return "Circunferência de centro: " + centro.toString() + "e raio: " + raio;
     }
+
+    public Ponto getCentro() {
+        return centro;
+    }
+
+    public void setCentro(Ponto centro) {
+        this.centro = centro;
+    }
+
+    public double getRaio() {
+        return raio;
+    }
+
+    public void setRaio(double raio) {
+        this.raio = raio;
+    }
 }

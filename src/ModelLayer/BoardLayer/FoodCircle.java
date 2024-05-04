@@ -1,6 +1,7 @@
 package ModelLayer.BoardLayer;
 
 import ModelLayer.SnakeLayer.Circunferencia;
+import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Snake;
 
 public class FoodCircle extends Food {
@@ -26,12 +27,22 @@ public class FoodCircle extends Food {
         return false;
     }
 
+    @Override
+    public boolean foodIntersectSnake(Snake snake) {
+        return this.circunferencia.interseta(snake.getHead());
+    }
+
     public Circunferencia getCircunferencia() {
         return circunferencia;
     }
 
     public void setCircunferencia(Circunferencia circunferencia) {
         this.circunferencia = circunferencia;
+    }
+
+    @Override
+    public Ponto getCentroide() {
+        return this.circunferencia.getCentro();
     }
 
     @Override

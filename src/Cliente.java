@@ -55,7 +55,12 @@ public class Cliente {
         System.out.print("Indique o modo de interface (textual/grafica): ");
         String UIMode = sc.nextLine();
         long seed = System.currentTimeMillis();
-        SnakeGame snakeGame = new SnakeGame(width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, obstacleRotacionPoint, isObstacleMovementAroundCenter, isObstacleDynamic, UIMode, seed);
-        snakeGame.runGame(sc);
+        SnakeGame snakeGame;
+        try {
+            snakeGame = new SnakeGame(width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, obstacleRotacionPoint, isObstacleMovementAroundCenter, isObstacleDynamic, UIMode, seed);
+            snakeGame.runGame(sc);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
     }
 }

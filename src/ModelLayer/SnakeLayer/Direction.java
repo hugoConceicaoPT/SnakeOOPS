@@ -1,5 +1,5 @@
 package ModelLayer.SnakeLayer;
 
-public enum Direction {
+public enum Direction implements Cloneable {
     UP,DOWN,LEFT,RIGHT;
 }

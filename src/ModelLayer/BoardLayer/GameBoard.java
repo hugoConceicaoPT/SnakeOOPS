@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
 import ModelLayer.SnakeLayer.Circunferencia;
 import ModelLayer.SnakeLayer.Direction;
 import ModelLayer.SnakeLayer.Poligono;
@@ -34,7 +33,7 @@ public class GameBoard {
      * @param rows linhas
      * @param columns colunas
      */
-    public GameBoard (Snake snake, int columns, int rows, FoodType foodType, int foodDimension,int obstaclesQuantity, Ponto obstacleRotacionPoint, boolean isObstacleMovementAroundCenter ,boolean isObstacleDynamic, Random random) {
+    public GameBoard (Snake snake, int columns, int rows, FoodType foodType, int foodDimension,int obstaclesQuantity, Ponto obstacleRotacionPoint, boolean isObstacleMovementAroundCenter ,boolean isObstacleDynamic, Random random) throws CloneNotSupportedException {
         if(columns <= 0 || rows <= 0) {
             throw new IllegalArgumentException("O número de linhas e colunas deve ser maior que zero.");
         }
@@ -43,9 +42,9 @@ public class GameBoard {
         this.snake = snake;
         this.columns = columns;
         this.listOfObstacles = new ArrayList<>();
-        this.board = new Cell[rows][columns];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
+        this.board = new Cell[this.rows][this.columns];
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.columns; j++) {
                 board[i][j] = new Cell();
             }
         }
@@ -90,7 +89,7 @@ public class GameBoard {
      * @return verdadeiro se estiver contido, falso se não
      * @throws CloneNotSupportedException
      */
-    public boolean foodContainedInSnake() {
+    public boolean foodContainedInSnake() throws CloneNotSupportedException {
         if (food.foodContainedInHead(snake)) {
             removeFood();
             generateFood();
@@ -119,7 +118,7 @@ public class GameBoard {
     }
 
     /** Gera uma comida aleatória na board */
-    public void generateFood() {
+    public void generateFood() throws CloneNotSupportedException {
         boolean isEmpty = true;
         while (isEmpty) {
             int row = 0;
@@ -143,13 +142,6 @@ public class GameBoard {
             }
 
             if(isAvailable) {
-                boolean isReachable = foodIsInReachableArea(row, column);
-                if(isReachable) {
-                    for (int i = row; i < row + this.foodDimension; i++) {
-                        for (int j = column; j < column + this.foodDimension; j++) {
-                            board[i][j].setCellType(CellType.FOOD);
-                        }
-                    }
                     if(this.foodType == FoodType.CIRCLE) {
                         double centroY = row + (this.foodDimension/2.0);
                         double centroX = column + (this.foodDimension/2.0);
@@ -162,43 +154,60 @@ public class GameBoard {
                         FactoryFood factory = new FactoryFood();
                         this.food = factory.createFood(new Quadrado(pontos));
                     }
-                    isEmpty = false;
+                    boolean isReachable = foodIsInReachableArea();
+                    if(isReachable) {
+                        for (int i = row; i < row + this.foodDimension; i++) {
+                            for (int j = column; j < column + this.foodDimension; j++) {
+                                board[i][j].setCellType(CellType.FOOD);
+                            }
+                        }
+                        isEmpty = false;
+                    }
+                    else {
+                        this.food = null;
+                    }
                 }
             }
         }
-    }
 
-    private boolean foodIsInReachableArea(int row, int column) {
-        double headX = snake.getHead().getCentroide().getX();
-        double headY = snake.getHead().getCentroide().getY();
-    
-        double foodCenterX = column + (foodDimension / 2.0);
-        double foodCenterY = row + (foodDimension / 2.0);
-    
-        double maxDistanceX = snake.getArestaHeadLength();
-        double maxDistanceY = snake.getArestaHeadLength();
-    
-        int stepsX = (int) Math.ceil(Math.abs(foodCenterX - headX) / maxDistanceX);
-        int stepsY = (int) Math.ceil(Math.abs(foodCenterY - headY) / maxDistanceY);
-    
-        double currentX = headX;
-        double currentY = headY;
-        for (int i = 0; i < Math.max(stepsX, stepsY); i++) {
-            if (i < stepsX && Math.abs(currentX - foodCenterX) > 1) {
-                currentX += Math.signum(foodCenterX - currentX) * maxDistanceX;
-            }
-            else if (i < stepsY && Math.abs(currentY - foodCenterY) > 1) {
-                currentY += Math.signum(foodCenterY - currentY) * maxDistanceY;
-            }
-    
-            if (currentX >= column && currentX <= column + foodDimension &&
-                currentY >= row && currentY <= row + foodDimension) {
-                return true;
-            }
+    private boolean foodIsInReachableArea() throws CloneNotSupportedException {
+        if (food == null) {
+            return false; 
         }
     
-        return false;
+        Snake snakeClone = (Snake) this.snake.clone();
+    
+        double foodX = this.food.getCentroide().getX();
+        double foodY = this.food.getCentroide().getY();
+        boolean isReachable = false;
+        while(true) {
+            double headX = snakeClone.getHead().getCentroide().getX();
+            double headY = snakeClone.getHead().getCentroide().getY();
+            Direction nextDirection = calculateDirection(headX, headY, foodX , foodY, snakeClone);
+            if(this.food.foodContainedInHead(snakeClone)) {
+                isReachable = true;
+                break;
+            }
+            else if(this.food.foodIntersectSnake(snakeClone)) {
+                isReachable = false;
+                break;
+            }
+            snakeClone.move(nextDirection);
+        }
+        return isReachable;
     }
+    
+    private Direction calculateDirection(double headX, double headY, double foodX, double foodY, Snake snake) {
+        if (foodX < headX && snake.getDirection() != Direction.RIGHT)
+            return Direction.LEFT;
+        else if (foodX > headX && snake.getDirection() != Direction.LEFT)
+            return Direction.RIGHT;
+        else if (foodY < headY && snake.getDirection() != Direction.UP) 
+            return Direction.DOWN;
+        else
+            return Direction.UP;
+    }
+    
     
 
     /** Gera um obstáculo aleatório na board */

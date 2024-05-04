@@ -95,6 +95,29 @@ public class Poligono implements Cloneable {
         setMinY(minY);
     }
 
+    private void updateAresta() {
+        this.aresta.clear();
+
+        for(int i = 0; i < pontos.size(); i++)
+        {
+            Reta reta = new Reta(pontos.get(i), pontos.get((i+1) % pontos.size()));
+            if(reta.colineares(pontos.get((i+2) % pontos.size())))
+            {
+                throw new IllegalArgumentException("Poligono:vi");
+            }
+            this.aresta.add(new SegmentoReta(pontos.get(i), pontos.get((i+1) % pontos.size())));
+        }
+
+        for(int i = 0; i < aresta.size(); i++)
+        {
+            if(this.aresta.get(i).seCruzam(this.aresta.get((i+2) % aresta.size())))
+            {
+                throw new IllegalArgumentException("Poligono:vi");
+            }
+        }
+
+    }
+
     public boolean interseta (Poligono that)
     {
         for(SegmentoReta aresta1 : this.aresta)
@@ -146,6 +169,8 @@ public class Poligono implements Cloneable {
     public void rotateAngle(int angle) {
         for (Ponto ponto : pontos) 
             ponto.rotate(angle,this.centroide);  
+        setCentroide(getCentroide());
+        updateAresta();
         setMaxCoordinates(); 
     }
 
@@ -158,6 +183,8 @@ public class Poligono implements Cloneable {
     public void rotate(int angle, Ponto pontoPivo) {
         for (Ponto ponto : pontos)
             ponto.rotate(angle, pontoPivo);
+        setCentroide(getCentroide());
+        updateAresta();
         setMaxCoordinates();
     }
 
@@ -165,6 +192,7 @@ public class Poligono implements Cloneable {
         for (Ponto ponto : pontos) 
             ponto.translate(dx, dy);
         setCentroide(getCentroide());
+        updateAresta();
         setMaxCoordinates();
     }
 
@@ -172,6 +200,7 @@ public class Poligono implements Cloneable {
         for (Ponto ponto : pontos) 
             ponto.translateCentroide(centroX, centroY, this.centroide);
         setCentroide(getCentroide());
+        updateAresta();
         setMaxCoordinates();
     }
 
