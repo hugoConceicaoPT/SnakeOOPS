@@ -232,16 +232,10 @@ public class Poligono implements Cloneable {
     }      
 
     public boolean contemPonto(Ponto ponto) {
-        int intersectCount = 0;
-        SegmentoReta centro = new SegmentoReta(ponto, new Ponto(Double.MAX_VALUE, ponto.getY()));
-    
-        for (SegmentoReta segmento : this.aresta) {
-            if (segmento.seCruzam(centro)) {
-                intersectCount++;
-            }
-        }
-    
-        return intersectCount % 2 == 1;
+        if(ponto.getX() >= this.minX && ponto.getX() <= this.maxX
+            && ponto.getY() >= this.minY && ponto.getY() <= this.maxY)
+            return true;
+        return false;
     }
     
 

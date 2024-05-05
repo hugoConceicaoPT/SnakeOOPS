@@ -3,9 +3,6 @@ package Tests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 
 import ModelLayer.SnakeLayer.Circunferencia;
@@ -17,13 +14,11 @@ public class CircurferenciaTest {
     @Test
     public void intersectaTest(){
         Circunferencia circulo = new Circunferencia(new Ponto(3, 3), 2);
-        List<Ponto> verticesPoligono = new ArrayList<>();
-        verticesPoligono.add(new Ponto(0, 0));
-        verticesPoligono.add(new Ponto(4, 0));
-        verticesPoligono.add(new Ponto(4, 4));
-        verticesPoligono.add(new Ponto(0, 4));
-        Poligono poligono = new Poligono(verticesPoligono);
+        Poligono poligono = new Poligono("4 0 0 4 0 4 4 0 4");
         assertTrue(circulo.interseta(poligono));
+        assertFalse(circulo.interseta(new Quadrado("6 3 9 3 9 0 6 0")));
+        assertFalse(circulo.interseta(new Quadrado("5 3 5 1 7 1 7 3")));
+
     }
     @Test
     public void contidaNaCircunferenciaTest(){

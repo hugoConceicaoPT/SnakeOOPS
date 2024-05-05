@@ -1,7 +1,5 @@
 package ModelLayer.SnakeLayer;
 
-import java.util.List;
-
 public class Circunferencia {
     private Ponto centro;
     private double raio;
@@ -27,33 +25,27 @@ public class Circunferencia {
         this.centro.translateCentroide(centroX, centroY, this.centro);
     }
 
-    private boolean pontoDentroCirculo(Ponto centro, double raio, Ponto ponto) {
-        double distancia = centro.dist(ponto);
-        return distancia <= raio;
-    }
-
+    /**
+     * 
+     * @param that
+     * @return
+     * @see https://www.jeffreythompson.org/collision-detection/circle-rect.php
+     */
     public boolean interseta(Poligono that) {
-        List<Ponto> verticesPoligono = that.getPontos();
+        double testX = that.getCentroide().getX();
+        double testY = that.getCentroide().getY();
+        double width = that.getMaxX() - that.getMinX();
+        double height = that.getMaxY() - that.getMinY();
+        if(this.centro.getX() < that.getCentroide().getX()) testX = that.getCentroide().getX();
+        else if(this.centro.getX() > that.getCentroide().getX() + width) testX = that.getCentroide().getX() + width;
+        if(this.centro.getY() < that.getCentroide().getY()) testY = that.getCentroide().getY();
+        else if(this.centro.getY() > that.getCentroide().getY() + height) testY = that.getCentroide().getY() + height;
 
-        for (int i = 0; i < verticesPoligono.size(); i++) {
-            Ponto ponto1 = verticesPoligono.get(i);
-            Ponto ponto2 = verticesPoligono.get((i + 1) % verticesPoligono.size());
-
-            if (pontoDentroCirculo(this.centro, this.raio, ponto1) ||
-                    pontoDentroCirculo(this.centro, this.raio, ponto2)) {
-                return true;
-            }
-
-            double d = ponto1.dist(ponto2);
-            double u = ((this.centro.getX() - ponto1.getX()) * (ponto2.getX() - ponto1.getX()) + (this.centro.getY() - ponto1.getY()) * (ponto2.getY() - ponto1.getY())) / (d * d);
-            double xInterseccao = ponto1.getX() + u * (ponto2.getX() - ponto1.getX());
-            double yInterseccao = ponto1.getY() + u * (ponto2.getY() - ponto1.getY());
-            Ponto interseccaoPonto = new Ponto(xInterseccao,yInterseccao);
-
-            if (pontoDentroCirculo(this.centro, this.raio, interseccaoPonto)) {
-                return true;
-            }
-        }
+        double distX = this.centro.getX() - testX;
+        double distY = this.centro.getY() - testY;
+        double distance = Math.sqrt((distX*distX)+(distY*distY));
+        
+        if(distance <= this.raio) return true;
         return false;
     }
 
@@ -77,9 +69,7 @@ public class Circunferencia {
 
         for (Ponto ponto : that.getPontos()) {
             double distancia = this.centro.dist(ponto);
-            if (distancia < this.raio) {
-                return false; 
-            }
+            if (distancia < this.raio) return false;
         }
 
         return true;

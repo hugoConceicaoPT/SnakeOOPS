@@ -42,22 +42,22 @@ public class Quadrado extends Retangulo{
         }
     }
 
-    public void getDirectionFromPreviousSquare(Quadrado previousSquare) throws CloneNotSupportedException {
-        for(int i = 0; i < previousSquare.getPontos().size(); i++) {
-            for(int j = 0; j < this.getPontos().size(); j++) {
-                if(previousSquare.getPontos().get(i).getX() > this.getPontos().get(j).getX() && previousSquare.getPontos().get(i).getY() == this.getPontos().get(j).getY()) {
-                    this.setDirection(Direction.RIGHT);
-                }
-                else if(previousSquare.getPontos().get(i).getX() < this.getPontos().get(j).getX() && previousSquare.getPontos().get(i).getY() == this.getPontos().get(j).getY()) {
-                    this.setDirection(Direction.LEFT);
-                }
-                else if(previousSquare.getPontos().get(i).getY() > this.getPontos().get(j).getY() && previousSquare.getPontos().get(i).getX() == this.getPontos().get(j).getX()) {
-                    this.setDirection(Direction.UP);
-                }
-                else 
-                    this.setDirection(Direction.DOWN);
-            }   
+    public void getDirectionFromPreviousSquare(Quadrado previousSquare) {
+        if(previousSquare.getCentroide().getX() > this.getCentroide().getX() && previousSquare.getCentroide().getY() == this.getCentroide().getY()) {
+            this.setDirection(Direction.RIGHT);
+            return;
         }
+        else if(previousSquare.getCentroide().getX() < this.getCentroide().getX() && previousSquare.getCentroide().getY() == this.getCentroide().getY()) {
+            this.setDirection(Direction.LEFT);
+            return;
+        }
+        else if(previousSquare.getCentroide().getY() > this.getCentroide().getY() && previousSquare.getCentroide().getX() == this.getCentroide().getX()) {
+            this.setDirection(Direction.UP);
+            return;
+        }
+        else 
+            this.setDirection(Direction.DOWN);
+            return;
     }
 
     public Direction getDirection() {
