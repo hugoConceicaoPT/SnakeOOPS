@@ -28,7 +28,7 @@ public class FoodCircleTest {
         snake.increaseSize();
         FoodCircle foodCircle = new FoodCircle(new Circunferencia(new Ponto(9.5,4.5), 0.5));
         assertFalse(foodCircle.foodContainedInHead(snake));
-        FoodCircle foodCircle2 = new FoodCircle(new Circunferencia(new Ponto(7,4), 0.5));
+        FoodCircle foodCircle2 = new FoodCircle(new Circunferencia(new Ponto(9,4), 0.5));
         snake.move(Direction.RIGHT);
         assertTrue(foodCircle2.foodContainedInHead(snake));
     }

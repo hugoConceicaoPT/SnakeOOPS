@@ -1,9 +1,20 @@
 package ControllerLayer;
 
 import ModelLayer.BoardLayer.GameBoard;
-import ModelLayer.SnakeLayer.Score;
 
-public class ContourRasterization implements RasterizationStrategy{
-    public void rasterization(GameBoard gameBoard, Score score) {
+public class ContourRasterization extends RasterizationStrategy {
+
+    public ContourRasterization(GameBoard gameBoard) {
+        super(gameBoard);
+    }
+
+    @Override
+    public String toString() {
+        return null;
+    }
+
+    @Override
+    public void updateBoard() {
+
     }
 }

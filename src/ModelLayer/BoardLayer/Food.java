@@ -4,7 +4,7 @@ import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Snake;
 import javafx.scene.paint.Color;
 public abstract class Food {
-    private Color color;
+    protected Color color;
 
     /** Construtor para criar uma comida na board
      */
@@ -23,6 +23,11 @@ public abstract class Food {
     public abstract Ponto getCentroide();
 
     public abstract boolean foodIntersectSnake(Snake snake);
+
+    public abstract int getMinX();
+    public abstract int getMaxX();
+    public abstract int getMinY();
+    public abstract int getMaxY();
 
     @Override
     public abstract String toString();

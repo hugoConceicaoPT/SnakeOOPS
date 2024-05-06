@@ -81,39 +81,7 @@ public class SegmentoReta implements Cloneable {
 
     @Override
     public Object clone() throws CloneNotSupportedException {
-            return super.clone();
-    }
-
-    public String toStringContour() {
-        String result = "";
-        int dist = (int) this.a.dist(this.b);
-        if(this.a.getX() == this.b.getX()) {
-            for(int i = 0; i <= dist; i++) {
-                result+="*";
-                result+="\n";
-            }
-        }
-        else if(this.a.getY() == this.b.getY()) {
-            for(int i = 0; i <= dist; i++) {
-                result+="*";
-                result+=" ";
-            }
-        }
-        else {
-            for(int i = 0; i <= dist; i++) {
-                if(i == dist) {
-                    result+="*";
-                }
-                else {
-                    result+="*";
-                    result+="\n";
-                    for(int j = 0; j < i+1; j++)
-                        result+=" ";
-                }
-            }
-        }
-        return result;
-
+        return super.clone();
     }
 
     /** Obtém o ponto a da reta

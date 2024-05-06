@@ -29,49 +29,45 @@ public class SnakeGame implements KeyListener {
     private FoodType foodType;
     private int obstaclesQuantity;
     private Ponto obstacleRotacionPoint;
-    private boolean isObstacleMovementAroundCenter;
     private boolean isObstacleDynamic;
     private boolean isGameOver;
     private Score score;
     private Snake snake;
     private GameBoard gameBoard;
-    private RasterizationStrategy rasterizionStragety;
+    private RasterizationStrategy rasterizationStrategy;
     private UI userInterface;
 
     /** Construtor para criar um jogo da cobra        
      * @param snake a cobra do jogo 
      */
-    public SnakeGame (int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, Ponto obstacleRotacionPoint, boolean isObstacleMovementAroundCenter, boolean isObstacleDynamic, String UIMode, long seed) throws CloneNotSupportedException {
+    public SnakeGame (int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, Ponto obstacleRotacionPoint, boolean isObstacleDynamic, String UIMode, long seed) throws CloneNotSupportedException {
         this.random = new Random(seed);
         this.isGameOver = false;
         this.widthBoard = widthBoard;
         this.heightBoard = heightBoard;
         this.headSnakeDimension = headSnakeDimension;
         this.isSnakeManualMovement = isSnakeManualMovement;
-        if(rasterizationMode.equals("contorno"))
-            this.rasterizionStragety = new ContourRasterization();
-        else
-            this.rasterizionStragety = new FullRasterization();
+        LinkedList<Quadrado> bodySnake = new LinkedList<>();
+        Quadrado quadrado = new Quadrado(createSquarePoints(this.widthBoard, this.heightBoard, this.headSnakeDimension));
+        bodySnake.addFirst(quadrado);
+        this.snake = new Snake(bodySnake, isSnakeManualMovement,this.random);
+        if(foodType.equals("quadrados")) this.foodType = FoodType.SQUARE;
+        else this.foodType = FoodType.CIRCLE;
         this.foodDimension = foodDimension;
-        if(foodType.equals("quadrados"))
-            this.foodType = FoodType.SQUARE;
-        else
-            this.foodType = FoodType.CIRCLE;
         this.scorePerFood = scorePerFood;
         this.obstaclesQuantity = obstaclesQuantity;
         this.obstacleRotacionPoint = obstacleRotacionPoint;
-        this.isObstacleMovementAroundCenter = isObstacleMovementAroundCenter;
         this.isObstacleDynamic = isObstacleDynamic;
+        this.score = new Score(0,this.scorePerFood);
+        this.gameBoard = new GameBoard(this.snake, this.widthBoard, this.heightBoard, this.foodType,this.foodDimension, this.obstaclesQuantity, this.obstacleRotacionPoint,this.isObstacleDynamic,this.random);
+        if(rasterizationMode.equals("contorno"))
+            this.rasterizationStrategy = new ContourRasterization(this.gameBoard);
+        else
+            this.rasterizationStrategy = new FullRasterization(this.gameBoard);
         if(UIMode.equals("textual"))
-            this.userInterface = new TextualUI(this.rasterizionStragety);
+            this.userInterface = new TextualUI(this.rasterizationStrategy);
         else
             this.userInterface = new GraphicalUI();
-        LinkedList<Quadrado> bodySnake = new LinkedList<>();
-        Quadrado quadrado = new Quadrado(createSquarePoints(this.widthBoard, this.heightBoard, this.headSnakeDimension));
-        this.score = new Score(0,this.scorePerFood);
-        bodySnake.addFirst(quadrado);
-        this.snake = new Snake(bodySnake, isSnakeManualMovement,this.random);
-        this.gameBoard = new GameBoard(this.snake, this.widthBoard, this.heightBoard, this.foodType,this.foodDimension, this.obstaclesQuantity, this.obstacleRotacionPoint, this.isObstacleMovementAroundCenter, this.isObstacleDynamic,this.random);
         if(userInterface instanceof GraphicalUI) 
             ((GraphicalUI) userInterface).addKeyListener(this);
     }
@@ -123,8 +119,10 @@ public class SnakeGame implements KeyListener {
     public void runGame(Scanner sc) {
         int iterationCount = 0;
         while(!this.isGameOver) {
-            if(iterationCount == 0) 
+            if(iterationCount == 0) {
+                this.rasterizationStrategy.updateBoard();
                 userInterface.display(score,gameBoard);
+            }
             System.out.println("Pressione as teclas 'W' para cima, 'A' para esquerda, 'S' para baixo, 'D' para direita.");
             System.out.print("Digite a direção desejada ou pressione Enter para manter a direção atual: ");
             String input = sc.nextLine();
@@ -150,7 +148,13 @@ public class SnakeGame implements KeyListener {
             }
             else 
                 moveSnake(this.snake.getDirection());
-                
+            
+            if(this.gameBoard.getFood() == null) {
+                this.isGameOver = true;
+                score.setPoints(Integer.MAX_VALUE);
+                System.out.println("Zerou o Jogo! Pontuação final: " + score.getPoints());
+            }
+
             if(snakeCollided()) {
                 this.isGameOver = true;
                 System.out.println("Game Over! Pontuação final: " + score.getPoints());
@@ -159,7 +163,6 @@ public class SnakeGame implements KeyListener {
 
             if(this.isObstacleDynamic) {
                 this.gameBoard.rotateObstacles();
-                this.gameBoard.updateObstacleCells();
             }
 
             try {
@@ -174,8 +177,7 @@ public class SnakeGame implements KeyListener {
                 break;
             }
 
-            this.gameBoard.updateSnakeCells();
-
+            this.rasterizationStrategy.updateBoard();
             try {
                 Thread.sleep(100); 
             } catch (InterruptedException e) {
@@ -193,7 +195,7 @@ public class SnakeGame implements KeyListener {
     public void endGame() {
         if(this.userInterface instanceof GraphicalUI) 
             ((GraphicalUI) userInterface).close();  
-        this.rasterizionStragety = null;
+        this.rasterizationStrategy = null;
         this.obstacleRotacionPoint = null;
         this.score = null;
         this.snake = null;
@@ -222,19 +224,19 @@ public class SnakeGame implements KeyListener {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
                 this.snake.move(Direction.UP);
-                this.gameBoard.updateSnakeCells();
+                this.rasterizationStrategy.updateBoard();
                 break;
             case KeyEvent.VK_DOWN:
                 this.snake.move(Direction.DOWN);
-                this.gameBoard.updateSnakeCells();
+                this.rasterizationStrategy.updateBoard();
                 break;
             case KeyEvent.VK_LEFT:
                 snake.move(Direction.LEFT);
-                this.gameBoard.updateSnakeCells();
+                this.rasterizationStrategy.updateBoard();
                 break;
             case KeyEvent.VK_RIGHT:
                 this.snake.move(Direction.RIGHT);
-                this.gameBoard.updateSnakeCells();
+                this.rasterizationStrategy.updateBoard();
                 break;
             default:
                 break;
@@ -246,13 +248,13 @@ public class SnakeGame implements KeyListener {
     }
 
     private List<Ponto> createSquarePoints(int widthBoard, int heightBoard, int size) {
-        int column = random.nextInt(widthBoard - size);
-        int row = random.nextInt(heightBoard - size); 
+        int x = random.nextInt(widthBoard - size);
+        int y = random.nextInt(heightBoard - size); 
         List<Ponto> pontos = new ArrayList<>();
-        pontos.add(new Ponto(column, row));
-        pontos.add(new Ponto(column + size, row));
-        pontos.add(new Ponto(column + size, row + size));
-        pontos.add(new Ponto(column, row + size));
+        pontos.add(new Ponto(x, y));
+        pontos.add(new Ponto(x + size,y));
+        pontos.add(new Ponto(x + size, y + size));
+        pontos.add(new Ponto(x, y + size));
 
         return pontos;
     }
@@ -298,12 +300,12 @@ public class SnakeGame implements KeyListener {
         this.gameBoard = gameBoard;
     }
 
-    public RasterizationStrategy getRasterizionStragety() {
-        return rasterizionStragety;
+    public RasterizationStrategy getrasterizationStrategy() {
+        return rasterizationStrategy;
     }
 
-    public void setRasterizionStragety(RasterizationStrategy rasterizionStragety) {
-        this.rasterizionStragety = rasterizionStragety;
+    public void setrasterizationStrategy(RasterizationStrategy rasterizationStrategy) {
+        this.rasterizationStrategy = rasterizationStrategy;
     }
 
     public int getHeadSnakeDimension() {
@@ -344,14 +346,6 @@ public class SnakeGame implements KeyListener {
 
     public void setObstacleRotacionPoint(Ponto obstacleRotacionPoint) {
         this.obstacleRotacionPoint = obstacleRotacionPoint;
-    }
-
-    public boolean isObstacleMovementAroundCenter() {
-        return isObstacleMovementAroundCenter;
-    }
-
-    public void setObstacleMovementAroundCenter(boolean isObstacleMovementAroundCenter) {
-        this.isObstacleMovementAroundCenter = isObstacleMovementAroundCenter;
     }
 
     public boolean isObstacleDynamic() {

@@ -42,22 +42,19 @@ public class Cliente {
         if(obstacleMovement.equals("sim"))
             isObstacleDynamic = true;
         Ponto obstacleRotacionPoint = null;
-        boolean isObstacleMovementAroundCenter = false;
         if(isObstacleDynamic) {
             System.out.print("Indique ou não o movimento de rotação desses obstáculos: ");
             String obstacleRotacionString = sc.nextLine(); 
             String [] obstaclesParts = obstacleRotacionString.split(" ");
             if(obstaclesParts.length > 1)
                 obstacleRotacionPoint = new Ponto(Double.parseDouble(obstaclesParts[0]), Double.parseDouble(obstaclesParts[1]));
-            else
-                isObstacleMovementAroundCenter = true;
         }
         System.out.print("Indique o modo de interface (textual/grafica): ");
         String UIMode = sc.nextLine();
         long seed = System.currentTimeMillis();
         SnakeGame snakeGame;
         try {
-            snakeGame = new SnakeGame(width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, obstacleRotacionPoint, isObstacleMovementAroundCenter, isObstacleDynamic, UIMode, seed);
+            snakeGame = new SnakeGame(width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, obstacleRotacionPoint,isObstacleDynamic, UIMode, seed);
             snakeGame.runGame(sc);
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();

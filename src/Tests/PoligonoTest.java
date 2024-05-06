@@ -173,12 +173,4 @@ public class PoligonoTest {
         Poligono poligono3 = new Poligono(input2);
         assertFalse(poligono2.equals(poligono3));
     }
-
-    @Test
-    public void toStringContour() {
-        String input1 = "4 1 3 1 1 5 1 5 3";
-        Poligono poligono1 = new Poligono(input1);
-        assertEquals(" ", poligono1.toStringCountour());
-
-    }
 }

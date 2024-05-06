@@ -32,6 +32,27 @@ public class FoodCircle extends Food {
         return this.circunferencia.interseta(snake.getHead());
     }
 
+    @Override
+    public int getMaxX() {
+        return (int) (this.circunferencia.getCentro().getX() + this.circunferencia.getRaio());
+    }
+
+    @Override
+    public int getMinX() {
+        return (int) (this.circunferencia.getCentro().getX() - this.circunferencia.getRaio());
+    }
+
+    @Override
+    public int getMaxY() {
+        return (int) (this.circunferencia.getCentro().getY() + this.circunferencia.getRaio());
+    }
+
+    @Override
+    public int getMinY() {
+        return (int) (this.circunferencia.getCentro().getY() - this.circunferencia.getRaio());
+    }
+    
+
     public Circunferencia getCircunferencia() {
         return circunferencia;
     }

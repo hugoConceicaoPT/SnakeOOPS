@@ -34,6 +34,27 @@ public class FoodSquare extends Food {
     }
 
     @Override
+    public int getMaxX() {
+        return (int) this.quadrado.getMaxX();
+    }
+
+    @Override
+    public int getMinX() {
+        return (int) this.quadrado.getMinX();
+    }
+
+    @Override
+    public int getMaxY() {
+        return (int) this.quadrado.getMaxY();
+    }
+
+    @Override
+    public int getMinY() {
+        return (int) this.quadrado.getMinY();
+    }
+
+
+    @Override
     public String toString() {
         return "Comida com: " + quadrado.toString();
     } 

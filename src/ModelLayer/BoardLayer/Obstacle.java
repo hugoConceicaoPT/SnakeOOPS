@@ -14,13 +14,13 @@ public class Obstacle {
      * @param figuraGeometrica figura geométrica
      * @param isDynamic booleano para verificar se o obstáculo é dinâmico
      */
-    public Obstacle(Poligono poligono, Ponto rotacionPoint, boolean isDynamic, boolean isMovementAroundCenter) {
+    public Obstacle(Poligono poligono, Ponto rotacionPoint, boolean isDynamic) {
         this.poligono = poligono;
         if(isDynamic)
             this.obstacleMovement = new DynamicMovement();
         else
             this.obstacleMovement = new StaticMovement();
-        if(isMovementAroundCenter)
+        if(rotacionPoint == null)
             this.rotacionPoint = poligono.getCentroide();
         else
             this.rotacionPoint = rotacionPoint;
