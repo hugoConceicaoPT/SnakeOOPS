@@ -153,7 +153,7 @@ public class SnakeGame implements KeyListener {
                 
             if(snakeCollided()) {
                 this.isGameOver = true;
-                System.out.println("Game Over! Pontuação final: " + score.getScore());
+                System.out.println("Game Over! Pontuação final: " + score.getPoints());
                 break;
             }
 
@@ -170,7 +170,7 @@ public class SnakeGame implements KeyListener {
 
             if(snakeCollided()) {
                 this.isGameOver = true;
-                System.out.println("Game Over! Pontuação final: " + score.getScore());
+                System.out.println("Game Over! Pontuação final: " + score.getPoints());
                 break;
             }
 

@@ -3,46 +3,32 @@ package ModelLayer.SnakeLayer;
 import java.io.File;
 
 public class Score {
-    private int score;
+    private int points;
     private int scorePerFood;
     private File fileRank;
     /** Construtor para criar um score
      * @param score o score
      */
-    public Score(int score, int scorePerFood) {
-        this.score = score;
+    public Score(int points, int scorePerFood) {
+        this.points = points;
         this.scorePerFood = scorePerFood;
     }
     
     /** Aumenta o score por um */
     public void increaseScore() {
-        setScore(this.score+this.scorePerFood);
+        setPoints(this.points+this.scorePerFood);
     }
 
     /** Obtém o rank a partir de um ficheiro
      * @param file ficheiro com o top n
      * @return o rank com top
      */
-    public String getRank(File file) {return null;}
+    public String getTop(File file) {return null;}
     
     /** Atualiza o rank para um ficheiro
      * @return o ficheiro atualiza com o ranking
      */
-    public File setRank() {return null;}
-
-    /** Obtém o valor do score
-     * @return o valor do score
-     */
-    public int getScore() {
-        return score;
-    }
-
-    /** Atualiza o valor do score
-     * @param score o valor do score
-     */
-    public void setScore(int score) {
-        this.score = score;
-    }
+    public File setTop() {return null;}
 
     public File getFileRank() {
         return fileRank;
@@ -50,6 +36,28 @@ public class Score {
 
     public void setFileRank(File fileRank) {
         this.fileRank = fileRank;
+    }
+
+      /** Obtém o valor dos pontos
+     * @return o valor dos pontos
+     */
+    public int getPoints() {
+        return points;
+    }
+
+    /** Atualiza o valor dos pontos
+     * @param points o valor dos pontos
+     */
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public int getScorePerFood() {
+        return scorePerFood;
+    }
+
+    public void setScorePerFood(int scorePerFood) {
+        this.scorePerFood = scorePerFood;
     };
 
     

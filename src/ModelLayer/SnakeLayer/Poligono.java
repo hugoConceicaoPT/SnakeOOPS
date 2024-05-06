@@ -249,6 +249,36 @@ public class Poligono implements Cloneable {
         return pontos.toString();
     }
 
+    public String toStringCountour() {
+    
+        char[][] contour = new char[(int) this.maxY + 1][(int) this.maxX + 1];
+    
+        for (int i = 0; i <= this.maxY; i++) {
+            for (int j = 0; j <= this.maxX; j++) {
+                contour[i][j] = ' ';
+            }
+        }
+
+        for(Ponto ponto : this.pontos) {
+            int x = (int) ponto.getX();
+            int y = (int) ponto.getY();
+
+            contour[y][x] = '*';
+        }
+    
+        // Converter a matriz em uma string
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i <= this.maxY; i++) {
+            for (int j = 0; j <= this.maxX; j++) {
+                sb.append(contour[i][j]);
+            }
+            sb.append("\n");
+        }
+    
+        return sb.toString();
+    }
+    
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         Poligono novoPoligono = (Poligono) super.clone();

@@ -123,6 +123,10 @@ public class Ponto implements Cloneable {
         return "(" + this.x + "," + this.y + ")";
     }
 
+    public String toStringContour() {
+        return "*";
+    }
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();

@@ -374,6 +374,19 @@ public class GameBoard {
         return result;
     }
 
+    public String toStringContour() {
+        String result = "";
+        for(int i = this.rows - 1; i >= 0; i--) {
+            for(int j = 0; j < this.columns; j++) {
+                result+= board[i][j].toString() + " ";
+            }
+            result += "\n";
+        }
+        return result;
+    }
+
+
+
     public List<Obstacle> getListOfObstacles() {
         return listOfObstacles;
     }

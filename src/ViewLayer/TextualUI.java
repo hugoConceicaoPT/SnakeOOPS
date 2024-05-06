@@ -23,6 +23,25 @@ public class TextualUI implements UI {
 
     private void renderContour(Score score,GameBoard gameBoard) {
 
+        int angle = 0;
+        switch (gameBoard.getSnake().getDirection()) {
+            case UP:
+                angle = 90;
+                break;
+            case DOWN:
+                angle = 270;
+                break;
+            case LEFT:
+                angle = 180;
+                break;
+            case RIGHT:
+                angle = 0;
+                break;  
+            default:
+                break;
+        }
+        System.out.println("Dir H: " + angle + "\t" + "Pontos: " + score.getPoints());
+
     }
 
     private void renderFull(Score score, GameBoard gameBoard) {
@@ -44,6 +63,6 @@ public class TextualUI implements UI {
             default:
                 break;
         }
-        System.out.println("Dir H: " + angle + "\t" + "Pontos: " + score.getScore());
+        System.out.println("Dir H: " + angle + "\t" + "Pontos: " + score.getPoints());
     }
 }

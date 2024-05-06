@@ -1,4 +1,5 @@
 package Tests;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
@@ -48,5 +49,14 @@ public class SegmentoRetaTest {
         SegmentoReta segmentoReta4 = new SegmentoReta(new Ponto(5,0), new Ponto(5,4));
         assertFalse(segmentoReta1.seCruzam(segmentoReta4));
         assertTrue(segmentoReta3.seCruzam(segmentoReta4));
+    }
+
+    @Test
+    public void toStringContouTest() {
+        SegmentoReta segmentoReta1 = new SegmentoReta(new Ponto(0,2), new Ponto(4,2));
+        assertEquals("*****", segmentoReta1.toStringContour());
+        SegmentoReta segmentoReta2 = new SegmentoReta(new Ponto(2,0), new Ponto(2,3));
+        assertEquals("*\n*\n*\n*\n", segmentoReta2.toStringContour());
+        assertEquals("*\n *\n  *", new SegmentoReta(new Ponto(7,5), new Ponto(9,3)).toStringContour());
     }
 }
