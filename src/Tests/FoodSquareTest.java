@@ -26,8 +26,8 @@ public class FoodSquareTest {
         snake.increaseSize();
         Quadrado quadrado = new Quadrado("10 5 10 4 9 4 9 5");
         FoodSquare foodCircle = new FoodSquare(quadrado);
-        assertFalse(foodCircle.foodContainedInHead(snake));
+        assertFalse(foodCircle.foodContainedInSnakeHead(snake));
         snake.move(Direction.RIGHT);
-        assertTrue(foodCircle.foodContainedInHead(snake));
+        assertTrue(foodCircle.foodContainedInSnakeHead(snake));
     }
 }

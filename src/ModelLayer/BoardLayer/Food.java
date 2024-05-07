@@ -16,7 +16,8 @@ public abstract class Food {
      * @param snake o objeto snake
      * @return verdadeiro se estiver contido, falso se não
      */
-    public abstract boolean foodContainedInHead(Snake snake);
+    public abstract boolean foodContainedInSnakeHead(Snake snake);
+    public abstract boolean foodContainedInSnake(Snake snake);
     
     public abstract boolean foodIntersectObstacle(Obstacle obstacle);
 

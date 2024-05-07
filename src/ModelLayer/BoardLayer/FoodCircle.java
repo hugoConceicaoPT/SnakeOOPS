@@ -14,11 +14,21 @@ public class FoodCircle extends Food {
     }
 
     @Override
-    public boolean foodContainedInHead(Snake snake){
+    public boolean foodContainedInSnakeHead(Snake snake){
         if(circunferencia.contidaNoPoligono(snake.getHead()))
             return true;
         return false;
     }
+
+    @Override
+    public boolean foodContainedInSnake(Snake snake){
+        for(int i = 1; i < snake.getBody().size(); i++) {
+            if(circunferencia.contidaNoPoligono(snake.getBody().get(i)))
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean foodIntersectObstacle(Obstacle obstacle){
         if (circunferencia.interseta(obstacle.getPoligono())) {

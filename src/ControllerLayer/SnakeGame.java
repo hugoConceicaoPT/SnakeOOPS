@@ -36,6 +36,7 @@ public class SnakeGame implements KeyListener {
     private GameBoard gameBoard;
     private RasterizationStrategy rasterizationStrategy;
     private UI userInterface;
+    private Leaderboard leaderboard;
 
     /** Construtor para criar um jogo da cobra        
      * @param snake a cobra do jogo 
@@ -70,6 +71,7 @@ public class SnakeGame implements KeyListener {
             this.userInterface = new GraphicalUI();
         if(userInterface instanceof GraphicalUI) 
             ((GraphicalUI) userInterface).addKeyListener(this);
+        this.leaderboard = new Leaderboard();
     }
 
 
@@ -166,7 +168,7 @@ public class SnakeGame implements KeyListener {
             }
 
             try {
-                foodContainedInSnake();
+                foodContainedInSnakeHead();
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
@@ -183,16 +185,16 @@ public class SnakeGame implements KeyListener {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-
             userInterface.display(score,gameBoard);
             iterationCount++;
         }
         sc.close();
-        endGame();
     }
     /** Para o jogo */
     public void endGame() {
+        this.leaderboard.updateLeaderboard(score);
+        System.out.println("Seu jogo acabou. Aqui estão os tops jogadores do jogo:");
+        System.out.println(this.leaderboard.generateLeaderboard());
         if(this.userInterface instanceof GraphicalUI) 
             ((GraphicalUI) userInterface).close();  
         this.rasterizationStrategy = null;
@@ -201,10 +203,11 @@ public class SnakeGame implements KeyListener {
         this.snake = null;
         this.gameBoard = null;
         this.userInterface = null; 
+        this.leaderboard = null;
     }
     
-    public void foodContainedInSnake() throws CloneNotSupportedException {
-        if(this.gameBoard.foodContainedInSnake()) {
+    public void foodContainedInSnakeHead() throws CloneNotSupportedException {
+        if(this.gameBoard.foodContainedInSnakeHead()) {
             this.snake.increaseSize();
             this.score.increaseScore();
         }
@@ -386,5 +389,25 @@ public class SnakeGame implements KeyListener {
 
     public void setScorePerFood(int scorePerFood) {
         this.scorePerFood = scorePerFood;
+    }
+
+
+    public RasterizationStrategy getRasterizationStrategy() {
+        return rasterizationStrategy;
+    }
+
+
+    public void setRasterizationStrategy(RasterizationStrategy rasterizationStrategy) {
+        this.rasterizationStrategy = rasterizationStrategy;
+    }
+
+
+    public Leaderboard getLeaderboard() {
+        return leaderboard;
+    }
+
+
+    public void setLeaderboard(Leaderboard leaderboard) {
+        this.leaderboard = leaderboard;
     }
 }

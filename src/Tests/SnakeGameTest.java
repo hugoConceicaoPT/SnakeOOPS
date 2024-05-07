@@ -40,7 +40,7 @@ public class SnakeGameTest {
         System.out.println(game.getSnake().toString());
         FoodSquare foodSquare = new FoodSquare(new Quadrado("16 30 22 30 22 36 16 36"));
         game.getGameBoard().setFood(foodSquare);
-        game.foodContainedInSnake(); 
+        game.foodContainedInSnakeHead(); 
         assertEquals(100, game.getScore().getPoints());
         assertEquals(2, game.getSnake().getBody().size());
     }

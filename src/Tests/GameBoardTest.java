@@ -66,9 +66,9 @@ public class GameBoardTest {
         FoodCircle foodCircle = new FoodCircle(new Circunferencia(new Ponto(9,4), 0.5));
         gameBoard.setFood(foodCircle);
         snake.move(Direction.RIGHT);
-        assertTrue(gameBoard.foodContainedInSnake());
+        assertTrue(gameBoard.foodContainedInSnakeHead());
         snake.move(Direction.UP);
-        assertFalse(gameBoard.foodContainedInSnake());
+        assertFalse(gameBoard.foodContainedInSnakeHead());
     }
 
     @Test
@@ -102,7 +102,7 @@ public class GameBoardTest {
         snake.increaseSize();
         GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,1,new Ponto(1,1),false,random);
         assertNotNull(gameBoard.getFood());
-        assertFalse(gameBoard.foodContainedInSnake());
+        assertFalse(gameBoard.foodContainedInSnakeHead());
         assertFalse(gameBoard.foodIntersectObstacle());
         gameBoard.removeFood();
         gameBoard.generateFood();

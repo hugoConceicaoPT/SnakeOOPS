@@ -56,6 +56,7 @@ public class Cliente {
         try {
             snakeGame = new SnakeGame(width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, obstacleRotacionPoint,isObstacleDynamic, UIMode, seed);
             snakeGame.runGame(sc);
+            snakeGame.endGame();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }

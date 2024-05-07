@@ -81,14 +81,24 @@ public class GameBoard {
      * @return verdadeiro se estiver contido, falso se não
      * @throws CloneNotSupportedException
      */
-    public boolean foodContainedInSnake() throws CloneNotSupportedException {
-        if (food.foodContainedInHead(snake)) {
+    public boolean foodContainedInSnakeHead() throws CloneNotSupportedException {
+        if (food.foodContainedInSnakeHead(snake)) {
             removeFood();
             generateFood();
             return true; 
         }
         return false; 
     }
+
+    public boolean foodContainedInSnake() throws CloneNotSupportedException {
+        if (food.foodContainedInSnake(snake)) {
+            removeFood();
+            generateFood();
+            return true; 
+        }
+        return false; 
+    }
+
 
     public void removeFood(){
         this.food = null;
@@ -128,7 +138,7 @@ public class GameBoard {
                 FactoryFood factory = new FactoryFood();
                 this.food = factory.createFood(new Quadrado(pontos));
             }
-            if(foodIntersectObstacle() || foodContainedInSnake()) {
+            if(foodIntersectObstacle() || foodContainedInSnakeHead() || foodContainedInSnake()) {
                 this.food = null;
             }
             else {
@@ -153,7 +163,7 @@ public class GameBoard {
             double headX = snakeClone.getHead().getCentroide().getX();
             double headY = snakeClone.getHead().getCentroide().getY();
             Direction nextDirection = calculateDirection(headX, headY, foodX , foodY, snakeClone);
-            if(this.food.foodContainedInHead(snakeClone)) {
+            if(this.food.foodContainedInSnakeHead(snakeClone)) {
                 isReachable = true;
                 break;
             }
