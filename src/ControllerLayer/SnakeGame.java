@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import ModelLayer.BoardLayer.FoodType;
 import ModelLayer.BoardLayer.GameBoard;
+import ModelLayer.SnakeLayer.AutomatedMovementStrategy;
 import ModelLayer.SnakeLayer.Direction;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
@@ -128,32 +129,36 @@ public class SnakeGame implements KeyListener {
                 this.rasterizationStrategy.updateBoard();
                 userInterface.display(score,gameBoard);
             }
-            System.out.println("Pressione as teclas 'W' para cima, 'A' para esquerda, 'S' para baixo, 'D' para direita.");
-            System.out.print("Digite a direção desejada ou pressione Enter para manter a direção atual: ");
-            String input = sc.nextLine();
-            if(!input.isEmpty()) {
-                char directionInput = input.toUpperCase().charAt(0);
-                switch (directionInput) {
-                    case 'W':
-                        moveSnake(Direction.UP);
-                        break;
-                    case 'A':
-                        moveSnake(Direction.LEFT);
-                        break;
-                    case 'S':
-                        moveSnake(Direction.DOWN);
-                        break;
-                    case 'D':
-                        moveSnake(Direction.RIGHT);
-                        break;
-                    default:
-                        moveSnake(this.snake.getCurrentDirection());
-                        break;
+            if(isSnakeManualMovement) {
+                System.out.println("Pressione as teclas 'W' para cima, 'A' para esquerda, 'S' para baixo, 'D' para direita.");
+                System.out.print("Digite a direção desejada ou pressione Enter para manter a direção atual: ");
+                String input = sc.nextLine();
+                if(!input.isEmpty()) {
+                    char directionInput = input.toUpperCase().charAt(0);
+                    switch (directionInput) {
+                        case 'W':
+                            moveSnake(Direction.UP);
+                            break;
+                        case 'A':
+                            moveSnake(Direction.LEFT);
+                            break;
+                        case 'S':
+                            moveSnake(Direction.DOWN);
+                            break;
+                        case 'D':
+                            moveSnake(Direction.RIGHT);
+                            break;
+                        default:
+                            moveSnake(this.snake.getCurrentDirection());
+                            break;
+                    }
                 }
+                else 
+                    moveSnake(this.snake.getCurrentDirection());
             }
-            else 
+            else {
                 moveSnake(this.snake.getCurrentDirection());
-            
+            }
             if(this.gameBoard.getFood() == null) {
                 this.isGameOver = true;
                 score.setPoints(Integer.MAX_VALUE);
@@ -183,13 +188,19 @@ public class SnakeGame implements KeyListener {
             }
 
             this.rasterizationStrategy.updateBoard();
-            try {
-                Thread.sleep(100); 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if(!this.isSnakeManualMovement) {
+                try {
+                    Thread.sleep(1000); 
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                userInterface.display(score,gameBoard);
+                iterationCount++;
             }
-            userInterface.display(score,gameBoard);
-            iterationCount++;
+            else {
+                userInterface.display(score,gameBoard);
+                iterationCount++;
+            }
         }
         sc.close();
     }
@@ -254,8 +265,14 @@ public class SnakeGame implements KeyListener {
     }
 
     public void moveSnake(Direction nextDirection) {
-        this.snake.setNextDirection(nextDirection);
-        this.snake.move();
+        if(this.snake.getMovementStrategy() instanceof AutomatedMovementStrategy) {
+            this.snake.setNextDirection(nextDirection);
+            this.snake.moveAutomated(gameBoard);
+        }
+        else {
+            this.snake.setNextDirection(nextDirection);
+            this.snake.move();
+        }
     }
 
     private List<Ponto> createSquarePoints(int widthBoard, int heightBoard, int size) {

@@ -3,6 +3,8 @@ package ModelLayer.SnakeLayer;
 import java.util.LinkedList;
 import java.util.Random;
 
+import ModelLayer.BoardLayer.GameBoard;
+
 public class Snake implements Cloneable {
     private LinkedList<Quadrado> body;
     private Quadrado head;
@@ -87,6 +89,7 @@ public class Snake implements Cloneable {
         return false;
     }
 
+
     /** Move a cabeça da cobra
      * @param nextDirection a próxima direção que a cobra vai tomar
      */
@@ -143,9 +146,15 @@ public class Snake implements Cloneable {
             
         }
     }
-    
+
+    public void moveAutomated(GameBoard gameBoard) {
+        this.nextDirection = this.movementStrategy.setNextDirection(this, gameBoard);
+        move();
+    }
+
     public void move() {
-        this.nextDirection = this.movementStrategy.setNextDirection(this);
+        if(this.movementStrategy instanceof ManualMovementStrategy)
+            this.nextDirection = this.movementStrategy.setNextDirection(this,null);
         if(isOppositeDirection(currentDirection, nextDirection))
             return;
         Ponto centroHeadSnake = this.head.getCentroide();

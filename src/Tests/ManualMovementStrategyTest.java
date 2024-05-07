@@ -30,7 +30,7 @@ public class ManualMovementStrategyTest {
         body.add(quadrado);
         Snake snake = new Snake(body, false, random);
         snake.setNextDirection(nexDirection);
-        movementStrategy.setNextDirection(snake);
+        movementStrategy.setNextDirection(snake,null);
         assertEquals(nexDirection, snake.getNextDirection());
     }
 }
