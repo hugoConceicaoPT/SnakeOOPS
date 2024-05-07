@@ -15,7 +15,10 @@ import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Score;
 import ModelLayer.SnakeLayer.Snake;
+import ViewLayer.ContourRasterization;
+import ViewLayer.FullRasterization;
 import ViewLayer.GraphicalUI;
+import ViewLayer.RasterizationStrategy;
 import ViewLayer.TextualUI;
 import ViewLayer.UI;
 public class SnakeGame implements KeyListener {

@@ -1,4 +1,4 @@
-package ControllerLayer;
+package ViewLayer;
 
 import ModelLayer.BoardLayer.GameBoard;
 
