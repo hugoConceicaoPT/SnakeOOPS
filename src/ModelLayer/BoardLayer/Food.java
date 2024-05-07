@@ -18,8 +18,8 @@ public abstract class Food {
      */
     public abstract boolean foodContainedInSnakeHead(Snake snake);
     public abstract boolean foodContainedInSnake(Snake snake);
-    
     public abstract boolean foodIntersectObstacle(Obstacle obstacle);
+    public abstract boolean foodContainedObstacle(Obstacle obstacle);
 
     public abstract Ponto getCentroide();
 

@@ -41,7 +41,19 @@ public class FoodSquare extends Food {
 
     @Override
     public boolean foodIntersectSnake(Snake snake) {
-        return snake.getHead().interseta(this.quadrado);
+        for(int i = 0; i < snake.getBody().size(); i++) {
+            if(quadrado.interseta(snake.getBody().get(i)))
+                return true;
+        }
+        return false;
+    }
+
+    
+    @Override
+    public boolean foodContainedObstacle(Obstacle obstacle) {
+        if(quadrado.contida(obstacle.getPoligono()) || obstacle.getPoligono().contida(quadrado))
+            return true;
+        return false;
     }
 
     @Override

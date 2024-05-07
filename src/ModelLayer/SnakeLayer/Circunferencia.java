@@ -34,19 +34,17 @@ public class Circunferencia {
     public boolean interseta(Poligono that) {
         double testX = that.getCentroide().getX();
         double testY = that.getCentroide().getY();
-        double width = that.getMaxX() - that.getMinX();
-        double height = that.getMaxY() - that.getMinY();
-        if(this.centro.getX() < that.getCentroide().getX()) testX = that.getCentroide().getX();
-        else if(this.centro.getX() > that.getCentroide().getX() + width) testX = that.getCentroide().getX() + width;
-        if(this.centro.getY() < that.getCentroide().getY()) testY = that.getCentroide().getY();
-        else if(this.centro.getY() > that.getCentroide().getY() + height) testY = that.getCentroide().getY() + height;
+        if (this.centro.getX() < that.getMinX()) testX = that.getMinX();
+        else if (this.centro.getX() > that.getMaxX()) testX = that.getMaxX();
+
+        if(this.centro.getY() < that.getMinY()) testY = that.getMinY();
+        else if(this.centro.getY() > that.getMaxY()) testY = that.getMaxY();
 
         double distX = this.centro.getX() - testX;
         double distY = this.centro.getY() - testY;
         double distance = Math.sqrt((distX*distX)+(distY*distY));
         
-        if(distance <= this.raio) return true;
-        return false;
+        return distance <= this.raio;
     }
 
     /** Verifica se uma circunferência está contido noutra
@@ -67,12 +65,10 @@ public class Circunferencia {
         if(!that.contemPonto(this.centro))
             return false;
 
-        for (Ponto ponto : that.getPontos()) {
-            double distancia = this.centro.dist(ponto);
-            if (distancia < this.raio) return false;
-        }
-
-        return true;
+        if(this.centro.getX() - this.raio >= that.minX && this.centro.getX() + this.raio <= that.maxX 
+            && this.centro.getY() - this.raio >= that.minY && this.centro.getY() + this.raio <= that.maxY)
+            return true;
+        return false;
     }
 
 

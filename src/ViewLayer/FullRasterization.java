@@ -23,7 +23,7 @@ public class FullRasterization extends RasterizationStrategy {
         String result = "";
         for(int i = this.rows - 1; i >= 0; i--) {
             for(int j = 0; j < this.cols; j++) {
-                result+= board[i][j].toString() + " ";
+                result += board[i][j].toString() + " ";
             }
             result += "\n";
         }

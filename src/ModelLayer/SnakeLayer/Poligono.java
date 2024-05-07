@@ -144,6 +144,15 @@ public class Poligono implements Cloneable {
         return overlapX && overlapY;
     }
 
+    public boolean contidaNaCircunferencia (Circunferencia that)
+    {
+
+        boolean overlapX = this.minX >= that.getCentro().getX() - that.getRaio() && this.maxX <= that.getCentro().getX() + that.getRaio();
+        boolean overlapY =  this.minY >= that.getCentro().getY() - that.getRaio() && this.maxY <= that.getCentro().getY() + that.getRaio();
+    
+        return overlapX && overlapY;
+    }
+
     /** Calcula o centróide de um poligono
      * @see https://math.stackexchange.com/questions/90463/how-can-i-calculate-the-centroid-of-polygon
      * @return o centróide 

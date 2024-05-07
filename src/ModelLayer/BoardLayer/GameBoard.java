@@ -92,13 +92,18 @@ public class GameBoard {
 
     public boolean foodContainedInSnake() throws CloneNotSupportedException {
         if (food.foodContainedInSnake(snake)) {
-            removeFood();
-            generateFood();
             return true; 
         }
         return false; 
     }
 
+    public boolean foodContainedInObstacle() {
+        for(int i = 0; i < this.obstaclesQuantity; i++) {
+            if(food.foodContainedObstacle(this.listOfObstacles.get(i)))
+                return true;
+        }
+        return false;
+    }
 
     public void removeFood(){
         this.food = null;
@@ -112,6 +117,10 @@ public class GameBoard {
         return false;
     }
 
+    public boolean foodIntersectSnake() {
+        return food.foodIntersectSnake(snake);
+    }
+
     /** Gera uma comida aleatória na board */
     public void generateFood() throws CloneNotSupportedException {
         boolean isEmpty = true;
@@ -123,9 +132,9 @@ public class GameBoard {
             else
                 x = this.random.nextInt(this.widthBoard - this.foodDimension - 1) + 1;
             if(this.heightBoard % this.snake.getHead().getMaxY() == 0 && this.snake.getHead().getMaxY() % this.snake.getArestaHeadLength() == 0)
-                y = this.random.nextInt(this.widthBoard - this.foodDimension);
+                y = this.random.nextInt(this.heightBoard - this.foodDimension);
             else
-                y = this.random.nextInt(this.widthBoard - this.foodDimension - 1) + 1;
+                y = this.random.nextInt(this.heightBoard - this.foodDimension - 1) + 1;
             if(this.foodType == FoodType.CIRCLE) {
                 double centroY = y + (this.foodDimension/2.0);
                 double centroX = x + (this.foodDimension/2.0);
@@ -138,13 +147,13 @@ public class GameBoard {
                 FactoryFood factory = new FactoryFood();
                 this.food = factory.createFood(new Quadrado(pontos));
             }
-            if(foodIntersectObstacle() || foodContainedInSnakeHead() || foodContainedInSnake()) {
-                this.food = null;
-            }
-            else {
+            if(!foodIntersectObstacle() && !foodContainedInSnake() && !foodContainedInObstacle() && !foodContainedInSnakeHead() && !foodIntersectSnake()) {
                 boolean isReachable = foodIsInReachableArea();
                 if(isReachable) isEmpty = false;
-                else this.food = null;
+                else { 
+                    this.food = null;
+                    isEmpty = true;
+                }
             }
         }
     }
@@ -164,8 +173,17 @@ public class GameBoard {
             double headY = snakeClone.getHead().getCentroide().getY();
             Direction nextDirection = calculateDirection(headX, headY, foodX , foodY, snakeClone);
             if(this.food.foodContainedInSnakeHead(snakeClone)) {
-                isReachable = true;
-                break;
+                for(int i = 0; i < this.obstaclesQuantity; i++ ){
+                    if(!this.listOfObstacles.get(i).obstacleContained(snakeClone) && !this.listOfObstacles.get(i).obstacleIntersect(snakeClone)) {
+                        isReachable = true;
+                    }
+                    else {
+                        isReachable = false;
+                        break;
+                    }
+                }
+                if(isReachable)
+                    break;
             }
             else if(this.food.foodIntersectSnake(snakeClone)) {
                 isReachable = false;
@@ -222,6 +240,13 @@ public class GameBoard {
                         break;
                     default:
                         break;
+                }
+                if(!snakeIntersectsObstacle() && !obstacleContainedInSnake()) {
+                    isEmpty = false;
+                }
+                else {
+                    this.listOfObstacles.remove(this.obstaclesQuantity - 1);
+                    isEmpty = true;
                 }
             }
         }

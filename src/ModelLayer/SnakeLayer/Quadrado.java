@@ -9,7 +9,6 @@ import java.util.List;
 */
 public class Quadrado extends Retangulo{
 
-    private Direction direction;
     /** Construtor para criar um quadrado a partir de uma lista de pontos
      * @param pontos a lista de pontos
      */
@@ -41,30 +40,4 @@ public class Quadrado extends Retangulo{
             }
         }
     }
-
-    public void getDirectionFromPreviousSquare(Quadrado previousSquare) {
-        if(previousSquare.getCentroide().getX() > this.getCentroide().getX() && previousSquare.getCentroide().getY() == this.getCentroide().getY()) {
-            this.setDirection(Direction.RIGHT);
-            return;
-        }
-        else if(previousSquare.getCentroide().getX() < this.getCentroide().getX() && previousSquare.getCentroide().getY() == this.getCentroide().getY()) {
-            this.setDirection(Direction.LEFT);
-            return;
-        }
-        else if(previousSquare.getCentroide().getY() > this.getCentroide().getY() && previousSquare.getCentroide().getX() == this.getCentroide().getX()) {
-            this.setDirection(Direction.UP);
-            return;
-        }
-        else 
-            this.setDirection(Direction.DOWN);
-            return;
-    }
-
-    public Direction getDirection() {
-        return direction;
-    }
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    } 
 }

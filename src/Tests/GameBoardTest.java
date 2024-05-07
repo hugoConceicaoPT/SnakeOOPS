@@ -110,7 +110,16 @@ public class GameBoardTest {
         gameBoard.generateFood();
         System.out.println(snake.toString());
         System.out.println(gameBoard.getFood().toString());
-
+        long seed1 = 123;
+        Random random1 = new Random(seed1);
+        String input1 = "9 5 9 2 6 2 6 5";
+        LinkedList<Quadrado> listaQuadrados1 = new LinkedList<>();
+        listaQuadrados1.add(new Quadrado(input1));
+        Snake snake1 = new Snake(listaQuadrados, true,random1);
+        snake.setCurrentDirection(Direction.RIGHT);
+        snake.increaseSize();
+        GameBoard gameBoard1 = new GameBoard(snake1, 30, 20,FoodType.SQUARE,2,2,null,false,random1);
+        assertEquals("2 ",gameBoard1.getFood().toString());
     }
 
     @Test

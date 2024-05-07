@@ -38,8 +38,19 @@ public class FoodCircle extends Food {
     }
 
     @Override
+    public boolean foodContainedObstacle(Obstacle obstacle) {
+        if(circunferencia.contidaNoPoligono(obstacle.getPoligono()) || obstacle.getPoligono().contidaNaCircunferencia(circunferencia))
+            return true;
+        return false;
+    }
+
+    @Override
     public boolean foodIntersectSnake(Snake snake) {
-        return this.circunferencia.interseta(snake.getHead());
+        for(int i = 0; i < snake.getBody().size(); i++) {
+            if(circunferencia.interseta(snake.getBody().get(i)))
+                return true;
+        }
+        return false;
     }
 
     @Override
