@@ -7,7 +7,6 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import ControllerLayer.FullRasterization;
 import ModelLayer.BoardLayer.CellType;
 import ModelLayer.BoardLayer.FoodType;
 import ModelLayer.BoardLayer.GameBoard;
@@ -15,6 +14,7 @@ import ModelLayer.SnakeLayer.Direction;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Snake;
+import ViewLayer.FullRasterization;
 
 public class FullRasterizationTest {
     @Test
@@ -25,7 +25,7 @@ public class FullRasterizationTest {
         LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
         listaQuadrados.add(new Quadrado(input));
         Snake snake = new Snake(listaQuadrados, true,random);
-        snake.setDirection(Direction.RIGHT);
+        snake.setCurrentDirection(Direction.RIGHT);
         snake.increaseSize();
         GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,2,new Ponto(1,1),false,random);
         FullRasterization rasterizationStrategy = new FullRasterization(gameBoard);
@@ -37,7 +37,8 @@ public class FullRasterizationTest {
         assertEquals(CellType.TAIL, rasterizationStrategy.getBoard()[4][4].getCellType());
         assertEquals(CellType.TAIL, rasterizationStrategy.getBoard()[5][3].getCellType());
         assertEquals(CellType.TAIL, rasterizationStrategy.getBoard()[5][4].getCellType());
-        snake.move(Direction.UP);
+        snake.setNextDirection(Direction.UP);
+        snake.move();
         rasterizationStrategy.updateSnakeCells();
         assertEquals(CellType.HEAD, rasterizationStrategy.getBoard()[6][6].getCellType());
         assertEquals(CellType.HEAD, rasterizationStrategy.getBoard()[6][5].getCellType());

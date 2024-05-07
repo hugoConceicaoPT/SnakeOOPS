@@ -6,10 +6,11 @@ import java.util.Random;
 public class Snake implements Cloneable {
     private LinkedList<Quadrado> body;
     private Quadrado head;
-    private Direction direction;
+    private Direction currentDirection;
     private MovementStrategy movementStrategy;
     private int arestaHeadLength;
     private Random random;
+    private Direction nextDirection;
     
     /** Construtor para criar uma cobra 
      * @param listaQuadrados a lista de quadrados que contém os quadrados da cobra
@@ -18,8 +19,8 @@ public class Snake implements Cloneable {
         this.body = listaQuadrados;
         this.head = this.body.getFirst();
         this.random = random;
-        this.direction = Direction.values()[random.nextInt(Direction.values().length)];
-        this.head.setDirection(direction);
+        this.currentDirection = Direction.values()[random.nextInt(Direction.values().length)];
+        this.head.setDirection(currentDirection);
         arestaHeadLength = (int) this.head.pontos.get(0).dist(this.head.pontos.get(1));
         if(isManualMovement)
             this.movementStrategy = new ManualMovementStrategy();
@@ -34,7 +35,7 @@ public class Snake implements Cloneable {
         Quadrado novoQuadrado;
         if(this.body.size() == 1) {
             novoQuadrado = (Quadrado) this.head.clone();
-            switch (this.direction) {
+            switch (this.currentDirection) {
                 case UP:
                     novoQuadrado.translate(0, -arestaHeadLength); 
                     break;
@@ -86,22 +87,103 @@ public class Snake implements Cloneable {
         return false;
     }
 
-    /** Move a cobra 
-     * @param nextDirection a próxima direção que a cobra vai tomar 
+    /** Move a cabeça da cobra
+     * @param nextDirection a próxima direção que a cobra vai tomar
      */
-    public void move(Direction nextDirection) {
-        if(isOppositeDirection(nextDirection, this.direction))
+    private void moveSquare(Quadrado quadrado,Direction currentDirection, Direction nextDirection) {
+        switch (currentDirection) {
+            case UP:
+                switch (nextDirection) {
+                    case RIGHT:
+                        quadrado.rotateAngle(-90);
+                        break; 
+                    case LEFT:
+                        quadrado.rotateAngle(90);
+                        break;
+                    default:
+                        break;
+            }
+            break;
+            case DOWN:
+                switch (nextDirection) {
+                    case RIGHT:
+                        quadrado.rotateAngle(90);
+                        break;
+                    case LEFT:
+                        quadrado.rotateAngle(-90);
+                        break;
+                    default:
+                        break;
+            }
+            break;
+            case LEFT:
+                switch (nextDirection) {
+                    case UP:
+                        quadrado.rotateAngle(-90);
+                        break;
+                    case DOWN:
+                        quadrado.rotateAngle(90);
+                        default:
+                            break;
+                }
+            break;
+            case RIGHT:
+                switch (nextDirection) {
+                    case UP:
+                        quadrado.rotateAngle(90);
+                        break;
+                    case DOWN:
+                        quadrado.rotateAngle(-90);
+                        default:
+                            break;
+                }
+                break;
+            default:
+                break;
+            
+        }
+    }
+    
+    public void move() {
+        this.nextDirection = this.movementStrategy.setNextDirection(this);
+        if(isOppositeDirection(currentDirection, nextDirection))
             return;
-        this.movementStrategy.move(nextDirection, this.body,this.direction,this.arestaHeadLength);
+        Ponto centroHeadSnake = this.head.getCentroide();
+
+        Quadrado ultimoQuadrado = body.getLast();
+        ultimoQuadrado.translateCentroide(((int) centroHeadSnake.getX()),(int) centroHeadSnake.getY());
+
+        if(this.currentDirection != this.nextDirection) 
+            moveSquare(ultimoQuadrado,currentDirection, nextDirection);
+
+        switch (this.nextDirection) {
+            case UP:
+                ultimoQuadrado.translate(0, this.arestaHeadLength); 
+                break;
+            case DOWN:
+                ultimoQuadrado.translate(0, -this.arestaHeadLength);
+                break;
+            case LEFT:
+                ultimoQuadrado.translate(-this.arestaHeadLength, 0);
+                break;
+            case RIGHT:
+                ultimoQuadrado.translate(this.arestaHeadLength, 0);
+                break;
+            default:
+                break;
+        }
+
+        this.body.removeLast();
+        this.body.addFirst(ultimoQuadrado);
         this.head = this.body.getFirst();
-        setDirection(nextDirection);
+        setCurrentDirection(nextDirection);
     }
 
-    private boolean isOppositeDirection(Direction nextDirection, Direction currentDirection) {
-        return (nextDirection == Direction.UP && currentDirection == Direction.DOWN) ||
-               (nextDirection == Direction.DOWN && currentDirection == Direction.UP) ||
-               (nextDirection == Direction.LEFT && currentDirection == Direction.RIGHT) ||
-               (nextDirection == Direction.RIGHT && currentDirection == Direction.LEFT);
+    private boolean isOppositeDirection(Direction currentDirection, Direction nextDirection) {
+        return (currentDirection == Direction.UP && nextDirection == Direction.DOWN) ||
+               (currentDirection == Direction.DOWN && nextDirection == Direction.UP) ||
+               (currentDirection == Direction.LEFT && nextDirection == Direction.RIGHT) ||
+               (currentDirection == Direction.RIGHT && nextDirection == Direction.LEFT);
     }
 
     @Override
@@ -149,20 +231,6 @@ public class Snake implements Cloneable {
         this.body = body;
     }
 
-    /** Obtém a direção da cobra
-     * @return a direção da cobra
-     */
-    public Direction getDirection() {
-        return direction;
-    }
-
-    /** Atualiza a direção da cobra
-     * @param direction a nova direção da cobra
-     */
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
-
     /** Obtém o comprimento de uma aresta da cabeça
      * @return o comprimento de uma aresta da cabeça
      */
@@ -191,5 +259,21 @@ public class Snake implements Cloneable {
 
     public void setRandom(Random random) {
         this.random = random;
+    }
+
+    public Direction getCurrentDirection() {
+        return currentDirection;
+    }
+
+    public void setCurrentDirection(Direction currentDirection) {
+        this.currentDirection = currentDirection;
+    }
+
+    public Direction getNextDirection() {
+        return nextDirection;
+    }
+
+    public void setNextDirection(Direction nextDirection) {
+        this.nextDirection = nextDirection;
     }
 }

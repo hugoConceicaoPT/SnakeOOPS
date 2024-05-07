@@ -171,17 +171,18 @@ public class GameBoard {
                 isReachable = false;
                 break;
             }
-            snakeClone.move(nextDirection);
+            snakeClone.setNextDirection(nextDirection);
+            snakeClone.move();
         }
         return isReachable;
     }
     
     private Direction calculateDirection(double headX, double headY, double foodX, double foodY, Snake snake) {
-        if (foodX < headX && snake.getDirection() != Direction.RIGHT)
+        if (foodX < headX && snake.getCurrentDirection() != Direction.RIGHT)
             return Direction.LEFT;
-        else if (foodX > headX && snake.getDirection() != Direction.LEFT)
+        else if (foodX > headX && snake.getCurrentDirection() != Direction.LEFT)
             return Direction.RIGHT;
-        else if (foodY < headY && snake.getDirection() != Direction.UP) 
+        else if (foodY < headY && snake.getCurrentDirection() != Direction.UP) 
             return Direction.DOWN;
         else
             return Direction.UP;

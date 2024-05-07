@@ -23,13 +23,14 @@ public class FoodCircleTest {
         Random random = new Random(122);
         listaQuadrados.add(new Quadrado(input));
         Snake snake = new Snake(listaQuadrados, true,random);
-        snake.setDirection(Direction.RIGHT);
+        snake.setCurrentDirection(Direction.RIGHT);
         snake.increaseSize();
         snake.increaseSize();
         FoodCircle foodCircle = new FoodCircle(new Circunferencia(new Ponto(9.5,4.5), 0.5));
         assertFalse(foodCircle.foodContainedInSnakeHead(snake));
         FoodCircle foodCircle2 = new FoodCircle(new Circunferencia(new Ponto(9,4), 0.5));
-        snake.move(Direction.RIGHT);
+        snake.setNextDirection(Direction.RIGHT);
+        snake.move();
         assertTrue(foodCircle2.foodContainedInSnakeHead(snake));
     }
 }

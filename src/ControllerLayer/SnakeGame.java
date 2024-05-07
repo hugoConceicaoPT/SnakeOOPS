@@ -147,12 +147,12 @@ public class SnakeGame implements KeyListener {
                         moveSnake(Direction.RIGHT);
                         break;
                     default:
-                        moveSnake(this.snake.getDirection());
+                        moveSnake(this.snake.getCurrentDirection());
                         break;
                 }
             }
             else 
-                moveSnake(this.snake.getDirection());
+                moveSnake(this.snake.getCurrentDirection());
             
             if(this.gameBoard.getFood() == null) {
                 this.isGameOver = true;
@@ -229,19 +229,23 @@ public class SnakeGame implements KeyListener {
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
-                this.snake.move(Direction.UP);
+                this.snake.setNextDirection(Direction.UP);
+                this.snake.move();
                 this.rasterizationStrategy.updateBoard();
                 break;
             case KeyEvent.VK_DOWN:
-                this.snake.move(Direction.DOWN);
+                this.snake.setNextDirection(Direction.DOWN);
+                this.snake.move();
                 this.rasterizationStrategy.updateBoard();
                 break;
             case KeyEvent.VK_LEFT:
-                snake.move(Direction.LEFT);
+                this.snake.setNextDirection(Direction.LEFT);
+                snake.move();
                 this.rasterizationStrategy.updateBoard();
                 break;
             case KeyEvent.VK_RIGHT:
-                this.snake.move(Direction.RIGHT);
+                this.snake.setNextDirection(Direction.RIGHT);
+                this.snake.move();
                 this.rasterizationStrategy.updateBoard();
                 break;
             default:
@@ -250,7 +254,8 @@ public class SnakeGame implements KeyListener {
     }
 
     public void moveSnake(Direction nextDirection) {
-        this.snake.move(nextDirection);
+        this.snake.setNextDirection(nextDirection);
+        this.snake.move();
     }
 
     private List<Ponto> createSquarePoints(int widthBoard, int heightBoard, int size) {

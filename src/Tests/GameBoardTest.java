@@ -59,15 +59,17 @@ public class GameBoardTest {
         LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
         listaQuadrados.add(new Quadrado(input));
         Snake snake = new Snake(listaQuadrados, true,random);
-        snake.setDirection(Direction.RIGHT);
+        snake.setCurrentDirection(Direction.RIGHT);
         snake.increaseSize();
         snake.increaseSize();
         GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.CIRCLE,1,1,new Ponto(1,1),false,random);
         FoodCircle foodCircle = new FoodCircle(new Circunferencia(new Ponto(9,4), 0.5));
         gameBoard.setFood(foodCircle);
-        snake.move(Direction.RIGHT);
+        snake.setNextDirection(Direction.RIGHT);
+        snake.move();
         assertTrue(gameBoard.foodContainedInSnakeHead());
-        snake.move(Direction.UP);
+        snake.setNextDirection(Direction.UP);
+        snake.move();
         assertFalse(gameBoard.foodContainedInSnakeHead());
     }
 
@@ -79,7 +81,7 @@ public class GameBoardTest {
         LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
         listaQuadrados.add(new Quadrado(input));
         Snake snake = new Snake(listaQuadrados, true,random);
-        snake.setDirection(Direction.RIGHT);
+        snake.setNextDirection(Direction.RIGHT);
         snake.increaseSize();
         snake.increaseSize();
         GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.CIRCLE,1,2,new Ponto(1,1),false,random);  
@@ -98,7 +100,7 @@ public class GameBoardTest {
         LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
         listaQuadrados.add(new Quadrado(input));
         Snake snake = new Snake(listaQuadrados, true,random);
-        snake.setDirection(Direction.RIGHT);
+        snake.setNextDirection(Direction.RIGHT);
         snake.increaseSize();
         GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,1,new Ponto(1,1),false,random);
         assertNotNull(gameBoard.getFood());
@@ -119,7 +121,7 @@ public class GameBoardTest {
         LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
         listaQuadrados.add(new Quadrado(input));
         Snake snake = new Snake(listaQuadrados, true,random);
-        snake.setDirection(Direction.RIGHT);
+        snake.setNextDirection(Direction.RIGHT);
         snake.increaseSize();
         GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.CIRCLE,1,1,new Ponto(1,1),false,random);
         assertNotNull(gameBoard.getFood());
@@ -135,7 +137,7 @@ public class GameBoardTest {
         LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
         listaQuadrados.add(new Quadrado(input));
         Snake snake = new Snake(listaQuadrados, true,random);
-        snake.setDirection(Direction.RIGHT);
+        snake.setNextDirection(Direction.RIGHT);
         snake.increaseSize();
         GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.SQUARE,1,1,new Ponto(1,1),false,random);
         assertFalse(gameBoard.snakeLeftBoard());
@@ -154,7 +156,7 @@ public class GameBoardTest {
         LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
         listaQuadrados.add(new Quadrado(input));
         Snake snake = new Snake(listaQuadrados, true,random);
-        snake.setDirection(Direction.RIGHT);
+        snake.setNextDirection(Direction.RIGHT);
         snake.increaseSize();
         GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.SQUARE,1,1,new Ponto(1,1),false,random);
         assertFalse(gameBoard.obstacleContainedInSnake());
@@ -171,7 +173,7 @@ public class GameBoardTest {
         listaQuadrados.add(new Quadrado(input));
         Random random = new Random(seed);
         Snake snake = new Snake(listaQuadrados, true,random);
-        snake.setDirection(Direction.RIGHT);
+        snake.setNextDirection(Direction.RIGHT);
         snake.increaseSize();
         GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.SQUARE,1,2,new Ponto(1,1),false,random);
         assertFalse(gameBoard.snakeIntersectsObstacle());

@@ -1,7 +1,5 @@
 package ModelLayer.SnakeLayer;
 
-import java.util.LinkedList;
-
 public interface MovementStrategy {
     /** Move a cobra
      * @param nexDirection próxima direção
@@ -9,5 +7,5 @@ public interface MovementStrategy {
      * @param currentDirection direção atual
      * @param arestaHeadLength comprimento da aresta da cabeça
      */
-    public void move(Direction nexDirection, LinkedList<Quadrado> body, Direction currentDirection, int arestaHeadLength);
+    public Direction setNextDirection(Snake snake);
 }

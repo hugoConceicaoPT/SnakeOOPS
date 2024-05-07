@@ -21,13 +21,14 @@ public class FoodSquareTest {
         listaQuadrados.add(new Quadrado(input));
         Random random = new Random(120);
         Snake snake = new Snake(listaQuadrados, true,random);
-        snake.setDirection(Direction.RIGHT);
+        snake.setCurrentDirection(Direction.RIGHT);
         snake.increaseSize();
         snake.increaseSize();
         Quadrado quadrado = new Quadrado("10 5 10 4 9 4 9 5");
         FoodSquare foodCircle = new FoodSquare(quadrado);
         assertFalse(foodCircle.foodContainedInSnakeHead(snake));
-        snake.move(Direction.RIGHT);
+        snake.setNextDirection(Direction.RIGHT);
+        snake.move();
         assertTrue(foodCircle.foodContainedInSnakeHead(snake));
     }
 }

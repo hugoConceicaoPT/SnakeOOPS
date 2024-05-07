@@ -1,6 +1,5 @@
 package ViewLayer;
 
-import ControllerLayer.RasterizationStrategy;
 import ModelLayer.BoardLayer.GameBoard;
 import ModelLayer.SnakeLayer.Score;
 
@@ -15,7 +14,7 @@ public class TextualUI implements UI {
     public void display(Score score, GameBoard gameBoard) {
         System.out.println(this.rasterizationStrategy.toString());
         int angle = 0;
-        switch (gameBoard.getSnake().getDirection()) {
+        switch (gameBoard.getSnake().getCurrentDirection()) {
             case UP:
                 angle = 90;
                 break;
