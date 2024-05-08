@@ -28,7 +28,12 @@ public class Snake implements Cloneable {
             this.movementStrategy = new ManualMovementStrategy();
         else
             this.movementStrategy = new AutomatedMovementStrategy();
-        this.ultimoQuadradoAntesDeMover = this.head;
+        try {
+            this.ultimoQuadradoAntesDeMover = (Quadrado) this.head.clone();            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /** Aumenta o tamanho da cobra 
@@ -54,7 +59,7 @@ public class Snake implements Cloneable {
     /** Move a cabeça da cobra
      * @param nextDirection a próxima direção que a cobra vai tomar
      */
-    private void moveSquare(Quadrado quadrado,Direction currentDirection, Direction nextDirection) {
+    public void moveSquare(Quadrado quadrado,Direction currentDirection, Direction nextDirection) {
         switch (currentDirection) {
             case UP:
                 switch (nextDirection) {

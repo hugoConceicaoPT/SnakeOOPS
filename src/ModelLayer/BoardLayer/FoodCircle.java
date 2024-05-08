@@ -1,6 +1,10 @@
 package ModelLayer.BoardLayer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ModelLayer.SnakeLayer.Circunferencia;
+import ModelLayer.SnakeLayer.Poligono;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Snake;
 
@@ -14,19 +18,51 @@ public class FoodCircle extends Food {
     }
 
     @Override
-    public boolean foodContainedInSnakeHead(Snake snake){
-        if(circunferencia.contidaNoPoligono(snake.getHead()))
-            return true;
-        return false;
-    }
-
-    @Override
     public boolean foodContainedInSnake(Snake snake){
-        for(int i = 1; i < snake.getBody().size(); i++) {
-            if(circunferencia.contidaNoPoligono(snake.getBody().get(i)))
+        if(snake.getBody().size() == 1) {
+            if(circunferencia.contidaNoPoligono(snake.getHead()))
                 return true;
+            return false;
         }
-        return false;
+        else {
+            List<Ponto> pontos = new ArrayList<>();
+            Poligono bodySnake = null;
+            switch (snake.getCurrentDirection()) {
+                case UP:
+                    pontos.add(new Ponto(snake.getBody().getFirst().getMaxY(),snake.getBody().getFirst().getMaxX()));
+                    pontos.add(new Ponto(snake.getBody().getFirst().getMaxY(),snake.getBody().getFirst().getMinX()));
+                    pontos.add(new Ponto(snake.getBody().get(1).getMinY(),snake.getBody().get(1).getMinX()));
+                    pontos.add(new Ponto(snake.getBody().get(1).getMinY(),snake.getBody().get(1).getMaxX()));
+                    bodySnake = new Poligono(pontos);
+                    break;
+                case DOWN:
+                    pontos.add(new Ponto(snake.getBody().getFirst().getMinY(),snake.getBody().getFirst().getMinX()));
+                    pontos.add(new Ponto(snake.getBody().getFirst().getMinY(),snake.getBody().getFirst().getMaxX()));
+                    pontos.add(new Ponto(snake.getBody().get(1).getMaxY(),snake.getBody().get(1).getMaxX()));
+                    pontos.add(new Ponto(snake.getBody().get(1).getMaxY(),snake.getBody().get(1).getMinX()));
+                    bodySnake = new Poligono(pontos);
+                    break;
+                case LEFT:
+                    pontos.add(new Ponto(snake.getBody().getFirst().getMinX(),snake.getBody().getFirst().getMaxY()));
+                    pontos.add(new Ponto(snake.getBody().getFirst().getMinX(),snake.getBody().getFirst().getMinY()));
+                    pontos.add(new Ponto(snake.getBody().get(1).getMaxX(),snake.getBody().get(1).getMinY()));
+                    pontos.add(new Ponto(snake.getBody().get(1).getMaxX(),snake.getBody().get(1).getMaxY()));
+                    bodySnake = new Poligono(pontos);
+                    break;
+                case RIGHT:
+                    pontos.add(new Ponto(snake.getBody().getFirst().getMaxX(),snake.getBody().getFirst().getMaxY()));
+                    pontos.add(new Ponto(snake.getBody().getFirst().getMaxX(),snake.getBody().getFirst().getMinY()));
+                    pontos.add(new Ponto(snake.getBody().get(1).getMinX(),snake.getBody().get(1).getMinY()));
+                    pontos.add(new Ponto(snake.getBody().get(1).getMinX(),snake.getBody().get(1).getMaxY()));
+                    bodySnake = new Poligono(pontos);
+                    break;
+                default:
+                    break;
+            }
+            if(circunferencia.contidaNoPoligono(bodySnake))
+                    return true;
+            return false;
+        }
     }
 
     @Override

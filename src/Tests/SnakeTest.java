@@ -21,6 +21,7 @@ public class SnakeTest {
         LinkedList<Quadrado> quadrado = new LinkedList<>();
         quadrado.add(new Quadrado(input1));
         Snake snake = new Snake(quadrado,true,random);
+        snake.setNextDirection(Direction.RIGHT);
         snake.move();
         snake.increaseSize();
         assertEquals("Cabeça: [(14.0,6.0), (14.0,4.0), (12.0,4.0), (12.0,6.0)] Tail: [[(16.0,6.0), (16.0,4.0), (14.0,4.0), (14.0,6.0)]]", snake.toString());

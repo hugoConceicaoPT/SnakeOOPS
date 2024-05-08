@@ -34,11 +34,12 @@ public class Circunferencia {
     public boolean interseta(Poligono that) {
         double testX = that.getCentroide().getX();
         double testY = that.getCentroide().getY();
-        if (this.centro.getX() < that.getMinX()) testX = that.getMinX();
-        else if (this.centro.getX() > that.getMaxX()) testX = that.getMaxX();
-
-        if(this.centro.getY() < that.getMinY()) testY = that.getMinY();
-        else if(this.centro.getY() > that.getMaxY()) testY = that.getMaxY();
+        double width = that.getMaxX() - that.getMinX();
+        double height = that.getMaxY() - that.getMinY();
+        if(this.centro.getX() < that.getCentroide().getX()) testX = that.getCentroide().getX();
+        else if(this.centro.getX() > that.getCentroide().getX() + width) testX = that.getCentroide().getX() + width;
+        if(this.centro.getY() < that.getCentroide().getY()) testY = that.getCentroide().getY();
+        else if(this.centro.getY() > that.getCentroide().getY() + height) testY = that.getCentroide().getY() + height;
 
         double distX = this.centro.getX() - testX;
         double distY = this.centro.getY() - testY;

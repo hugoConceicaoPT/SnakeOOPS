@@ -241,10 +241,33 @@ public class Poligono implements Cloneable {
     }      
 
     public boolean contemPonto(Ponto ponto) {
-        if(ponto.getX() >= this.minX && ponto.getX() <= this.maxX
-            && ponto.getY() >= this.minY && ponto.getY() <= this.maxY)
-            return true;
-        return false;
+        double x = ponto.getX();
+        double y = ponto.getY();
+        int numVertices = pontos.size();
+        int windingNumber = 0;
+
+        for (int i = 0; i < numVertices; i++) {
+            double xi = pontos.get(i).getX();
+            double yi = pontos.get(i).getY();
+            double xj = pontos.get((i + 1) % numVertices).getX();
+            double yj = pontos.get((i + 1) % numVertices).getY();
+
+            if (yi <= y) {
+                if (yj > y && isLeft(xi, yi, xj, yj, x, y) > 0) {
+                    windingNumber++;
+                }
+            } else {
+                if (yj <= y && isLeft(xi, yi, xj, yj, x, y) < 0) {
+                    windingNumber--;
+                }
+            }
+        }
+
+        return windingNumber != 0;
+    }
+
+    private double isLeft(double x0, double y0, double x1, double y1, double x2, double y2) {
+        return ((x1 - x0) * (y2 - y0) - (x2 - x0) * (y1 - y0));
     }
     
 
@@ -257,36 +280,6 @@ public class Poligono implements Cloneable {
     public String toString() {
         return pontos.toString();
     }
-
-    public String toStringCountour() {
-    
-        char[][] contour = new char[(int) this.maxY + 1][(int) this.maxX + 1];
-    
-        for (int i = 0; i <= this.maxY; i++) {
-            for (int j = 0; j <= this.maxX; j++) {
-                contour[i][j] = ' ';
-            }
-        }
-
-        for(Ponto ponto : this.pontos) {
-            int x = (int) ponto.getX();
-            int y = (int) ponto.getY();
-
-            contour[y][x] = '*';
-        }
-    
-        // Converter a matriz em uma string
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i <= this.maxY; i++) {
-            for (int j = 0; j <= this.maxX; j++) {
-                sb.append(contour[i][j]);
-            }
-            sb.append("\n");
-        }
-    
-        return sb.toString();
-    }
-    
 
     @Override
     public Object clone() throws CloneNotSupportedException {

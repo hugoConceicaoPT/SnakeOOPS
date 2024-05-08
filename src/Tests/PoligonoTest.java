@@ -127,6 +127,9 @@ public class PoligonoTest {
         Poligono poligono1 = new Poligono(input1);
         Ponto ponto1 = new Ponto(3, 3);
         assertTrue(poligono1.contemPonto(ponto1));
+        assertTrue(poligono1.contemPonto(new Ponto(2,1)));
+        assertFalse(poligono1.contemPonto(new Ponto(2,0.5))); 
+        assertTrue(poligono1.contemPonto(new Ponto(1,1))); 
         Ponto ponto2 = new Ponto(0, 0);
         assertFalse(poligono1.contemPonto(ponto2));
         assertTrue(poligono1.contemPonto(new Ponto(2,2)));

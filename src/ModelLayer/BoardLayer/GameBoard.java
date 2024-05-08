@@ -1,6 +1,7 @@
 package ModelLayer.BoardLayer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -24,6 +25,7 @@ public class GameBoard {
     private int obstaclesQuantity;
     private ObstacleType obstacleType;
     private Random random;
+    private static int generatedFoods = 0;
 
     /** Construtor para criar uma board no jogo
      * @param listofObstacles lista de obstáculos
@@ -44,7 +46,6 @@ public class GameBoard {
         this.foodType = foodType;
         this.foodDimension = foodDimension;
         this.obstaclesQuantity = obstaclesQuantity;
-        this.obstacleType = ObstacleType.values()[random.nextInt(Direction.values().length)];
         generateObstacles(obstacleRotacionPoint,isObstacleDynamic);
         generateFood();
     }
@@ -68,12 +69,9 @@ public class GameBoard {
     }
 
     public boolean snakeLeftBoard() {
-        for(int i = 0; i < snake.getBody().size(); i++) {
-            for(int j = 0; j < snake.getBody().get(i).getPontos().size(); j++)
-            if(snake.getBody().get(i).getPontos().get(j).getX() < 0 || snake.getBody().get(i).getPontos().get(j).getX() > this.widthBoard 
-            || snake.getBody().get(i).getPontos().get(j).getY() < 0 || snake.getBody().get(i).getPontos().get(j).getY() > this.heightBoard)
-               return true;
-        }
+        if(this.snake.getHead().getMinX() < 0 || this.snake.getHead().getMinY() < 0 
+            || this.snake.getHead().getMaxX() > this.widthBoard || this.snake.getHead().getMaxY() > this.heightBoard)
+            return true;
         return false;
     }
 
@@ -81,8 +79,9 @@ public class GameBoard {
      * @return verdadeiro se estiver contido, falso se não
      * @throws CloneNotSupportedException
      */
-    public boolean foodContainedInSnakeHead() throws CloneNotSupportedException {
-        if (food.foodContainedInSnakeHead(snake)) {
+
+    public boolean foodContainedInSnake() throws CloneNotSupportedException {
+        if (food.foodContainedInSnake(snake)) {
             removeFood();
             generateFood();
             return true; 
@@ -90,15 +89,8 @@ public class GameBoard {
         return false; 
     }
 
-    public boolean foodContainedInSnake() throws CloneNotSupportedException {
-        if (food.foodContainedInSnake(snake)) {
-            return true; 
-        }
-        return false; 
-    }
-
     public boolean foodContainedInObstacle() {
-        for(int i = 0; i < this.obstaclesQuantity; i++) {
+        for(int i = 0; i < this.listOfObstacles.size(); i++) {
             if(food.foodContainedObstacle(this.listOfObstacles.get(i)))
                 return true;
         }
@@ -122,7 +114,7 @@ public class GameBoard {
     }
 
     /** Gera uma comida aleatória na board */
-    public void generateFood() throws CloneNotSupportedException {
+    public void generateFood() {
         boolean isEmpty = true;
         while (isEmpty) {
             int y = 0;
@@ -147,33 +139,44 @@ public class GameBoard {
                 FactoryFood factory = new FactoryFood();
                 this.food = factory.createFood(new Quadrado(pontos));
             }
-            if(!foodIntersectObstacle() && !foodContainedInSnake() && !foodContainedInObstacle() && !foodContainedInSnakeHead() && !foodIntersectSnake()) {
-                boolean isReachable = foodIsInReachableArea();
-                if(isReachable) isEmpty = false;
-                else { 
-                    this.food = null;
-                    isEmpty = true;
+            if(!foodIntersectObstacle() && !foodContainedInObstacle() && !foodIntersectSnake()) {
+                if(generatedFoods == 0) {
+                    boolean isReachable = foodIsInReachableArea();
+                    if(isReachable) isEmpty = false;
+                    else { 
+                        this.food = null;
+                        isEmpty = true;
+                    }
+                }
+                else {
+                    isEmpty = false;
                 }
             }
         }
+        generatedFoods++;
     }
 
-    private boolean foodIsInReachableArea() throws CloneNotSupportedException {
+    private boolean foodIsInReachableArea() {
         if (food == null) {
             return false; 
         }
-    
-        Snake snakeClone = (Snake) this.snake.clone();
-    
+        Snake snakeClone = null;
+        try {
+            snakeClone = (Snake) this.snake.clone();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         double foodX = this.food.getCentroide().getX();
         double foodY = this.food.getCentroide().getY();
         boolean isReachable = false;
-        while(true) {
+        int maxIterations = 50;
+        int iterations = 0;
+        while(iterations < maxIterations) {
             double headX = snakeClone.getHead().getCentroide().getX();
             double headY = snakeClone.getHead().getCentroide().getY();
             Direction nextDirection = calculateDirection(headX, headY, foodX , foodY, snakeClone);
-            if(this.food.foodContainedInSnakeHead(snakeClone)) {
-                for(int i = 0; i < this.obstaclesQuantity; i++ ){
+            if(this.food.foodContainedInSnake(snakeClone)) {
+                for(int i = 0; i < this.listOfObstacles.size(); i++ ){
                     if(!this.listOfObstacles.get(i).obstacleContained(snakeClone) && !this.listOfObstacles.get(i).obstacleIntersect(snakeClone)) {
                         isReachable = true;
                     }
@@ -191,6 +194,7 @@ public class GameBoard {
             }
             snakeClone.setNextDirection(nextDirection);
             snakeClone.move();
+            iterations++;
         }
         return isReachable;
     }
@@ -210,9 +214,10 @@ public class GameBoard {
 
     /** Gera um obstáculo aleatório na board */
     public void generateObstacles(Ponto rotacionPoint, boolean isDynamic) {
-        int obstacleSize = random.nextInt(this.snake.getArestaHeadLength()) + 1;
         for(int w = 0; w < this.obstaclesQuantity; w++) {
+            int obstacleSize = random.nextInt(this.snake.getArestaHeadLength()) + 1;
             boolean isEmpty = true; 
+            this.obstacleType = ObstacleType.values()[random.nextInt(Direction.values().length)];
             while (isEmpty) {
                 int y = this.random.nextInt(this.heightBoard - obstacleSize); 
                 int x = this.random.nextInt(this.widthBoard - obstacleSize);
@@ -221,32 +226,39 @@ public class GameBoard {
                     case POLYGON:
                         pontos = createPolygonPoints(x, y, obstacleSize);
                         this.listOfObstacles.add(new Obstacle(new Poligono(pontos), rotacionPoint ,isDynamic));
-                        isEmpty = false;
                         break;
                     case SQUARE:
                         pontos = createSquarePoints(x, y, obstacleSize); 
                         this.listOfObstacles.add(new Obstacle(new Quadrado(pontos), rotacionPoint ,isDynamic));
-                        isEmpty = false;
                         break;
                     case RECTANGLE:
                         pontos = createRectanglePoints(x, y, obstacleSize);
                         this.listOfObstacles.add(new Obstacle(new Retangulo(pontos), rotacionPoint ,isDynamic));
-                        isEmpty = false;
                         break;
                     case TRIANGLE:
                         pontos = createTrianglePoints(x, y, obstacleSize);
                         this.listOfObstacles.add(new Obstacle(new Triangulo(pontos), rotacionPoint ,isDynamic));
-                        isEmpty = false;
                         break;
                     default:
                         break;
                 }
-                if(!snakeIntersectsObstacle() && !obstacleContainedInSnake()) {
-                    isEmpty = false;
+                boolean isObstacleIntersectedWithAnotherObstacle = false;
+                for(int i = 0; i < this.listOfObstacles.size(); i++) {
+                    if(this.listOfObstacles.get(i).getPoligono().interseta(this.listOfObstacles.get(this.listOfObstacles.size()-1).getPoligono())) {
+                        this.listOfObstacles.remove(this.listOfObstacles.size() - 1);
+                        isEmpty = true;
+                        isObstacleIntersectedWithAnotherObstacle = true;
+                        break;
+                    }
                 }
-                else {
-                    this.listOfObstacles.remove(this.obstaclesQuantity - 1);
-                    isEmpty = true;
+                if(!isObstacleIntersectedWithAnotherObstacle) {
+                    if(!snakeIntersectsObstacle() && !obstacleContainedInSnake()) {
+                        isEmpty = false;
+                    }
+                    else {
+                        this.listOfObstacles.remove(this.listOfObstacles.size() - 1);
+                        isEmpty = true;
+                    }
                 }
             }
         }
@@ -258,20 +270,43 @@ public class GameBoard {
         }
     }
 
-
     private List<Ponto> createPolygonPoints (int x, int y, int size) {
         List<Ponto> pontos = new ArrayList<>();
-        int sides = this.random.nextInt(size) + 3;
-        double angleIncrement = 2 * Math.PI / sides;
-        double radius = size / 2.0;
-
-        for (int i = 0; i < sides; i++) {
-            double angle = i * angleIncrement;
-            double newX = x + radius * Math.cos(angle);
-            double newY = y + radius * Math.sin(angle);
-            pontos.add(new Ponto(newX, newY));
+        List<String> polygonsTypes = Arrays.asList("L", "T", "S");
+        String type = polygonsTypes.get(random.nextInt(polygonsTypes.size()));
+        switch (type) {
+            case "L": 
+                pontos.add(new Ponto(x, y));
+                pontos.add(new Ponto(x, y - (size+1)));
+                pontos.add(new Ponto(x + (size+1), y - (size+1)));
+                pontos.add(new Ponto(x + (size+1), y - (size)));
+                pontos.add(new Ponto(x + size, y - size));
+                pontos.add(new Ponto(x + size, y));
+                break;
+            case "T": 
+                pontos.add(new Ponto(x, y));
+                pontos.add(new Ponto(x, y + size));
+                pontos.add(new Ponto(x + size, y + size));
+                pontos.add(new Ponto(x + size, y + (size+1)));
+                pontos.add(new Ponto(x - (size+1), y + (size+1)));
+                pontos.add(new Ponto(x - (size+1), y + size));
+                pontos.add(new Ponto(x - size, y + size));
+                pontos.add(new Ponto(x - size, y));
+                break;
+            case "S": 
+                pontos.add(new Ponto(x, y));
+                pontos.add(new Ponto(x, y + size));
+                pontos.add(new Ponto(x + size, y + size));
+                pontos.add(new Ponto(x + size, y + (size+1)));
+                pontos.add(new Ponto(x - size, y + (size+1)));
+                pontos.add(new Ponto(x - size, y + size));
+                pontos.add(new Ponto(x - (size+1), y + size));
+                pontos.add(new Ponto(x - (size+1), y));
+                break;
+            default:
+                break;
         }
-    
+
         return pontos;
     }
 
@@ -291,7 +326,7 @@ public class GameBoard {
 
     private List<Ponto> createTrianglePoints(int x, int y, int size) {
         List<Ponto> pontos = new ArrayList<>();
-        double halfSize = size / 2.0;
+        int halfSize = size / 2;
         pontos.add(new Ponto(x, y+ size)); 
         pontos.add(new Ponto(x + halfSize,y)); 
         pontos.add(new Ponto(x + size,y + size)); 

@@ -176,7 +176,7 @@ public class SnakeGame implements KeyListener {
             }
 
             try {
-                foodContainedInSnakeHead();
+                foodContainedInSnake();
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
@@ -206,9 +206,9 @@ public class SnakeGame implements KeyListener {
     }
     /** Para o jogo */
     public void endGame() {
-        this.leaderboard.updateLeaderboard(score);
+        //this.leaderboard.updateLeaderboard(score);
         System.out.println("Seu jogo acabou. Aqui estão os tops jogadores do jogo:");
-        System.out.println(this.leaderboard.generateLeaderboard());
+        //System.out.println(this.leaderboard.generateLeaderboard());
         if(this.userInterface instanceof GraphicalUI) 
             ((GraphicalUI) userInterface).close();  
         this.rasterizationStrategy = null;
@@ -220,8 +220,8 @@ public class SnakeGame implements KeyListener {
         this.leaderboard = null;
     }
     
-    public void foodContainedInSnakeHead() throws CloneNotSupportedException {
-        if(this.gameBoard.foodContainedInSnakeHead()) {
+    public void foodContainedInSnake() throws CloneNotSupportedException {
+        if(this.gameBoard.foodContainedInSnake()) {
             this.snake.increaseSize();
             this.score.increaseScore();
         }

@@ -73,4 +73,12 @@ public class Retangulo extends Poligono {
         
         return angulo;
     }
+
+    @Override
+    public boolean contemPonto(Ponto ponto) {
+        if(ponto.getX() >= this.minX && ponto.getX() <= this.maxX
+            && ponto.getY() >= this.minY && ponto.getY() <= this.maxY)
+            return true;
+        return false;
+    }
 }
