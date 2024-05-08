@@ -126,7 +126,9 @@ public class SnakeGame implements KeyListener {
         int iterationCount = 0;
         while(!this.isGameOver) {
             if(iterationCount == 0) {
-                this.rasterizationStrategy.updateBoard();
+                this.rasterizationStrategy.updateObstacleCells();
+                this.rasterizationStrategy.updateFoodCells();
+                this.rasterizationStrategy.updateSnakeCells();
                 userInterface.display(score,gameBoard);
             }
             if(isSnakeManualMovement) {
@@ -173,6 +175,7 @@ public class SnakeGame implements KeyListener {
 
             if(this.isObstacleDynamic) {
                 this.gameBoard.rotateObstacles();
+                this.rasterizationStrategy.updateObstacleCells();
             }
 
             try {
@@ -187,7 +190,8 @@ public class SnakeGame implements KeyListener {
                 break;
             }
 
-            this.rasterizationStrategy.updateBoard();
+            this.rasterizationStrategy.updateSnakeCells();
+
             if(!this.isSnakeManualMovement) {
                 try {
                     Thread.sleep(1000); 
@@ -209,6 +213,8 @@ public class SnakeGame implements KeyListener {
         //this.leaderboard.updateLeaderboard(score);
         System.out.println("Seu jogo acabou. Aqui estão os tops jogadores do jogo:");
         //System.out.println(this.leaderboard.generateLeaderboard());
+        System.out.println(snake.toString());
+        System.out.println(this.gameBoard.getListOfObstacles().toString());
         if(this.userInterface instanceof GraphicalUI) 
             ((GraphicalUI) userInterface).close();  
         this.rasterizationStrategy = null;
@@ -224,6 +230,7 @@ public class SnakeGame implements KeyListener {
         if(this.gameBoard.foodContainedInSnake()) {
             this.snake.increaseSize();
             this.score.increaseScore();
+            this.rasterizationStrategy.updateFoodCells();
         }
     }
 
@@ -231,9 +238,24 @@ public class SnakeGame implements KeyListener {
      * @return verdadeiro se colidir, falso se não
      */
     public boolean snakeCollided() {
-        if(this.gameBoard.snakeIntersectsObstacle() || this.gameBoard.obstacleContainedInSnake() || this.snake.collidedWithHerself() || this.gameBoard.snakeLeftBoard())
+        if(this.gameBoard.snakeIntersectsObstacle()) {
+            System.out.println("colidiu com um obstáculo");
             return true;
-        return false;
+        }
+        else if (this.gameBoard.obstacleContainedInSnake()) {
+            System.out.println("ficou contido em um obstáculo");
+            return true;
+        }
+        else if (this.snake.collidedWithHerself()) {
+            System.out.println("colidiu consigo propria");
+            return true;
+        }
+        else if(this.gameBoard.snakeLeftBoard()) {
+            System.out.println("saiu da arena");
+            return true;
+        }
+        else
+            return false;
     }
 
     @Override
@@ -242,22 +264,22 @@ public class SnakeGame implements KeyListener {
             case KeyEvent.VK_UP:
                 this.snake.setNextDirection(Direction.UP);
                 this.snake.move();
-                this.rasterizationStrategy.updateBoard();
+                this.rasterizationStrategy.updateSnakeCells();
                 break;
             case KeyEvent.VK_DOWN:
                 this.snake.setNextDirection(Direction.DOWN);
                 this.snake.move();
-                this.rasterizationStrategy.updateBoard();
+                this.rasterizationStrategy.updateSnakeCells();
                 break;
             case KeyEvent.VK_LEFT:
                 this.snake.setNextDirection(Direction.LEFT);
                 snake.move();
-                this.rasterizationStrategy.updateBoard();
+                this.rasterizationStrategy.updateSnakeCells();
                 break;
             case KeyEvent.VK_RIGHT:
                 this.snake.setNextDirection(Direction.RIGHT);
                 this.snake.move();
-                this.rasterizationStrategy.updateBoard();
+                this.rasterizationStrategy.updateSnakeCells();
                 break;
             default:
                 break;

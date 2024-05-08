@@ -128,6 +128,11 @@ public class Poligono implements Cloneable {
                     return true;
             }
         }
+
+        if(this.pontos.get(0).dist(this.pontos.get(1)) == that.pontos.get(0).dist(that.pontos.get(1))) {
+            if(this.centroide.dist(that.centroide) < this.pontos.get(0).dist(this.pontos.get(1)))
+                return true;
+        }
         return false;
     }
 

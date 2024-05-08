@@ -13,13 +13,6 @@ public class FullRasterization extends RasterizationStrategy {
     }
 
     @Override
-    public void updateBoard() {
-        updateFoodCells();
-        updateObstacleCells();
-        updateSnakeCells();
-    }
-
-    @Override
     public String toString() {
         String result = "";
         for(int i = this.rows - 1; i >= 0; i--) {
@@ -85,6 +78,7 @@ public class FullRasterization extends RasterizationStrategy {
     }
 
     public void updateFoodCells() {
+
         boolean isFoodNotReseted = false;
         while(!isFoodNotReseted) {
             for (int i = 0; i < this.rows; i++) {
@@ -99,9 +93,9 @@ public class FullRasterization extends RasterizationStrategy {
                 for (int j = this.gameBoard.getFood().getMinX(); j < this.gameBoard.getFood().getMaxX(); j++) {
                     if(board[i][j].getCellType() != CellType.EMPTY)
                     {
-                        for (int w = this.gameBoard.getFood().getMinY(); w < this.gameBoard.getFood().getMaxY(); w++) {
-                            for (int z = this.gameBoard.getFood().getMinX(); z < this.gameBoard.getFood().getMaxX(); z++) {
-                                if(board[i][j].getCellType() == CellType.FOOD) {
+                        for (int w = 0; w < this.rows; w++) {
+                            for (int z = 0; z < this.cols; z++) {
+                                if (board[i][j].getCellType() == CellType.FOOD) {
                                     board[i][j].setCellType(CellType.EMPTY);
                                 }
                             }

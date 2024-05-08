@@ -28,7 +28,7 @@ public class Obstacle {
 
     public boolean obstacleIntersect(Snake snake) {
         if (snake.getHead().interseta(this.poligono)) 
-                return true;
+            return true;
         return false;
     }
 

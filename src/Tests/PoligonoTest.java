@@ -119,6 +119,7 @@ public class PoligonoTest {
         String input4 = "3 0 4 0 5 3 4 3 5";
         Poligono Poligono4 = new Poligono(input4);
         assertFalse(Poligono4.interseta(Poligono3));
+        assertTrue(new Poligono("4 2 4 4 4 4 2 2 2").interseta(new Poligono("4 2 3 4 3 4 1 2 1")));
     }
 
     @Test

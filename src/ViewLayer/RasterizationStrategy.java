@@ -25,7 +25,9 @@ public abstract class RasterizationStrategy {
     @Override
     public abstract String toString();
 
-    public abstract void updateBoard();
+    public abstract void updateObstacleCells();
+    public abstract void updateSnakeCells();
+    public abstract void updateFoodCells();
 
     public Cell[][] getBoard() {
         return board;

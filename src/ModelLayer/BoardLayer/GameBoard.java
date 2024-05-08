@@ -34,7 +34,7 @@ public class GameBoard {
      * @param rows linhas
      * @param columns colunas
      */
-    public GameBoard (Snake snake, int widthBoard, int heightBoard, FoodType foodType, int foodDimension,int obstaclesQuantity, Ponto obstacleRotacionPoint,boolean isObstacleDynamic, Random random) throws CloneNotSupportedException {
+    public GameBoard (Snake snake, int widthBoard, int heightBoard, FoodType foodType, int foodDimension,int obstaclesQuantity, Ponto obstacleRotacionPoint,boolean isObstacleDynamic, Random random) {
         if(widthBoard <= 0 || heightBoard <= 0) {
             throw new IllegalArgumentException("O número de linhas e colunas deve ser maior que zero.");
         }
@@ -176,17 +176,7 @@ public class GameBoard {
             double headY = snakeClone.getHead().getCentroide().getY();
             Direction nextDirection = calculateDirection(headX, headY, foodX , foodY, snakeClone);
             if(this.food.foodContainedInSnake(snakeClone)) {
-                for(int i = 0; i < this.listOfObstacles.size(); i++ ){
-                    if(!this.listOfObstacles.get(i).obstacleContained(snakeClone) && !this.listOfObstacles.get(i).obstacleIntersect(snakeClone)) {
-                        isReachable = true;
-                    }
-                    else {
-                        isReachable = false;
-                        break;
-                    }
-                }
-                if(isReachable)
-                    break;
+                isReachable = true;
             }
             else if(this.food.foodIntersectSnake(snakeClone)) {
                 isReachable = false;
@@ -243,8 +233,8 @@ public class GameBoard {
                         break;
                 }
                 boolean isObstacleIntersectedWithAnotherObstacle = false;
-                for(int i = 0; i < this.listOfObstacles.size(); i++) {
-                    if(this.listOfObstacles.get(i).getPoligono().interseta(this.listOfObstacles.get(this.listOfObstacles.size()-1).getPoligono())) {
+                for(int i = 0; i < this.listOfObstacles.size() - 1; i++) {
+                    if(this.listOfObstacles.get(i).getPoligono().interseta(this.listOfObstacles.get(this.listOfObstacles.size()-1).getPoligono()) && this.listOfObstacles.size() > 1) {
                         this.listOfObstacles.remove(this.listOfObstacles.size() - 1);
                         isEmpty = true;
                         isObstacleIntersectedWithAnotherObstacle = true;
