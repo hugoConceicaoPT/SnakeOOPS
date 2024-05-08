@@ -139,7 +139,7 @@ public class GameBoard {
                 FactoryFood factory = new FactoryFood();
                 this.food = factory.createFood(new Quadrado(pontos));
             }
-            if(!foodIntersectObstacle() && !foodContainedInObstacle() && !foodIntersectSnake()) {
+            if(!foodIntersectObstacle() && !foodContainedInObstacle() && !foodIntersectSnake() && !this.food.foodContainedInSnake(snake)) {
                 if(generatedFoods == 0) {
                     boolean isReachable = foodIsInReachableArea();
                     if(isReachable) isEmpty = false;
@@ -314,9 +314,10 @@ public class GameBoard {
         List<Ponto> pontos = new ArrayList<>();
         int width = this.random.nextInt(size) + 1;
         int height = this.random.nextInt(size) + 1;
-        while(width == height)
-            width = this.random.nextInt(size) + 1;
-            height = this.random.nextInt(size) + 1;
+        if(width == height) {
+            pontos = createSquarePoints(x, y, size);
+            return pontos;
+        }
         pontos.add(new Ponto(x, y));
         pontos.add(new Ponto(x, y + height));
         pontos.add(new Ponto(x + width,y + height));

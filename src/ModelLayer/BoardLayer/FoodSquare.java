@@ -29,17 +29,17 @@ public class FoodSquare extends Food {
             Poligono bodySnake = null;
             switch (snake.getCurrentDirection()) {
                 case UP:
-                    pontos.add(new Ponto(snake.getBody().getFirst().getMaxY(),snake.getBody().getFirst().getMinX()));
-                    pontos.add(new Ponto(snake.getBody().getFirst().getMaxY(),snake.getBody().getFirst().getMaxX()));
-                    pontos.add(new Ponto(snake.getBody().get(1).getMinY(),snake.getBody().get(1).getMaxX()));
-                    pontos.add(new Ponto(snake.getBody().get(1).getMinY(),snake.getBody().get(1).getMinX()));
+                    pontos.add(new Ponto(snake.getBody().getFirst().getMaxX(),snake.getBody().getFirst().getMaxY()));
+                    pontos.add(new Ponto(snake.getBody().getFirst().getMinX(),snake.getBody().getFirst().getMaxY()));
+                    pontos.add(new Ponto(snake.getBody().get(1).getMinX(),snake.getBody().get(1).getMinY()));
+                    pontos.add(new Ponto(snake.getBody().get(1).getMaxX(),snake.getBody().get(1).getMinY()));
                     bodySnake = new Poligono(pontos);
                     break;
                 case DOWN:
-                    pontos.add(new Ponto(snake.getBody().getFirst().getMinY(),snake.getBody().getFirst().getMinX()));
-                    pontos.add(new Ponto(snake.getBody().getFirst().getMinY(),snake.getBody().getFirst().getMaxX()));
-                    pontos.add(new Ponto(snake.getBody().get(1).getMaxY(),snake.getBody().get(1).getMaxX()));
-                    pontos.add(new Ponto(snake.getBody().get(1).getMaxY(),snake.getBody().get(1).getMinX()));
+                    pontos.add(new Ponto(snake.getBody().getFirst().getMinX(),snake.getBody().getFirst().getMinY()));
+                    pontos.add(new Ponto(snake.getBody().getFirst().getMaxX(),snake.getBody().getFirst().getMinY()));
+                    pontos.add(new Ponto(snake.getBody().get(1).getMaxX(),snake.getBody().get(1).getMaxY()));
+                    pontos.add(new Ponto(snake.getBody().get(1).getMinX(),snake.getBody().get(1).getMaxY()));
                     bodySnake = new Poligono(pontos);
                     break;
                 case LEFT:
