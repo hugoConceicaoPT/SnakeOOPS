@@ -5,7 +5,6 @@ import ModelLayer.BoardLayer.GameBoard;
 import ModelLayer.SnakeLayer.Poligono;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
-import ModelLayer.SnakeLayer.SegmentoReta;
 
 public class ContourRasterization extends RasterizationStrategy {
 
