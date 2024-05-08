@@ -2,8 +2,10 @@ package ViewLayer;
 
 import ModelLayer.BoardLayer.CellType;
 import ModelLayer.BoardLayer.GameBoard;
+import ModelLayer.SnakeLayer.Poligono;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
+import ModelLayer.SnakeLayer.SegmentoReta;
 
 public class ContourRasterization extends RasterizationStrategy {
 
@@ -13,9 +15,16 @@ public class ContourRasterization extends RasterizationStrategy {
 
     @Override
     public String toString() {
-        return null;
+        String result = "";
+        for(int i = this.rows - 1; i >= 0; i--) {
+            for(int j = 0; j < this.cols; j++) {
+                result += board[i][j].toString() + " ";
+            }
+            result += "\n";
+        }
+        return result;
     }
-
+    
     public void updateSnakeCells() {
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
@@ -26,27 +35,82 @@ public class ContourRasterization extends RasterizationStrategy {
         }
     
         for (int i = 1; i < this.gameBoard.getSnake().getBody().size(); i++) {
-            for(int w = (int) this.gameBoard.getSnake().getBody().get(i).getMinY(); w < (int) this.gameBoard.getSnake().getBody().get(i).getMaxY(); w++) {
-                for(int j = (int) this.gameBoard.getSnake().getBody().get(i).getMinX() ; j < (int) this.gameBoard.getSnake().getBody().get(i).getMaxX(); j++) {
-                    if(board[w][j].getCellType() == CellType.FOOD) {
-                        board[w][j].setCellType(CellType.SNAKEFOOD);
-                    }
-                    else
-                        board[w][j].setCellType(CellType.TAIL);
+            Quadrado segment = this.gameBoard.getSnake().getBody().get(i);
+            int minX = (int) segment.getMinX();
+            int maxX = (int) segment.getMaxX();
+            int minY = (int) segment.getMinY();
+            int maxY = (int) segment.getMaxY();
+        
+
+            for (int j = minX; j < maxX; j++) {
+                if (board[minY][j].getCellType() == CellType.FOOD) {
+                    board[minY][j].setCellType(CellType.SNAKEFOOD);
+                } else {
+                    board[minY][j].setCellType(CellType.TAIL);
+                }
+        
+                if (board[maxY - 1][j].getCellType() == CellType.FOOD) {
+                    board[maxY - 1][j].setCellType(CellType.SNAKEFOOD);
+                } else {
+                    board[maxY - 1][j].setCellType(CellType.TAIL);
+                }
+            }
+        
+            
+            for (int w = minY; w < maxY; w++) {
+                if (board[w][minX].getCellType() == CellType.FOOD) {
+                    board[w][minX].setCellType(CellType.SNAKEFOOD);
+                } else {
+                    board[w][minX].setCellType(CellType.TAIL);
+                }
+        
+                if (board[w][maxX - 1].getCellType() == CellType.FOOD) {
+                    board[w][maxX - 1].setCellType(CellType.SNAKEFOOD);
+                } else {
+                    board[w][maxX - 1].setCellType(CellType.TAIL);
                 }
             }
         }
+        
     
         Quadrado head = this.gameBoard.getSnake().getHead();
-        for(int w = (int) head.getMinY(); w < (int) head.getMaxY(); w++) {
-            for(int j = (int) head.getMinX(); j < (int) head.getMaxX(); j++) {
-                if(board[w][j].getCellType() == CellType.FOOD) {
-                    board[w][j].setCellType(CellType.SNAKEFOOD);
-                }
-                else
-                    board[w][j].setCellType(CellType.HEAD);
+        int minX = (int) head.getMinX();
+        int maxX = (int) head.getMaxX();
+        int minY = (int) head.getMinY();
+        int maxY = (int) head.getMaxY();
+        
+
+        for (int j = minX; j < maxX; j++) {
+
+            if (board[minY][j].getCellType() == CellType.FOOD) {
+                board[minY][j].setCellType(CellType.SNAKEFOOD);
+            } else {
+                board[minY][j].setCellType(CellType.HEAD);
+            }
+        
+
+            if (board[maxY - 1][j].getCellType() == CellType.FOOD) {
+                board[maxY - 1][j].setCellType(CellType.SNAKEFOOD);
+            } else {
+                board[maxY - 1][j].setCellType(CellType.HEAD);
             }
         }
+        
+        for (int w = minY; w < maxY; w++) {
+
+            if (board[w][minX].getCellType() == CellType.FOOD) {
+                board[w][minX].setCellType(CellType.SNAKEFOOD);
+            } else {
+                board[w][minX].setCellType(CellType.HEAD);
+            }
+        
+            if (board[w][maxX - 1].getCellType() == CellType.FOOD) {
+                board[w][maxX - 1].setCellType(CellType.SNAKEFOOD);
+            } else {
+                board[w][maxX - 1].setCellType(CellType.HEAD);
+            }
+        }
+        
     }
 
     public void updateObstacleCells() {
@@ -58,19 +122,40 @@ public class ContourRasterization extends RasterizationStrategy {
             }
         }   
 
-        for(int i = 0; i < this.gameBoard.getObstaclesQuantity(); i++) {
-            for(int w = (int) this.gameBoard.getListOfObstacles().get(i).getPoligono().getMinY(); w < (int) this.gameBoard.getListOfObstacles().get(i).getPoligono().getMaxY(); w++) {
-                for(int j = (int) this.gameBoard.getListOfObstacles().get(i).getPoligono().getMinX() ; j < (int) this.gameBoard.getListOfObstacles().get(i).getPoligono().getMaxX(); j++) {
-                    if(this.gameBoard.getListOfObstacles().get(i).getPoligono().contemPonto(new Ponto(j,w)) && w >= 0 && w < this.gameBoard.getHeightBoard() && j >= 0 && j < this.gameBoard.getWidthBoard() && board[w][j].getCellType() == CellType.EMPTY) {
-                        board[w][j].setCellType(CellType.OBSTACLE);
-                    }
+        for (int i = 0; i < this.gameBoard.getObstaclesQuantity(); i++) {
+            Poligono poligono = this.gameBoard.getListOfObstacles().get(i).getPoligono();
+            int minX = (int) poligono.getMinX();
+            int maxX = (int) poligono.getMaxX();
+            int minY = (int) poligono.getMinY();
+            int maxY = (int) poligono.getMaxY();
+        
+            for (int j = minX; j < maxX; j++) {
+
+                if (poligono.contemPonto(new Ponto(j, minY)) && minY >= 0 && minY < this.gameBoard.getHeightBoard() && j >= 0 && j < this.gameBoard.getWidthBoard() && board[minY][j].getCellType() == CellType.EMPTY) {
+                    board[minY][j].setCellType(CellType.OBSTACLE);
+                }
+        
+                if (poligono.contemPonto(new Ponto(j, maxY - 1)) && maxY - 1 >= 0 && maxY - 1 < this.gameBoard.getHeightBoard() && j >= 0 && j < this.gameBoard.getWidthBoard() && board[maxY - 1][j].getCellType() == CellType.EMPTY) {
+                    board[maxY - 1][j].setCellType(CellType.OBSTACLE);
+                }
+            }
+        
+
+            for (int w = minY; w < maxY; w++) {
+
+                if (poligono.contemPonto(new Ponto(minX, w)) && w >= 0 && w < this.gameBoard.getHeightBoard() && minX >= 0 && minX < this.gameBoard.getWidthBoard() && board[w][minX].getCellType() == CellType.EMPTY) {
+                    board[w][minX].setCellType(CellType.OBSTACLE);
+                }
+        
+                if (poligono.contemPonto(new Ponto(maxX - 1, w)) && w >= 0 && w < this.gameBoard.getHeightBoard() && maxX - 1 >= 0 && maxX - 1 < this.gameBoard.getWidthBoard() && board[w][maxX - 1].getCellType() == CellType.EMPTY) {
+                    board[w][maxX - 1].setCellType(CellType.OBSTACLE);
                 }
             }
         }
+        
     }
 
     public void updateFoodCells() {
-
         boolean isFoodNotReseted = false;
         while(!isFoodNotReseted) {
             for (int i = 0; i < this.rows; i++) {
@@ -81,42 +166,48 @@ public class ContourRasterization extends RasterizationStrategy {
                 }
             }
 
-            for(int i = 0; i < this.rows - this.gameBoard.getFoodDimension(); i++) {
-                for(int j = 0; j < this.cols - this.gameBoard.getFoodDimension(); j++) {
-                    for(int k = i; k < i + this.gameBoard.getFoodDimension(); k++) {
-                        for(int l = j; l < j + this.gameBoard.getFoodDimension(); l++) {
-                            if (board[k][l].getCellType() != CellType.EMPTY) {
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-
-            for (int i = this.gameBoard.getFood().getMinY(); i < this.gameBoard.getFood().getMaxY(); i++) {
-                for (int j = this.gameBoard.getFood().getMinX(); j < this.gameBoard.getFood().getMaxX(); j++) {
-                    if(board[i][j].getCellType() != CellType.EMPTY)
-                    {
-                        for (int w = this.gameBoard.getFood().getMinY(); w < this.gameBoard.getFood().getMaxY(); w++) {
-                            for (int z = this.gameBoard.getFood().getMinX(); z < this.gameBoard.getFood().getMaxX(); z++) {
-                                if(board[i][j].getCellType() == CellType.FOOD) {
-                                    board[i][j].setCellType(CellType.EMPTY);
+            boolean isFoodPlaced = false;
+            int minX = this.gameBoard.getFood().getMinX();
+            int maxX = this.gameBoard.getFood().getMaxX();
+            int minY = this.gameBoard.getFood().getMinY();
+            int maxY = this.gameBoard.getFood().getMaxY();
+            
+           
+            for (int i = minY; i < maxY; i++) {
+                for (int j = minX; j < maxX; j++) {
+                  
+                    if (board[i][j].getCellType() != CellType.EMPTY && board[i][j].getCellType() != CellType.FOOD) {
+                        
+                        for (int x = minY; x < maxY; x++) {
+                            for (int y = minX; y < maxX; y++) {
+                                if (board[x][y].getCellType() == CellType.FOOD) {
+                                    board[x][y].setCellType(CellType.EMPTY);
                                 }
                             }
                         }
+            
+                       
                         this.gameBoard.removeFood();
                         this.gameBoard.generateFood();
-                        isFoodNotReseted = false;
+                        isFoodPlaced = true;
                         break;
                     }
-                    else {
-                        board[i][j].setCellType(CellType.FOOD);
-                        isFoodNotReseted = true;
-                    }
-                    if(!isFoodNotReseted)
-                        break;
+                }
+            
+                if (isFoodPlaced) {
+                    break;
                 }
             }
+            
+            if (!isFoodPlaced) {
+                for (int i = minY; i < maxY; i++) {
+                    for (int j = minX; j < maxX; j++) {
+                        board[i][j].setCellType(CellType.FOOD);
+                    }
+                }
+            }
+            
         }
     }
+
 }
