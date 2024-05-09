@@ -9,6 +9,13 @@ public class Cliente {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("----------------------------- Bem vindo ao jogo da Cobra -----------------------------");  
+        System.out.println("Indique o seu nome (clique enter se quiser o nome default): ");
+        String name;
+        if(sc.nextLine().isEmpty()) {
+            name = "Player";
+        }
+        else
+            name = sc.nextLine();
         System.out.print("Digite o comprimento da arena: ");
         int width = sc.nextInt();
         System.out.print("Digite a largura da arena: ");
@@ -60,7 +67,7 @@ public class Cliente {
         long seed = System.currentTimeMillis();
         SnakeGame snakeGame;
         try {
-            snakeGame = new SnakeGame(width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, listObstacleRotacionPoint,isObstacleDynamic, UIMode, seed);
+            snakeGame = new SnakeGame(name,width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, listObstacleRotacionPoint,isObstacleDynamic, UIMode, seed);
             snakeGame.runGame(sc);
             snakeGame.endGame();
         } catch (CloneNotSupportedException e) {

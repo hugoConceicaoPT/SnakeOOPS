@@ -40,16 +40,15 @@ public class ContourRasterization extends RasterizationStrategy {
         for (int i = 1; i < this.gameBoard.getSnake().getBody().size(); i++) {
             Quadrado segment = this.gameBoard.getSnake().getBody().get(i);
             int minX = (int) segment.getMinX();
-            int maxX = (int) segment.getMaxX();
+            int maxX = (int) segment.getMaxX()- 1;
             int minY = (int) segment.getMinY();
-            int maxY = (int) segment.getMaxY();
+            int maxY = (int) segment.getMaxY() - 1;
     
-            for (int j = minX; j < maxX; j++) {
-                for (int g = minY; g < maxY; g++) {
-                    board[g][minX].setCellType(CellType.TAIL);
-                    board[g][maxX].setCellType(CellType.TAIL);
-                    board[minY][j].setCellType(CellType.TAIL);
-                    board[maxY][j].setCellType(CellType.TAIL);
+            for (int j = minY; j <= maxY; j++) {
+                for (int g = minX; g <= maxX; g++) {
+                    if(j == minY || j == maxY || g == minX || g == maxX) {
+                        board[j][g].setCellType(CellType.TAIL);
+                    }
                 }
             }
             
@@ -59,15 +58,14 @@ public class ContourRasterization extends RasterizationStrategy {
 
         Quadrado head = this.gameBoard.getSnake().getHead();
         int minX = (int) head.getMinX();
-        int maxX = (int) head.getMaxX();
+        int maxX = (int) head.getMaxX() - 1;
         int minY = (int) head.getMinY();
-        int maxY = (int) head.getMaxY();
-        for (int j = minX; j < maxX; j++) {
-            for (int g = minY; g < maxY; g++) {
-                board[g][minX].setCellType(CellType.HEAD);
-                board[g][maxX].setCellType(CellType.HEAD);
-                board[minY][j].setCellType(CellType.HEAD);
-                board[maxY][j].setCellType(CellType.HEAD);
+        int maxY = (int) head.getMaxY() - 1;
+        for (int j = minY; j <= maxY; j++) {
+            for (int g = minX; g <= maxX; g++) {
+                if(j == minY || j == maxY || g == minX || g == maxX) {
+                    board[j][g].setCellType(CellType.HEAD);
+                }
             }
         }
     }
@@ -84,21 +82,27 @@ public class ContourRasterization extends RasterizationStrategy {
 
         for (int i = 0; i < this.gameBoard.getObstaclesQuantity(); i++) {
             Poligono poligono = this.gameBoard.getListOfObstacles().get(i).getPoligono();
-            SegmentoReta segment = this.gameBoard.getListOfObstacles().get(i).getPoligono().getAresta().get(i);
-            int maxX = (int) poligono.getMaxX();
-            int maxY = (int) poligono.getMaxY();
-            floodFill(maxX, maxY, segment);
+            int maxX = (int) poligono.getMaxX() - 1;
+            int maxY = (int) poligono.getMaxY() - 1;
+            for(int j = 0; j < poligono.getAresta().size(); j++) {
+                SegmentoReta segment = this.gameBoard.getListOfObstacles().get(i).getPoligono().getAresta().get(i);
+                floodFill(maxX, maxY, segment);
+            }
         }
         
     }
 
     public void floodFill(int x, int y,SegmentoReta segmentoReta){
-        if (segmentoReta.contemPonto(new Ponto<Integer>(x,y))) {
+        if (segmentoReta.contemPonto(new Ponto<Integer>(x,y)) && x >= 0 && y >= 0 && x < this.cols && y < this.rows) {
             board[y][x].setCellType(CellType.OBSTACLE);
             floodFill(x+1, y, segmentoReta);
-            floodFill(x-1, y, segmentoReta);
             floodFill(x, y+1, segmentoReta);
+            floodFill(x-1, y, segmentoReta);
             floodFill(x, y-1, segmentoReta);
+            floodFill(x+1, y-1, segmentoReta);
+            floodFill(x+1, y+1, segmentoReta);
+            floodFill(x-1, y-1, segmentoReta);
+            floodFill(x-1, y+1, segmentoReta);
         }
     }
 
@@ -114,19 +118,17 @@ public class ContourRasterization extends RasterizationStrategy {
 
         Food food = this.gameBoard.getFood();
         int minX = (int) food.getMinX();
-        int maxX = (int) food.getMaxX();
+        int maxX = (int) food.getMaxX() - 1;
         int minY = (int) food.getMinY();
-        int maxY = (int) food.getMaxY();
+        int maxY = (int) food.getMaxY() - 1;
     
     
-        for (int j = minX; j < maxX; j++) {
-            board[minY][j].setCellType(CellType.FOOD);
-            board[maxY][j].setCellType(CellType.FOOD);
-        }
-        
-        for (int g = minY; g < maxY; g++) {
-            board[g][minX].setCellType(CellType.FOOD);
-            board[g][maxX].setCellType(CellType.FOOD);
+        for (int j = minY; j <= maxY; j++) {
+            for (int g = minX; g <= maxX; g++) {
+                if(j == minY || j == maxY || g == minX || g == maxX) {
+                    board[j][g].setCellType(CellType.FOOD);
+                }
+            }
         }
     }
     

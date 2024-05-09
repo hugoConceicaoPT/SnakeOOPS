@@ -16,20 +16,20 @@ public class Leaderboard {
         this.filePath = "src\\ranking.txt";
     }
 
-   /* public String generateLeaderboard() {
+    public String generateLeaderboard() {
         String result = "";
         try (Stream<String> lines = Files.lines(Paths.get(this.filePath))) {
             List<Player> topPlayers = lines.map(line -> {
-                String[] parts = line.split(" ");
-                String name = parts[1];
-                int points = Integer.parseInt(parts[3]);
-                return new Player(name, new Score(points,0));
-            })
-            .sorted(Comparator.comparing(Player player) -> player.getScore().getPoints()).reversed())
-            .collect(Collectors.toList());
+                    String[] parts = line.split(" ");
+                    String name = parts[1];
+                    int points = Integer.parseInt(parts[3]);
+                    return new Player(name, new Score(points,0));
+                })
+                .sorted(Comparator.comparing(player -> player.getScore().getPoints(), Comparator.reverseOrder()))
+                .collect(Collectors.toList());
 
-            for(int i = 0; i < topScores.size(); i++) {
-                result += i+1 + "º " + topScores.get(i).getPoints() + " " + "Pontos"+ "\n"; 
+            for(int i = 0; i < topPlayers.size(); i++) {
+                result += i+1 + "º " + topPlayers.get(i).getName() + " " + topPlayers.get(i).getScore().getPoints() + " " + "Pontos"+ "\n"; 
             }
 
         } catch (Exception e) {
@@ -37,23 +37,23 @@ public class Leaderboard {
         }
         return result;
     }
-*/
 
-    public void updateLeaderboard(Score newScore) {
+    public void updateLeaderboard(Player newPlayer) {
         try (Stream<String> lines = Files.lines(Paths.get(this.filePath))) {
-            List<Score> topScores = lines.map(line -> {
+            List<Player> topPlayers = lines.map(line -> {
                 String[] parts = line.split(" ");
-                int points = Integer.parseInt(parts[1]);
-                return new Score(points, 0);
+                String name = parts[1];
+                int points = Integer.parseInt(parts[3]);
+                return new Player(name, new Score(points,0));
             })
-            .sorted(Comparator.comparing(Score::getPoints).reversed())
+            .sorted(Comparator.comparing(player -> player.getScore().getPoints(), Comparator.reverseOrder()))
             .collect(Collectors.toList());
 
-            topScores.add(newScore);
-            topScores.sort(Comparator.comparing(Score::getPoints).reversed());
+            topPlayers.add(newPlayer);
+            topPlayers.sort(Comparator.comparing(player -> player.getScore().getPoints(), Comparator.reverseOrder()));
 
-            List<String> formattedScores = topScores.stream()
-                .map(topScore -> (topScores.indexOf(topScore) + 1) + "º " + topScore.getPoints() + " " + "Pontos")
+            List<String> formattedScores = topPlayers.stream()
+                .map(topPlayer -> (topPlayers.indexOf(topPlayer) + 1) + "º " + topPlayer.getName() + " " + topPlayer.getScore().getPoints() + " " + "Pontos")
                 .collect(Collectors.toList());
 
             Files.write(Paths.get(this.filePath),formattedScores);

@@ -14,7 +14,7 @@ public class SnakeGameTest {
     @Test
     public void moveSnakeTest() throws CloneNotSupportedException {
         long seed = 0;
-        SnakeGame snakeGame = new SnakeGame(20, 10, 2, true, "completa", 1, "quadrados", 5, 2, null, true, "textual", seed);
+        SnakeGame snakeGame = new SnakeGame("Player",20, 10, 2, true, "completa", 1, "quadrados", 5, 2, null, true, "textual", seed);
         System.out.println(snakeGame.getSnake().toString());
         snakeGame.moveSnake(Direction.UP);
         snakeGame.getrasterizationStrategy().updateSnakeCells();
@@ -35,7 +35,7 @@ public class SnakeGameTest {
     @Test
     public void foodContainedInSnakeTest() throws CloneNotSupportedException {
         long seed = 1;
-        SnakeGame game = new SnakeGame(100, 100, 10, true, "contorno", 5, "quadrados", 100, 5, null, true, "textual", seed);
+        SnakeGame game = new SnakeGame("Player",100, 100, 10, true, "contorno", 5, "quadrados", 100, 5, null, true, "textual", seed);
         System.out.println(game.getSnake().toString());
         FoodSquare foodSquare = new FoodSquare(new Quadrado("16 30 22 30 22 36 16 36"));
         game.getGameBoard().setFood(foodSquare);

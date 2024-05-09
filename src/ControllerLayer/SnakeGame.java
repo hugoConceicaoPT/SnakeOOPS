@@ -12,6 +12,7 @@ import ModelLayer.BoardLayer.FoodType;
 import ModelLayer.BoardLayer.GameBoard;
 import ModelLayer.SnakeLayer.AutomatedMovementStrategy;
 import ModelLayer.SnakeLayer.Direction;
+import ModelLayer.SnakeLayer.Player;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Score;
@@ -36,6 +37,7 @@ public class SnakeGame implements KeyListener {
     private boolean isObstacleDynamic;
     private boolean isGameOver;
     private Score score;
+    private Player player;
     private Snake snake;
     private GameBoard gameBoard;
     private RasterizationStrategy rasterizationStrategy;
@@ -46,7 +48,7 @@ public class SnakeGame implements KeyListener {
     /** Construtor para criar um jogo da cobra        
      * @param snake a cobra do jogo 
      */
-    public SnakeGame (int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, List<Ponto<? extends Number>> listObstacleRotacionPoint, boolean isObstacleDynamic, String UIMode, long seed) throws CloneNotSupportedException {
+    public SnakeGame (String playerName, int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, List<Ponto<? extends Number>> listObstacleRotacionPoint, boolean isObstacleDynamic, String UIMode, long seed) throws CloneNotSupportedException {
         this.random = new Random(seed);
         this.isGameOver = false;
         this.widthBoard = widthBoard;
@@ -65,6 +67,7 @@ public class SnakeGame implements KeyListener {
         this.listObstacleRotacionPoint = listObstacleRotacionPoint;
         this.isObstacleDynamic = isObstacleDynamic;
         this.score = new Score(0,this.scorePerFood);
+        this.player = new Player(playerName, score);
         this.gameBoard = new GameBoard(this.snake, this.widthBoard, this.heightBoard, this.foodType,this.foodDimension, this.obstaclesQuantity, this.listObstacleRotacionPoint,this.isObstacleDynamic,this.random);
         if(rasterizationMode.equals("contorno"))
             this.rasterizationStrategy = new ContourRasterization(this.gameBoard);
@@ -78,6 +81,7 @@ public class SnakeGame implements KeyListener {
             ((GraphicalUI) userInterface).addKeyListener(this);
         this.leaderboard = new Leaderboard();
         this.isFoodEaten = false;
+
     }
 
     /** Inicializa o jogo */
@@ -175,9 +179,9 @@ public class SnakeGame implements KeyListener {
     }
     /** Para o jogo */
     public void endGame() {
-        //this.leaderboard.updateLeaderboard(score);
+        this.leaderboard.updateLeaderboard(player);
         System.out.println("Seu jogo acabou. Aqui estão os tops jogadores do jogo:");
-        //System.out.println(this.leaderboard.generateLeaderboard());
+        System.out.println(this.leaderboard.generateLeaderboard());
         System.out.println(snake.toString());
         System.out.println(this.gameBoard.getListOfObstacles().toString());
         if(this.userInterface instanceof GraphicalUI) 

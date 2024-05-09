@@ -81,8 +81,8 @@ public class SegmentoReta implements Cloneable {
         }
 
         // Verifica se o ponto está dentro dos limites dos extremos do segmento
-        boolean dentroDosLimitesX = Math.min(a.getX().doubleValue(), b.getX().doubleValue()) <= ponto.getX() && ponto.getX() <= Math.max(a.getX().doubleValue(), b.getX().doubleValue());
-        boolean dentroDosLimitesY = Math.min(a.getY().doubleValue(), b.getY().doubleValue()) <= ponto.getY() && ponto.getY() <= Math.max(a.getY().doubleValue(), b.getY().doubleValue());
+        boolean dentroDosLimitesX = Math.min(a.getX().doubleValue(), b.getX().doubleValue()) <= ponto.getX().doubleValue() && ponto.getX().doubleValue() <= Math.max(a.getX().doubleValue(), b.getX().doubleValue());
+        boolean dentroDosLimitesY = Math.min(a.getY().doubleValue(), b.getY().doubleValue()) <= ponto.getY().doubleValue() && ponto.getY().doubleValue() <= Math.max(a.getY().doubleValue(), b.getY().doubleValue());
 
         // Retorna true se estiver dentro dos limites tanto em X quanto em Y
         return dentroDosLimitesX && dentroDosLimitesY;
