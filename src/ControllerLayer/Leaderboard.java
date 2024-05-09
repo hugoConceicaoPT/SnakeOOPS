@@ -16,7 +16,7 @@ public class Leaderboard {
         this.filePath = "src\\ranking.txt";
     }
 
-    public String generateLeaderboard() {
+   /* public String generateLeaderboard() {
         String result = "";
         try (Stream<String> lines = Files.lines(Paths.get(this.filePath))) {
             List<Player> topPlayers = lines.map(line -> {
@@ -37,6 +37,7 @@ public class Leaderboard {
         }
         return result;
     }
+*/
 
     public void updateLeaderboard(Score newScore) {
         try (Stream<String> lines = Files.lines(Paths.get(this.filePath))) {

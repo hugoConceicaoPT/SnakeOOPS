@@ -45,14 +45,14 @@ public class ContourRasterization extends RasterizationStrategy {
             int maxY = (int) segment.getMaxY();
     
             for (int j = minX; j < maxX; j++) {
-                board[minY][j].setCellType(CellType.TAIL);
-                board[maxY - 1][j].setCellType(CellType.TAIL);
+                for (int g = minY; g < maxY; g++) {
+                    board[g][minX].setCellType(CellType.TAIL);
+                    board[g][maxX].setCellType(CellType.TAIL);
+                    board[minY][j].setCellType(CellType.TAIL);
+                    board[maxY][j].setCellType(CellType.TAIL);
+                }
             }
             
-            for (int g = minY; g < maxY; g++) {
-                board[g][minX].setCellType(CellType.TAIL);
-                board[g][maxX - 1].setCellType(CellType.TAIL);
-            }
             
         }
     
@@ -63,13 +63,12 @@ public class ContourRasterization extends RasterizationStrategy {
         int minY = (int) head.getMinY();
         int maxY = (int) head.getMaxY();
         for (int j = minX; j < maxX; j++) {
-            board[minY][j].setCellType(CellType.HEAD);
-            board[maxY - 1][j].setCellType(CellType.HEAD);
-        }
-        
-        for (int g = minY; g < maxY; g++) {
-            board[g][minX].setCellType(CellType.TAIL);
-            board[g][maxX - 1].setCellType(CellType.TAIL);
+            for (int g = minY; g < maxY; g++) {
+                board[g][minX].setCellType(CellType.HEAD);
+                board[g][maxX].setCellType(CellType.HEAD);
+                board[minY][j].setCellType(CellType.HEAD);
+                board[maxY][j].setCellType(CellType.HEAD);
+            }
         }
     }
     
@@ -122,12 +121,12 @@ public class ContourRasterization extends RasterizationStrategy {
     
         for (int j = minX; j < maxX; j++) {
             board[minY][j].setCellType(CellType.FOOD);
-            board[maxY - 1][j].setCellType(CellType.FOOD);
+            board[maxY][j].setCellType(CellType.FOOD);
         }
         
         for (int g = minY; g < maxY; g++) {
             board[g][minX].setCellType(CellType.FOOD);
-            board[g][maxX - 1].setCellType(CellType.FOOD);
+            board[g][maxX].setCellType(CellType.FOOD);
         }
     }
     
