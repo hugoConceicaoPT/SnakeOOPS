@@ -130,11 +130,11 @@ public class ContourRasterization extends RasterizationStrategy {
         
             for (int j = minX; j < maxX; j++) {
 
-                if (poligono.contemPonto(new Ponto(j, minY)) && minY >= 0 && minY < this.gameBoard.getHeightBoard() && j >= 0 && j < this.gameBoard.getWidthBoard() && board[minY][j].getCellType() == CellType.EMPTY) {
+                if (poligono.contemPonto(new Ponto<Integer>(j, minY)) && minY >= 0 && minY < this.gameBoard.getHeightBoard() && j >= 0 && j < this.gameBoard.getWidthBoard() && board[minY][j].getCellType() == CellType.EMPTY) {
                     board[minY][j].setCellType(CellType.OBSTACLE);
                 }
         
-                if (poligono.contemPonto(new Ponto(j, maxY - 1)) && maxY - 1 >= 0 && maxY - 1 < this.gameBoard.getHeightBoard() && j >= 0 && j < this.gameBoard.getWidthBoard() && board[maxY - 1][j].getCellType() == CellType.EMPTY) {
+                if (poligono.contemPonto(new Ponto<Integer>(j, maxY - 1)) && maxY - 1 >= 0 && maxY - 1 < this.gameBoard.getHeightBoard() && j >= 0 && j < this.gameBoard.getWidthBoard() && board[maxY - 1][j].getCellType() == CellType.EMPTY) {
                     board[maxY - 1][j].setCellType(CellType.OBSTACLE);
                 }
             }
@@ -142,11 +142,11 @@ public class ContourRasterization extends RasterizationStrategy {
 
             for (int w = minY; w < maxY; w++) {
 
-                if (poligono.contemPonto(new Ponto(minX, w)) && w >= 0 && w < this.gameBoard.getHeightBoard() && minX >= 0 && minX < this.gameBoard.getWidthBoard() && board[w][minX].getCellType() == CellType.EMPTY) {
+                if (poligono.contemPonto(new Ponto<Integer>(minX, w)) && w >= 0 && w < this.gameBoard.getHeightBoard() && minX >= 0 && minX < this.gameBoard.getWidthBoard() && board[w][minX].getCellType() == CellType.EMPTY) {
                     board[w][minX].setCellType(CellType.OBSTACLE);
                 }
         
-                if (poligono.contemPonto(new Ponto(maxX - 1, w)) && w >= 0 && w < this.gameBoard.getHeightBoard() && maxX - 1 >= 0 && maxX - 1 < this.gameBoard.getWidthBoard() && board[w][maxX - 1].getCellType() == CellType.EMPTY) {
+                if (poligono.contemPonto(new Ponto<Integer>(maxX - 1, w)) && w >= 0 && w < this.gameBoard.getHeightBoard() && maxX - 1 >= 0 && maxX - 1 < this.gameBoard.getWidthBoard() && board[w][maxX - 1].getCellType() == CellType.EMPTY) {
                     board[w][maxX - 1].setCellType(CellType.OBSTACLE);
                 }
             }

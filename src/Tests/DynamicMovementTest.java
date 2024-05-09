@@ -15,10 +15,10 @@ public class DynamicMovementTest {
     public void rotateObstacleTest() {
         ObstacleMovement obstacleMovement = new DynamicMovement();
         Quadrado quadrado = new Quadrado("2 4 2 2 4 2 4 4");
-        obstacleMovement.rotateObstacle(quadrado, new Ponto(5,5));
-        assertEquals("[(6.0,2.0), (8.0,2.0), (8.0,4.0), (6.0,4.0)]", quadrado.toString());
-        Triangulo triangulo = new Triangulo("3 4 2 2 4 2");
-        obstacleMovement.rotateObstacle(triangulo, new Ponto(3,2.67));
-        assertEquals("[(2.0,3.0), (4.0,2.0), (4.0,4.0)]", triangulo.toString());
+        obstacleMovement.rotateObstacle(quadrado, new Ponto<Integer>(5,5));
+        assertEquals("[(6,2), (8,2), (8,4), (6,4)]", quadrado.toString());
+        Triangulo triangulo = new Triangulo("3.0 4.0 2.0 2.0 4.0 2.0");
+        obstacleMovement.rotateObstacle(triangulo, new Ponto<Double>(3.0,2.67));
+        assertEquals("[(1.67,2.67), (3.67,1.67), (3.67,3.67)]", triangulo.toString());
     }
 }

@@ -21,7 +21,7 @@ public class FactoryFoodTest {
         Food foodSquare = foodFactory.createFood(quadrado);
         assertNotNull(foodSquare);
         assertTrue(foodSquare instanceof FoodSquare);
-        Circunferencia circunferencia = new Circunferencia(new Ponto(3, 4), 2);
+        Circunferencia circunferencia = new Circunferencia(new Ponto<Integer>(3, 4), 2);
         Food foodCircle = foodFactory.createFood(circunferencia);
         assertNotNull(foodCircle);
         assertTrue(foodCircle instanceof FoodCircle);

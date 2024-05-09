@@ -9,14 +9,14 @@ import java.util.Objects;
     @inv  Os pontos não podem ser iguais
 */
 public class SegmentoReta implements Cloneable {
-    private Ponto a;
-    private Ponto b;
+    private Ponto<? extends Number> a;
+    private Ponto<? extends Number> b;
 
     /** Construtor para criar um segmento de reta com dois pontos
      * @param a O ponto inicial do segmento de reta
      * @param b O ponto final do segmento de reta
      */
-    public SegmentoReta(Ponto a, Ponto b) {
+    public SegmentoReta(Ponto<? extends Number> a, Ponto<? extends Number> b) {
         check(a, b);
         this.a = a;
         this.b = b;
@@ -26,7 +26,7 @@ public class SegmentoReta implements Cloneable {
      * @param ponto1 primeiro ponto do segmento de reta
      * @param ponto2 segundo ponto do segmento de reta
      */
-    private void check(Ponto ponto1,Ponto ponto2){
+    private void check(Ponto<? extends Number> ponto1,Ponto<? extends Number> ponto2){
         if (ponto1.getX() == ponto2.getX() && ponto1.getY() == ponto2.getY()) {
             throw new IllegalArgumentException("Segmento:vi");
         }
@@ -45,8 +45,8 @@ public class SegmentoReta implements Cloneable {
      * @param c o ponto c no plano cartesiano
      * @return o produto vetorial entre os três pontos
      */
-    private double produtoVetorial(Ponto a, Ponto b, Ponto c) {
-        return ((b.getX() - a.getX()) * (c.getY() - a.getY())) - ((b.getY() - a.getY()) * (c.getX() - a.getX()));
+    private double produtoVetorial(Ponto<? extends Number> a, Ponto<? extends Number> b, Ponto<? extends Number> c) {
+        return ((b.getX().doubleValue() - a.getX().doubleValue()) * (c.getY().doubleValue() - a.getY().doubleValue())) - ((b.getY().doubleValue() - a.getY().doubleValue()) * (c.getX().doubleValue() - a.getX().doubleValue()));
     }
 
     /** Verifica se dois segmentos se cruzam
@@ -87,28 +87,28 @@ public class SegmentoReta implements Cloneable {
     /** Obtém o ponto a da reta
      * @return O ponto a da reta
      */
-    public Ponto getA() {
+    public Ponto<? extends Number> getA() {
         return a;
     }
 
     /** Obtém o ponto b da reta
      * @return O ponto b da reta
      */
-    public Ponto getB() {
+    public Ponto<? extends Number> getB() {
         return b;
     }
 
     /** Define o ponto a da reta
      * @param a O novo valor para o ponto a
      */
-    public void setA(Ponto a) {
+    public void setA(Ponto<? extends Number> a) {
         this.a = a;
     }
 
     /** Define o ponto b da reta
      * @param b O novo valor para o ponto b
      */
-    public void setB(Ponto b) {
+    public void setB(Ponto<? extends Number> b) {
         this.b = b;
     }
 }

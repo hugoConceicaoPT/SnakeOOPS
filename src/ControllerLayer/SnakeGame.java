@@ -32,7 +32,7 @@ public class SnakeGame implements KeyListener {
     private int scorePerFood;
     private FoodType foodType;
     private int obstaclesQuantity;
-    private Ponto obstacleRotacionPoint;
+    private List<Ponto<? extends Number>> listObstacleRotacionPoint;
     private boolean isObstacleDynamic;
     private boolean isGameOver;
     private Score score;
@@ -45,7 +45,7 @@ public class SnakeGame implements KeyListener {
     /** Construtor para criar um jogo da cobra        
      * @param snake a cobra do jogo 
      */
-    public SnakeGame (int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, Ponto obstacleRotacionPoint, boolean isObstacleDynamic, String UIMode, long seed) throws CloneNotSupportedException {
+    public SnakeGame (int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, List<Ponto<? extends Number>> listObstacleRotacionPoint, boolean isObstacleDynamic, String UIMode, long seed) throws CloneNotSupportedException {
         this.random = new Random(seed);
         this.isGameOver = false;
         this.widthBoard = widthBoard;
@@ -61,10 +61,10 @@ public class SnakeGame implements KeyListener {
         this.foodDimension = foodDimension;
         this.scorePerFood = scorePerFood;
         this.obstaclesQuantity = obstaclesQuantity;
-        this.obstacleRotacionPoint = obstacleRotacionPoint;
+        this.listObstacleRotacionPoint = listObstacleRotacionPoint;
         this.isObstacleDynamic = isObstacleDynamic;
         this.score = new Score(0,this.scorePerFood);
-        this.gameBoard = new GameBoard(this.snake, this.widthBoard, this.heightBoard, this.foodType,this.foodDimension, this.obstaclesQuantity, this.obstacleRotacionPoint,this.isObstacleDynamic,this.random);
+        this.gameBoard = new GameBoard(this.snake, this.widthBoard, this.heightBoard, this.foodType,this.foodDimension, this.obstaclesQuantity, this.listObstacleRotacionPoint,this.isObstacleDynamic,this.random);
         if(rasterizationMode.equals("contorno"))
             this.rasterizationStrategy = new ContourRasterization(this.gameBoard);
         else
@@ -218,7 +218,7 @@ public class SnakeGame implements KeyListener {
         if(this.userInterface instanceof GraphicalUI) 
             ((GraphicalUI) userInterface).close();  
         this.rasterizationStrategy = null;
-        this.obstacleRotacionPoint = null;
+        this.listObstacleRotacionPoint.clear();
         this.score = null;
         this.snake = null;
         this.gameBoard = null;
@@ -297,14 +297,14 @@ public class SnakeGame implements KeyListener {
         }
     }
 
-    private List<Ponto> createSquarePoints(int widthBoard, int heightBoard, int size) {
+    private List<Ponto<? extends Number>> createSquarePoints(int widthBoard, int heightBoard, int size) {
         int x = random.nextInt(widthBoard - size);
         int y = random.nextInt(heightBoard - size); 
-        List<Ponto> pontos = new ArrayList<>();
-        pontos.add(new Ponto(x, y));
-        pontos.add(new Ponto(x + size,y));
-        pontos.add(new Ponto(x + size, y + size));
-        pontos.add(new Ponto(x, y + size));
+        List<Ponto<? extends Number>> pontos = new ArrayList<>();
+        pontos.add(new Ponto<Integer>(x, y));
+        pontos.add(new Ponto<Integer>(x + size,y));
+        pontos.add(new Ponto<Integer>(x + size, y + size));
+        pontos.add(new Ponto<Integer>(x, y + size));
 
         return pontos;
     }
@@ -389,15 +389,7 @@ public class SnakeGame implements KeyListener {
     public void setObstaclesQuantity(int obstaclesQuantity) {
         this.obstaclesQuantity = obstaclesQuantity;
     }
-
-    public Ponto getObstacleRotacionPoint() {
-        return obstacleRotacionPoint;
-    }
-
-    public void setObstacleRotacionPoint(Ponto obstacleRotacionPoint) {
-        this.obstacleRotacionPoint = obstacleRotacionPoint;
-    }
-
+    
     public boolean isObstacleDynamic() {
         return isObstacleDynamic;
     }
@@ -456,5 +448,15 @@ public class SnakeGame implements KeyListener {
 
     public void setLeaderboard(Leaderboard leaderboard) {
         this.leaderboard = leaderboard;
+    }
+
+
+    public List<Ponto<? extends Number>> getListObstacleRotacionPoint() {
+        return listObstacleRotacionPoint;
+    }
+
+
+    public void setListObstacleRotacionPoint(List<Ponto<? extends Number>> listObstacleRotacionPoint) {
+        this.listObstacleRotacionPoint = listObstacleRotacionPoint;
     }
 }

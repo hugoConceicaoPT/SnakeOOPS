@@ -25,7 +25,6 @@ public class GameBoard {
     private int obstaclesQuantity;
     private ObstacleType obstacleType;
     private Random random;
-    private static int generatedFoods = 0;
 
     /** Construtor para criar uma board no jogo
      * @param listofObstacles lista de obstáculos
@@ -34,7 +33,7 @@ public class GameBoard {
      * @param rows linhas
      * @param columns colunas
      */
-    public GameBoard (Snake snake, int widthBoard, int heightBoard, FoodType foodType, int foodDimension,int obstaclesQuantity, Ponto obstacleRotacionPoint,boolean isObstacleDynamic, Random random) {
+    public GameBoard (Snake snake, int widthBoard, int heightBoard, FoodType foodType, int foodDimension,int obstaclesQuantity, List<Ponto<? extends Number>> listObstacleRotacionPoint,boolean isObstacleDynamic, Random random) {
         if(widthBoard <= 0 || heightBoard <= 0) {
             throw new IllegalArgumentException("O número de linhas e colunas deve ser maior que zero.");
         }
@@ -46,7 +45,7 @@ public class GameBoard {
         this.foodType = foodType;
         this.foodDimension = foodDimension;
         this.obstaclesQuantity = obstaclesQuantity;
-        generateObstacles(obstacleRotacionPoint,isObstacleDynamic);
+        generateObstacles(listObstacleRotacionPoint,isObstacleDynamic);
         generateFood();
     }
 
@@ -122,38 +121,32 @@ public class GameBoard {
             if(this.widthBoard % this.snake.getArestaHeadLength() == 0 && this.snake.getHead().getMaxX() % this.snake.getArestaHeadLength() == 0) 
                 x = this.random.nextInt(this.widthBoard - this.foodDimension);
             else
-                x = this.random.nextInt(this.widthBoard - this.foodDimension - 1) + 1;
+                x = this.random.nextInt(this.widthBoard - this.foodDimension - 1) + this.foodDimension;
             if(this.heightBoard % this.snake.getHead().getMaxY() == 0 && this.snake.getHead().getMaxY() % this.snake.getArestaHeadLength() == 0)
                 y = this.random.nextInt(this.heightBoard - this.foodDimension);
             else
-                y = this.random.nextInt(this.heightBoard - this.foodDimension - 1) + 1;
+                y = this.random.nextInt(this.heightBoard - this.foodDimension - 1) + this.foodDimension;
             if(this.foodType == FoodType.CIRCLE) {
                 double centroY = y + (this.foodDimension/2.0);
                 double centroX = x + (this.foodDimension/2.0);
                 FactoryFood factory = new FactoryFood();
-                this.food = factory.createFood(new Circunferencia(new Ponto(centroX,centroY), (this.foodDimension/2.0)));
+                this.food = factory.createFood(new Circunferencia(new Ponto<Double>(centroX,centroY), (this.foodDimension/2.0)));
             }
             else if (this.foodType == FoodType.SQUARE) {
-                List<Ponto> pontos = new ArrayList<>();
+                List<Ponto<? extends Number>> pontos = new ArrayList<>();
                 pontos = createSquarePoints(x, y, this.foodDimension);
                 FactoryFood factory = new FactoryFood();
                 this.food = factory.createFood(new Quadrado(pontos));
             }
             if(!foodIntersectObstacle() && !foodContainedInObstacle() && !foodIntersectSnake() && !this.food.foodContainedInSnake(snake)) {
-                if(generatedFoods == 0) {
-                    boolean isReachable = foodIsInReachableArea();
-                    if(isReachable) isEmpty = false;
-                    else { 
-                        this.food = null;
-                        isEmpty = true;
-                    }
-                }
-                else {
-                    isEmpty = false;
+                boolean isReachable = foodIsInReachableArea();
+                if(isReachable) isEmpty = false;
+                else { 
+                    this.food = null;
+                    isEmpty = true;
                 }
             }
         }
-        generatedFoods++;
     }
 
     private boolean foodIsInReachableArea() {
@@ -166,8 +159,8 @@ public class GameBoard {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        double foodX = this.food.getCentroide().getX();
-        double foodY = this.food.getCentroide().getY();
+        double foodX = this.food.getCentroide().getX().doubleValue();
+        double foodY = this.food.getCentroide().getY().doubleValue();
         boolean isReachable = false;
         int maxIterations = 50;
         int iterations = 0;
@@ -175,7 +168,8 @@ public class GameBoard {
             double headX = snakeClone.getHead().getCentroide().getX();
             double headY = snakeClone.getHead().getCentroide().getY();
             Direction nextDirection = calculateDirection(headX, headY, foodX , foodY, snakeClone);
-            if(this.food.foodContainedInSnake(snakeClone)) {
+            if(this.food.foodContainedInSnake(snakeClone) && snakeClone.getHead().getMinX() >= 0 
+                && snakeClone.getHead().getMinY() >= 0 && snakeClone.getHead().getMaxX() < this.widthBoard && snakeClone.getHead().getMaxY() < this.heightBoard) {
                 isReachable = true;
             }
             else if(this.food.foodIntersectSnake(snakeClone)) {
@@ -203,7 +197,7 @@ public class GameBoard {
     
 
     /** Gera um obstáculo aleatório na board */
-    public void generateObstacles(Ponto rotacionPoint, boolean isDynamic) {
+    public void generateObstacles(List<Ponto<? extends Number>> listRotacionPoint, boolean isDynamic) {
         for(int w = 0; w < this.obstaclesQuantity; w++) {
             int obstacleSize = random.nextInt(this.snake.getArestaHeadLength()) + 1;
             boolean isEmpty = true; 
@@ -211,23 +205,43 @@ public class GameBoard {
             while (isEmpty) {
                 int y = this.random.nextInt(this.heightBoard - obstacleSize); 
                 int x = this.random.nextInt(this.widthBoard - obstacleSize);
-                List<Ponto> pontos = new ArrayList<>();
+                List<Ponto<? extends Number>> pontos = new ArrayList<>();
                 switch (obstacleType) {
                     case POLYGON:
+                        if(listRotacionPoint.size() == 0) {
+                            pontos = createPolygonPoints(x, y, obstacleSize);
+                            this.listOfObstacles.add(new Obstacle(new Poligono(pontos),null,isDynamic));
+                            break;
+                        }
                         pontos = createPolygonPoints(x, y, obstacleSize);
-                        this.listOfObstacles.add(new Obstacle(new Poligono(pontos), rotacionPoint ,isDynamic));
+                        this.listOfObstacles.add(new Obstacle(new Poligono(pontos), listRotacionPoint.get(w) ,isDynamic));
                         break;
                     case SQUARE:
+                        if(listRotacionPoint.size() == 0) {
+                            pontos = createSquarePoints(x, y, obstacleSize); 
+                            this.listOfObstacles.add(new Obstacle(new Quadrado(pontos), null,isDynamic));
+                            break;
+                        }
                         pontos = createSquarePoints(x, y, obstacleSize); 
-                        this.listOfObstacles.add(new Obstacle(new Quadrado(pontos), rotacionPoint ,isDynamic));
+                        this.listOfObstacles.add(new Obstacle(new Quadrado(pontos), listRotacionPoint.get(w),isDynamic));
                         break;
                     case RECTANGLE:
+                        if(listRotacionPoint.size() == 0 ) {
+                            pontos = createRectanglePoints(x, y, obstacleSize);
+                        this.listOfObstacles.add(new Obstacle(new Retangulo(pontos),null,isDynamic));
+                        break;
+                        }
                         pontos = createRectanglePoints(x, y, obstacleSize);
-                        this.listOfObstacles.add(new Obstacle(new Retangulo(pontos), rotacionPoint ,isDynamic));
+                        this.listOfObstacles.add(new Obstacle(new Retangulo(pontos), listRotacionPoint.get(w) ,isDynamic));
                         break;
                     case TRIANGLE:
+                        if(listRotacionPoint.size() == 0) {
+                            pontos = createRectanglePoints(x, y, obstacleSize);
+                            this.listOfObstacles.add(new Obstacle(new Retangulo(pontos), null,isDynamic));
+                            break;
+                        }
                         pontos = createTrianglePoints(x, y, obstacleSize);
-                        this.listOfObstacles.add(new Obstacle(new Triangulo(pontos), rotacionPoint ,isDynamic));
+                        this.listOfObstacles.add(new Obstacle(new Triangulo(pontos), listRotacionPoint.get(w) ,isDynamic));
                         break;
                     default:
                         break;
@@ -260,38 +274,38 @@ public class GameBoard {
         }
     }
 
-    private List<Ponto> createPolygonPoints (int x, int y, int size) {
-        List<Ponto> pontos = new ArrayList<>();
+    private List<Ponto<? extends Number>> createPolygonPoints (int x, int y, int size) {
+        List<Ponto<? extends Number>> pontos = new ArrayList<>();
         List<String> polygonsTypes = Arrays.asList("L", "T", "S");
         String type = polygonsTypes.get(random.nextInt(polygonsTypes.size()));
         switch (type) {
             case "L": 
-                pontos.add(new Ponto(x, y));
-                pontos.add(new Ponto(x, y - (size+1)));
-                pontos.add(new Ponto(x + (size+1), y - (size+1)));
-                pontos.add(new Ponto(x + (size+1), y - (size)));
-                pontos.add(new Ponto(x + size, y - size));
-                pontos.add(new Ponto(x + size, y));
+                pontos.add(new Ponto<Integer>(x, y));
+                pontos.add(new Ponto<Integer>(x, y - (size+1)));
+                pontos.add(new Ponto<Integer>(x + (size+1), y - (size+1)));
+                pontos.add(new Ponto<Integer>(x + (size+1), y - (size)));
+                pontos.add(new Ponto<Integer>(x + size, y - size));
+                pontos.add(new Ponto<Integer>(x + size, y));
                 break;
             case "T": 
-                pontos.add(new Ponto(x, y));
-                pontos.add(new Ponto(x, y + size));
-                pontos.add(new Ponto(x + size, y + size));
-                pontos.add(new Ponto(x + size, y + (size+1)));
-                pontos.add(new Ponto(x - (size+1), y + (size+1)));
-                pontos.add(new Ponto(x - (size+1), y + size));
-                pontos.add(new Ponto(x - size, y + size));
-                pontos.add(new Ponto(x - size, y));
+                pontos.add(new Ponto<Integer>(x, y));
+                pontos.add(new Ponto<Integer>(x, y + size));
+                pontos.add(new Ponto<Integer>(x + size, y + size));
+                pontos.add(new Ponto<Integer>(x + size, y + (size+1)));
+                pontos.add(new Ponto<Integer>(x - (size+1), y + (size+1)));
+                pontos.add(new Ponto<Integer>(x - (size+1), y + size));
+                pontos.add(new Ponto<Integer>(x - size, y + size));
+                pontos.add(new Ponto<Integer>(x - size, y));
                 break;
             case "S": 
-                pontos.add(new Ponto(x, y));
-                pontos.add(new Ponto(x, y + size));
-                pontos.add(new Ponto(x + size, y + size));
-                pontos.add(new Ponto(x + size, y + (size+1)));
-                pontos.add(new Ponto(x - size, y + (size+1)));
-                pontos.add(new Ponto(x - size, y + size));
-                pontos.add(new Ponto(x - (size+1), y + size));
-                pontos.add(new Ponto(x - (size+1), y));
+                pontos.add(new Ponto<Integer>(x, y));
+                pontos.add(new Ponto<Integer>(x, y + size));
+                pontos.add(new Ponto<Integer>(x + size, y + size));
+                pontos.add(new Ponto<Integer>(x + size, y + (size+1)));
+                pontos.add(new Ponto<Integer>(x - size, y + (size+1)));
+                pontos.add(new Ponto<Integer>(x - size, y + size));
+                pontos.add(new Ponto<Integer>(x - (size+1), y + size));
+                pontos.add(new Ponto<Integer>(x - (size+1), y));
                 break;
             default:
                 break;
@@ -300,36 +314,31 @@ public class GameBoard {
         return pontos;
     }
 
-    private List<Ponto> createRectanglePoints(int x, int y, int size) {
-        List<Ponto> pontos = new ArrayList<>();
+    private List<Ponto<? extends Number>> createRectanglePoints(int x, int y, int size) {
+        List<Ponto<? extends Number>> pontos = new ArrayList<>();
         int width = this.random.nextInt(size) + 1;
         int height = this.random.nextInt(size) + 1;
-        if(width == height) {
-            pontos = createSquarePoints(x, y, size);
-            return pontos;
-        }
-        pontos.add(new Ponto(x, y));
-        pontos.add(new Ponto(x, y + height));
-        pontos.add(new Ponto(x + width,y + height));
-        pontos.add(new Ponto(x+ width,y));
+        pontos.add(new Ponto<Integer>(x, y));
+        pontos.add(new Ponto<Integer>(x, y + height));
+        pontos.add(new Ponto<Integer>(x + width,y + height));
+        pontos.add(new Ponto<Integer>(x+ width,y));
         return pontos;
     }
 
-    private List<Ponto> createTrianglePoints(int x, int y, int size) {
-        List<Ponto> pontos = new ArrayList<>();
-        int halfSize = size / 2;
-        pontos.add(new Ponto(x, y+ size)); 
-        pontos.add(new Ponto(x + halfSize,y)); 
-        pontos.add(new Ponto(x + size,y + size)); 
+    private List<Ponto<? extends Number>> createTrianglePoints(int x, int y, int size) {
+        List<Ponto<? extends Number>> pontos = new ArrayList<>();
+        pontos.add(new Ponto<Integer>(x, y)); 
+        pontos.add(new Ponto<Integer>(x + size,y)); 
+        pontos.add(new Ponto<Integer>(x + size,y - size)); 
         return pontos;
     }
 
-    private List<Ponto> createSquarePoints(int x, int y, int size) {
-        List<Ponto> pontos = new ArrayList<>();
-        pontos.add(new Ponto(x, y));
-        pontos.add(new Ponto(x + size,y));
-        pontos.add(new Ponto(x + size, y + size));
-        pontos.add(new Ponto(x, y + size));
+    private List<Ponto<? extends Number>> createSquarePoints(int x, int y, int size) {
+        List<Ponto<? extends Number>> pontos = new ArrayList<>();
+        pontos.add(new Ponto<Integer>(x, y));
+        pontos.add(new Ponto<Integer>(x + size,y));
+        pontos.add(new Ponto<Integer>(x + size, y + size));
+        pontos.add(new Ponto<Integer>(x, y + size));
 
         return pontos;
     }

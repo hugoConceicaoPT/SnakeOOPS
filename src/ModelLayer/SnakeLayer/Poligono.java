@@ -10,9 +10,9 @@ import java.util.Objects;
     ,se cada par de aresta não se cruzar e se tiver pelo menos 3 pontos
 */
 public class Poligono implements Cloneable {
-    protected List<Ponto> pontos;
+    protected List<Ponto<? extends Number>> pontos;
     protected List<SegmentoReta> aresta;
-    protected Ponto centroide;
+    protected Ponto<? extends Number> centroide;
     protected double minX;
     protected double minY;
     protected double maxX;
@@ -22,7 +22,7 @@ public class Poligono implements Cloneable {
     /** Costrutor para criar um polígono com uma lista de pontos
      * @param pontos A lista de pontos que define o polígono
      */
-    public Poligono(List<Ponto> pontos) {
+    public Poligono(List<Ponto<? extends Number>> pontos) {
         if (pontos.size() < 3)
         {
             throw new IllegalArgumentException("Poligono:vi");
@@ -53,24 +53,29 @@ public class Poligono implements Cloneable {
      * @param input A string com os pontos do polígono
      */
     public Poligono(String input) {
-        this(toDouble(input)); 
+        this(toPoint(input)); 
     }
 
     /** Converte a string recebida em uma lista de pontos 
      * @param input String com os pontos do polígono
      * @return lista de pontos
      */
-    private static List<Ponto> toDouble (String input) {
+    private static List<Ponto<? extends Number>> toPoint (String input) {
         String [] parts = input.split(" ");
         if(parts.length-2 % 2 == 0)
             System.exit(0);
         int n = Integer.parseInt(parts[0]);
-        List<Ponto> pontos = new ArrayList<>(); 
+        List<Ponto<? extends Number>> pontos = new ArrayList<>(); 
         int i = 1;
         int count = 0;
         while(count < n)
         {
-            pontos.add(new Ponto(Double.parseDouble(parts[i]),Double.parseDouble(parts[i+1])));
+            if(parts[i].contains(".")) {
+                pontos.add(new Ponto<Double>(Double.parseDouble(parts[i]),Double.parseDouble(parts[i+1])));
+            }
+            else {
+                pontos.add(new Ponto<Integer>(Integer.parseInt(parts[i]),Integer.parseInt(parts[i+1])));
+            }
             i+=2;
             count++;
         }
@@ -83,11 +88,11 @@ public class Poligono implements Cloneable {
         double minY = Double.MAX_VALUE;
         double maxX = Double.MIN_VALUE;
         double maxY = Double.MIN_VALUE;
-        for (Ponto ponto : this.pontos) {
-            minX = Math.min(minX, ponto.getX());
-            maxX = Math.max(maxX, ponto.getX());
-            minY = Math.min(minY, ponto.getY());
-            maxY = Math.max(maxY, ponto.getY());
+        for (Ponto<? extends Number> ponto : this.pontos) {
+            minX = Math.min(minX, ponto.getX().doubleValue());
+            maxX = Math.max(maxX, ponto.getX().doubleValue());
+            minY = Math.min(minY, ponto.getY().doubleValue());
+            maxY = Math.max(maxY, ponto.getY().doubleValue());
         }
         setMaxX(maxX);
         setMaxY(maxY);
@@ -133,6 +138,12 @@ public class Poligono implements Cloneable {
             if(this.centroide.dist(that.centroide) < this.pontos.get(0).dist(this.pontos.get(1)))
                 return true;
         }
+
+        for(Ponto<? extends Number> ponto : that.pontos) {
+            if(ponto.getX().doubleValue() > this.minX && ponto.getX().doubleValue() < this.maxX
+            && ponto.getY().doubleValue() > this.minY && ponto.getY().doubleValue() < this.maxY)
+                return true;
+        }
         return false;
     }
 
@@ -152,8 +163,8 @@ public class Poligono implements Cloneable {
     public boolean contidaNaCircunferencia (Circunferencia that)
     {
 
-        boolean overlapX = this.minX >= that.getCentro().getX() - that.getRaio() && this.maxX <= that.getCentro().getX() + that.getRaio();
-        boolean overlapY =  this.minY >= that.getCentro().getY() - that.getRaio() && this.maxY <= that.getCentro().getY() + that.getRaio();
+        boolean overlapX = this.minX >= that.getCentro().getX().doubleValue() - that.getRaio() && this.maxX <= that.getCentro().getX().doubleValue() + that.getRaio();
+        boolean overlapY =  this.minY >= that.getCentro().getY().doubleValue() - that.getRaio() && this.maxY <= that.getCentro().getY().doubleValue() + that.getRaio();
     
         return overlapX && overlapY;
     }
@@ -162,17 +173,17 @@ public class Poligono implements Cloneable {
      * @see https://math.stackexchange.com/questions/90463/how-can-i-calculate-the-centroid-of-polygon
      * @return o centróide 
      */
-    public Ponto getCentroide() {
+    public Ponto<Double> getCentroide() {
         double centroX = 0;
         double centroY = 0;
-        for(Ponto ponto : pontos)
+        for(Ponto<? extends Number> ponto : pontos)
         {
-           centroX += ponto.getX();
-           centroY += ponto.getY();
+           centroX += ponto.getX().doubleValue();
+           centroY += ponto.getY().doubleValue();
         }
         centroX /=  pontos.size();
         centroY /=  pontos.size();
-        return new Ponto(centroX,centroY);
+        return new Ponto<Double>(centroX,centroY);
     }
 
     /** Aplica-se um movimento de rotação ao polígono a partir do ângulo de rotaçãos
@@ -181,7 +192,7 @@ public class Poligono implements Cloneable {
      * @see http://www.java2s.com/example/java-utility-method/polygon-rotate/rotatepolygon-polygon-pg-double-rotangle-point-centroid-polygon-original-ee480.html
      */
     public void rotateAngle(int angle) {
-        for (Ponto ponto : pontos) 
+        for (Ponto<? extends Number> ponto : pontos) 
             ponto.rotate(angle,this.centroide);  
         setCentroide(getCentroide());
         updateAresta();
@@ -194,8 +205,8 @@ public class Poligono implements Cloneable {
      * @return um novo polígono com o movimento de rotação já aplicado
      * @see http://www.java2s.com/example/java-utility-method/polygon-rotate/rotatepolygon-polygon-pg-double-rotangle-point-centroid-polygon-original-ee480.html
      */
-    public void rotate(int angle, Ponto pontoPivo) {
-        for (Ponto ponto : pontos)
+    public void rotate(int angle, Ponto<? extends Number> pontoPivo) {
+        for (Ponto<? extends Number> ponto : pontos)
             ponto.rotate(angle, pontoPivo);
         setCentroide(getCentroide());
         updateAresta();
@@ -203,7 +214,7 @@ public class Poligono implements Cloneable {
     }
 
     public void translate(int dx, int dy) {
-        for (Ponto ponto : pontos) 
+        for (Ponto<? extends Number> ponto : pontos) 
             ponto.translate(dx, dy);
         setCentroide(getCentroide());
         updateAresta();
@@ -211,7 +222,7 @@ public class Poligono implements Cloneable {
     }
 
     public void translateCentroide(int centroX, int centroY) {
-        for (Ponto ponto : pontos) 
+        for (Ponto<? extends Number> ponto : pontos) 
             ponto.translateCentroide(centroX, centroY, this.centroide);
         setCentroide(getCentroide());
         updateAresta();
@@ -245,37 +256,27 @@ public class Poligono implements Cloneable {
         return thatArestasCopy.isEmpty();
     }      
 
-    public boolean contemPonto(Ponto ponto) {
-        double x = ponto.getX();
-        double y = ponto.getY();
+    public boolean contemPonto(Ponto<? extends Number> ponto) {
+        double x = ponto.getX().doubleValue();
+        double y = ponto.getY().doubleValue();
         int numVertices = pontos.size();
-        int windingNumber = 0;
-
-        for (int i = 0; i < numVertices; i++) {
-            double xi = pontos.get(i).getX();
-            double yi = pontos.get(i).getY();
-            double xj = pontos.get((i + 1) % numVertices).getX();
-            double yj = pontos.get((i + 1) % numVertices).getY();
-
-            if (yi <= y) {
-                if (yj > y && isLeft(xi, yi, xj, yj, x, y) > 0) {
-                    windingNumber++;
-                }
-            } else {
-                if (yj <= y && isLeft(xi, yi, xj, yj, x, y) < 0) {
-                    windingNumber--;
-                }
+        boolean inside = false;
+    
+        for (int i = 0, j = numVertices - 1; i < numVertices; j = i++) {
+            double xi = pontos.get(i).getX().doubleValue();
+            double yi = pontos.get(i).getY().doubleValue();
+            double xj = pontos.get(j).getX().doubleValue();
+            double yj = pontos.get(j).getY().doubleValue();
+    
+            // Verifica se o ponto está no segmento de reta ou à esquerda da aresta
+            if ((yi > y) != (yj > y) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi)) {
+                inside = !inside;
             }
         }
-
-        return windingNumber != 0;
-    }
-
-    private double isLeft(double x0, double y0, double x1, double y1, double x2, double y2) {
-        return ((x1 - x0) * (y2 - y0) - (x2 - x0) * (y1 - y0));
+    
+        return inside;
     }
     
-
     @Override
     public int hashCode() {
         return Objects.hash(this.pontos,this.aresta);
@@ -290,8 +291,8 @@ public class Poligono implements Cloneable {
     public Object clone() throws CloneNotSupportedException {
         Poligono novoPoligono = (Poligono) super.clone();
         novoPoligono.pontos = new ArrayList<>();
-        for (Ponto ponto : this.pontos) {
-            novoPoligono.pontos.add((Ponto) ponto.clone());
+        for (Ponto<? extends Number> ponto : this.pontos) {
+            novoPoligono.pontos.add((Ponto<?>) ponto.clone());
         }
 
         novoPoligono.aresta = new ArrayList<>();
@@ -299,14 +300,14 @@ public class Poligono implements Cloneable {
             novoPoligono.aresta.add((SegmentoReta) aresta.clone());
         }
 
-        novoPoligono.centroide = (Ponto) this.centroide.clone();
+        novoPoligono.centroide = (Ponto<?>) this.centroide.clone();
 
         return novoPoligono;
     }
     /** Obtém a lista de pontos do polígono
      * @return A lista de pontos do polígono
      */
-    public List<Ponto> getPontos() {
+    public List<Ponto<? extends Number>> getPontos() {
         return pontos;
     }
 
@@ -317,7 +318,7 @@ public class Poligono implements Cloneable {
         return aresta;
     }
 
-    public void setPontos(List<Ponto> pontos) {
+    public void setPontos(List<Ponto<? extends Number>> pontos) {
         this.pontos = pontos;
     }
 
@@ -325,7 +326,7 @@ public class Poligono implements Cloneable {
         this.aresta = aresta;
     }
 
-    public void setCentroide(Ponto centroide) {
+    public void setCentroide(Ponto<? extends Number> centroide) {
         this.centroide = centroide;
     }
 

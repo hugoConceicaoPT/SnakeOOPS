@@ -6,6 +6,6 @@ import ModelLayer.SnakeLayer.Ponto;
 public class StaticMovement implements ObstacleMovement {
     
     @Override
-    public void rotateObstacle(Poligono poligono, Ponto pontoPivo) {
+    public void rotateObstacle(Poligono poligono, Ponto<? extends Number> pontoPivo) {
     }
 }

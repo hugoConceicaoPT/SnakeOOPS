@@ -123,7 +123,7 @@ public class Snake implements Cloneable {
             this.nextDirection = this.movementStrategy.setNextDirection(this,null);
         if(isOppositeDirection(currentDirection, nextDirection))
             return;
-        Ponto centroHeadSnake = this.head.getCentroide();
+        Ponto<? extends Number> centroHeadSnake = this.head.getCentroide();
         
         Quadrado ultimoQuadrado = this.body.getLast();
         try {
@@ -131,7 +131,7 @@ public class Snake implements Cloneable {
         } catch (Exception e) {
            e.printStackTrace();
         }
-        ultimoQuadrado.translateCentroide(((int) centroHeadSnake.getX()),(int) centroHeadSnake.getY());
+        ultimoQuadrado.translateCentroide((centroHeadSnake.getX().intValue()),centroHeadSnake.getY().intValue());
 
         if(this.currentDirection != this.nextDirection) 
             moveSquare(ultimoQuadrado,currentDirection, nextDirection);

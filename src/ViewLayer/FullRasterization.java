@@ -66,11 +66,11 @@ public class FullRasterization extends RasterizationStrategy {
             }
         }   
 
-        for(int i = 0; i < this.gameBoard.getObstaclesQuantity(); i++) {
-            for(int w = (int) this.gameBoard.getListOfObstacles().get(i).getPoligono().getMinY(); w < (int) this.gameBoard.getListOfObstacles().get(i).getPoligono().getMaxY(); w++) {
-                for(int j = (int) this.gameBoard.getListOfObstacles().get(i).getPoligono().getMinX() ; j < (int) this.gameBoard.getListOfObstacles().get(i).getPoligono().getMaxX(); j++) {
-                    if(this.gameBoard.getListOfObstacles().get(i).getPoligono().contemPonto(new Ponto(j,w)) && w >= 0 && w < this.gameBoard.getHeightBoard() && j >= 0 && j < this.gameBoard.getWidthBoard() && board[w][j].getCellType() == CellType.EMPTY) {
-                        board[w][j].setCellType(CellType.OBSTACLE);
+        for(int i = 0; i < this.gameBoard.getListOfObstacles().size(); i++) {
+            for(int row = 0; row < this.rows; row++) {
+                for(int col = 0; col < this.cols; col++) {
+                    if(this.gameBoard.getListOfObstacles().get(i).getPoligono().contemPonto(new Ponto<Double>(col + 0.5, row + 0.5))) {
+                        board[row][col].setCellType(CellType.OBSTACLE);
                     }
                 }
             }
@@ -95,8 +95,8 @@ public class FullRasterization extends RasterizationStrategy {
                     {
                         for (int w = 0; w < this.rows; w++) {
                             for (int z = 0; z < this.cols; z++) {
-                                if (board[i][j].getCellType() == CellType.FOOD) {
-                                    board[i][j].setCellType(CellType.EMPTY);
+                                if (board[w][z].getCellType() == CellType.FOOD) {
+                                    board[w][z].setCellType(CellType.EMPTY);
                                 }
                             }
                         }
@@ -109,11 +109,12 @@ public class FullRasterization extends RasterizationStrategy {
                         board[i][j].setCellType(CellType.FOOD);
                         isFoodNotReseted = true;
                     }
-                    if(!isFoodNotReseted)
-                        break;
                 }
+                if(!isFoodNotReseted)
+                    break;
             }
         }
+        System.out.println(this.gameBoard.getFood().toString());
     }
 
     public Cell[][] getBoard() {

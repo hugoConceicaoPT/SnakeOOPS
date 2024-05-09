@@ -12,17 +12,17 @@ public class AutomatedMovementStrategy implements MovementStrategy {
     @Override
     public Direction setNextDirection(Snake snake, GameBoard gameBoard) {
         if (gameBoard != null && gameBoard.getFood() != null) {
-            return calculateDirectionToFood(snake, gameBoard.getFood().getCentroide());
+            return calculateDirectionToFood(snake, (Ponto<?>) gameBoard.getFood().getCentroide());
         }
 
         return avoidObstacles(snake, gameBoard);
     }
 
-    private Direction calculateDirectionToFood(Snake snake, Ponto foodCentroide) {
-        double headX = snake.getHead().getCentroide().getX();
-        double headY = snake.getHead().getCentroide().getY();
-        double foodX = foodCentroide.getX();
-        double foodY = foodCentroide.getY();
+    private Direction calculateDirectionToFood(Snake snake, Ponto<? extends Number> foodCentroide) {
+        double headX = snake.getHead().getCentroide().getX().doubleValue();
+        double headY = snake.getHead().getCentroide().getY().doubleValue();
+        double foodX = foodCentroide.getX().doubleValue();
+        double foodY = foodCentroide.getY().doubleValue();
 
         if (foodX < headX && snake.getCurrentDirection() != Direction.RIGHT)
             return Direction.LEFT;

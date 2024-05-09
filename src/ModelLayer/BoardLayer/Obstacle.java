@@ -8,13 +8,13 @@ public class Obstacle {
 
     private Poligono poligono;
     private ObstacleMovement obstacleMovement;
-    private Ponto rotacionPoint;
+    private Ponto<? extends Number> rotacionPoint;
 
     /** Construtor para criar um obstáculo
      * @param figuraGeometrica figura geométrica
      * @param isDynamic booleano para verificar se o obstáculo é dinâmico
      */
-    public Obstacle(Poligono poligono, Ponto rotacionPoint, boolean isDynamic) {
+    public Obstacle(Poligono poligono, Ponto<? extends Number> rotacionPoint, boolean isDynamic) {
         this.poligono = poligono;
         if(isDynamic)
             this.obstacleMovement = new DynamicMovement();
@@ -64,11 +64,11 @@ public class Obstacle {
         this.obstacleMovement = obstacleMovement;
     }
 
-    public Ponto getRotacionPoint() {
+    public Ponto<? extends Number> getRotacionPoint() {
         return rotacionPoint;
     }
 
-    public void setRotacionPoint(Ponto rotacionPoint) {
+    public void setRotacionPoint(Ponto<? extends Number> rotacionPoint) {
         this.rotacionPoint = rotacionPoint;
     }
 }

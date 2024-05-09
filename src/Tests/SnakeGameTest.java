@@ -8,7 +8,6 @@ import ControllerLayer.SnakeGame;
 import ModelLayer.BoardLayer.CellType;
 import ModelLayer.BoardLayer.FoodSquare;
 import ModelLayer.SnakeLayer.Direction;
-import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 
 public class SnakeGameTest {
@@ -36,7 +35,7 @@ public class SnakeGameTest {
     @Test
     public void foodContainedInSnakeTest() throws CloneNotSupportedException {
         long seed = 1;
-        SnakeGame game = new SnakeGame(100, 100, 10, true, "contorno", 5, "quadrados", 100, 5, new Ponto(50, 50), true, "textual", seed);
+        SnakeGame game = new SnakeGame(100, 100, 10, true, "contorno", 5, "quadrados", 100, 5, null, true, "textual", seed);
         System.out.println(game.getSnake().toString());
         FoodSquare foodSquare = new FoodSquare(new Quadrado("16 30 22 30 22 36 16 36"));
         game.getGameBoard().setFood(foodSquare);

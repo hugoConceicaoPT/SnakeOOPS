@@ -20,7 +20,7 @@ public abstract class Food {
     public abstract boolean foodIntersectObstacle(Obstacle obstacle);
     public abstract boolean foodContainedObstacle(Obstacle obstacle);
 
-    public abstract Ponto getCentroide();
+    public abstract Ponto<? extends Number> getCentroide();
 
     public abstract boolean foodIntersectSnake(Snake snake);
 

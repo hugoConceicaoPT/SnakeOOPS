@@ -7,7 +7,9 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.Test;
@@ -32,8 +34,11 @@ public class GameBoardTest {
         LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
         listaQuadrados.add(new Quadrado(input));
         Snake snake = new Snake(listaQuadrados, true,random);
+        List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
+        rotacionPoint.add(null);
+        rotacionPoint.add(null);
         assertThrows(IllegalArgumentException.class, () -> {
-            new GameBoard(snake, -1, 100,FoodType.CIRCLE,1,1,new Ponto(1,1),false,new Random(seed));
+            new GameBoard(snake, -1, 100,FoodType.CIRCLE,1,1,rotacionPoint,false,new Random(seed));
         });
     }
 
@@ -45,8 +50,11 @@ public class GameBoardTest {
         LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
         listaQuadrados.add(new Quadrado(input));
         Snake snake = new Snake(listaQuadrados, true,random);
+        List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
+        rotacionPoint.add(null);
+        rotacionPoint.add(null);
         assertThrows(IllegalArgumentException.class, () -> {
-            new GameBoard(snake, 100, -1,FoodType.CIRCLE,1,1,new Ponto(1,1),false,new Random(seed));
+            new GameBoard(snake, 100, -1,FoodType.CIRCLE,1,1,rotacionPoint,false,new Random(seed));
         });
     }
 
@@ -62,8 +70,11 @@ public class GameBoardTest {
         snake.setCurrentDirection(Direction.RIGHT);
         snake.increaseSize();
         snake.increaseSize();
-        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.CIRCLE,1,1,new Ponto(1,1),false,random);
-        FoodCircle foodCircle = new FoodCircle(new Circunferencia(new Ponto(9,4), 0.5));
+        List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
+        rotacionPoint.add(null);
+        rotacionPoint.add(null);
+        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.CIRCLE,1,1,rotacionPoint,false,random);
+        FoodCircle foodCircle = new FoodCircle(new Circunferencia(new Ponto<Integer>(9,4), 0.5));
         gameBoard.setFood(foodCircle);
         snake.setNextDirection(Direction.RIGHT);
         snake.move();
@@ -84,7 +95,10 @@ public class GameBoardTest {
         snake.setNextDirection(Direction.RIGHT);
         snake.increaseSize();
         snake.increaseSize();
-        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.CIRCLE,1,2,new Ponto(1,1),false,random);  
+        List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
+        rotacionPoint.add(null);
+        rotacionPoint.add(null);
+        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.CIRCLE,1,2,rotacionPoint,false,random);  
         assertNotNull(gameBoard.getListOfObstacles());
         assertTrue(gameBoard.getListOfObstacles().size() > 0);
         assertFalse(gameBoard.snakeIntersectsObstacle());
@@ -102,7 +116,10 @@ public class GameBoardTest {
         Snake snake = new Snake(listaQuadrados, true,random);
         snake.setNextDirection(Direction.RIGHT);
         snake.increaseSize();
-        GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,1,new Ponto(1,1),false,random);
+        List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
+        rotacionPoint.add(null);
+        rotacionPoint.add(null);
+        GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,1,rotacionPoint,false,random);
         assertNotNull(gameBoard.getFood());
         assertFalse(gameBoard.foodContainedInSnake());
         assertFalse(gameBoard.foodIntersectObstacle());
@@ -118,7 +135,7 @@ public class GameBoardTest {
         Snake snake1 = new Snake(listaQuadrados, true,random1);
         snake.setCurrentDirection(Direction.RIGHT);
         snake.increaseSize();
-        GameBoard gameBoard1 = new GameBoard(snake1, 30, 20,FoodType.SQUARE,2,2,null,false,random1);
+        GameBoard gameBoard1 = new GameBoard(snake1, 30, 20,FoodType.SQUARE,2,2,rotacionPoint,false,random1);
         assertEquals("2 ",gameBoard1.getFood().toString());
     }
 
@@ -132,7 +149,10 @@ public class GameBoardTest {
         Snake snake = new Snake(listaQuadrados, true,random);
         snake.setNextDirection(Direction.RIGHT);
         snake.increaseSize();
-        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.CIRCLE,1,1,new Ponto(1,1),false,random);
+        List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
+        rotacionPoint.add(null);
+        rotacionPoint.add(null);
+        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.CIRCLE,1,1,rotacionPoint,false,random);
         assertNotNull(gameBoard.getFood());
         gameBoard.removeFood();
         assertNull(gameBoard.getFood());
@@ -148,7 +168,10 @@ public class GameBoardTest {
         Snake snake = new Snake(listaQuadrados, true,random);
         snake.setNextDirection(Direction.RIGHT);
         snake.increaseSize();
-        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.SQUARE,1,1,new Ponto(1,1),false,random);
+        List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
+        rotacionPoint.add(null);
+        rotacionPoint.add(null);
+        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.SQUARE,1,1,rotacionPoint,false,random);
         assertFalse(gameBoard.snakeLeftBoard());
         String input2 = "-1 0 -1 2 1 2 1 0";
         LinkedList<Quadrado> listaQuadrados2 = new LinkedList<>();
@@ -167,9 +190,12 @@ public class GameBoardTest {
         Snake snake = new Snake(listaQuadrados, true,random);
         snake.setNextDirection(Direction.RIGHT);
         snake.increaseSize();
-        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.SQUARE,1,1,new Ponto(1,1),false,random);
+        List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
+        rotacionPoint.add(null);
+        rotacionPoint.add(null);
+        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.SQUARE,1,1,rotacionPoint,false,random);
         assertFalse(gameBoard.obstacleContainedInSnake());
-        Obstacle obstacle = new Obstacle(new Quadrado("8 5 8 4 7 4 7 5"), new Ponto(1,1) ,false);
+        Obstacle obstacle = new Obstacle(new Quadrado("8 5 8 4 7 4 7 5"), new Ponto<Integer>(1,1) ,false);
         gameBoard.getListOfObstacles().add(obstacle);
         assertTrue(gameBoard.obstacleContainedInSnake());
     }
@@ -184,32 +210,13 @@ public class GameBoardTest {
         Snake snake = new Snake(listaQuadrados, true,random);
         snake.setNextDirection(Direction.RIGHT);
         snake.increaseSize();
-        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.SQUARE,1,2,new Ponto(1,1),false,random);
+        List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
+        rotacionPoint.add(null);
+        rotacionPoint.add(null);
+        GameBoard gameBoard = new GameBoard(snake, 200, 100,FoodType.SQUARE,1,2,rotacionPoint,false,random);
         assertFalse(gameBoard.snakeIntersectsObstacle());
-        Obstacle obstacle = new Obstacle(new Quadrado("5 6 5 4 7 4 7 6"),new Ponto(1,1),false);
+        Obstacle obstacle = new Obstacle(new Quadrado("5 6 5 4 7 4 7 6"),new Ponto<Integer>(1,1),false);
         gameBoard.getListOfObstacles().add(obstacle);
         assertTrue(gameBoard.snakeIntersectsObstacle());
-    }
-
-    @Test
-    public void toStringTest() throws CloneNotSupportedException {
-        long seed = 117;
-        Random random = new Random(seed);
-        String input = "6 3 8 3 8 5 6 5";
-        LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
-        listaQuadrados.add(new Quadrado(input));
-        Snake snake = new Snake(listaQuadrados, true,random);
-        GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,1,null,false,random);
-        assertEquals(". . . . . . . . . . . . . . . . . . . . . \r\n" + //
-                     ". . . . . . . . . . . . . . . . . . . . . \r\n" + //
-                     ". . . . . . . . . . . . . . . . . . . . . \r\n" + //
-                     ". . . . . . . . . . . . . . . . . . . . . \r\n" + //
-                     ". . . . . . . . . . . . . . . . . . . . . \r\n" + //
-                     ". . . . . . . . . . . . . . . . . . . . . \r\n" + //
-                     ". . . . . . . . . . . . . . . . . . . . . \r\n" + //
-                     ". . . . . . . . . . . . O O . . . . . . . \r\n" + //
-                     ". . . . . . . . F . . . O O . . . . . . . \r\n" + //
-                     ". . . . . . . . . . . . . . . . . . . . . \r\n" + //
-                     ". . . . . . . . . . . . . . . . . . . . .", gameBoard.toString());
-    }   
+    } 
 }

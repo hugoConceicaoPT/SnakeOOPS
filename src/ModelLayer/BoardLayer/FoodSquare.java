@@ -25,35 +25,35 @@ public class FoodSquare extends Food {
             return false;
         }
         else {
-            List<Ponto> pontos = new ArrayList<>();
+            List<Ponto<? extends Number>> pontos = new ArrayList<>();
             Poligono bodySnake = null;
             switch (snake.getCurrentDirection()) {
                 case UP:
-                    pontos.add(new Ponto(snake.getBody().getFirst().getMaxX(),snake.getBody().getFirst().getMaxY()));
-                    pontos.add(new Ponto(snake.getBody().getFirst().getMinX(),snake.getBody().getFirst().getMaxY()));
-                    pontos.add(new Ponto(snake.getBody().get(1).getMinX(),snake.getBody().get(1).getMinY()));
-                    pontos.add(new Ponto(snake.getBody().get(1).getMaxX(),snake.getBody().get(1).getMinY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMaxX(), (int) snake.getBody().getFirst().getMaxY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMinX(),(int) snake.getBody().getFirst().getMaxY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMinX(),(int) snake.getBody().get(1).getMinY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMaxX(),(int) snake.getBody().get(1).getMinY()));
                     bodySnake = new Poligono(pontos);
                     break;
                 case DOWN:
-                    pontos.add(new Ponto(snake.getBody().getFirst().getMinX(),snake.getBody().getFirst().getMinY()));
-                    pontos.add(new Ponto(snake.getBody().getFirst().getMaxX(),snake.getBody().getFirst().getMinY()));
-                    pontos.add(new Ponto(snake.getBody().get(1).getMaxX(),snake.getBody().get(1).getMaxY()));
-                    pontos.add(new Ponto(snake.getBody().get(1).getMinX(),snake.getBody().get(1).getMaxY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMinX(),(int) snake.getBody().getFirst().getMinY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMaxX(),(int) snake.getBody().getFirst().getMinY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMaxX(),(int) snake.getBody().get(1).getMaxY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMinX(),(int) snake.getBody().get(1).getMaxY()));
                     bodySnake = new Poligono(pontos);
                     break;
                 case LEFT:
-                    pontos.add(new Ponto(snake.getBody().getFirst().getMinX(),snake.getBody().getFirst().getMaxY()));
-                    pontos.add(new Ponto(snake.getBody().getFirst().getMinX(),snake.getBody().getFirst().getMinY()));
-                    pontos.add(new Ponto(snake.getBody().get(1).getMaxX(),snake.getBody().get(1).getMinY()));
-                    pontos.add(new Ponto(snake.getBody().get(1).getMaxX(),snake.getBody().get(1).getMaxY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMinX(),(int) snake.getBody().getFirst().getMaxY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMinX(),(int) snake.getBody().getFirst().getMinY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMaxX(),(int) snake.getBody().get(1).getMinY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMaxX(),(int) snake.getBody().get(1).getMaxY()));
                     bodySnake = new Poligono(pontos);
                     break;
                 case RIGHT:
-                    pontos.add(new Ponto(snake.getBody().getFirst().getMaxX(),snake.getBody().getFirst().getMaxY()));
-                    pontos.add(new Ponto(snake.getBody().getFirst().getMaxX(),snake.getBody().getFirst().getMinY()));
-                    pontos.add(new Ponto(snake.getBody().get(1).getMinX(),snake.getBody().get(1).getMinY()));
-                    pontos.add(new Ponto(snake.getBody().get(1).getMinX(),snake.getBody().get(1).getMaxY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMaxX(),(int) snake.getBody().getFirst().getMaxY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMaxX(),(int) snake.getBody().getFirst().getMinY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMinX(),(int) snake.getBody().get(1).getMinY()));
+                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMinX(),(int) snake.getBody().get(1).getMaxY()));
                     bodySnake = new Poligono(pontos);
                     break;
             }
@@ -115,7 +115,7 @@ public class FoodSquare extends Food {
     } 
 
     @Override
-    public Ponto getCentroide() {
+    public Ponto<? extends Number> getCentroide() {
         return this.quadrado.getCentroide();
     }
 

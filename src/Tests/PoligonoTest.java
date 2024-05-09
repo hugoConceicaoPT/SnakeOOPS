@@ -14,7 +14,7 @@ import ModelLayer.SnakeLayer.Triangulo;
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe Poligono
     Responsabilidade: Testar as funcionalidades da classe Poligono
-    @version 1.0 26/03/2024
+    @version 1 26/03/2024
     @author Hugo Conceição
  */
 public class PoligonoTest {
@@ -39,11 +39,11 @@ public class PoligonoTest {
     @Test    
     public void testToString0() {
         String input1 = "4 5 5 8 6 8 7 5 7";
-        assertEquals("[(5.0,5.0), (8.0,6.0), (8.0,7.0), (5.0,7.0)]", new Poligono(input1).toString());
+        assertEquals("[(5,5), (8,6), (8,7), (5,7)]", new Poligono(input1).toString());
         String input2 = "3 9 3 7 1 9 1";
-        assertEquals("[(9.0,3.0), (7.0,1.0), (9.0,1.0)]", new Poligono(input2).toString());
+        assertEquals("[(9,3), (7,1), (9,1)]", new Poligono(input2).toString());
         String input3 = "4 1 2 5 6 8 7 12 14";
-        assertEquals("[(1.0,2.0), (5.0,6.0), (8.0,7.0), (12.0,14.0)]", new Poligono(input3).toString());
+        assertEquals("[(1,2), (5,6), (8,7), (12,14)]", new Poligono(input3).toString());
     }
 
     @Test    
@@ -77,11 +77,11 @@ public class PoligonoTest {
         String input1 = "4 1 1 3 1 3 5 1 5";
         Poligono poligono1 = new Poligono(input1);
         poligono1.rotateAngle(90);
-        assertEquals("[(4.0,2.0), (4.0,4.0), (0.0,4.0), (0.0,2.0)]",poligono1.toString());
+        assertEquals("[(4,2), (4,4), (0,4), (0,2)]",poligono1.toString());
         String input2 = "3 2 2 3 4 4 2";
         Poligono poligono2 = new Poligono(input2);
         poligono2.rotateAngle(60);
-        assertEquals("[(3.0,1.0), (2.0,3.0), (4.0,3.0)]", poligono2.toString());
+        assertEquals("[(3,1), (2,3), (4,3)]", poligono2.toString());
     }
 
     @Test    
@@ -89,11 +89,11 @@ public class PoligonoTest {
         String input1 = "4 1 2 5 6 8 7 12 14";
         Poligono poligono1 = new Poligono(input1);
         poligono1.translate(-1, 3);
-        assertEquals("[(0.0,5.0), (4.0,9.0), (7.0,10.0), (11.0,17.0)]",poligono1.toString());
+        assertEquals("[(0,5), (4,9), (7,10), (11,17)]",poligono1.toString());
         String input2 = "3 2 2 3 4 4 2";
         Poligono poligono2 = new Poligono(input2);
         poligono2.translate(3, 3);
-        assertEquals("[(5.0,5.0), (6.0,7.0), (7.0,5.0)]", poligono2.toString());
+        assertEquals("[(5,5), (6,7), (7,5)]", poligono2.toString());
     }
 
     @Test    
@@ -101,11 +101,11 @@ public class PoligonoTest {
         String input1 = "4 1 3 1 1 5 1 5 3";
         Poligono poligono1 = new Poligono(input1);
         poligono1.translateCentroide(8, 2);
-        assertEquals("[(6.0,3.0), (6.0,1.0), (10.0,1.0), (10.0,3.0)]",poligono1.toString());
+        assertEquals("[(6,3), (6,1), (10,1), (10,3)]",poligono1.toString());
         String input2 = "3 2 2 4 4 4 2";
         Poligono poligono2 = new Poligono(input2);
         poligono2.translateCentroide(4, 5);
-        assertEquals("[(3.0,4.0), (5.0,6.0), (5.0,4.0)]", poligono2.toString());
+        assertEquals("[(3,4), (5,6), (5,4)]", poligono2.toString());
     }
     @Test
     public void testInterseta() {
@@ -126,23 +126,25 @@ public class PoligonoTest {
     public void testContemPonto() {
         String input1 = "4 1 1 1 5 5 5 5 1";
         Poligono poligono1 = new Poligono(input1);
-        Ponto ponto1 = new Ponto(3, 3);
+        Ponto<Integer> ponto1 = new Ponto<Integer>(3, 3);
         assertTrue(poligono1.contemPonto(ponto1));
-        assertTrue(poligono1.contemPonto(new Ponto(2,1)));
-        assertFalse(poligono1.contemPonto(new Ponto(2,0.5))); 
-        assertTrue(poligono1.contemPonto(new Ponto(1,1))); 
-        Ponto ponto2 = new Ponto(0, 0);
+        assertTrue(poligono1.contemPonto(new Ponto<Integer>(2,1)));
+        assertFalse(poligono1.contemPonto(new Ponto<Integer>(2,0))); 
+        assertTrue(poligono1.contemPonto(new Ponto<Integer>(1,1))); 
+        Ponto<Integer> ponto2 = new Ponto<Integer>(0, 0);
         assertFalse(poligono1.contemPonto(ponto2));
-        assertTrue(poligono1.contemPonto(new Ponto(2,2)));
-        assertTrue(poligono1.contemPonto(new Ponto(3,1)));
+        assertTrue(poligono1.contemPonto(new Ponto<Integer>(2,2)));
+        assertTrue(poligono1.contemPonto(new Ponto<Integer>(3,1)));
         String input2 = "4 10 10 10 15 15 15 15 10";
         Poligono poligono2 = new Poligono(input2);
-        Ponto ponto3 = new Ponto(12, 12);
+        Ponto<Integer> ponto3 = new Ponto<Integer>(12, 12);
         assertTrue(poligono2.contemPonto(ponto3));
-        Ponto ponto4 = new Ponto(10, 12);
+        Ponto<Integer> ponto4 = new Ponto<Integer>(10, 12);
         assertTrue(poligono2.contemPonto(ponto4));
-        Ponto ponto5 = new Ponto(16, 16);
+        Ponto<Integer> ponto5 = new Ponto<Integer>(16, 16);
         assertFalse(poligono2.contemPonto(ponto5));
+        assertTrue(new Triangulo("2 2 4 2 3 0").contemPonto(new Ponto<Integer>(3,0)));
+        assertTrue(new Triangulo("2 2 4 2 3 0").contemPonto(new Ponto<Integer>(3,1)));
     }
     @Test
     public void testContida() {

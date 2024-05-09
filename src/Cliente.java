@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import ControllerLayer.SnakeGame;
@@ -41,20 +43,24 @@ public class Cliente {
         boolean isObstacleDynamic = false;
         if(obstacleMovement.equals("sim"))
             isObstacleDynamic = true;
-        Ponto obstacleRotacionPoint = null;
+        List<Ponto<? extends Number>> listObstacleRotacionPoint = new ArrayList<>();
         if(isObstacleDynamic) {
-            System.out.print("Indique ou não o movimento de rotação desses obstáculos: ");
-            String obstacleRotacionString = sc.nextLine(); 
-            String [] obstaclesParts = obstacleRotacionString.split(" ");
-            if(obstaclesParts.length > 1)
-                obstacleRotacionPoint = new Ponto(Double.parseDouble(obstaclesParts[0]), Double.parseDouble(obstaclesParts[1]));
+            for(int i = 0; i < obstaclesQuantity; i++) {
+                System.out.print("Indique ou não o movimento de rotação de cada obstáculo: ");
+                String obstacleRotacionString = sc.nextLine(); 
+                String [] obstaclesParts = obstacleRotacionString.split(" ");
+                if(obstaclesParts.length > 1)
+                    listObstacleRotacionPoint.add(new Ponto<Integer>(Integer.parseInt(obstaclesParts[0]), Integer.parseInt(obstaclesParts[1])));
+                else
+                    listObstacleRotacionPoint.add(null);
+            }
         }
         System.out.print("Indique o modo de interface (textual/grafica): ");
         String UIMode = sc.nextLine();
         long seed = System.currentTimeMillis();
         SnakeGame snakeGame;
         try {
-            snakeGame = new SnakeGame(width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, obstacleRotacionPoint,isObstacleDynamic, UIMode, seed);
+            snakeGame = new SnakeGame(width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, listObstacleRotacionPoint,isObstacleDynamic, UIMode, seed);
             snakeGame.runGame(sc);
             snakeGame.endGame();
         } catch (CloneNotSupportedException e) {
