@@ -9,13 +9,11 @@ public class Cliente {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("----------------------------- Bem vindo ao jogo da Cobra -----------------------------");  
-        System.out.println("Indique o seu nome (clique enter se quiser o nome default): ");
-        String name;
-        if(sc.nextLine().isEmpty()) {
+        System.out.print("Indique o seu nome (clique enter se quiser o nome default): ");
+        String name = sc.nextLine();
+        if(name.isEmpty()) {
             name = "Player";
         }
-        else
-            name = sc.nextLine();
         System.out.print("Digite o comprimento da arena: ");
         int width = sc.nextInt();
         System.out.print("Digite a largura da arena: ");

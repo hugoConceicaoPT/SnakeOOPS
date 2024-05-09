@@ -115,7 +115,7 @@ public class GameBoard {
     /** Gera uma comida aleatória na board */
     public void generateFood() {
         boolean isEmpty = true;
-        int maxIterations = 100;
+        int maxIterations = this.widthBoard * this.heightBoard / this.foodDimension;
         int iterations = 0;
         while (isEmpty || iterations < maxIterations) {
             int y = 0;
