@@ -35,7 +35,7 @@ public class SegmentoReta implements Cloneable {
     /** Calcula o comprimento do segmento de reta
      * @return O comprimento do segmento de reta
      */
-    double length () {
+    public double length () {
         return this.a.dist(this.b);
     }
 
@@ -74,6 +74,19 @@ public class SegmentoReta implements Cloneable {
         return false;
     }
 
+    public boolean contemPonto(Ponto<Integer> ponto) {
+        // Primeiro verifica se o ponto está na linha usando o produto vetorial
+        if (produtoVetorial(a, b, ponto) != 0) {
+            return false;
+        }
+
+        // Verifica se o ponto está dentro dos limites dos extremos do segmento
+        boolean dentroDosLimitesX = Math.min(a.getX(), b.getX()) <= ponto.getX() && ponto.getX() <= Math.max(a.getX(), b.getX());
+        boolean dentroDosLimitesY = Math.min(a.getY(), b.getY()) <= ponto.getY() && ponto.getY() <= Math.max(a.getY(), b.getY());
+
+        // Retorna true se estiver dentro dos limites tanto em X quanto em Y
+        return dentroDosLimitesX && dentroDosLimitesY;
+    }
     @Override
     public int hashCode() {
         return Objects.hash(this.a,this.b);
