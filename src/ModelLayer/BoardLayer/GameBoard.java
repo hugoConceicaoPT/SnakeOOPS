@@ -115,7 +115,9 @@ public class GameBoard {
     /** Gera uma comida aleatória na board */
     public void generateFood() {
         boolean isEmpty = true;
-        while (isEmpty) {
+        int maxIterations = 100;
+        int iterations = 0;
+        while (isEmpty || iterations < maxIterations) {
             int y = 0;
             int x = 0;
             if(this.widthBoard % this.snake.getArestaHeadLength() == 0 && this.snake.getHead().getMaxX() % this.snake.getArestaHeadLength() == 0) 
@@ -146,6 +148,11 @@ public class GameBoard {
                     isEmpty = true;
                 }
             }
+            iterations++;
+        }
+        if(iterations == maxIterations) {
+            this.food = null;
+            return;
         }
     }
 
@@ -170,7 +177,17 @@ public class GameBoard {
             Direction nextDirection = calculateDirection(headX, headY, foodX , foodY, snakeClone);
             if(this.food.foodContainedInSnake(snakeClone) && snakeClone.getHead().getMinX() >= 0 
                 && snakeClone.getHead().getMinY() >= 0 && snakeClone.getHead().getMaxX() < this.widthBoard && snakeClone.getHead().getMaxY() < this.heightBoard) {
-                isReachable = true;
+                for(int i = 0; i < this.listOfObstacles.size(); i++ ){
+                    if(!this.listOfObstacles.get(i).obstacleContained(snakeClone) && !this.listOfObstacles.get(i).obstacleIntersect(snakeClone)) {
+                        isReachable = true;
+                    }
+                    else {
+                        isReachable = false;
+                        break;
+                    }
+                }
+                if(isReachable)
+                    break;
             }
             else if(this.food.foodIntersectSnake(snakeClone)) {
                 isReachable = false;
@@ -180,6 +197,7 @@ public class GameBoard {
             snakeClone.move();
             iterations++;
         }
+        snakeClone = null;
         return isReachable;
     }
     

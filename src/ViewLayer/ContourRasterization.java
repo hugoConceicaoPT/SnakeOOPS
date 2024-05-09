@@ -94,7 +94,7 @@ public class ContourRasterization extends RasterizationStrategy {
     }
 
     public void floodFill(int x, int y,SegmentoReta segmentoReta){
-        if (segmentoReta.contemPonto(new Ponto(x,y))) {
+        if (segmentoReta.contemPonto(new Ponto<Integer>(x,y))) {
             board[y][x].setCellType(CellType.OBSTACLE);
             floodFill(x+1, y, segmentoReta);
             floodFill(x-1, y, segmentoReta);

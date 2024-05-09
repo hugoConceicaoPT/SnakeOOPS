@@ -41,6 +41,7 @@ public class SnakeGame implements KeyListener {
     private RasterizationStrategy rasterizationStrategy;
     private UI userInterface;
     private Leaderboard leaderboard;
+    private boolean isFoodEaten;
 
     /** Construtor para criar um jogo da cobra        
      * @param snake a cobra do jogo 
@@ -76,49 +77,7 @@ public class SnakeGame implements KeyListener {
         if(userInterface instanceof GraphicalUI) 
             ((GraphicalUI) userInterface).addKeyListener(this);
         this.leaderboard = new Leaderboard();
-    }
-
-
-    /** Obtém se acabou o jogo ou não
-     * @return se acabou o jogo ou não
-     */
-    public boolean isGameOver() {
-        return isGameOver;
-    }
-
-    /** Atualiza o estado do gameOver
-     * @param gameOver o novo estado do gameOver
-     */
-    public void setGameOver(boolean isGameOver) {
-        this.isGameOver = isGameOver;
-    }
-
-    /** Obtém o score do jogo
-     * @return o score do jogo
-     */
-    public Score getScore() {
-        return score;
-    }
-
-    /** Atualiza o score do jogo
-     * @param score o novo score do jogo
-     */
-    public void setScore(Score score) {
-        this.score = score;
-    }
-
-    /** Obtém a snake do jogo                                                                       
-     * @return a snake do jogo
-     */
-    public Snake getSnake() {
-        return snake;
-    }
-
-    /** Atualiza a snake do jogo
-     * @param snake a nova snake do jogo
-     */
-    public void setSnake(Snake snake) {
-        this.snake = snake;
+        this.isFoodEaten = false;
     }
 
     /** Inicializa o jogo */
@@ -126,6 +85,13 @@ public class SnakeGame implements KeyListener {
         int iterationCount = 0;
         while(!this.isGameOver) {
             if(iterationCount == 0) {
+                if(this.gameBoard.getFood() == null) {
+                    this.isGameOver = true;
+                    score.setPoints(Integer.MAX_VALUE);
+                    System.out.println("Zerou o Jogo! Pontuação final: " + score.getPoints());
+                    if(isGameOver)
+                        break;
+                }
                 this.rasterizationStrategy.updateObstacleCells();
                 this.rasterizationStrategy.updateFoodCells();
                 this.rasterizationStrategy.updateSnakeCells();
@@ -161,12 +127,7 @@ public class SnakeGame implements KeyListener {
             else {
                 moveSnake(this.snake.getCurrentDirection());
             }
-            if(this.gameBoard.getFood() == null) {
-                this.isGameOver = true;
-                score.setPoints(Integer.MAX_VALUE);
-                System.out.println("Zerou o Jogo! Pontuação final: " + score.getPoints());
-            }
-
+    
             if(snakeCollided()) {
                 this.isGameOver = true;
                 System.out.println("Game Over! Pontuação final: " + score.getPoints());
@@ -180,6 +141,10 @@ public class SnakeGame implements KeyListener {
 
             try {
                 foodContainedInSnake();
+                if(this.isGameOver)
+                    break;
+                if(this.isFoodEaten)
+                    this.rasterizationStrategy.updateFoodCells();
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
@@ -230,7 +195,11 @@ public class SnakeGame implements KeyListener {
         if(this.gameBoard.foodContainedInSnake()) {
             this.snake.increaseSize();
             this.score.increaseScore();
-            this.rasterizationStrategy.updateFoodCells();
+            if(this.gameBoard.getFood() == null) {
+                this.isGameOver = true;
+                score.setPoints(Integer.MAX_VALUE);
+                System.out.println("Zerou o Jogo! Pontuação final: " + score.getPoints());
+            }
         }
     }
 
@@ -313,6 +282,49 @@ public class SnakeGame implements KeyListener {
     public void keyPressed(KeyEvent e) {}
     @Override
     public void keyTyped(KeyEvent e) {}
+
+    /** Obtém se acabou o jogo ou não
+     * @return se acabou o jogo ou não
+     */
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
+    /** Atualiza o estado do gameOver
+     * @param gameOver o novo estado do gameOver
+     */
+    public void setGameOver(boolean isGameOver) {
+        this.isGameOver = isGameOver;
+    }
+
+    /** Obtém o score do jogo
+     * @return o score do jogo
+     */
+    public Score getScore() {
+        return score;
+    }
+
+    /** Atualiza o score do jogo
+     * @param score o novo score do jogo
+     */
+    public void setScore(Score score) {
+        this.score = score;
+    }
+
+    /** Obtém a snake do jogo                                                                       
+     * @return a snake do jogo
+     */
+    public Snake getSnake() {
+        return snake;
+    }
+
+    /** Atualiza a snake do jogo
+     * @param snake a nova snake do jogo
+     */
+    public void setSnake(Snake snake) {
+        this.snake = snake;
+    }
+
 
     /** Obtém a width da board
      * @return o valor da width

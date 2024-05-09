@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import ModelLayer.SnakeLayer.Player;
 import ModelLayer.SnakeLayer.Score;
 public class Leaderboard {
     private String filePath;
@@ -18,12 +19,13 @@ public class Leaderboard {
     public String generateLeaderboard() {
         String result = "";
         try (Stream<String> lines = Files.lines(Paths.get(this.filePath))) {
-            List<Score> topScores = lines.map(line -> {
+            List<Player> topPlayers = lines.map(line -> {
                 String[] parts = line.split(" ");
-                int points = Integer.parseInt(parts[1]);
-                return new Score(points, 0);
+                String name = parts[1];
+                int points = Integer.parseInt(parts[3]);
+                return new Player(name, new Score(points,0));
             })
-            .sorted(Comparator.comparing(Score::getPoints).reversed())
+            .sorted(Comparator.comparing(Player player) -> player.getScore().getPoints()).reversed())
             .collect(Collectors.toList());
 
             for(int i = 0; i < topScores.size(); i++) {
