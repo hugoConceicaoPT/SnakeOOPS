@@ -3,8 +3,8 @@ import java.util.List;
 
 /** Classe que representa um quadrado 
     Responsabilidade: Representar um quadrado e verificar se os pontos formam um quadrado válido
-    @version 1.0 26/03/2024
-    @author Hugo Conceição
+    @version 1.0 10/05/2024
+    @author Hugo Conceição João Ventura Eduarda Pereira
     @inv O quadrado é válido se os lados forem todos iguais 
 */
 public class Quadrado extends Retangulo{

@@ -2,8 +2,8 @@ package ModelLayer.SnakeLayer;
 /**	Classe que representa uma reta no plano cartesiano
     Responsabilidade: Representar uma reta no plano cartesiano 
     e verificar se os pontos formam uma reta válida
-    @version 1.0 26/03/2024
-    @author Hugo Conceição
+    @version 1.0 10/05/2024
+    @author Hugo Conceição João Ventura Eduarda Pereira
     @inv  Os pontos não podem ser iguais
 */
 public class Reta {

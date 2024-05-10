@@ -3,8 +3,8 @@ import java.util.Objects;
 
 /**	Classe que representa um ponto no plano cartesiano
     Responsabilidade: Armazenar as coordenadas de um ponto
-    @version 1.0 26/03/2024
-    @author Hugo Conceição
+    @version 1.0 10/05/2024
+    @author Hugo Conceição João Ventura Eduarda Pereira
     @inv  As coordenadas devem estar localizadas no primeiro quadrante do plano cartesiano
 */
 public class Ponto<T extends Number> implements Cloneable {
