@@ -1,7 +1,7 @@
 package ViewLayer;
 
 import ModelLayer.BoardLayer.GameBoard;
-import ModelLayer.SnakeLayer.Score;
+import ModelLayer.BoardLayer.Score;
 
 public class TextualUI implements UI {
 

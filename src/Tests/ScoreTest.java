@@ -3,7 +3,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ModelLayer.SnakeLayer.Score;
+import ModelLayer.BoardLayer.Score;
 
 public class ScoreTest {
     @Test

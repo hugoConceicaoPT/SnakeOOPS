@@ -1,4 +1,4 @@
-package ModelLayer.SnakeLayer;
+package ModelLayer.BoardLayer;
 
 public class Player {
     private String name;

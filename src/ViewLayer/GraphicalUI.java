@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
 import ModelLayer.BoardLayer.GameBoard;
-import ModelLayer.SnakeLayer.Score;
+import ModelLayer.BoardLayer.Score;
 
 public class GraphicalUI extends JFrame implements UI {
 

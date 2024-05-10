@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import ModelLayer.SnakeLayer.Player;
-import ModelLayer.SnakeLayer.Score;
+import ModelLayer.BoardLayer.Player;
+import ModelLayer.BoardLayer.Score;
 public class Leaderboard {
     private String filePath;
     

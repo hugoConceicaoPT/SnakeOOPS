@@ -10,12 +10,12 @@ import java.util.Scanner;
 
 import ModelLayer.BoardLayer.FoodType;
 import ModelLayer.BoardLayer.GameBoard;
+import ModelLayer.BoardLayer.Player;
+import ModelLayer.BoardLayer.Score;
 import ModelLayer.SnakeLayer.AutomatedMovementStrategy;
 import ModelLayer.SnakeLayer.Direction;
-import ModelLayer.SnakeLayer.Player;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
-import ModelLayer.SnakeLayer.Score;
 import ModelLayer.SnakeLayer.Snake;
 import ViewLayer.ContourRasterization;
 import ViewLayer.FullRasterization;
