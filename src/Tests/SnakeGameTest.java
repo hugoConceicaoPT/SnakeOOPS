@@ -17,19 +17,19 @@ public class SnakeGameTest {
         SnakeGame snakeGame = new SnakeGame("Player",20, 10, 2, true, "completa", 1, "quadrados", 5, 2, null, true, "textual", seed);
         System.out.println(snakeGame.getSnake().toString());
         snakeGame.moveSnake(Direction.UP);
-        snakeGame.getrasterizationStrategy().updateSnakeCells();
+        snakeGame.getRasterizationStrategy().updateSnakeCells();
         assertEquals("Cabeça: [(6.0,8.0), (8.0,8.0), (8.0,10.0), (6.0,10.0)] Tail: []", snakeGame.getSnake().toString());
-        assertEquals(CellType.HEAD, snakeGame.getrasterizationStrategy().getBoard()[8][6].getCellType());
-        assertEquals(CellType.HEAD, snakeGame.getrasterizationStrategy().getBoard()[8][7].getCellType());
-        assertEquals(CellType.HEAD, snakeGame.getrasterizationStrategy().getBoard()[9][6].getCellType());
-        assertEquals(CellType.HEAD, snakeGame.getrasterizationStrategy().getBoard()[9][7].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getRasterizationStrategy().getBoard()[8][6].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getRasterizationStrategy().getBoard()[8][7].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getRasterizationStrategy().getBoard()[9][6].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getRasterizationStrategy().getBoard()[9][7].getCellType());
         snakeGame.moveSnake(Direction.RIGHT);
-        snakeGame.getrasterizationStrategy().updateSnakeCells();
+        snakeGame.getRasterizationStrategy().updateSnakeCells();
         assertEquals("Cabeça: [(8.0,10.0), (8.0,8.0), (10.0,8.0), (10.0,10.0)] Tail: []", snakeGame.getSnake().toString());
-        assertEquals(CellType.HEAD, snakeGame.getrasterizationStrategy().getBoard()[8][8].getCellType());
-        assertEquals(CellType.HEAD, snakeGame.getrasterizationStrategy().getBoard()[8][9].getCellType());
-        assertEquals(CellType.HEAD, snakeGame.getrasterizationStrategy().getBoard()[9][8].getCellType());
-        assertEquals(CellType.HEAD, snakeGame.getrasterizationStrategy().getBoard()[9][9].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getRasterizationStrategy().getBoard()[8][8].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getRasterizationStrategy().getBoard()[8][9].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getRasterizationStrategy().getBoard()[9][8].getCellType());
+        assertEquals(CellType.HEAD, snakeGame.getRasterizationStrategy().getBoard()[9][9].getCellType());
     }
 
     @Test
