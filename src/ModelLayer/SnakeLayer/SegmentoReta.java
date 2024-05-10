@@ -11,6 +11,10 @@ import java.util.Objects;
 public class SegmentoReta implements Cloneable {
     private Ponto<? extends Number> a;
     private Ponto<? extends Number> b;
+    private double minX;
+    private double minY;
+    private double maxX;
+    private double maxY;
 
     /** Construtor para criar um segmento de reta com dois pontos
      * @param a O ponto inicial do segmento de reta
@@ -20,6 +24,7 @@ public class SegmentoReta implements Cloneable {
         check(a, b);
         this.a = a;
         this.b = b;
+        setMaxCoordinates();
     }
 
      /** Verifica se dois pontos são iguais 
@@ -74,7 +79,7 @@ public class SegmentoReta implements Cloneable {
         return false;
     }
 
-    public boolean contemPonto(Ponto<Integer> ponto) {
+    public boolean contemPonto(Ponto<? extends Number> ponto) {
         // Primeiro verifica se o ponto está na linha usando o produto vetorial
         if (produtoVetorial(a, b, ponto) != 0) {
             return false;
@@ -86,6 +91,26 @@ public class SegmentoReta implements Cloneable {
 
         // Retorna true se estiver dentro dos limites tanto em X quanto em Y
         return dentroDosLimitesX && dentroDosLimitesY;
+    }
+
+    public void setMaxCoordinates() {
+        double minX = Double.MAX_VALUE;
+        double minY = Double.MAX_VALUE;
+        double maxX = Double.MIN_VALUE;
+        double maxY = Double.MIN_VALUE;
+        minX = Math.min(minX, a.getX().doubleValue());
+        maxX = Math.max(maxX, a.getX().doubleValue());
+        minY = Math.min(minY, a.getY().doubleValue());
+        maxY = Math.max(maxY, a.getY().doubleValue());
+
+        minX = Math.min(minX, b.getX().doubleValue());
+        maxX = Math.max(maxX, b.getX().doubleValue());
+        minY = Math.min(minY, b.getY().doubleValue());
+        maxY = Math.max(maxY, b.getY().doubleValue());
+        setMaxX(maxX);
+        setMaxY(maxY);
+        setMinX(minX);
+        setMinY(minY);
     }
     @Override
     public int hashCode() {
@@ -123,5 +148,37 @@ public class SegmentoReta implements Cloneable {
      */
     public void setB(Ponto<? extends Number> b) {
         this.b = b;
+    }
+
+    public double getMinX() {
+        return minX;
+    }
+
+    public void setMinX(double minX) {
+        this.minX = minX;
+    }
+
+    public double getMinY() {
+        return minY;
+    }
+
+    public void setMinY(double minY) {
+        this.minY = minY;
+    }
+
+    public double getMaxX() {
+        return maxX;
+    }
+
+    public void setMaxX(double maxX) {
+        this.maxX = maxX;
+    }
+
+    public double getMaxY() {
+        return maxY;
+    }
+
+    public void setMaxY(double maxY) {
+        this.maxY = maxY;
     }
 }

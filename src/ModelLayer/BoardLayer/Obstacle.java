@@ -39,6 +39,13 @@ public class Obstacle {
         return false;
     }
 
+    public boolean obstacleIntersect(Ponto<? extends Number> point) {
+        double x = point.getX().doubleValue();
+        double y = point.getY().doubleValue();
+        return (x >= this.poligono.getMinX() && x <= this.poligono.getMaxX() &&
+            y >= this.poligono.getMinY() && y <= this.poligono.getMaxY());
+    }
+
     public void rotateObstacle() {
         this.obstacleMovement.rotateObstacle(this.poligono,this.rotacionPoint);
     }

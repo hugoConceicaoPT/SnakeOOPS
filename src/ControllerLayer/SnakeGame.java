@@ -142,15 +142,13 @@ public class SnakeGame implements KeyListener {
                 this.gameBoard.rotateObstacles();
                 this.rasterizationStrategy.updateObstacleCells();
             }
-
-            try {
-                foodContainedInSnake();
-                if(this.isGameOver)
-                    break;
-                if(this.isFoodEaten)
-                    this.rasterizationStrategy.updateFoodCells();
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
+            
+            foodContainedInSnakeHead();
+            if(this.isGameOver)
+                break;
+            if(this.isFoodEaten) {
+                this.rasterizationStrategy.updateFoodCells();
+                this.isFoodEaten = false;
             }
 
             if(snakeCollided()) {
@@ -195,10 +193,11 @@ public class SnakeGame implements KeyListener {
         this.leaderboard = null;
     }
     
-    public void foodContainedInSnake() throws CloneNotSupportedException {
-        if(this.gameBoard.foodContainedInSnake()) {
+    public void foodContainedInSnakeHead() {
+        if(this.gameBoard.foodContainedInSnakeHead()) {
             this.snake.increaseSize();
             this.score.increaseScore();
+            this.isFoodEaten = true;
             if(this.gameBoard.getFood() == null) {
                 this.isGameOver = true;
                 score.setPoints(Integer.MAX_VALUE);

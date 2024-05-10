@@ -78,10 +78,10 @@ public class GameBoardTest {
         gameBoard.setFood(foodCircle);
         snake.setNextDirection(Direction.RIGHT);
         snake.move();
-        assertTrue(gameBoard.foodContainedInSnake());
+        assertTrue(gameBoard.foodContainedInSnakeHead());
         snake.setNextDirection(Direction.UP);
         snake.move();
-        assertFalse(gameBoard.foodContainedInSnake());
+        assertFalse(gameBoard.foodContainedInSnakeHead());
     }
 
     @Test
@@ -103,7 +103,6 @@ public class GameBoardTest {
         assertTrue(gameBoard.getListOfObstacles().size() > 0);
         assertFalse(gameBoard.snakeIntersectsObstacle());
         assertFalse(gameBoard.obstacleContainedInSnake());
-        assertFalse(gameBoard.foodIntersectObstacle());
     }
 
     @Test
@@ -121,8 +120,7 @@ public class GameBoardTest {
         rotacionPoint.add(null);
         GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,1,rotacionPoint,false,random);
         assertNotNull(gameBoard.getFood());
-        assertFalse(gameBoard.foodContainedInSnake());
-        assertFalse(gameBoard.foodIntersectObstacle());
+        assertFalse(gameBoard.foodContainedInSnakeHead());
         gameBoard.removeFood();
         gameBoard.generateFood();
         System.out.println(snake.toString());

@@ -1,9 +1,5 @@
 package ModelLayer.BoardLayer;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ModelLayer.SnakeLayer.Poligono;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Snake;
@@ -18,56 +14,18 @@ public class FoodSquare extends Food {
     }
 
     @Override
-    public boolean foodContainedInSnake(Snake snake) {
-        if(snake.getBody().size() == 1) {
-            if(quadrado.contida(snake.getHead()))
-                return true;
-            return false;
-        }
-        else {
-            List<Ponto<? extends Number>> pontos = new ArrayList<>();
-            Poligono bodySnake = null;
-            switch (snake.getCurrentDirection()) {
-                case UP:
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMaxX(), (int) snake.getBody().getFirst().getMaxY()));
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMinX(),(int) snake.getBody().getFirst().getMaxY()));
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMinX(),(int) snake.getBody().get(1).getMinY()));
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMaxX(),(int) snake.getBody().get(1).getMinY()));
-                    bodySnake = new Poligono(pontos);
-                    break;
-                case DOWN:
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMinX(),(int) snake.getBody().getFirst().getMinY()));
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMaxX(),(int) snake.getBody().getFirst().getMinY()));
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMaxX(),(int) snake.getBody().get(1).getMaxY()));
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMinX(),(int) snake.getBody().get(1).getMaxY()));
-                    bodySnake = new Poligono(pontos);
-                    break;
-                case LEFT:
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMinX(),(int) snake.getBody().getFirst().getMaxY()));
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMinX(),(int) snake.getBody().getFirst().getMinY()));
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMaxX(),(int) snake.getBody().get(1).getMinY()));
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMaxX(),(int) snake.getBody().get(1).getMaxY()));
-                    bodySnake = new Poligono(pontos);
-                    break;
-                case RIGHT:
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMaxX(),(int) snake.getBody().getFirst().getMaxY()));
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().getFirst().getMaxX(),(int) snake.getBody().getFirst().getMinY()));
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMinX(),(int) snake.getBody().get(1).getMinY()));
-                    pontos.add(new Ponto<Integer>((int) snake.getBody().get(1).getMinX(),(int) snake.getBody().get(1).getMaxY()));
-                    bodySnake = new Poligono(pontos);
-                    break;
-            }
-            if(quadrado.contida(bodySnake))
-                return true;
-            return false;
-        }
-    }
-
-    @Override
     public boolean foodIntersectObstacle(Obstacle obstacle){
         if (quadrado.interseta(obstacle.getPoligono())) {
             return true;
         }     
+        return false;
+    }
+
+    @Override
+    public boolean foodContainedInSnakeHead(Snake snake){
+        if(quadrado.contida(snake.getHead())) {
+           return true; 
+        }
         return false;
     }
 

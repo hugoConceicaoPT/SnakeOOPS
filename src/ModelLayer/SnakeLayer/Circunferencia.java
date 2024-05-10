@@ -48,6 +48,7 @@ public class Circunferencia {
         return distance <= this.raio;
     }
 
+    
     /** Verifica se uma circunferência está contido noutra
      * @param that a outra circunferência 
      * @return true se a circunferencia estiver contida noutra, false se não

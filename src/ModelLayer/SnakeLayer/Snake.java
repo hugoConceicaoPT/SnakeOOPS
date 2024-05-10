@@ -166,6 +166,19 @@ public class Snake implements Cloneable {
                (currentDirection == Direction.RIGHT && nextDirection == Direction.LEFT);
     }
 
+
+    public boolean intersectsFood(Ponto<? extends Number> ponto) {
+        double x = ponto.getX().doubleValue();
+        double y = ponto.getY().doubleValue();
+
+        for(Quadrado quadrado : this.body) {
+            if(x >= quadrado.getMinX() && x <= quadrado.getMaxX() &&
+            y >= quadrado.getMinY() && y <= quadrado.getMaxY())
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         Snake clonedSnake = (Snake) super.clone();

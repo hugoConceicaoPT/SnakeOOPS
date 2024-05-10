@@ -49,4 +49,14 @@ public class SegmentoRetaTest {
         assertFalse(segmentoReta1.seCruzam(segmentoReta4));
         assertTrue(segmentoReta3.seCruzam(segmentoReta4));
     }
+
+    @Test
+    public void contemPontoTest() {
+        SegmentoReta segmentoReta1 = new SegmentoReta(new Ponto<Integer>(0,2), new Ponto<Integer>(4,2));
+        assertTrue(segmentoReta1.contemPonto(new Ponto<Integer>(2,2)));
+        assertFalse(segmentoReta1.contemPonto(new Ponto<Integer>(2,3)));
+        assertTrue(segmentoReta1.contemPonto(new Ponto<Integer>(3,2)));
+        assertFalse(segmentoReta1.contemPonto(new Ponto<Integer>(3,1)));
+        
+    }
 }

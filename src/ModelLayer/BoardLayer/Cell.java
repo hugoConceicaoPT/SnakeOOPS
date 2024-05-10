@@ -31,8 +31,6 @@ public class Cell {
                 return "F";
             case OBSTACLE:
                 return "O";
-            case SNAKEFOOD:
-                return "#";
             default:
                 return ".";
         }

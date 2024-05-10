@@ -36,11 +36,7 @@ public class FullRasterization extends RasterizationStrategy {
         for (int i = 1; i < this.gameBoard.getSnake().getBody().size(); i++) {
             for(int w = (int) this.gameBoard.getSnake().getBody().get(i).getMinY(); w < (int) this.gameBoard.getSnake().getBody().get(i).getMaxY(); w++) {
                 for(int j = (int) this.gameBoard.getSnake().getBody().get(i).getMinX() ; j < (int) this.gameBoard.getSnake().getBody().get(i).getMaxX(); j++) {
-                    if(board[w][j].getCellType() == CellType.FOOD) {
-                        board[w][j].setCellType(CellType.SNAKEFOOD);
-                    }
-                    else
-                        board[w][j].setCellType(CellType.TAIL);
+                    board[w][j].setCellType(CellType.TAIL);
                 }
             }
         }
@@ -48,11 +44,7 @@ public class FullRasterization extends RasterizationStrategy {
         Quadrado head = this.gameBoard.getSnake().getHead();
         for(int w = (int) head.getMinY(); w < (int) head.getMaxY(); w++) {
             for(int j = (int) head.getMinX(); j < (int) head.getMaxX(); j++) {
-                if(board[w][j].getCellType() == CellType.FOOD) {
-                    board[w][j].setCellType(CellType.SNAKEFOOD);
-                }
-                else
-                    board[w][j].setCellType(CellType.HEAD);
+                board[w][j].setCellType(CellType.HEAD);
             }
         }
     }

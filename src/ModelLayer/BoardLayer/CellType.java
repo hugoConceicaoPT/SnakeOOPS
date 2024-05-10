@@ -5,6 +5,5 @@ public enum CellType {
     FOOD,
     OBSTACLE,
     HEAD,
-    TAIL,
-    SNAKEFOOD
+    TAIL
 }

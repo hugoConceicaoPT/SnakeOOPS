@@ -29,14 +29,14 @@ public class FoodSquareTest {
         snake.increaseSize();
         Quadrado quadrado = new Quadrado("10 5 10 4 9 4 9 5");
         FoodSquare foodCircle = new FoodSquare(quadrado);
-        assertTrue(foodCircle.foodContainedInSnake(snake));
-        assertTrue(new FoodSquare(new Quadrado("11 5 11 4 10 4 10 5")).foodContainedInSnake(snake));
-        assertFalse(new FoodSquare(new Quadrado("7 5 8 5 8 4 7 4")).foodContainedInSnake(snake));
-        assertFalse(new FoodSquare(new Quadrado("8 6 9 6 9 5 8 5")).foodContainedInSnake(snake));
-        assertTrue(new FoodSquare(new Quadrado("11 4 12 4 12 3 11 3")).foodContainedInSnake(snake));    
+        assertTrue(foodCircle.foodContainedInSnakeHead(snake));
+        assertTrue(new FoodSquare(new Quadrado("11 5 11 4 10 4 10 5")).foodContainedInSnakeHead(snake));
+        assertFalse(new FoodSquare(new Quadrado("7 5 8 5 8 4 7 4")).foodContainedInSnakeHead(snake));
+        assertFalse(new FoodSquare(new Quadrado("8 6 9 6 9 5 8 5")).foodContainedInSnakeHead(snake));
+        assertTrue(new FoodSquare(new Quadrado("11 4 12 4 12 3 11 3")).foodContainedInSnakeHead(snake));    
         snake.setNextDirection(Direction.UP);
         snake.move();
-        assertTrue(new FoodSquare(new Quadrado("10 7 11 7 11 6 10 6")).foodContainedInSnake(snake));
+        assertTrue(new FoodSquare(new Quadrado("10 7 11 7 11 6 10 6")).foodContainedInSnakeHead(snake));
 
     }
 }

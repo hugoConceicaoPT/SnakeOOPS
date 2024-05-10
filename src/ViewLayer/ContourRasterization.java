@@ -71,7 +71,7 @@ public class ContourRasterization extends RasterizationStrategy {
     }
     
 
-    @SuppressWarnings("unchecked")
+    
     public void updateObstacleCells() {
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
@@ -83,35 +83,31 @@ public class ContourRasterization extends RasterizationStrategy {
 
         for (int i = 0; i < this.gameBoard.getObstaclesQuantity(); i++) {
             Poligono poligono = this.gameBoard.getListOfObstacles().get(i).getPoligono();
-            int minX = (int) poligono.getMinX();
-            int minY = (int) poligono.getMinY();
-            int maxY = (int) poligono.getMaxX() -1;
-            @SuppressWarnings("rawtypes")
-            Ponto ponto = new Ponto<Integer>(minX, minY);
-            for (int j = minY; j <= maxY; j++) {
-                if (poligono.contemPonto(new Ponto<Integer>(minX, j))) {
-                    ponto.setY(j);
-                    break;
+            
+            for (int j = 0; j < poligono.getAresta().size(); j++) {
+                SegmentoReta aresta = poligono.getAresta().get(j);
+                int minX = (int) aresta.getMinX();
+                int maxX = (int) aresta.getMaxX();
+                int minY = (int) aresta.getMinY();
+                int maxY = (int) aresta.getMaxY();
+    
+                if(minX != maxX) {
+                    maxX = maxX -1;
                 }
-            }
-            int x = (int) ponto.getX();
-            int y = (int) ponto.getY();
-            for(int j = 0; j < poligono.getAresta().size(); j++) {
-                SegmentoReta segment = this.gameBoard.getListOfObstacles().get(i).getPoligono().getAresta().get(i);
-                floodFill(x,y, segment);
+                if(minY != maxY) {
+                    maxY = maxY - 1;
+                }
+
+                for (int y = minY; y <= maxY; y++) {
+                    for (int x = minX; x <= maxX; x++) {
+                        if (aresta.contemPonto(new Ponto<Integer>(x, y)) && y >= 0 && y < this.rows && x >= 0 && x < this.cols) {
+                            board[y][x].setCellType(CellType.OBSTACLE);
+                        }
+                    }
+                }
             }
         }
         
-    }
-
-    public void floodFill(Integer x, Integer y,SegmentoReta segmentoReta){
-        if (segmentoReta.contemPonto(new Ponto<Integer>(x,y)) && x >= 0 && y >= 0 && x < this.cols && y < this.rows) {
-            board[y][x].setCellType(CellType.OBSTACLE);
-            floodFill(x+1, y, segmentoReta);
-            floodFill(x, y+1, segmentoReta);
-            floodFill(x-1, y, segmentoReta);
-            floodFill(x, y-1, segmentoReta);
-        }
     }
 
     public void updateFoodCells() {
