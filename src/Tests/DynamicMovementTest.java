@@ -26,4 +26,5 @@ public class DynamicMovementTest {
         obstacleMovement.rotateObstacle(triangulo, new Ponto<Double>(3.0,2.67),angle.get(0));
         assertEquals("[(1.67,2.67), (3.67,1.67), (3.67,3.67)]", triangulo.toString());
     }
+
 }

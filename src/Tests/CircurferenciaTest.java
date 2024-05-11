@@ -1,5 +1,6 @@
 package Tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -46,6 +47,11 @@ public class CircurferenciaTest {
         Circunferencia circunferencia1 = new Circunferencia(new Ponto<Double>(8.5,0.5), 0.5);
         assertTrue(circunferencia1.contidaNoPoligono(quadrado));
 
+    }
+    @Test
+    public void toStringTest(){
+        Circunferencia circulo = new Circunferencia(new Ponto<Integer>(5, 5), 5);
+         assertEquals( "Circunferência de centro: (5,5) e raio: 5.0", circulo.toString());
     }
 
 
