@@ -16,6 +16,7 @@ import ModelLayer.SnakeLayer.Direction;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Snake;
+
 import ViewLayer.FullRasterization;
 
 public class FullRasterizationTest {
@@ -84,5 +85,37 @@ public class FullRasterizationTest {
         assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[5][1].getCellType());
         assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[6][1].getCellType());
 
+    }
+    
+
+    @Test
+    public void updateFoodCellsTest(){
+        long seed = 118;
+        Random random = new Random(seed);
+        String input = "6 3 9 3 9 6 6 6";
+        LinkedList<Quadrado> listaQuadrados = new LinkedList<>();
+        listaQuadrados.add(new Quadrado(input));
+        Snake snake = new Snake(listaQuadrados, true,random);
+        snake.setCurrentDirection(Direction.RIGHT);
+        snake.setNextDirection(Direction.RIGHT);
+        snake.move();
+        snake.increaseSize();
+        List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
+        rotacionPoint.add(null);
+        rotacionPoint.add(null);
+        List<Integer> angle = new ArrayList<>();
+        angle.add(0);
+        GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,3,0,rotacionPoint,angle,false,random);
+        FullRasterization rasterizationStrategy = new FullRasterization(gameBoard);
+        rasterizationStrategy.updateFoodCells();
+        assertEquals(CellType.FOOD, rasterizationStrategy.getBoard()[1][5].getCellType());
+        assertEquals(CellType.FOOD, rasterizationStrategy.getBoard()[1][6].getCellType());
+        assertEquals(CellType.FOOD, rasterizationStrategy.getBoard()[1][7].getCellType());
+        assertEquals(CellType.FOOD, rasterizationStrategy.getBoard()[1][8].getCellType());
+        assertEquals(CellType.FOOD, rasterizationStrategy.getBoard()[2][5].getCellType());
+        assertEquals(CellType.FOOD, rasterizationStrategy.getBoard()[2][6].getCellType());
+        assertEquals(CellType.FOOD, rasterizationStrategy.getBoard()[3][7].getCellType());
+        assertEquals(CellType.FOOD, rasterizationStrategy.getBoard()[4][8].getCellType());
+        assertEquals(CellType.FOOD, rasterizationStrategy.getBoard()[3][5].getCellType());
     }
 }

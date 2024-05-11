@@ -2,7 +2,9 @@ package Tests;
 
 import static org.junit.Assert.assertEquals;
 
+
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.junit.Test;
@@ -10,8 +12,11 @@ import org.junit.Test;
 import ControllerLayer.SnakeGame;
 import ModelLayer.BoardLayer.CellType;
 import ModelLayer.BoardLayer.FoodSquare;
+
 import ModelLayer.SnakeLayer.Direction;
+
 import ModelLayer.SnakeLayer.Quadrado;
+
 
 public class SnakeGameTest {
     @Test
@@ -50,4 +55,5 @@ public class SnakeGameTest {
         assertEquals(100, game.getScore().getPoints());
         assertEquals(2, game.getSnake().getBody().size());
     }
+
 }

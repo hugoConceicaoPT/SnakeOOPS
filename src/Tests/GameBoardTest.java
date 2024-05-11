@@ -1,13 +1,16 @@
 package Tests;
 
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -20,6 +23,7 @@ import ModelLayer.BoardLayer.GameBoard;
 import ModelLayer.BoardLayer.Obstacle;
 import ModelLayer.SnakeLayer.Circunferencia;
 import ModelLayer.SnakeLayer.Direction;
+import ModelLayer.SnakeLayer.Poligono;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Snake;
@@ -235,4 +239,82 @@ public class GameBoardTest {
         gameBoard.getListOfObstacles().add(obstacle);
         assertTrue(gameBoard.snakeIntersectsObstacle());
     } 
+    
+    @Test
+    public void foodIntersectObstacleTest() throws CloneNotSupportedException {
+    long seed = 119;
+    Random random = new Random(seed);
+
+    
+    List<Obstacle> listOfObstacles = new ArrayList<>();
+    Obstacle obstacle1 = new Obstacle(new Quadrado("5 6 5 4 7 4 7 6"), new Ponto<Integer>(1,1), 0, false);
+    listOfObstacles.add(obstacle1);
+
+    
+    GameBoard gameBoard = new GameBoard(null, 200, 100, FoodType.SQUARE, 1, 2, new ArrayList<>(), new ArrayList<>(), false, random);
+    gameBoard.setListOfObstacles(listOfObstacles);
+
+   
+    assertFalse(gameBoard.foodIntersectObstacle(8, 8));
+    assertTrue(gameBoard.foodIntersectObstacle(6, 5));
+    }
+    
+    @Test
+    public void foodIntersectSnakeTest() throws CloneNotSupportedException {
+    long seed = 119;
+    Random random = new Random(seed);
+    String snakePosition = "5 5 5 7 7 7 7 5"; 
+    LinkedList<Quadrado> snakeBody = new LinkedList<>();
+    snakeBody.add(new Quadrado(snakePosition));
+    Snake snake = new Snake(snakeBody, true, random);
+
+   
+    GameBoard gameBoard = new GameBoard(snake, 200, 100, FoodType.SQUARE, 1, 2, new ArrayList<>(), new ArrayList<>(), false, random);
+
+   
+    assertTrue(gameBoard.foodIntersectSnake(6, 6));
+
+   
+    assertFalse(gameBoard.foodIntersectSnake(8, 8));
+    }
+
+  @Test
+public void rotateObstaclesTest() throws CloneNotSupportedException {
+  
+    long seed = 119;
+    Random random = new Random(seed);
+
+ 
+    Poligono polygon1 = new Poligono(new ArrayList<>(Arrays.asList(
+        new Ponto<Integer>(10, 10),
+        new Ponto<Integer>(12, 10),
+        new Ponto<Integer>(12, 12),
+        new Ponto<Integer>(10, 12))));
+    Poligono polygon2 = new Poligono(new ArrayList<>(Arrays.asList(
+        new Ponto<Integer>(20, 20),
+        new Ponto<Integer>(22, 20),
+        new Ponto<Integer>(22, 22),
+        new Ponto<Integer>(20, 22))));
+
+    Obstacle obstacle1 = new Obstacle(polygon1, polygon1.getCentroide(), 0, true);
+    Obstacle obstacle2 = new Obstacle(polygon2, polygon2.getCentroide(), 0, true);
+    List<Obstacle> obstacles = Arrays.asList(obstacle1, obstacle2);
+
+
+    GameBoard gameBoard = new GameBoard(null, 200, 100, FoodType.SQUARE, 1, 2, new ArrayList<>(), new ArrayList<>(), false, random);
+    gameBoard.setListOfObstacles(obstacles);
+
+ 
+    Poligono initialPolygon1 = new Poligono((List<Ponto<? extends Number>>) obstacle1.getPoligono());
+    Poligono initialPolygon2 = new Poligono((List<Ponto<? extends Number>>) obstacle2.getPoligono());
+
+
+    gameBoard.rotateObstacles();
+
+    assertFalse(initialPolygon1.equals(obstacle1.getPoligono()));
+    assertFalse(initialPolygon2.equals(obstacle2.getPoligono()));
+}
+
+
+
 }
