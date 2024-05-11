@@ -35,7 +35,9 @@ public class ContourRasterizationTest {
         List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
         rotacionPoint.add(null);
         rotacionPoint.add(null);
-        GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,2,rotacionPoint,false,random);
+        List<Integer> angle = new ArrayList<>();
+        angle.add(0);
+        GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,2,rotacionPoint,angle,false,random);
         ContourRasterization rasterizationStrategy = new ContourRasterization(gameBoard);
         rasterizationStrategy.updateSnakeCells();
         assertEquals(CellType.HEAD, rasterizationStrategy.getBoard()[3][9].getCellType());
@@ -71,7 +73,9 @@ public class ContourRasterizationTest {
         List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
         rotacionPoint.add(null);
         rotacionPoint.add(null);
-        GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,2,rotacionPoint,false,random);
+        List<Integer> angle = new ArrayList<>();
+        angle.add(0);
+        GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,2,rotacionPoint,angle,false,random);
         ContourRasterization rasterizationStrategy = new ContourRasterization(gameBoard);
         rasterizationStrategy.updateObstacleCells();
         assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[1][5].getCellType());

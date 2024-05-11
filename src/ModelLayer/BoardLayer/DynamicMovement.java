@@ -18,8 +18,7 @@ public class DynamicMovement implements ObstacleMovement {
      * @param pontoPivo O ponto pivô ao redor do qual o obstáculo deve girar.
      */
     @Override
-    public void rotateObstacle(Poligono poligono, Ponto<? extends Number> pontoPivo) {
-        // Rotaciona o polígono ao redor do ponto pivô em 90 graus
-        poligono.rotate(90, pontoPivo);
-    }
+    public void rotateObstacle(Poligono poligono, Ponto<? extends Number> pontoPivo, int obstacleAngle) {     
+        poligono.rotate(obstacleAngle, pontoPivo);   
+    }   
 }

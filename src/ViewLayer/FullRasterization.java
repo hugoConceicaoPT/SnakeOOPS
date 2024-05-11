@@ -28,14 +28,14 @@ public class FullRasterization extends RasterizationStrategy {
      */
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
-        for (int i = this.rows - 1; i >= 0; i--) {
-            for (int j = 0; j < this.cols; j++) {
-                result.append(board[i][j].toString()).append(" ");
+        String result = "";
+        for(int i = this.rows - 1; i >= 0; i--) {
+            for(int j = 0; j < this.cols; j++) {
+                result += board[i][j].toString() + " ";
             }
-            result.append("\n");
+            result += "\n";
         }
-        return result.toString();
+        return result;
     }
 
     /**
@@ -54,9 +54,8 @@ public class FullRasterization extends RasterizationStrategy {
 
         // Preenche completamente as células do corpo da cobra
         for (int i = 1; i < this.gameBoard.getSnake().getBody().size(); i++) {
-            Quadrado segment = this.gameBoard.getSnake().getBody().get(i);
-            for (int w = (int) segment.getMinY(); w < (int) segment.getMaxY(); w++) {
-                for (int j = (int) segment.getMinX(); j < (int) segment.getMaxX(); j++) {
+            for(int w = (int) this.gameBoard.getSnake().getBody().get(i).getMinY(); w < (int) this.gameBoard.getSnake().getBody().get(i).getMaxY(); w++) {
+                for(int j = (int) this.gameBoard.getSnake().getBody().get(i).getMinX() ; j < (int) this.gameBoard.getSnake().getBody().get(i).getMaxX(); j++) {
                     board[w][j].setCellType(CellType.TAIL);
                 }
             }
@@ -64,8 +63,8 @@ public class FullRasterization extends RasterizationStrategy {
 
         // Preenche completamente as células da cabeça da cobra
         Quadrado head = this.gameBoard.getSnake().getHead();
-        for (int w = (int) head.getMinY(); w < (int) head.getMaxY(); w++) {
-            for (int j = (int) head.getMinX(); j < (int) head.getMaxX(); j++) {
+        for(int w = (int) head.getMinY(); w < (int) head.getMaxY(); w++) {
+            for(int j = (int) head.getMinX(); j < (int) head.getMaxX(); j++) {
                 board[w][j].setCellType(CellType.HEAD);
             }
         }
@@ -86,10 +85,10 @@ public class FullRasterization extends RasterizationStrategy {
         }   
 
         // Preenche as células que contêm obstáculos
-        for (int i = 0; i < this.gameBoard.getListOfObstacles().size(); i++) {
-            for (int row = 0; row < this.rows; row++) {
-                for (int col = 0; col < this.cols; col++) {
-                    if (this.gameBoard.getListOfObstacles().get(i).getPoligono().contemPonto(new Ponto<>(col + 0.5, row + 0.5))) {
+        for(int i = 0; i < this.gameBoard.getListOfObstacles().size(); i++) {
+            for(int row = 0; row < this.rows; row++) {
+                for(int col = 0; col < this.cols; col++) {
+                    if(this.gameBoard.getListOfObstacles().get(i).getPoligono().contemPonto(new Ponto<Double>(col + 0.5, row + 0.5))) {
                         board[row][col].setCellType(CellType.OBSTACLE);
                     }
                 }

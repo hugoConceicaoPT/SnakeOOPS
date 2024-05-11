@@ -11,10 +11,5 @@ import ModelLayer.SnakeLayer.Ponto;
  * @inv Deve ser implementada por classes que manipulam a rotação de obstáculos no tabuleiro.
  */
 public interface ObstacleMovement {
-    /**
-     * Rotaciona um obstáculo.
-     * @param poligono o polígono representando o obstáculo a ser rotacionado.
-     * @param pontoPivo o ponto de rotação usado como pivô para a rotação.
-     */
-    void rotateObstacle(Poligono poligono, Ponto<? extends Number> pontoPivo);
+    void rotateObstacle(Poligono poligono, Ponto<? extends Number> pontoPivo, int obstacleAngle);
 }

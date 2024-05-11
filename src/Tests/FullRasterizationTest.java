@@ -34,7 +34,9 @@ public class FullRasterizationTest {
         List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
         rotacionPoint.add(null);
         rotacionPoint.add(null);
-        GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,2,rotacionPoint,false,random);
+        List<Integer> angle = new ArrayList<>();
+        angle.add(0);
+        GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,2,rotacionPoint,angle,false,random);
         FullRasterization rasterizationStrategy = new FullRasterization(gameBoard);
         rasterizationStrategy.updateSnakeCells();
         assertEquals(CellType.HEAD, rasterizationStrategy.getBoard()[4][8].getCellType());
@@ -62,7 +64,9 @@ public class FullRasterizationTest {
         List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
         rotacionPoint.add(null);
         rotacionPoint.add(null);
-        GameBoard gameBoard = new GameBoard(snake, 10, 10,FoodType.SQUARE,1,2,rotacionPoint,false,random);
+        List<Integer> angle = new ArrayList<>();
+        angle.add(0);
+        GameBoard gameBoard = new GameBoard(snake, 10, 10,FoodType.SQUARE,1,2,rotacionPoint,angle,false,random);
         FullRasterization rasterizationStrategy = new FullRasterization(gameBoard);
         rasterizationStrategy.updateSnakeCells();
         assertEquals(CellType.HEAD, rasterizationStrategy.getBoard()[4][8].getCellType());

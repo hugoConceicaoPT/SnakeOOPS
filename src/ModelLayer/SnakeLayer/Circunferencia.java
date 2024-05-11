@@ -61,11 +61,11 @@ public class Circunferencia {
         double height = that.getMaxY() - that.getMinY();
 
         // Ajuste das coordenadas de teste baseando-se na posição do centro da circunferência
-        if (this.centro.getX().doubleValue() < testX) testX = testX;
-        else if (this.centro.getX().doubleValue() > testX + width) testX = testX + width;
+        if (this.centro.getX().doubleValue() < that.getCentroide().getX().doubleValue()) testX = that.getCentroide().getX().doubleValue();
+        else if (this.centro.getX().doubleValue() > that.getCentroide().getX().doubleValue() + width) testX = that.getCentroide().getX().doubleValue() + width;
 
-        if (this.centro.getY().doubleValue() < testY) testY = testY;
-        else if (this.centro.getY().doubleValue() > testY + height) testY = testY + height;
+        if (this.centro.getY().doubleValue() < that.getCentroide().getY().doubleValue()) testY = that.getCentroide().getY().doubleValue();
+        else if (this.centro.getY().doubleValue() > that.getCentroide().getY().doubleValue() + height) testY = that.getCentroide().getY().doubleValue() + height;
 
         double distX = this.centro.getX().doubleValue() - testX;
         double distY = this.centro.getY().doubleValue() - testY;

@@ -42,14 +42,13 @@ public class Snake implements Cloneable {
         this.random = random;
         // Define a direção inicial aleatoriamente
         this.currentDirection = Direction.values()[random.nextInt(Direction.values().length)];
-        arestaHeadLength = (int) this.head.getPontos().get(0).dist(this.head.getPontos().get(1));
+        this.arestaHeadLength = (int) this.head.getPontos().get(0).dist(this.head.getPontos().get(1));
 
         // Define a estratégia de movimento
-        if (isManualMovement) {
+        if (isManualMovement) 
             this.movementStrategy = new ManualMovementStrategy();
-        } else {
+        else 
             this.movementStrategy = new AutomatedMovementStrategy();
-        }
 
         try {
             // Clona o último quadrado antes de mover, para aumentar o tamanho da cobra posteriormente

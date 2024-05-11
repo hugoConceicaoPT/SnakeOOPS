@@ -96,19 +96,8 @@ public class Ponto<T extends Number> implements Cloneable {
         double x = centroide.getX().doubleValue() + ((this.x.doubleValue() - centroide.getX().doubleValue()) * Math.cos(angleRadians) - (this.y.doubleValue() - centroide.getY().doubleValue()) * Math.sin(angleRadians));
         double y = centroide.getY().doubleValue() + ((this.x.doubleValue() - centroide.getX().doubleValue()) * Math.sin(angleRadians) + (this.y.doubleValue() - centroide.getY().doubleValue()) * Math.cos(angleRadians));
         
-        if(this.x instanceof Integer) {
-            setX((T) Integer.valueOf((int) Math.round(x)));
-        }
-        else {
-            setX((T) Double.valueOf(x));
-        }
-
-        if(this.y instanceof Integer) {
-            setY((T) Integer.valueOf((int) Math.round(y)));
-        }
-        else {
-            setY((T) Double.valueOf(y));
-        }
+        setX((T) Double.valueOf(x));
+        setY((T) Double.valueOf(y));
     }
 
 

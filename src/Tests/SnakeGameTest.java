@@ -2,6 +2,9 @@ package Tests;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import ControllerLayer.SnakeGame;
@@ -14,7 +17,9 @@ public class SnakeGameTest {
     @Test
     public void moveSnakeTest() throws CloneNotSupportedException {
         long seed = 0;
-        SnakeGame snakeGame = new SnakeGame("Player",20, 10, 2, true, "completa", 1, "quadrados", 5, 2, null, true, "textual", seed);
+        List<Integer> angle = new ArrayList<>();
+        angle.add(0);
+        SnakeGame snakeGame = new SnakeGame("Player",20, 10, 2, true, "completa", 1, "quadrados", 5, 2, null, angle,true, "textual", seed);
         System.out.println(snakeGame.getSnake().toString());
         snakeGame.moveSnake(Direction.UP);
         snakeGame.getRasterizationStrategy().updateSnakeCells();
@@ -35,7 +40,9 @@ public class SnakeGameTest {
     @Test
     public void foodContainedInSnakeTest() throws CloneNotSupportedException {
         long seed = 1;
-        SnakeGame game = new SnakeGame("Player",100, 100, 10, true, "contorno", 5, "quadrados", 100, 5, null, true, "textual", seed);
+        List<Integer> angle = new ArrayList<>();
+        angle.add(0);
+        SnakeGame game = new SnakeGame("Player",100, 100, 10, true, "contorno", 5, "quadrados", 100, 5, null, angle ,true, "textual", seed);
         System.out.println(game.getSnake().toString());
         FoodSquare foodSquare = new FoodSquare(new Quadrado("16 30 22 30 22 36 16 36"));
         game.getGameBoard().setFood(foodSquare);

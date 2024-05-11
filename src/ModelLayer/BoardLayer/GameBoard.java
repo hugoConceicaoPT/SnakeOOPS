@@ -44,8 +44,7 @@ public class GameBoard {
      * @param isObstacleDynamic indica se os obstáculos são dinâmicos
      * @param random gerador de números aleatórios
      */
-    public GameBoard (Snake snake, int widthBoard, int heightBoard, FoodType foodType, int foodDimension, int obstaclesQuantity, List<Ponto<? extends Number>> listObstacleRotacionPoint, boolean isObstacleDynamic, Random random) {
-        // Validate board dimensions
+    public GameBoard (Snake snake, int widthBoard, int heightBoard, FoodType foodType, int foodDimension,int obstaclesQuantity, List<Ponto<? extends Number>> listObstacleRotacionPoint,List<Integer> listObstacleAngles ,boolean isObstacleDynamic, Random random) {
         if(widthBoard <= 0 || heightBoard <= 0) {
             throw new IllegalArgumentException("A largura e a altura do tabuleiro devem ser maiores que zero.");
         }
@@ -57,8 +56,7 @@ public class GameBoard {
         this.foodType = foodType;
         this.foodDimension = foodDimension;
         this.obstaclesQuantity = obstaclesQuantity;
-        // Generate initial obstacles and food
-        generateObstacles(listObstacleRotacionPoint, isObstacleDynamic);
+        generateObstacles(listObstacleRotacionPoint,listObstacleAngles,isObstacleDynamic);
         generateFood();
     }
 
@@ -240,15 +238,11 @@ public class GameBoard {
             return Direction.UP;
     }
 
-    /**
-     * Gera obstáculos de forma aleatória no tabuleiro, garantindo que não intersectem a cobra ou outros obstáculos.
-     * @param listRotacionPoint pontos de rotação para os obstáculos.
-     * @param isDynamic indica se os obstáculos são dinâmicos.
-     */
-    public void generateObstacles(List<Ponto<? extends Number>> listRotacionPoint, boolean isDynamic) {
-        for (int w = 0; w < obstaclesQuantity; w++) {
-            int obstacleSize = random.nextInt(snake.getArestaHeadLength()) + foodDimension;
-            boolean isEmpty = true;
+    /** Gera um obstáculo aleatório na board */
+    public void generateObstacles(List<Ponto<? extends Number>> listRotacionPoint, List<Integer> listObstacleAngles ,boolean isDynamic) {
+        for(int w = 0; w < this.obstaclesQuantity; w++) {
+            int obstacleSize = random.nextInt(this.snake.getArestaHeadLength()) + this.foodDimension;
+            boolean isEmpty = true; 
             this.obstacleType = ObstacleType.values()[random.nextInt(Direction.values().length)];
             while (isEmpty) {
                 int x = random.nextInt(widthBoard - obstacleSize);
@@ -258,38 +252,38 @@ public class GameBoard {
                     case POLYGON:
                         if (listRotacionPoint.size() == 0) {
                             pontos = createPolygonPoints(x, y, obstacleSize);
-                            listOfObstacles.add(new Obstacle(new Poligono(pontos), null, isDynamic));
+                            this.listOfObstacles.add(new Obstacle(new Poligono(pontos),null,0,isDynamic));
                             break;
                         }
                         pontos = createPolygonPoints(x, y, obstacleSize);
-                        listOfObstacles.add(new Obstacle(new Poligono(pontos), listRotacionPoint.get(w), isDynamic));
+                        this.listOfObstacles.add(new Obstacle(new Poligono(pontos), listRotacionPoint.get(w) ,listObstacleAngles.get(w),isDynamic));
                         break;
                     case SQUARE:
-                        if (listRotacionPoint.size() == 0) {
-                            pontos = createSquarePoints(x, y, obstacleSize);
-                            listOfObstacles.add(new Obstacle(new Quadrado(pontos), null, isDynamic));
+                        if(listRotacionPoint.size() == 0) {
+                            pontos = createSquarePoints(x, y, obstacleSize); 
+                            this.listOfObstacles.add(new Obstacle(new Quadrado(pontos), null,0,isDynamic));
                             break;
                         }
-                        pontos = createSquarePoints(x, y, obstacleSize);
-                        listOfObstacles.add(new Obstacle(new Quadrado(pontos), listRotacionPoint.get(w), isDynamic));
+                        pontos = createSquarePoints(x, y, obstacleSize); 
+                        this.listOfObstacles.add(new Obstacle(new Quadrado(pontos), listRotacionPoint.get(w),listObstacleAngles.get(w),isDynamic));
                         break;
                     case RECTANGLE:
                         if (listRotacionPoint.size() == 0) {
                             pontos = createRectanglePoints(x, y, obstacleSize);
-                            listOfObstacles.add(new Obstacle(new Retangulo(pontos), null, isDynamic));
-                            break;
+                        this.listOfObstacles.add(new Obstacle(new Retangulo(pontos),null,0,isDynamic));
+                        break;
                         }
                         pontos = createRectanglePoints(x, y, obstacleSize);
-                        listOfObstacles.add(new Obstacle(new Retangulo(pontos), listRotacionPoint.get(w), isDynamic));
+                        this.listOfObstacles.add(new Obstacle(new Retangulo(pontos), listRotacionPoint.get(w),listObstacleAngles.get(w) ,isDynamic));
                         break;
                     case TRIANGLE:
                         if (listRotacionPoint.size() == 0) {
                             pontos = createRectanglePoints(x, y, obstacleSize);
-                            listOfObstacles.add(new Obstacle(new Retangulo(pontos), null, isDynamic));
+                            this.listOfObstacles.add(new Obstacle(new Retangulo(pontos), null,0,isDynamic));
                             break;
                         }
                         pontos = createTrianglePoints(x, y, obstacleSize);
-                        listOfObstacles.add(new Obstacle(new Triangulo(pontos), listRotacionPoint.get(w), isDynamic));
+                        this.listOfObstacles.add(new Obstacle(new Triangulo(pontos), listRotacionPoint.get(w),listObstacleAngles.get(w) ,isDynamic));
                         break;
                     default:
                         break;

@@ -19,7 +19,6 @@ public class StaticMovement implements ObstacleMovement {
      * @param pontoPivo O ponto de pivô que seria usado para a rotação, não utilizado neste contexto.
      */
     @Override
-    public void rotateObstacle(Poligono poligono, Ponto<? extends Number> pontoPivo) {
-        
+    public void rotateObstacle(Poligono poligono, Ponto<? extends Number> pontoPivo, int obstacleAngle) {
     }
 }

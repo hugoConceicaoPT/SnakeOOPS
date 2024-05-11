@@ -72,20 +72,22 @@ public class Cliente {
 
         // Coleta pontos de rotação específicos para os obstáculos dinâmicos
         List<Ponto<? extends Number>> listObstacleRotacionPoint = new ArrayList<>();
-        if (isObstacleDynamic) {
-            for (int i = 0; i < obstaclesQuantity; i++) {
+        List<Integer> listObstacleAngles = new ArrayList<>();
+        if(isObstacleDynamic) {
+            for(int i = 0; i < obstaclesQuantity; i++) {
                 System.out.print("Indique ou não o movimento de rotação de cada obstáculo: ");
-                String obstacleRotacionString = sc.nextLine();
-                String[] obstaclesParts = obstacleRotacionString.split(" ");
-                if (obstaclesParts.length > 1) {
-                    listObstacleRotacionPoint.add(new Ponto<>(Integer.parseInt(obstaclesParts[0]), Integer.parseInt(obstaclesParts[1])));
-                } else {
+                String obstacleRotacionString = sc.nextLine(); 
+                System.out.print("Indique o ângulo para cada obstáculo: ");
+                int obstacleAngle = sc.nextInt();
+                sc.nextLine();
+                listObstacleAngles.add(obstacleAngle);
+                String [] obstaclesParts = obstacleRotacionString.split(" ");
+                if(obstaclesParts.length > 1)
+                    listObstacleRotacionPoint.add(new Ponto<Integer>(Integer.parseInt(obstaclesParts[0]), Integer.parseInt(obstaclesParts[1])));
+                else
                     listObstacleRotacionPoint.add(null);
-                }
             }
         }
-
-        // Escolhe o modo de interface (textual ou gráfica)
         System.out.print("Indique o modo de interface (textual/grafica): ");
         String UIMode = sc.nextLine();
 
@@ -94,7 +96,7 @@ public class Cliente {
 
         // Cria e executa o jogo da Cobra
         try {
-            SnakeGame snakeGame = new SnakeGame(name, width, height, headDimension, isSnakeManualMovement, rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, listObstacleRotacionPoint, isObstacleDynamic, UIMode, seed);
+            SnakeGame snakeGame = new SnakeGame(name,width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, listObstacleRotacionPoint,listObstacleAngles,isObstacleDynamic, UIMode, seed);
             snakeGame.runGame(sc);
             snakeGame.endGame();
         } catch (CloneNotSupportedException e) {

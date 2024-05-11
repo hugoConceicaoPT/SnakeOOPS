@@ -12,9 +12,10 @@ import ModelLayer.SnakeLayer.Snake;
  */
 public class Obstacle {
 
-    private Poligono poligono; // Representa a forma geométrica do obstáculo
-    private ObstacleMovement obstacleMovement; // Define o comportamento do movimento do obstáculo
-    private Ponto<? extends Number> rotacionPoint; // Ponto de rotação usado em transformações geométricas
+    private Poligono poligono;
+    private ObstacleMovement obstacleMovement;
+    private Ponto<? extends Number> rotacionPoint;
+    private int obstacleAngle;
 
     /** 
      * Construtor para criar um obstáculo com características especificadas
@@ -22,13 +23,17 @@ public class Obstacle {
      * @param rotacionPoint Ponto de rotação para transformações geométricas
      * @param isDynamic Indica se o obstáculo possui movimento dinâmico
      */
-    public Obstacle(Poligono poligono, Ponto<? extends Number> rotacionPoint, boolean isDynamic) {
+    public Obstacle(Poligono poligono, Ponto<? extends Number> rotacionPoint, int obstacleAngle ,boolean isDynamic) {
         this.poligono = poligono;
         if(isDynamic)
             this.obstacleMovement = new DynamicMovement();
         else
             this.obstacleMovement = new StaticMovement();
-        this.rotacionPoint = (rotacionPoint == null) ? poligono.getCentroide() : rotacionPoint;
+        if(rotacionPoint == null)
+            this.rotacionPoint = poligono.getCentroide();
+        else
+            this.rotacionPoint = rotacionPoint;
+        this.obstacleAngle = obstacleAngle;
     }
 
     /** Verifica se o obstáculo intersecta a cabeça da cobra
@@ -61,7 +66,7 @@ public class Obstacle {
     /** Rotaciona o obstáculo em torno do ponto de rotação
      */
     public void rotateObstacle() {
-        this.obstacleMovement.rotateObstacle(this.poligono, this.rotacionPoint);
+        this.obstacleMovement.rotateObstacle(this.poligono,this.rotacionPoint, this.obstacleAngle);
     }
 
     public Poligono getPoligono() {

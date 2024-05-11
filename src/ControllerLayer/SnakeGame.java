@@ -52,6 +52,7 @@ public class SnakeGame implements KeyListener {
     private UI userInterface; // Interface de usuário para exibir o estado do jogo.
     private Leaderboard leaderboard; // Placar para guardar os recordes de pontuação.
     private boolean isFoodEaten; // Controla se a comida foi comida na iteração atual do loop do jogo.
+    private List<Integer> listObstacleAngles;
 
     /**
      * Constrói um novo jogo da cobra com configurações especificadas.
@@ -71,23 +72,29 @@ public class SnakeGame implements KeyListener {
      * @param seed Semente para o gerador aleatório.
      * @throws CloneNotSupportedException Se a clonagem não é suportada (quando usado em objetos clonáveis).
      */
-    public SnakeGame(String playerName, int widthBoard, int heightBoard, int headSnakeDimension, boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType, int scorePerFood, int obstaclesQuantity, List<Ponto<? extends Number>> listObstacleRotacionPoint, boolean isObstacleDynamic, String UIMode, long seed) throws CloneNotSupportedException {
+    public SnakeGame (String playerName, int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, List<Ponto<? extends Number>> listObstacleRotacionPoint, List<Integer> listObstacleAngles,boolean isObstacleDynamic, String UIMode, long seed) throws CloneNotSupportedException {
         this.random = new Random(seed);
         this.isGameOver = false;
         this.widthBoard = widthBoard;
         this.heightBoard = heightBoard;
         this.headSnakeDimension = headSnakeDimension;
         this.isSnakeManualMovement = isSnakeManualMovement;
+        LinkedList<Quadrado> bodySnake = new LinkedList<>();
+        Quadrado quadrado = new Quadrado(createSquarePoints(this.widthBoard, this.heightBoard, this.headSnakeDimension));
+        bodySnake.addFirst(quadrado);
+        this.snake = new Snake(bodySnake, isSnakeManualMovement,this.random);
+        if(foodType.equals("quadrados")) this.foodType = FoodType.SQUARE;
+        else this.foodType = FoodType.CIRCLE;
         this.foodDimension = foodDimension;
         this.scorePerFood = scorePerFood;
         this.obstaclesQuantity = obstaclesQuantity;
         this.listObstacleRotacionPoint = listObstacleRotacionPoint;
+        this.listObstacleAngles = listObstacleAngles;
         this.isObstacleDynamic = isObstacleDynamic;
-        this.score = new Score(0, this.scorePerFood);
-        this.player = new Player(playerName, this.score);
-        this.snake = new Snake(new LinkedList<>(), isSnakeManualMovement, this.random);
-        this.gameBoard = new GameBoard(this.snake, this.widthBoard, this.heightBoard, this.foodType, this.foodDimension, this.obstaclesQuantity, this.listObstacleRotacionPoint, this.isObstacleDynamic, this.random);
-        if ("contorno".equals(rasterizationMode))
+        this.score = new Score(0,this.scorePerFood);
+        this.player = new Player(playerName, score);
+        this.gameBoard = new GameBoard(this.snake, this.widthBoard, this.heightBoard, this.foodType,this.foodDimension, this.obstaclesQuantity, this.listObstacleRotacionPoint,this.listObstacleAngles,this.isObstacleDynamic,this.random);
+        if(rasterizationMode.equals("contorno"))
             this.rasterizationStrategy = new ContourRasterization(this.gameBoard);
         else
             this.rasterizationStrategy = new FullRasterization(this.gameBoard);
@@ -341,4 +348,28 @@ public class SnakeGame implements KeyListener {
     public void setLeaderboard(Leaderboard leaderboard) { this.leaderboard = leaderboard; }
     public List<Ponto<? extends Number>> getListObstacleRotacionPoint() { return this.listObstacleRotacionPoint; }
     public void setListObstacleRotacionPoint(List<Ponto<? extends Number>> listObstacleRotacionPoint) { this.listObstacleRotacionPoint = listObstacleRotacionPoint; }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public boolean isFoodEaten() {
+        return isFoodEaten;
+    }
+
+    public void setFoodEaten(boolean isFoodEaten) {
+        this.isFoodEaten = isFoodEaten;
+    }
+
+    public List<Integer> getListObstacleAngles() {
+        return listObstacleAngles;
+    }
+
+    public void setListObstacleAngles(List<Integer> listObstacleAngles) {
+        this.listObstacleAngles = listObstacleAngles;
+    }
 }
