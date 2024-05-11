@@ -38,7 +38,9 @@ public class Cliente {
         // Verifica se a cobra deve ser controlada manualmente
         System.out.print("Deseja o movimento da cobra manual (sim/nao)? ");
         String movementSnake = sc.nextLine();
-        boolean isSnakeManualMovement = movementSnake.equalsIgnoreCase("sim");
+        boolean isSnakeManualMovement = false;
+        if(movementSnake.equals("sim"))
+            isSnakeManualMovement = true;
 
         // Escolhe o modo de rasterização (contorno ou completa)
         System.out.print("Digite o modo de rasterização (contorno/completa): ");
@@ -68,7 +70,9 @@ public class Cliente {
         // Verifica se os obstáculos devem ser dinâmicos
         System.out.print("Deseja que os obstáculos sejam dinâmicos (sim/nao): ");
         String obstacleMovement = sc.nextLine();
-        boolean isObstacleDynamic = obstacleMovement.equalsIgnoreCase("sim");
+        boolean isObstacleDynamic = false;
+        if(obstacleMovement.equals("sim"))
+            isObstacleDynamic = true;
 
         // Coleta pontos de rotação específicos para os obstáculos dinâmicos
         List<Ponto<? extends Number>> listObstacleRotacionPoint = new ArrayList<>();

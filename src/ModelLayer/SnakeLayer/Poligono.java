@@ -221,10 +221,9 @@ public class Poligono implements Cloneable {
             centroY += ponto.getY().doubleValue();
         }
 
-        centroX /= pontos.size();
-        centroY /= pontos.size();
-
-        return new Ponto<>(centroX, centroY);
+        centroX /=  pontos.size();
+        centroY /=  pontos.size();
+        return new Ponto<Double>(centroX,centroY);
     }
 
     /**

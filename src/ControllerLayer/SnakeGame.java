@@ -31,27 +31,27 @@ import ViewLayer.UI;
  * @author Hugo Conceição João Ventura Eduarda Pereira
  * @inv O jogo termina quando a cobra colide com um obstáculo, com ela mesma, ou a comida acaba.
  */
-public class SnakeGame implements KeyListener {
-    private Random random; // Gerador de números aleatórios para várias operações dentro do jogo.
-    private int widthBoard; // Largura do tabuleiro de jogo.
-    private int heightBoard; // Altura do tabuleiro de jogo.
-    private int headSnakeDimension; // Tamanho do quadrado que representa a cabeça da cobra.
-    private boolean isSnakeManualMovement; // Se a cobra é controlada manualmente pelo jogador.
-    private int foodDimension; // Dimensão dos itens de comida no jogo.
-    private int scorePerFood; // Pontuação recebida por cada item de comida coletado.
-    private FoodType foodType; // Tipo de comida disponível no jogo.
-    private int obstaclesQuantity; // Quantidade de obstáculos presentes no tabuleiro.
-    private List<Ponto<? extends Number>> listObstacleRotacionPoint; // Lista de pontos para rotação dinâmica dos obstáculos.
-    private boolean isObstacleDynamic; // Se os obstáculos no jogo são dinâmicos.
-    private boolean isGameOver; // Estado do jogo, verdadeiro se o jogo acabou.
-    private Score score; // Pontuação atual do jogador no jogo.
-    private Player player; // Objeto do jogador participando do jogo.
-    private Snake snake; // Objeto da cobra sendo controlada no jogo.
-    private GameBoard gameBoard; // Tabuleiro do jogo contendo todos os elementos como cobra, comida e obstáculos.
-    private RasterizationStrategy rasterizationStrategy; // Estratégia de rasterização para desenho do jogo.
-    private UI userInterface; // Interface de usuário para exibir o estado do jogo.
-    private Leaderboard leaderboard; // Placar para guardar os recordes de pontuação.
-    private boolean isFoodEaten; // Controla se a comida foi comida na iteração atual do loop do jogo.
+    public class SnakeGame implements KeyListener {
+        private Random random;
+        private int widthBoard;
+        private int heightBoard;
+        private int headSnakeDimension;
+        private boolean isSnakeManualMovement;
+        private int foodDimension;
+        private int scorePerFood;
+        private FoodType foodType;
+        private int obstaclesQuantity;
+        private List<Ponto<? extends Number>> listObstacleRotacionPoint;
+        private boolean isObstacleDynamic;
+        private boolean isGameOver;
+        private Score score;
+        private Player player;
+        private Snake snake;
+        private GameBoard gameBoard;
+        private RasterizationStrategy rasterizationStrategy;
+        private UI userInterface;
+        private Leaderboard leaderboard;
+        private boolean isFoodEaten;
     private List<Integer> listObstacleAngles;
 
     /**
@@ -311,43 +311,194 @@ public class SnakeGame implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {}
 
-    /** Getters e setters padrão para as propriedades da classe. */
-    public boolean isGameOver() { return this.isGameOver; }
-    public void setGameOver(boolean isGameOver) { this.isGameOver = isGameOver; }
-    public Score getScore() { return this.score; }
-    public void setScore(Score score) { this.score = score; }
-    public Snake getSnake() { return this.snake; }
-    public void setSnake(Snake snake) { this.snake = snake; }
-    public int getWidthBoard() { return this.widthBoard; }
-    public void setWidthBoard(int widthBoard) { this.widthBoard = widthBoard; }
-    public int getHeightBoard() { return this.heightBoard; }
-    public void setHeightBoard(int heightBoard) { this.heightBoard = heightBoard; }
-    public GameBoard getGameBoard() { return this.gameBoard; }
-    public void setGameBoard(GameBoard gameBoard) { this.gameBoard = gameBoard; }
-    public RasterizationStrategy getRasterizationStrategy() { return this.rasterizationStrategy; }
-    public void setRasterizationStrategy(RasterizationStrategy rasterizationStrategy) { this.rasterizationStrategy = rasterizationStrategy; }
-    public int getHeadSnakeDimension() { return this.headSnakeDimension; }
-    public void setHeadSnakeDimension(int headDimension) { this.headSnakeDimension = headDimension; }
-    public int getFoodDimension() { return this.foodDimension; }
-    public void setFoodDimension(int foodDimension) { this.foodDimension = foodDimension; }
-    public FoodType getFoodType() { return this.foodType; }
-    public void setFoodType(FoodType foodType) { this.foodType = foodType; }
-    public int getObstaclesQuantity() { return this.obstaclesQuantity; }
-    public void setObstaclesQuantity(int obstaclesQuantity) { this.obstaclesQuantity = obstaclesQuantity; }
-    public boolean isObstacleDynamic() { return this.isObstacleDynamic; }
-    public void setObstacleDynamic(boolean isObstacleDynamic) { this.isObstacleDynamic = isObstacleDynamic; }
-    public UI getUserInterface() { return this.userInterface; }
-    public void setUserInterface(UI userInterface) { this.userInterface = userInterface; }
-    public Random getRandom() { return this.random; }
-    public void setRandom(Random random) { this.random = random; }
-    public boolean isSnakeManualMovement() { return this.isSnakeManualMovement; }
-    public void setSnakeManualMovement(boolean isSnakeManualMovement) { this.isSnakeManualMovement = isSnakeManualMovement; }
-    public int getScorePerFood() { return this.scorePerFood; }
-    public void setScorePerFood(int scorePerFood) { this.scorePerFood = scorePerFood; }   
-    public Leaderboard getLeaderboard() { return this.leaderboard; }
-    public void setLeaderboard(Leaderboard leaderboard) { this.leaderboard = leaderboard; }
-    public List<Ponto<? extends Number>> getListObstacleRotacionPoint() { return this.listObstacleRotacionPoint; }
-    public void setListObstacleRotacionPoint(List<Ponto<? extends Number>> listObstacleRotacionPoint) { this.listObstacleRotacionPoint = listObstacleRotacionPoint; }
+    /** Obtém se acabou o jogo ou não
+     * @return se acabou o jogo ou não
+     */
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
+    /** Atualiza o estado do gameOver
+     * @param gameOver o novo estado do gameOver
+     */
+    public void setGameOver(boolean isGameOver) {
+        this.isGameOver = isGameOver;
+    }
+
+    /** Obtém o score do jogo
+     * @return o score do jogo
+     */
+    public Score getScore() {
+        return score;
+    }
+
+    /** Atualiza o score do jogo
+     * @param score o novo score do jogo
+     */
+    public void setScore(Score score) {
+        this.score = score;
+    }
+
+    /** Obtém a snake do jogo                                                                       
+     * @return a snake do jogo
+     */
+    public Snake getSnake() {
+        return snake;
+    }
+
+    /** Atualiza a snake do jogo
+     * @param snake a nova snake do jogo
+     */
+    public void setSnake(Snake snake) {
+        this.snake = snake;
+    }
+
+
+    /** Obtém a width da board
+     * @return o valor da width
+     */
+    public int getWidthBoard() {
+        return widthBoard;
+    }
+
+    /** Atualiza a width da board
+     * @param widthBoard a nova width da board
+     */
+    public void setWidthBoard(int widthBoard) {
+        this.widthBoard = widthBoard;
+    }
+
+    /** Obtém a heigth da board
+     * @return a heigth da board
+     */
+    public int getHeightBoard() {
+        return heightBoard;
+    }
+
+    /** Atualiza a height da board
+     * @param heightBoard a nova height da board
+     */
+    public void setHeightBoard(int heightBoard) {
+        this.heightBoard = heightBoard;
+    }
+
+    public GameBoard getGameBoard() {
+        return gameBoard;
+    }
+
+    public void setGameBoard(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
+    }
+
+    public RasterizationStrategy getrasterizationStrategy() {
+        return rasterizationStrategy;
+    }
+
+    public void setrasterizationStrategy(RasterizationStrategy rasterizationStrategy) {
+        this.rasterizationStrategy = rasterizationStrategy;
+    }
+
+    public int getHeadSnakeDimension() {
+        return headSnakeDimension;
+    }
+
+    public void setHeadSnakeDimension(int headDimension) {
+        this.headSnakeDimension = headDimension;
+    }
+
+    public int getFoodDimension() {
+        return foodDimension;
+    }
+
+    public void setFoodDimension(int foodDimension) {
+        this.foodDimension = foodDimension;
+    }
+
+    public FoodType getFoodType() {
+        return foodType;
+    }
+
+    public void setFoodType(FoodType foodType) {
+        this.foodType = foodType;
+    }
+
+    public int getObstaclesQuantity() {
+        return obstaclesQuantity;
+    }
+
+    public void setObstaclesQuantity(int obstaclesQuantity) {
+        this.obstaclesQuantity = obstaclesQuantity;
+    }
+    
+    public boolean isObstacleDynamic() {
+        return isObstacleDynamic;
+    }
+
+    public void setObstacleDynamic(boolean isObstacleDynamic) {
+        this.isObstacleDynamic = isObstacleDynamic;
+    }
+
+    public UI getUserInterface() {
+        return userInterface;
+    }
+
+    public void setUserInterface(UI userInterface) {
+        this.userInterface = userInterface;
+    }
+
+    public Random getRandom() {
+        return random;
+    }
+
+    public void setRandom(Random random) {
+        this.random = random;
+    }
+
+    public boolean isSnakeManualMovement() {
+        return isSnakeManualMovement;
+    }
+
+    public void setSnakeManualMovement(boolean isSnakeManualMovement) {
+        this.isSnakeManualMovement = isSnakeManualMovement;
+    }
+
+    public int getScorePerFood() {
+        return scorePerFood;
+    }
+
+    public void setScorePerFood(int scorePerFood) {
+        this.scorePerFood = scorePerFood;
+    }
+
+
+    public RasterizationStrategy getRasterizationStrategy() {
+        return rasterizationStrategy;
+    }
+
+
+    public void setRasterizationStrategy(RasterizationStrategy rasterizationStrategy) {
+        this.rasterizationStrategy = rasterizationStrategy;
+    }
+
+
+    public Leaderboard getLeaderboard() {
+        return leaderboard;
+    }
+
+
+    public void setLeaderboard(Leaderboard leaderboard) {
+        this.leaderboard = leaderboard;
+    }
+
+
+    public List<Ponto<? extends Number>> getListObstacleRotacionPoint() {
+        return listObstacleRotacionPoint;
+    }
+
+
+    public void setListObstacleRotacionPoint(List<Ponto<? extends Number>> listObstacleRotacionPoint) {
+        this.listObstacleRotacionPoint = listObstacleRotacionPoint;
+    }
 
     public Player getPlayer() {
         return player;
