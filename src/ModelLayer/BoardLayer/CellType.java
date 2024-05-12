@@ -7,29 +7,10 @@ package ModelLayer.BoardLayer;
  * @autor Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public enum CellType {
-    /**
-     * Representa uma célula vazia no tabuleiro.
-     */
     EMPTY,
-
-    /**
-     * Representa uma célula contendo comida.
-     */
     FOOD,
-
-    /**
-     * Representa uma célula contendo um obstáculo.
-     */
     OBSTACLE,
-
-    /**
-     * Representa a célula contendo a cabeça da cobra.
-     */
     HEAD,
-
-    /**
-     * Representa as células contendo o corpo da cobra.
-     */
     TAIL
 }
 

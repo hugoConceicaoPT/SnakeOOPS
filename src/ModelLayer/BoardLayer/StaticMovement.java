@@ -12,12 +12,6 @@ import ModelLayer.SnakeLayer.Ponto;
  */
 public class StaticMovement implements ObstacleMovement {
     
-    /**
-     * Implementação do método para rotação de obstáculos que, neste caso, não realiza nenhuma operação.
-     * Este método é invocado para simular a "rotação" de um obstáculo estático, que efetivamente não muda sua orientação ou posição.
-     * @param poligono O polígono representando o obstáculo que não será rotacionado.
-     * @param pontoPivo O ponto de pivô que seria usado para a rotação, não utilizado neste contexto.
-     */
     @Override
     public void rotateObstacle(Poligono poligono, Ponto<? extends Number> pontoPivo, int obstacleAngle) {
     }

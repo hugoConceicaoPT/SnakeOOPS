@@ -26,10 +26,8 @@ public class FactoryFood {
      */
     public Food createFood(int x, int y, FoodType foodType, int foodDimension) {
         if (foodType == FoodType.CIRCLE) {
-            // Cria comida do tipo círculo, representada por uma circunferência
             return new FoodCircle(new Circunferencia(new Ponto<>(x, y), foodDimension / 2));
         } else if (foodType == FoodType.SQUARE) {
-            // Cria comida do tipo quadrado, representada por um polígono
             return new FoodSquare(new Quadrado(createSquarePoints(x, y, foodDimension)));
         } else {
             throw new IllegalArgumentException("Parâmetro inválido para criar a Food");
@@ -47,8 +45,7 @@ public class FactoryFood {
     private List<Ponto<? extends Number>> createSquarePoints(int x, int y, double size) {
         List<Ponto<? extends Number>> pontos = new ArrayList<>();
         double halfSize = size / 2.0;
-
-        // Adiciona os quatro vértices do quadrado, começando no canto superior esquerdo e seguindo no sentido horário
+        
         pontos.add(new Ponto<>(x - halfSize, y - halfSize));
         pontos.add(new Ponto<>(x - halfSize, y + halfSize));
         pontos.add(new Ponto<>(x + halfSize, y + halfSize));

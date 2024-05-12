@@ -11,7 +11,6 @@ import javafx.scene.paint.Color;
  * @autor Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public abstract class Food {
-    // Cor padrão da comida no jogo
     protected Color color;
 
     /**

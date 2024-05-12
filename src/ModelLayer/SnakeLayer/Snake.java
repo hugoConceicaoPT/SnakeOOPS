@@ -12,21 +12,13 @@ import ModelLayer.BoardLayer.GameBoard;
  * @autor Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class Snake implements Cloneable {
-    // Lista que contém os quadrados do corpo da cobra
     private LinkedList<Quadrado> body;
-    // Quadrado que representa a cabeça da cobra
     private Quadrado head;
-    // A direção atual do movimento da cobra
     private Direction currentDirection;
-    // Estratégia de movimento utilizada pela cobra (manual ou automatizada)
     private MovementStrategy movementStrategy;
-    // Comprimento de uma aresta da cabeça da cobra
     private int arestaHeadLength;
-    // Gerador de números aleatórios para definir a direção inicial
     private Random random;
-    // A próxima direção de movimento desejada para a cobra
     private Direction nextDirection;
-    // O último quadrado antes de mover a cobra (usado para crescer)
     private Quadrado ultimoQuadradoAntesDeMover;
 
     /**
@@ -40,18 +32,14 @@ public class Snake implements Cloneable {
         this.body = listaQuadrados;
         this.head = this.body.getFirst();
         this.random = random;
-        // Define a direção inicial aleatoriamente
         this.currentDirection = Direction.values()[random.nextInt(Direction.values().length)];
         this.arestaHeadLength = (int) this.head.getPontos().get(0).dist(this.head.getPontos().get(1));
-
-        // Define a estratégia de movimento
         if (isManualMovement) 
             this.movementStrategy = new ManualMovementStrategy();
         else 
             this.movementStrategy = new AutomatedMovementStrategy();
 
         try {
-            // Clona o último quadrado antes de mover, para aumentar o tamanho da cobra posteriormente
             this.ultimoQuadradoAntesDeMover = (Quadrado) this.head.clone();
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,35 +143,28 @@ public class Snake implements Cloneable {
      * Gira a cabeça conforme necessário e move os outros segmentos de acordo.
      */
     public void move() {
-        // Para movimentos manuais, obtém a próxima direção
         if (this.movementStrategy instanceof ManualMovementStrategy) {
             this.nextDirection = this.movementStrategy.setNextDirection(this, null);
         }
-        // Verifica se a direção escolhida é a oposta da atual
         if (isOppositeDirection(currentDirection, nextDirection)) {
             return;
         }
 
-        // Obtém o centróide da cabeça para calcular a nova posição
         Ponto<? extends Number> centroHeadSnake = this.head.getCentroide();
         Quadrado ultimoQuadrado = this.body.getLast();
 
         try {
-            // Clona o último quadrado antes de mover
             this.ultimoQuadradoAntesDeMover = (Quadrado) this.body.getLast().clone();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Move o último quadrado para a posição da cabeça
-        ultimoQuadrado.translateCentroide(centroHeadSnake.getX().intValue(), centroHeadSnake.getY().intValue());
+        ultimoQuadrado.translateCentroide(centroHeadSnake.getX().doubleValue(), centroHeadSnake.getY().doubleValue());
 
-        // Gira a cabeça se a direção estiver mudando
         if (this.currentDirection != this.nextDirection) {
             moveSquare(ultimoQuadrado, currentDirection, nextDirection);
         }
 
-        // Move o quadrado na nova direção
         switch (this.nextDirection) {
             case UP:
                 ultimoQuadrado.translate(0, this.arestaHeadLength);
@@ -201,7 +182,6 @@ public class Snake implements Cloneable {
                 break;
         }
 
-        // Remove o último quadrado e adiciona à frente
         this.body.removeLast();
         this.body.addFirst(ultimoQuadrado);
         this.head = this.body.getFirst();
@@ -239,11 +219,6 @@ public class Snake implements Cloneable {
         return false;
     }
 
-    /**
-     * Cria um clone da cobra, incluindo todos os seus quadrados.
-     * @return Um clone da cobra.
-     * @throws CloneNotSupportedException Se a cobra não puder ser clonada.
-     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         Snake clonedSnake = (Snake) super.clone();
@@ -255,10 +230,6 @@ public class Snake implements Cloneable {
         return clonedSnake;
     }
 
-    /**
-     * Retorna a representação da cobra como uma string, incluindo a cabeça e os segmentos restantes.
-     * @return A representação da cobra.
-     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -92,7 +92,7 @@ public class GameBoard {
      */
     public boolean snakeLeftBoard() {
         return snake.getHead().getMinX() < 0 || snake.getHead().getMinY() < 0 
-            || snake.getHead().getMaxX() >= widthBoard || snake.getHead().getMaxY() >= heightBoard;
+            || snake.getHead().getMaxX() > widthBoard || snake.getHead().getMaxY() > heightBoard;
     }
 
     /**

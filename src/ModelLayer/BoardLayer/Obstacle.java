@@ -63,16 +63,25 @@ public class Obstacle {
             y >= this.poligono.getMinY() && y <= this.poligono.getMaxY());
     }
 
-    /** Rotaciona o obstáculo em torno do ponto de rotação
+    /** 
+     * Rotaciona o obstáculo em torno do ponto de rotação
      */
     public void rotateObstacle() {
         this.obstacleMovement.rotateObstacle(this.poligono,this.rotacionPoint, this.obstacleAngle);
     }
 
+    /**
+     * Obtém o polígono que representa o obstáculo
+     * @return o polígono
+     */
     public Poligono getPoligono() {
         return poligono;
     }
 
+    /**
+     * Atualiza o polígono que representa o obstáculos
+     * @param poligono o novo polígono
+     */
     public void setPoligono(Poligono poligono) {
         this.poligono = poligono;
     }
@@ -82,18 +91,34 @@ public class Obstacle {
         return "Obstáculo: " + poligono.toString();
     }
 
+    /**
+     * Obtém o tipo de movimento do obstáculo
+     * @return o tipo de movimento do obstáculo
+     */
     public ObstacleMovement getObstacleMovement() {
         return obstacleMovement;
     }
 
+    /**
+     * Atualiza o tipo de movimento do obstáculo
+     * @param obstacleMovement o novo tipo de movimento do obstáculo
+     */
     public void setObstacleMovement(ObstacleMovement obstacleMovement) {
         this.obstacleMovement = obstacleMovement;
     }
 
+    /**
+     * Obtém o ponto de rotação do obstáculo
+     * @return o ponto de rotação do obstáculo
+     */
     public Ponto<? extends Number> getRotacionPoint() {
         return rotacionPoint;
     }
 
+    /**
+     * Atualiza o ponto de rotação do obstáculo
+     * @param rotacionPoint o novo ponto de rotação do obstáculo
+     */
     public void setRotacionPoint(Ponto<? extends Number> rotacionPoint) {
         this.rotacionPoint = rotacionPoint;
     }

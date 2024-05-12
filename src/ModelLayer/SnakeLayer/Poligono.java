@@ -13,13 +13,9 @@ import java.util.Objects;
  * se as arestas não se cruzarem entre si, e se tiver pelo menos 3 pontos.
  */
 public class Poligono implements Cloneable {
-    // Lista de pontos que formam os vértices do polígono
     protected List<Ponto<? extends Number>> pontos;
-    // Lista de segmentos de reta que formam as arestas do polígono
     protected List<SegmentoReta> aresta;
-    // O ponto centróide do polígono
     protected Ponto<? extends Number> centroide;
-    // Coordenadas mínimas e máximas ao longo dos eixos X e Y
     protected double minX, minY, maxX, maxY;
 
     /**
@@ -28,36 +24,27 @@ public class Poligono implements Cloneable {
      * @param pontos Lista de pontos que define o polígono.
      */
     public Poligono(List<Ponto<? extends Number>> pontos) {
-        // O polígono precisa ter pelo menos 3 pontos
         if (pontos.size() < 3) {
             throw new IllegalArgumentException("Poligono:vi");
         }
 
-        // Inicializa as arestas do polígono
         this.aresta = new ArrayList<>();
         for (int i = 0; i < pontos.size(); i++) {
-            // Cria segmentos de reta entre pontos consecutivos
             Reta reta = new Reta(pontos.get(i), pontos.get((i + 1) % pontos.size()));
-            // Verifica se há três pontos consecutivos colineares
             if (reta.colineares(pontos.get((i + 2) % pontos.size()))) {
                 throw new IllegalArgumentException("Poligono:vi");
             }
-            // Adiciona o segmento de reta à lista de arestas
             aresta.add(new SegmentoReta(pontos.get(i), pontos.get((i + 1) % pontos.size())));
         }
 
-        // Verifica se alguma das arestas se cruza com outras
         for (int i = 0; i < aresta.size(); i++) {
             if (aresta.get(i).seCruzam(aresta.get((i + 2) % aresta.size()))) {
                 throw new IllegalArgumentException("Poligono:vi");
             }
         }
 
-        // Atribui a lista de pontos ao atributo da classe
         this.pontos = pontos;
-        // Atualiza as coordenadas máximas e mínimas do polígono
         setMaxCoordinates();
-        // Calcula o centróide do polígono
         this.centroide = getCentroide();
     }
 
@@ -108,7 +95,6 @@ public class Poligono implements Cloneable {
         double maxX = Double.MIN_VALUE;
         double maxY = Double.MIN_VALUE;
 
-        // Itera sobre todos os pontos para calcular os limites
         for (Ponto<? extends Number> ponto : this.pontos) {
             minX = Math.min(minX, ponto.getX().doubleValue());
             maxX = Math.max(maxX, ponto.getX().doubleValue());
@@ -116,7 +102,6 @@ public class Poligono implements Cloneable {
             maxY = Math.max(maxY, ponto.getY().doubleValue());
         }
 
-        // Atualiza os atributos da classe
         setMaxX(maxX);
         setMaxY(maxY);
         setMinX(minX);
@@ -129,7 +114,6 @@ public class Poligono implements Cloneable {
     private void updateAresta() {
         this.aresta.clear();
 
-        // Recria a lista de arestas, verificando novamente a validade
         for (int i = 0; i < pontos.size(); i++) {
             Reta reta = new Reta(pontos.get(i), pontos.get((i + 1) % pontos.size()));
             if (reta.colineares(pontos.get((i + 2) % pontos.size()))) {
@@ -138,7 +122,6 @@ public class Poligono implements Cloneable {
             this.aresta.add(new SegmentoReta(pontos.get(i), pontos.get((i + 1) % pontos.size())));
         }
 
-        // Verifica se alguma aresta se cruza com outras
         for (int i = 0; i < aresta.size(); i++) {
             if (this.aresta.get(i).seCruzam(this.aresta.get((i + 2) % aresta.size()))) {
                 throw new IllegalArgumentException("Poligono:vi");
@@ -152,7 +135,6 @@ public class Poligono implements Cloneable {
      * @return true se os polígonos se intersectarem, false caso contrário.
      */
     public boolean interseta(Poligono that) {
-        // Verifica se há interseção entre qualquer aresta de ambos os polígonos
         for (SegmentoReta aresta1 : this.aresta) {
             for (SegmentoReta aresta2 : that.aresta) {
                 if (aresta1.seCruzam(aresta2)) {
@@ -161,14 +143,12 @@ public class Poligono implements Cloneable {
             }
         }
 
-        // Verifica a proximidade entre os centróides de ambos os polígonos
         if (this.pontos.get(0).dist(this.pontos.get(1)) == that.pontos.get(0).dist(that.pontos.get(1))) {
             if (this.centroide.dist(that.centroide) < this.pontos.get(0).dist(this.pontos.get(1))) {
                 return true;
             }
         }
 
-        // Verifica se algum ponto do outro polígono está dentro deste polígono
         for (Ponto<? extends Number> ponto : that.pontos) {
             if (ponto.getX().doubleValue() > this.minX && ponto.getX().doubleValue() < this.maxX
                 && ponto.getY().doubleValue() > this.minY && ponto.getY().doubleValue() < this.maxY) {
@@ -185,7 +165,6 @@ public class Poligono implements Cloneable {
      * @return true se este polígono estiver contido no outro, false caso contrário.
      */
     public boolean contida(Poligono that) {
-        // Verifica sobreposição das coordenadas mínimas e máximas
         boolean overlapX = this.minX >= that.minX && this.maxX <= that.maxX;
         boolean overlapY = this.minY >= that.minY && this.maxY <= that.maxY;
 
@@ -198,7 +177,6 @@ public class Poligono implements Cloneable {
      * @return true se este polígono estiver contido na circunferência, false caso contrário.
      */
     public boolean contidaNaCircunferencia(Circunferencia that) {
-        // Verifica se os limites do polígono estão contidos nos limites da circunferência
         boolean overlapX = this.minX >= that.getCentro().getX().doubleValue() - that.getRaio()
             && this.maxX <= that.getCentro().getX().doubleValue() + that.getRaio();
         boolean overlapY = this.minY >= that.getCentro().getY().doubleValue() - that.getRaio()
@@ -215,7 +193,6 @@ public class Poligono implements Cloneable {
     public Ponto<Double> getCentroide() {
         double centroX = 0, centroY = 0;
 
-        // Soma todas as coordenadas x e y dos pontos para calcular a média
         for (Ponto<? extends Number> ponto : pontos) {
             centroX += ponto.getX().doubleValue();
             centroY += ponto.getY().doubleValue();
@@ -275,7 +252,7 @@ public class Poligono implements Cloneable {
      * @param centroX A coordenada x do novo centróide.
      * @param centroY A coordenada y do novo centróide.
      */
-    public void translateCentroide(int centroX, int centroY) {
+    public void translateCentroide(double centroX, double centroY) {
         for (Ponto<? extends Number> ponto : pontos) {
             ponto.translateCentroide(centroX, centroY, this.centroide);
         }
@@ -289,6 +266,8 @@ public class Poligono implements Cloneable {
      * Verifica se um ponto está contido dentro do polígono.
      * @param ponto O ponto a ser verificado.
      * @return true se o ponto estiver contido no polígono, false caso contrário.
+     * @see https://github.com/viniciusfinger/java-ray-casting/blob/main/RayCasting.java
+     * 
      */
     public boolean contemPonto(Ponto<? extends Number> ponto) {
         double x = ponto.getX().doubleValue();
@@ -296,14 +275,12 @@ public class Poligono implements Cloneable {
         int numVertices = pontos.size();
         boolean inside = false;
 
-        // Usa o algoritmo de ray-casting para verificar se o ponto está dentro
         for (int i = 0, j = numVertices - 1; i < numVertices; j = i++) {
             double xi = pontos.get(i).getX().doubleValue();
             double yi = pontos.get(i).getY().doubleValue();
             double xj = pontos.get(j).getX().doubleValue();
             double yj = pontos.get(j).getY().doubleValue();
 
-            // Verifica se o ponto está no segmento de reta ou à esquerda da aresta
             if ((yi > y) != (yj > y) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi)) {
                 inside = !inside;
             }
@@ -312,11 +289,6 @@ public class Poligono implements Cloneable {
         return inside;
     }
 
-    /**
-     * Verifica se este polígono é igual a outro objeto, comparando as arestas.
-     * @param obj O objeto a ser comparado.
-     * @return true se forem iguais, false caso contrário.
-     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -331,7 +303,6 @@ public class Poligono implements Cloneable {
 
         List<SegmentoReta> thatArestasCopy = new ArrayList<>(that.aresta);
 
-        // Verifica a igualdade das arestas entre ambos os polígonos
         for (int i = 0; i < this.aresta.size(); i++) {
             for (int j = 0; j < that.aresta.size(); j++) {
                 if (this.aresta.get(i).equals(that.aresta.get(j))) {
@@ -353,20 +324,11 @@ public class Poligono implements Cloneable {
         return Objects.hash(this.pontos, this.aresta);
     }
 
-    /**
-     * Retorna a representação do polígono como uma string.
-     * @return A representação do polígono.
-     */
     @Override
     public String toString() {
         return pontos.toString();
     }
 
-    /**
-     * Cria um clone do polígono, incluindo a lista de pontos e arestas.
-     * @return Um clone do polígono.
-     * @throws CloneNotSupportedException se o polígono não puder ser clonado.
-     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         Poligono novoPoligono = (Poligono) super.clone();

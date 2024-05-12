@@ -9,11 +9,11 @@ import ModelLayer.BoardLayer.GameBoard;
  */
 
 public interface MovementStrategy {
-    /** Move a cobra
-     * @param nexDirection próxima direção
-     * @param body corpo da cobra
-     * @param currentDirection direção atual
-     * @param arestaHeadLength comprimento da aresta da cabeça
+    /**
+     *  Define a próxima direção de movimento da cobra
+     * @param snake a cobra do jogo
+     * @param gameBoard a arena do jogo
+     * @return a próxima direção que a cobra se vai mover
      */
     public Direction setNextDirection(Snake snake,GameBoard gameBoard);
 }

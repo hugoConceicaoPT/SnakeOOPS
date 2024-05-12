@@ -9,9 +9,7 @@ package ModelLayer.SnakeLayer;
  * @inv O raio deve ser positivo para representar uma circunferência válida.
  */
 public class Circunferencia {
-    // Coordenadas do centro da circunferência
     private Ponto<? extends Number> centro;
-    // Raio da circunferência, que deve ser positivo
     private double raio;
 
     /**
@@ -60,7 +58,6 @@ public class Circunferencia {
         double width = that.getMaxX() - that.getMinX();
         double height = that.getMaxY() - that.getMinY();
 
-        // Ajuste das coordenadas de teste baseando-se na posição do centro da circunferência
         if(this.centro.getX().doubleValue() < that.getCentroide().getX().doubleValue()) testX = that.getCentroide().getX().doubleValue();
         else if(this.centro.getX().doubleValue() > that.getCentroide().getX().doubleValue() + width) testX = that.getCentroide().getX().doubleValue() + width;
         if(this.centro.getY().doubleValue() < that.getCentroide().getY().doubleValue()) testY = that.getCentroide().getY().doubleValue();
@@ -69,8 +66,7 @@ public class Circunferencia {
         double distX = this.centro.getX().doubleValue() - testX;
         double distY = this.centro.getY().doubleValue() - testY;
         double distance = Math.sqrt((distX * distX) + (distY * distY));
-
-        // Retorna se a distância entre o ponto ajustado e o centro da circunferência é menor ou igual ao raio
+        
         return distance <= this.raio;
     }
 

@@ -99,12 +99,8 @@ public class Cliente {
         long seed = System.currentTimeMillis();
 
         // Cria e executa o jogo da Cobra
-        try {
-            SnakeGame snakeGame = new SnakeGame(name,width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, listObstacleRotacionPoint,listObstacleAngles,isObstacleDynamic, UIMode, seed);
-            snakeGame.runGame(sc);
-            snakeGame.endGame();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        SnakeGame snakeGame = new SnakeGame(name,width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, listObstacleRotacionPoint,listObstacleAngles,isObstacleDynamic, UIMode, seed);
+        snakeGame.runGame(sc);
+        snakeGame.endGame();
     }
 }

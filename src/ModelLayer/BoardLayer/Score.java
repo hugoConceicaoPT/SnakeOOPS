@@ -8,8 +8,8 @@ package ModelLayer.BoardLayer;
  * @inv A pontuação (points) nunca deve ser negativa, e a pontuação por comida (scorePerFood) deve ser um valor positivo.
  */
 public class Score {
-    private int points; // Pontos totais acumulados pelo jogador.
-    private int scorePerFood; // Pontos ganhos por cada comida coletada.
+    private int points; 
+    private int scorePerFood; 
 
     /**
      * Construtor para criar uma pontuação.
@@ -17,15 +17,18 @@ public class Score {
      * @param scorePerFood Os pontos adicionados à pontuação cada vez que comida é coletada.
      */
     public Score(int points, int scorePerFood) {
+        if(points < 0 || scorePerFood < 0) {
+            throw new IllegalArgumentException("Tanto os pontos como os pontos por comida têm que ter um valor positivo");
+        }
         this.points = points;
         this.scorePerFood = scorePerFood;
     }
     
     /**
-     * Aumenta a pontuação do jogador baseada na quantidade definida por scorePerFood.
+     * Aumenta a pontuação do jogador baseada na quantidade definida pelo scorePerFood.
      */
     public void increaseScore() {
-        setPoints(this.points + this.scorePerFood); // Atualiza a pontuação adicionando o scorePerFood aos pontos atuais.
+        setPoints(this.points + this.scorePerFood); 
     }
 
     /**

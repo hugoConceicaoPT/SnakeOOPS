@@ -10,10 +10,8 @@ import java.util.Objects;
  * @inv Os pontos não podem ser iguais para formar um segmento de reta válido.
  */
 public class SegmentoReta implements Cloneable {
-    // Pontos que representam as extremidades do segmento de reta
     private Ponto<? extends Number> a;
     private Ponto<? extends Number> b;
-    // Coordenadas mínimas e máximas nos eixos X e Y
     private double minX, minY, maxX, maxY;
 
     /**
@@ -22,11 +20,9 @@ public class SegmentoReta implements Cloneable {
      * @param b O ponto final do segmento de reta.
      */
     public SegmentoReta(Ponto<? extends Number> a, Ponto<? extends Number> b) {
-        // Verifica se os pontos fornecidos são válidos
         check(a, b);
         this.a = a;
         this.b = b;
-        // Calcula as coordenadas mínimas e máximas do segmento
         setMaxCoordinates();
     }
 
@@ -67,12 +63,10 @@ public class SegmentoReta implements Cloneable {
      * @return true se os segmentos se cruzam, false caso contrário.
      */
     public boolean seCruzam(SegmentoReta segmentoDeReta) {
-        // Calcula o produto vetorial entre as extremidades de ambos os segmentos
         double abac = produtoVetorial(this.b, this.a, segmentoDeReta.a);
         double abad = produtoVetorial(this.b, this.a, segmentoDeReta.b);
         double cdca = produtoVetorial(segmentoDeReta.b, segmentoDeReta.a, this.a);
         double cdcb = produtoVetorial(segmentoDeReta.b, segmentoDeReta.a, this.b);
-        // Retorna true se os produtos vetoriais indicarem interseção
         return abac * abad < 0 && cdca * cdcb < 0;
     }
 
@@ -82,16 +76,12 @@ public class SegmentoReta implements Cloneable {
      * @return true se o ponto estiver contido no segmento, false caso contrário.
      */
     public boolean contemPonto(Ponto<? extends Number> ponto) {
-        // Primeiro verifica se o ponto está na linha usando o produto vetorial
         if (produtoVetorial(a, b, ponto) != 0) {
             return false;
         }
 
-        // Verifica se o ponto está dentro dos limites dos extremos do segmento
         boolean dentroDosLimitesX = Math.min(a.getX().doubleValue(), b.getX().doubleValue()) <= ponto.getX().doubleValue() && ponto.getX().doubleValue() <= Math.max(a.getX().doubleValue(), b.getX().doubleValue());
         boolean dentroDosLimitesY = Math.min(a.getY().doubleValue(), b.getY().doubleValue()) <= ponto.getY().doubleValue() && ponto.getY().doubleValue() <= Math.max(a.getY().doubleValue(), b.getY().doubleValue());
-
-        // Retorna true se estiver dentro dos limites tanto em X quanto em Y
         return dentroDosLimitesX && dentroDosLimitesY;
     }
 
@@ -104,7 +94,6 @@ public class SegmentoReta implements Cloneable {
         double maxX = Double.MIN_VALUE;
         double maxY = Double.MIN_VALUE;
 
-        // Atualiza as coordenadas mínimas e máximas de acordo com os pontos
         minX = Math.min(minX, a.getX().doubleValue());
         maxX = Math.max(maxX, a.getX().doubleValue());
         minY = Math.min(minY, a.getY().doubleValue());
@@ -115,18 +104,12 @@ public class SegmentoReta implements Cloneable {
         minY = Math.min(minY, b.getY().doubleValue());
         maxY = Math.max(maxY, b.getY().doubleValue());
 
-        // Define as coordenadas mínimas e máximas calculadas
         setMaxX(maxX);
         setMaxY(maxY);
         setMinX(minX);
         setMinY(minY);
     }
 
-    /**
-     * Verifica se este segmento de reta é igual a outro objeto.
-     * @param obj O objeto a ser comparado.
-     * @return true se forem iguais, false caso contrário.
-     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null || getClass() != obj.getClass()) {
@@ -134,7 +117,6 @@ public class SegmentoReta implements Cloneable {
         }
 
         SegmentoReta that = (SegmentoReta) obj;
-        // Os segmentos são considerados iguais se as extremidades coincidirem
         return (this.a.equals(that.a) && this.b.equals(that.b)) || (this.a.equals(that.b) && this.b.equals(that.a));
     }
 
@@ -147,11 +129,6 @@ public class SegmentoReta implements Cloneable {
         return Objects.hash(this.a, this.b);
     }
 
-    /**
-     * Cria um clone do segmento de reta, mantendo os pontos originais.
-     * @return Um clone do segmento de reta.
-     * @throws CloneNotSupportedException Se o segmento não puder ser clonado.
-     */
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();

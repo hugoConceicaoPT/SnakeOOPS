@@ -8,7 +8,6 @@ package ModelLayer.BoardLayer;
  */
 public class Cell {
 
-    // Tipo de conteúdo presente na célula, usando a enumeração `CellType`
     private CellType cellType;
 
     /**

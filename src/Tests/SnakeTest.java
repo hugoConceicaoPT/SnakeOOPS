@@ -90,13 +90,13 @@ public class SnakeTest {
         Direction direction = Direction.UP;
         snake.setNextDirection(direction);
         snake.move();
-        assertEquals("Cabeça: [(8,4), (6,4), (6,6), (8,6)] Tail: [[(8,4), (8,2), (6,2), (6,4)]]", snake.toString());
+        assertEquals("Cabeça: [(8.0,4.0), (6.0,4.0), (6.0,6.0), (8.0,6.0)] Tail: [[(8,4), (8,2), (6,2), (6,4)]]", snake.toString());
         snake.increaseSize();
         snake.setNextDirection(Direction.RIGHT);
         snake.move();
         snake.setNextDirection(Direction.LEFT);
         snake.move();
-        assertEquals("Cabeça: [(10.0,4.0), (8.0,4.0), (8.0,6.0), (10.0,6.0)] Tail: [[(8.0,4.0), (6.0,4.0), (6.0,6.0), (8.0,6.0)], [(8.0,4.0), (8.0,2.0), (6.0,2.0), (6.0,4.0)]]", snake.toString());
+        assertEquals("Cabeça: [(10.0,4.0), (8.0,4.0), (8.0,6.0), (10.0,6.0)] Tail: [[(8.0,4.0), (6.0,4.0), (6.0,6.0), (8.0,6.0)], [(8,4), (8,2), (6,2), (6,4)]]", snake.toString());
         snake.setNextDirection(Direction.DOWN);
         snake.move();
         assertEquals("Cabeça: [(10.0,2.0), (8.0,2.0), (8.0,4.0), (10.0,4.0)] Tail: [[(10.0,4.0), (8.0,4.0), (8.0,6.0), (10.0,6.0)], [(8.0,4.0), (6.0,4.0), (6.0,6.0), (8.0,6.0)]]", snake.toString());

@@ -16,22 +16,11 @@ import ModelLayer.BoardLayer.Obstacle;
  */
 public class AutomatedMovementStrategy implements MovementStrategy {
 
-    /**
-     * Define a próxima direção de movimento da cobra, tentando encontrar comida
-     * ou evitar obstáculos. Se a comida estiver disponível, tenta alcançá-la.
-     * Caso contrário, evita obstáculos enquanto mantém a direção atual.
-     * @param snake A cobra que será movida.
-     * @param gameBoard O tabuleiro do jogo contendo a comida e os obstáculos.
-     * @return A próxima direção de movimento.
-     */
     @Override
     public Direction setNextDirection(Snake snake, GameBoard gameBoard) {
-        // Se há comida no tabuleiro, calcula a direção para chegar até ela.
         if (gameBoard != null && gameBoard.getFood() != null) {
             return calculateDirectionToFood(snake, (Ponto<?>) gameBoard.getFood().getCentroide());
         }
-
-        // Caso contrário, tenta evitar obstáculos mantendo a direção atual.
         return avoidObstacles(snake, gameBoard);
     }
 
@@ -43,13 +32,11 @@ public class AutomatedMovementStrategy implements MovementStrategy {
      * @return A direção para alcançar a comida.
      */
     private Direction calculateDirectionToFood(Snake snake, Ponto<? extends Number> foodCentroide) {
-        // Coordenadas da cabeça da cobra e da comida
         double headX = snake.getHead().getCentroide().getX().doubleValue();
         double headY = snake.getHead().getCentroide().getY().doubleValue();
         double foodX = foodCentroide.getX().doubleValue();
         double foodY = foodCentroide.getY().doubleValue();
 
-        // Determina a direção para alcançar a comida, evitando direções opostas consecutivas.
         if (foodX < headX && snake.getCurrentDirection() != Direction.RIGHT) {
             return Direction.LEFT;
         } else if (foodX > headX && snake.getCurrentDirection() != Direction.LEFT) {
@@ -69,13 +56,10 @@ public class AutomatedMovementStrategy implements MovementStrategy {
      * @return Uma nova direção que evita os obstáculos, ou a direção atual.
      */
     private Direction avoidObstacles(Snake snake, GameBoard gameBoard) {
-        // Verifica se há obstáculos no tabuleiro.
         if (gameBoard != null && gameBoard.getListOfObstacles() != null) {
-            // Analisa cada obstáculo para verificar possível colisão.
             for (Obstacle obstacle : gameBoard.getListOfObstacles()) {
-                // Verifica se a cobra colidirá ao mover-se na direção atual.
-                if (willCollideWithObstacleAfterMovingInDirection(snake, obstacle, snake.getCurrentDirection())) {
-                    // Tenta encontrar uma direção alternativa que não colida.
+                if (willCollideWithObstacleAfterMovingInDirection(snake, obstacle, snake.getCurrentDirection()) ||
+                    willCollideWithBorderAfterMovingInDirection(snake, gameBoard, snake.getCurrentDirection())) {
                     Direction nextDirection = chooseRandomDirectionWithoutCollision(snake, obstacle);
                     if (nextDirection != null) {
                         return nextDirection;
@@ -83,10 +67,37 @@ public class AutomatedMovementStrategy implements MovementStrategy {
                 }
             }
         }
-
-        // Retorna a direção atual se não houver colisão.
         return snake.getCurrentDirection();
     }
+
+    /**
+     * Verifica se a cobra irá colidir com a borda do tabuleiro após mover-se em uma direção específica.
+     * @param snake A cobra que será movida.
+     * @param gameBoard O tabuleiro do jogo contendo as dimensões.
+     * @param direction A direção em que a cobra planeja se mover.
+     * @return true se a cobra irá colidir com a borda, false caso contrário.
+     */
+    private boolean willCollideWithBorderAfterMovingInDirection(Snake snake, GameBoard gameBoard, Direction direction) {
+        int nextX = snake.getHead().getCentroide().getX().intValue();
+        int nextY = snake.getHead().getCentroide().getY().intValue();
+
+        switch (direction) {
+            case UP:
+                nextY += snake.getArestaHeadLength();
+                break;
+            case DOWN:
+                nextY -= snake.getArestaHeadLength();
+                break;
+            case LEFT:
+                nextX -= snake.getArestaHeadLength();
+                break;
+            case RIGHT:
+                nextX += snake.getArestaHeadLength();
+                break;
+        }
+        return nextX < 0 || nextX > gameBoard.getWidthBoard() || nextY < 0 || nextY > gameBoard.getHeightBoard();
+    }
+    
 
     /**
      * Verifica se a cobra irá colidir com um obstáculo após mover-se em uma direção específica.
@@ -96,7 +107,6 @@ public class AutomatedMovementStrategy implements MovementStrategy {
      * @return true se a cobra irá colidir com o obstáculo, false caso contrário.
      */
     private boolean willCollideWithObstacleAfterMovingInDirection(Snake snake, Obstacle obstacle, Direction direction) {
-        // Cria um clone da cobra para simular o movimento.
         Snake snakeClone;
         try {
             snakeClone = (Snake) snake.clone();
@@ -104,12 +114,8 @@ public class AutomatedMovementStrategy implements MovementStrategy {
             e.printStackTrace();
             return true;
         }
-
-        // Move a cobra clonada na direção desejada.
         snakeClone.moveSquare(snakeClone.getHead(), snake.getCurrentDirection(), direction);
-
-        // Verifica se a cabeça da cobra clonada colide com o obstáculo.
-        return snakeClone.getHead().interseta(obstacle.getPoligono());
+        return snakeClone.getHead().interseta(obstacle.getPoligono()) || snakeClone.getHead().contida(obstacle.getPoligono());
     }
 
     /**
@@ -119,16 +125,12 @@ public class AutomatedMovementStrategy implements MovementStrategy {
      * @return Uma direção aleatória segura ou null se todas resultarem em colisão.
      */
     private Direction chooseRandomDirectionWithoutCollision(Snake snake, Obstacle obstacle) {
-        // Lista de direções seguras.
         List<Direction> availableDirections = new ArrayList<>();
         for (Direction dir : Direction.values()) {
-            // Adiciona a direção à lista se não colidir com o obstáculo.
             if (!willCollideWithObstacleAfterMovingInDirection(snake, obstacle, dir)) {
                 availableDirections.add(dir);
             }
         }
-
-        // Escolhe uma direção aleatória da lista de direções seguras.
         if (!availableDirections.isEmpty()) {
             Random rand = new Random();
             int index = rand.nextInt(availableDirections.size());

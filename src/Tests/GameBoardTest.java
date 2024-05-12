@@ -284,7 +284,6 @@ public void rotateObstaclesTest() throws CloneNotSupportedException {
     long seed = 119;
     Random random = new Random(seed);
 
- 
     Poligono polygon1 = new Poligono(new ArrayList<>(Arrays.asList(
         new Ponto<Integer>(10, 10),
         new Ponto<Integer>(12, 10),

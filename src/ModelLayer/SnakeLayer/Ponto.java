@@ -5,7 +5,6 @@ import java.util.Objects;
     Responsabilidade: Armazenar as coordenadas de um ponto
     @version 1.0 10/05/2024
     @author Hugo Conceição João Ventura Eduarda Pereira
-    @inv  As coordenadas devem estar localizadas no primeiro quadrante do plano cartesiano
 */
 public class Ponto<T extends Number> implements Cloneable {
     private T x;
@@ -131,24 +130,13 @@ public class Ponto<T extends Number> implements Cloneable {
      * @return um novo ponto com o movimento de translação já aplicado
      */
     @SuppressWarnings("unchecked")
-    public void translateCentroide(int centroX, int centroY, Ponto<? extends Number> centroide) {
+    public void translateCentroide(double centroX, double centroY, Ponto<? extends Number> centroide) {
         double dx = centroX - centroide.getX().doubleValue();
         double dy = centroY - centroide.getY().doubleValue();
         double x = this.x.doubleValue() + dx;
         double y = this.y.doubleValue() + dy;
-        if(this.x instanceof Integer) {
-            setX((T) Integer.valueOf((int) Math.round(x)));
-        }
-        else {
-            setX((T) Double.valueOf(x));
-        }
-
-        if(this.y instanceof Integer) {
-            setY((T) Integer.valueOf((int) Math.round(y)));
-        }
-        else {
-            setY((T) Double.valueOf(y));
-        }
+        setX((T) Double.valueOf(x));
+        setY((T) Integer.valueOf((int) Math.round(y)));
     }
 
     @Override
@@ -161,14 +149,14 @@ public class Ponto<T extends Number> implements Cloneable {
         return super.clone();
     }
     /** Obtém a coordenada x do ponto
-     * @return A coordenada x do ponto
+     * @return a coordenada x do ponto
      */
     public T getX() {
         return x;
     }
 
     /** Obtém a coordenada y do ponto
-     * @return A coordenada y do ponto
+     * @return a coordenada y do ponto
      */
     public T getY() {
         return y;

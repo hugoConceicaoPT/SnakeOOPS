@@ -20,11 +20,9 @@ public class Retangulo extends Poligono {
      */
     public Retangulo(List<Ponto<? extends Number>> pontos) {
         super(pontos);
-        // Verifica se o número de pontos é exatamente 4
         if (pontos.size() != 4) {
             throw new IllegalArgumentException("Retangulo:vi");
         }
-        // Verifica se todos os ângulos internos são de 90 graus
         for (int i = 0; i < getPontos().size(); i++) {
             Ponto<? extends Number> a = getPontos().get(i);
             Ponto<? extends Number> b = getPontos().get((i + 1) % getPontos().size());
@@ -57,7 +55,6 @@ public class Retangulo extends Poligono {
 
         List<Ponto<? extends Number>> pontos = new ArrayList<>();
         for (int i = 0; i < parts.length; i += 2) {
-            // Cria pontos com base nos valores numéricos da string
             if (parts[i].contains(".")) {
                 pontos.add(new Ponto<>(Double.parseDouble(parts[i]), Double.parseDouble(parts[i + 1])));
             } else {
@@ -76,23 +73,18 @@ public class Retangulo extends Poligono {
      * @return O ângulo em graus.
      */
     private double calcularAngulo(Ponto<? extends Number> a, Ponto<? extends Number> b, Ponto<? extends Number> c) {
-        // Calcula os vetores entre os pontos
         double lado1x = b.getX().doubleValue() - a.getX().doubleValue();
         double lado1y = b.getY().doubleValue() - a.getY().doubleValue();
         double lado2x = c.getX().doubleValue() - b.getX().doubleValue();
         double lado2y = c.getY().doubleValue() - b.getY().doubleValue();
 
-        // Calcula o produto escalar entre os vetores
         double produtoEscalar = (lado1x * lado2x) + (lado1y * lado2y);
 
-        // Calcula as normas dos vetores
         double normaLado1 = Math.sqrt((lado1x * lado1x) + (lado1y * lado1y));
         double normaLado2 = Math.sqrt((lado2x * lado2x) + (lado2y * lado2y));
 
-        // Calcula o cosseno do ângulo
         double cosenoAngulo = produtoEscalar / (normaLado1 * normaLado2);
 
-        // Calcula o ângulo em graus a partir do cosseno
         double angulo = Math.acos(cosenoAngulo) * (180 / Math.PI);
 
         return angulo;
@@ -107,7 +99,6 @@ public class Retangulo extends Poligono {
      */
     @Override
     public boolean contemPonto(Ponto<? extends Number> ponto) {
-        // Verifica se as coordenadas do ponto estão dentro dos limites do retângulo
         return ponto.getX().doubleValue() >= this.minX && ponto.getX().doubleValue() <= this.maxX
             && ponto.getY().doubleValue() >= this.minY && ponto.getY().doubleValue() <= this.maxY;
     }

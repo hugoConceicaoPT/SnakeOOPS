@@ -14,17 +14,16 @@ import ModelLayer.BoardLayer.Score;
  * Classe responsável pela gestão da classificação dos jogadores.
  * Responsabilidade: Gerenciar e atualizar o arquivo de classificação dos jogadores com base em suas pontuações.
  * @version 1.0 10/05/2024
- * @author Hugo Conceição João Ventura Eduarda Pereira
- * @inv Deve manter um arquivo consistente de ranking de jogadores.
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class Leaderboard {
-    private String filePath; // Caminho para o arquivo de ranking.
+    private String filePath; 
     
     /**
      * Construtor padrão que inicializa o caminho do arquivo de ranking.
      */
     public Leaderboard() {
-        this.filePath = "src\\ranking.txt"; // Define o caminho padrão para o arquivo de ranking.
+        this.filePath = "src\\ranking.txt"; 
     }
 
     /**
@@ -49,7 +48,7 @@ public class Leaderboard {
             }
 
         } catch (Exception e) {
-            e.printStackTrace(); // Log and handle errors appropriately.
+            e.printStackTrace();
         }
         return result;
     }
@@ -83,7 +82,6 @@ public class Leaderboard {
             if (!playerExists)
                 topPlayers.add(newPlayer);
 
-            // Re-sort and save the updated list
             topPlayers.sort(Comparator.comparing(player -> player.getScore().getPoints(), Comparator.reverseOrder()));
             List<String> formattedScores = topPlayers.stream()
                 .map(topPlayer -> (topPlayers.indexOf(topPlayer) + 1) + "º " + topPlayer.getName() + " " + topPlayer.getScore().getPoints() + " Pontos")
@@ -91,7 +89,7 @@ public class Leaderboard {
 
             Files.write(Paths.get(this.filePath), formattedScores);
         } catch (Exception e) {
-            e.printStackTrace(); // Log and handle errors appropriately.
+            e.printStackTrace(); 
         }
     }
 }

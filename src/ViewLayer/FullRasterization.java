@@ -75,7 +75,6 @@ public class FullRasterization extends RasterizationStrategy {
      * Cada obstáculo é preenchido completamente.
      */
     public void updateObstacleCells() {
-        // Limpa as células que atualmente representam os obstáculos
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
                 if (board[i][j].getCellType() == CellType.OBSTACLE) {
@@ -84,7 +83,6 @@ public class FullRasterization extends RasterizationStrategy {
             }
         }   
 
-        // Preenche as células que contêm obstáculos
         for(int i = 0; i < this.gameBoard.getListOfObstacles().size(); i++) {
             for(int row = 0; row < this.rows; row++) {
                 for(int col = 0; col < this.cols; col++) {
@@ -103,7 +101,6 @@ public class FullRasterization extends RasterizationStrategy {
     public void updateFoodCells() {
         boolean isFoodNotReseted = false;
         while (!isFoodNotReseted) {
-            // Limpa as células que atualmente representam a comida
             for (int i = 0; i < this.rows; i++) {
                 for (int j = 0; j < this.cols; j++) {
                     if (board[i][j].getCellType() == CellType.FOOD) {
@@ -112,11 +109,9 @@ public class FullRasterization extends RasterizationStrategy {
                 }
             }
 
-            // Tenta preencher as células da comida, mas verifica colisões com outros elementos
             for (int i = this.gameBoard.getFood().getMinY(); i < this.gameBoard.getFood().getMaxY(); i++) {
                 for (int j = this.gameBoard.getFood().getMinX(); j < this.gameBoard.getFood().getMaxX(); j++) {
                     if (board[i][j].getCellType() != CellType.EMPTY) {
-                        // Se houver colisão, limpa novamente e gera nova comida
                         for (int w = 0; w < this.rows; w++) {
                             for (int z = 0; z < this.cols; z++) {
                                 if (board[w][z].getCellType() == CellType.FOOD) {

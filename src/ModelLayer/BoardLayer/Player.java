@@ -8,8 +8,8 @@ package ModelLayer.BoardLayer;
  * @inv O nome do jogador não deve ser nulo ou vazio, e o objeto Score associado deve sempre ser válido.
  */
 public class Player {
-    private String name; // Nome do jogador.
-    private Score score; // Objeto Score que representa a pontuação do jogador.
+    private String name; 
+    private Score score; 
 
     /**
      * Construtor para criar um novo jogador.
