@@ -26,10 +26,10 @@ import ViewLayer.UI;
 
 /** 
  * Classe principal que gerencia o jogo da cobra.
- * Responsabilidade: Gerenciar o loop de jogo, entradas do usuário e renderização do estado do jogo.
- * @version 1.0 10/05/2024
- * @author Hugo Conceição João Ventura Eduarda Pereira
- * @inv O jogo termina quando a cobra colide com um obstáculo, com ela mesma, ou a comida acaba.
+ * Responsabilidade: Gerenciar o loop de jogo, entradas do usuario e renderizacao do estado do jogo.
+ * @version 1.0 12/05/2024
+ * @author Hugo Conceicao, Joao Ventura, Eduarda Pereira
+ * @inv O jogo termina quando a cobra colide com um obstaculo, com ela mesma, ou a comida acaba.
  */
     public class SnakeGame implements KeyListener {
         private Random random;
@@ -55,22 +55,22 @@ import ViewLayer.UI;
         private List<Integer> listObstacleAngles;
 
     /**
-     * Constrói um novo jogo da cobra com configurações especificadas.
+     * Constroi um novo jogo da cobra com configuracoes especificadas.
      * @param playerName Nome do jogador.
      * @param widthBoard Largura do tabuleiro.
      * @param heightBoard Altura do tabuleiro.
-     * @param headSnakeDimension Tamanho da cabeça da cobra.
-     * @param isSnakeManualMovement Se o movimento da cobra é manual.
-     * @param rasterizationMode Modo de rasterização.
+     * @param headSnakeDimension Tamanho da cabeca da cobra.
+     * @param isSnakeManualMovement Se o movimento da cobra e manual.
+     * @param rasterizationMode Modo de rasterizacao.
      * @param foodDimension Tamanho da comida.
      * @param foodType Tipo da comida.
-     * @param scorePerFood Pontuação por comida.
-     * @param obstaclesQuantity Quantidade de obstáculos.
-     * @param listObstacleRotacionPoint Lista de pontos para rotação dos obstáculos.
-     * @param listObstacleAngles Lista de pontos com os ângulos de rotação dos obstáculos
-     * @param isObstacleDynamic Se os obstáculos são dinâmicos.
-     * @param UIMode Modo da interface de usuário.
-     * @param seed Semente para o gerador aleatório.
+     * @param scorePerFood Pontuacao por comida.
+     * @param obstaclesQuantity Quantidade de obstaculos.
+     * @param listObstacleRotacionPoint Lista de pontos para rotacao dos obstaculos.
+     * @param listObstacleAngles Lista de pontos com os angulos de rotacao dos obstaculos
+     * @param isObstacleDynamic Se os obstaculos sao dinamicos.
+     * @param UIMode Modo da interface de usuario.
+     * @param seed Semente para o gerador aleatorio.
      */
     public SnakeGame (String playerName, int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, List<Ponto<? extends Number>> listObstacleRotacionPoint, List<Integer> listObstacleAngles,boolean isObstacleDynamic, String UIMode, long seed) {
         this.random = new Random(seed);
@@ -209,7 +209,7 @@ import ViewLayer.UI;
     }
 
     /** 
-     * Verifica se a comida está contida na cabeça da snake, se sim aumenta o tamanho dela e o score do jogador
+     * Verifica se a comida esta contida na cabeca da snake, se sim aumenta o tamanho dela e o score do jogador
      */
     public void foodContainedInSnakeHead() {
         if(this.gameBoard.foodContainedInSnakeHead()) {
@@ -225,8 +225,8 @@ import ViewLayer.UI;
     }
 
     /** 
-     * Verifica e trata a colisão da cobra com obstáculos, consigo mesma ou saída do tabuleiro.
-     * @return verdadeiro se houve colisão.
+     * Verifica e trata a colisao da cobra com obstaculos, consigo mesma ou saida do tabuleiro.
+     * @return verdadeiro se houve colisao.
      */
     public boolean snakeCollided() {
         if (this.gameBoard.snakeIntersectsObstacle() || this.gameBoard.obstacleContainedInSnake() || this.snake.collidedWithHerself() || this.gameBoard.snakeLeftBoard()) 
@@ -235,7 +235,7 @@ import ViewLayer.UI;
     }
 
     /** 
-     * Atualiza a direção da cobra com base nas entradas do teclado.
+     * Atualiza a direcao da cobra com base nas entradas do teclado.
      * @param e Evento de teclado capturado.
      */
     @Override
@@ -267,8 +267,8 @@ import ViewLayer.UI;
     }
 
     /** 
-     * Move a cobra na direção especificada.
-     * @param nextDirection Nova direção para a cobra.
+     * Move a cobra na direcao especificada.
+     * @param nextDirection Nova direcao para a cobra.
      */
     public void moveSnake(Direction nextDirection) {
         if (this.snake.getMovementStrategy() instanceof AutomatedMovementStrategy) {
@@ -282,11 +282,11 @@ import ViewLayer.UI;
     }
 
     /** 
-     * Cria pontos que formarão o quadrado da cabeça da cobra.
+     * Cria pontos que formarao o quadrado da cabeca da cobra.
      * @param widthBoard Largura do tabuleiro.
      * @param heightBoard Altura do tabuleiro.
-     * @param size Tamanho da cabeça da cobra.
-     * @return Lista de pontos que formam o quadrado da cabeça da cobra.
+     * @param size Tamanho da cabeca da cobra.
+     * @return Lista de pontos que formam o quadrado da cabeca da cobra.
      */
     private List<Ponto<? extends Number>> createSquarePoints(int widthBoard, int heightBoard, int size) {
         int x = this.random.nextInt(widthBoard - size);
@@ -304,21 +304,21 @@ import ViewLayer.UI;
     @Override
     public void keyTyped(KeyEvent e) {}
 
-    /** Obtém se acabou o jogo ou não
-     * @return se acabou o jogo ou não
+    /** Obtem se acabou o jogo ou nao
+     * @return se acabou o jogo ou nao
      */
     public boolean isGameOver() {
         return isGameOver;
     }
 
     /** Atualiza o estado do gameOver
-     * @param gameOver o novo estado do gameOver
+     * @param isGameOver o novo estado do gameOver
      */
     public void setGameOver(boolean isGameOver) {
         this.isGameOver = isGameOver;
     }
 
-    /** Obtém o score do jogo
+    /** Obtem o score do jogo
      * @return o score do jogo
      */
     public Score getScore() {
@@ -332,7 +332,7 @@ import ViewLayer.UI;
         this.score = score;
     }
 
-    /** Obtém a snake do jogo                                                                       
+    /** Obtem a snake do jogo                                                                       
      * @return a snake do jogo
      */
     public Snake getSnake() {
@@ -346,7 +346,7 @@ import ViewLayer.UI;
         this.snake = snake;
     }
 
-    /** Obtém a width da board
+    /** Obtem a width da board
      * @return o valor da width
      */
     public int getWidthBoard() {
@@ -360,7 +360,7 @@ import ViewLayer.UI;
         this.widthBoard = widthBoard;
     }
 
-    /** Obtém a heigth da board
+    /** Obtem a heigth da board
      * @return a heigth da board
      */
     public int getHeightBoard() {
@@ -375,7 +375,7 @@ import ViewLayer.UI;
     }
 
     /**
-     * Obtém a arena do jogo
+     * Obtem a arena do jogo
      * @return a arena do jogo
      */
     public GameBoard getGameBoard() {
@@ -391,7 +391,7 @@ import ViewLayer.UI;
     }
 
     /**
-     * Obtém o tipo de rasterização do jogo
+     * Obtem o tipo de rasterização do jogo
      * @return o tipo de rasterização do jogo
      */
     public RasterizationStrategy getRasterizationStrategy() {
@@ -407,7 +407,7 @@ import ViewLayer.UI;
     }
 
     /**
-     * Obtém o tamanho da cabeça da cobra
+     * Obtem o tamanho da cabeça da cobra
      * @return o tamanho da cabeça da cobra
      */
     public int getHeadSnakeDimension() {
@@ -423,7 +423,7 @@ import ViewLayer.UI;
     }
 
     /**
-     * Obtém o tamanho da comida
+     * Obtem o tamanho da comida
      * @return o tamanho da comida
      */
     public int getFoodDimension() {
@@ -439,7 +439,7 @@ import ViewLayer.UI;
     }
 
     /**
-     * Obtém o tipo de comida
+     * Obtem o tipo de comida
      * @return o tipo de comida
      */
     public FoodType getFoodType() {
@@ -455,23 +455,23 @@ import ViewLayer.UI;
     }
 
     /**
-     * Obtém a quantidade de obstáculos
-     * @return a quantidade de obstáculos
+     * Obtem a quantidade de obstaculos
+     * @return a quantidade de obstaculos
      */
     public int getObstaclesQuantity() {
         return obstaclesQuantity;
     }
 
     /**
-     * Atualiza a quantidade de obstáculos
-     * @param obstaclesQuantity a nova quantidade e obstáculos
+     * Atualiza a quantidade de obstaculos
+     * @param obstaclesQuantity a nova quantidade e obstaculos
      */
     public void setObstaclesQuantity(int obstaclesQuantity) {
         this.obstaclesQuantity = obstaclesQuantity;
     }
     
     /**
-     * Obtém se os obstáculos são dinâmicos ou não
+     * Obtem se os obstáculos sao dinamicos ou nao
      * @return os obstáculos dinâmicos ou não
      */
     public boolean isObstacleDynamic() {
@@ -479,15 +479,15 @@ import ViewLayer.UI;
     }
 
     /**
-     * Atualiza se os obstáculos são dinâmicos ou não 
-     * @param isObstacleDynamic o novo valor lógico da dinamicidade dos obstáculos
+     * Atualiza se os obstaculos sao dinamicos ou nao 
+     * @param isObstacleDynamic o novo valor logico da dinamicidade dos obstaculos
      */
     public void setObstacleDynamic(boolean isObstacleDynamic) {
         this.isObstacleDynamic = isObstacleDynamic;
     }
 
     /**
-     * Obtém a UI do jogo
+     * Obtem a UI do jogo
      * @return UI do jogo
      */
     public UI getUserInterface() {
@@ -503,39 +503,39 @@ import ViewLayer.UI;
     }
 
     /**
-     * Obtém o gerador de números aleatórios
-     * @return o gerador de números aleatórios
+     * Obtem o gerador de numeros aleatorios
+     * @return o gerador de numeros aleatorios
      */
     public Random getRandom() {
         return random;
     }
 
     /**
-     * Atualiza o gerador de números aleatórios
-     * @param random o novo gerador de números aleatórios
+     * Atualiza o gerador de numeros aleatorios
+     * @param random o novo gerador de numeros aleatorios
      */
     public void setRandom(Random random) {
         this.random = random;
     }
 
     /**
-     * Obtém se o movimento da snake é manual ou automatizado
-     * @return se o movimento da snake é manual ou automatizado
+     * Obtem se o movimento da snake e manual ou automatizado
+     * @return se o movimento da snake e manual ou automatizado
      */
     public boolean isSnakeManualMovement() {
         return isSnakeManualMovement;
     }
 
     /**
-     * Atualiza se o movimento da snake é manual ou automatizado
-     * @param isSnakeManualMovement o novo valor lógico da automatização ou não do movimento da snake
+     * Atualiza se o movimento da snake e manual ou automatizado
+     * @param isSnakeManualMovement o novo valor logico da automatizacao ou nao do movimento da snake
      */
     public void setSnakeManualMovement(boolean isSnakeManualMovement) {
         this.isSnakeManualMovement = isSnakeManualMovement;
     }
 
     /**
-     * Obtém os pontos por comida do jogo
+     * Obtem os pontos por comida do jogo
      * @return os pontos por comida do jogo
      */
     public int getScorePerFood() {
@@ -552,7 +552,7 @@ import ViewLayer.UI;
 
 
     /**
-     * Obtém a leaderboard do jogo
+     * Obtem a leaderboard do jogo
      * @return a leaderboard do jogo
      */
     public Leaderboard getLeaderboard() {
@@ -569,8 +569,8 @@ import ViewLayer.UI;
 
 
     /**
-     * Obtém a lista de pontos de rotação dos obstáculos
-     * @return a lista de pontos de rotação dos obstáculos
+     * Obtem a lista de pontos de rotacao dos obstaculos
+     * @return a lista de pontos de rotacao dos obstaculos
      */
     public List<Ponto<? extends Number>> getListObstacleRotacionPoint() {
         return listObstacleRotacionPoint;
@@ -578,15 +578,15 @@ import ViewLayer.UI;
 
 
     /**
-     * Atualiza a lista de pontos de rotação dos obstáculos
-     * @param listObstacleRotacionPoint a nova lista de pontos de rotação dos obstáculos
+     * Atualiza a lista de pontos de rotacao dos obstaculos
+     * @param listObstacleRotacionPoint a nova lista de pontos de rotacao dos obstaculos
      */
     public void setListObstacleRotacionPoint(List<Ponto<? extends Number>> listObstacleRotacionPoint) {
         this.listObstacleRotacionPoint = listObstacleRotacionPoint;
     }
 
     /**
-     * Obtém o player do jogo
+     * Obtem o player do jogo
      * @return o player
      */
     public Player getPlayer() {
@@ -602,32 +602,32 @@ import ViewLayer.UI;
     }
 
     /**
-     * Obtém se a comida foi comida pela cobra ou não
-     * @return se a comida foi comida pela cobra ou não
+     * Obtem se a comida foi comida pela cobra ou nao
+     * @return se a comida foi comida pela cobra ou nao
      */
     public boolean isFoodEaten() {
         return isFoodEaten;
     }
 
     /**
-     * Atualiza se a comida foi comida pela cobra ou não
-     * @param isFoodEaten o novo valor lógico se a comida foi comida pela cobra ou não
+     * Atualiza se a comida foi comida pela cobra ou nao
+     * @param isFoodEaten o novo valor logico se a comida foi comida pela cobra ou nao
      */
     public void setFoodEaten(boolean isFoodEaten) {
         this.isFoodEaten = isFoodEaten;
     }
 
     /**
-     * Obtém a lista de ângulos de rotação dos obstáculos
-     * @return a lista de ângulos de rotação dos obstáculos
+     * Obtem a lista de angulos de rotacao dos obstaculos
+     * @return a lista de ângulos de rotacao dos obstaculos
      */
     public List<Integer> getListObstacleAngles() {
         return listObstacleAngles;
     }
 
     /**
-     * Atualiza a lista de ângulos de rotação dos obstáculos
-     * @param listObstacleAngles a nova lista de ângulos de rotação de obstáculos
+     * Atualiza a lista de angulos de rotacao dos obstaculos
+     * @param listObstacleAngles a nova lista de angulos de rotacao de obstaculos
      */
     public void setListObstacleAngles(List<Integer> listObstacleAngles) {
         this.listObstacleAngles = listObstacleAngles;
