@@ -13,6 +13,12 @@ import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Snake;
 
+
+/** Classe que representa uma classe teste para testar as funcionalidades da classe Snake
+    Responsabilidade: Testar as funcionalidades da classe Snake
+    @version 1.0 12/05/2024
+    @author Hugo Conceição, João Ventura, Eduarda Pereira
+ */
 public class SnakeTest {
     @Test
     public void increaseSizeTest() throws CloneNotSupportedException{
@@ -22,24 +28,25 @@ public class SnakeTest {
         LinkedList<Quadrado> quadrado = new LinkedList<>();
         quadrado.add(new Quadrado(input1));
         Snake snake = new Snake(quadrado,true,random);
+        snake.setCurrentDirection(Direction.RIGHT);
         snake.setNextDirection(Direction.RIGHT);
         snake.move();
         snake.increaseSize();
-        assertEquals("Cabeça: [(14.0,6.0), (14.0,4.0), (12.0,4.0), (12.0,6.0)] Tail: [[(16.0,6.0), (16.0,4.0), (14.0,4.0), (14.0,6.0)]]", snake.toString());
+        assertEquals("Cabeça: [(16.0,6.0), (16.0,4.0), (14.0,4.0), (14.0,6.0)] Tail: [[(14,6), (14,4), (12,4), (12,6)]]", snake.toString());
         assertEquals(2,snake.getBody().size());
         snake.increaseSize();
-        assertEquals("Cabeça: [(14.0,6.0), (14.0,4.0), (12.0,4.0), (12.0,6.0)] Tail: [[(16.0,6.0), (16.0,4.0), (14.0,4.0), (14.0,6.0)], [(18.0,6.0), (18.0,4.0), (16.0,4.0), (16.0,6.0)]]", snake.toString());
+        assertEquals("Cabeça: [(16.0,6.0), (16.0,4.0), (14.0,4.0), (14.0,6.0)] Tail: [[(14,6), (14,4), (12,4), (12,6)], [(14,6), (14,4), (12,4), (12,6)]]", snake.toString());
         assertEquals(3, snake.getBody().size());
         snake.setNextDirection(Direction.UP);
         snake.move();
         snake.increaseSize();
-        assertEquals("Cabeça: [(14.0,6.0), (12.0,6.0), (12.0,8.0), (14.0,8.0)] Tail: [[(14.0,6.0), (14.0,4.0), (12.0,4.0), (12.0,6.0)], [(16.0,6.0), (16.0,4.0), (14.0,4.0), (14.0,6.0)], [(18.0,6.0), (18.0,4.0), (16.0,4.0), (16.0,6.0)]]", snake.toString());
+        assertEquals("Cabeça: [(14.0,8.0), (16.0,8.0), (16.0,6.0), (14.0,6.0)] Tail: [[(16.0,6.0), (16.0,4.0), (14.0,4.0), (14.0,6.0)], [(14.0,8.0), (16.0,8.0), (16.0,6.0), (14.0,6.0)], [(14,6), (14,4), (12,4), (12,6)]]", snake.toString());
         snake.setNextDirection(Direction.UP);
         snake.move();
         snake.setNextDirection(Direction.UP);
         snake.move();
         snake.increaseSize();
-        assertEquals("Cabeça: [(14.0,12.0), (14.0,10.0), (12.0,10.0), (12.0,12.0)] Tail: [[(14.0,10.0), (14.0,8.0), (12.0,8.0), (12.0,10.0)], [(14.0,6.0), (12.0,6.0), (12.0,8.0), (14.0,8.0)], [(14.0,6.0), (14.0,4.0), (12.0,4.0), (12.0,6.0)], [(14.0,4.0), (14.0,2.0), (12.0,2.0), (12.0,4.0)]]", snake.toString());
+        assertEquals("Cabeça: [(14.0,12.0), (16.0,12.0), (16.0,10.0), (14.0,10.0)] Tail: [[(16.0,10.0), (16.0,8.0), (14.0,8.0), (14.0,10.0)], [(14.0,12.0), (16.0,12.0), (16.0,10.0), (14.0,10.0)], [(16.0,6.0), (16.0,4.0), (14.0,4.0), (14.0,6.0)], [(14.0,8.0), (16.0,8.0), (16.0,6.0), (14.0,6.0)]]", snake.toString());
         snake.increaseSize();
         assertEquals(6, snake.getBody().size());
         long seed1 = 117;
@@ -49,9 +56,12 @@ public class SnakeTest {
         quadrado2.add(new Quadrado(input2));
         Snake snake1 = new Snake(quadrado2, true,random2); 
         snake1.setCurrentDirection(Direction.RIGHT);
+        snake1.setNextDirection(Direction.RIGHT);
+        snake1.move();
         snake1.increaseSize();
+        snake1.move();
         snake1.increaseSize();
-        assertEquals("Cabeça: [(2.0,3.0), (4.0,3.0), (4.0,1.0), (2.0,1.0)] Tail: [[(0.0,3.0), (2.0,3.0), (2.0,1.0), (0.0,1.0)], [(0.0,5.0), (2.0,5.0), (2.0,3.0), (0.0,3.0)]]", snake1.toString());    
+        assertEquals("Cabeça: [(6.0,3.0), (8.0,3.0), (8.0,1.0), (6.0,1.0)] Tail: [[(4.0,3.0), (6.0,3.0), (6.0,1.0), (4.0,1.0)], [(2,3), (4,3), (4,1), (2,1)]]", snake1.toString());    
     }
 
     @Test   
@@ -63,9 +73,17 @@ public class SnakeTest {
         quadrado.add(new Quadrado(input1));
         Snake snake = new Snake(quadrado,true,random);
         snake.setCurrentDirection(Direction.RIGHT);
+        snake.setNextDirection(Direction.RIGHT);
+        snake.move();
         snake.increaseSize();
+        snake.setNextDirection(Direction.RIGHT);
+        snake.move();
         snake.increaseSize();
+        snake.setNextDirection(Direction.RIGHT);
+        snake.move();
         snake.increaseSize();
+        snake.setNextDirection(Direction.RIGHT);
+        snake.move();
         snake.increaseSize();
         assertFalse(snake.collidedWithHerself());
         snake.setNextDirection(Direction.UP);
@@ -133,7 +151,7 @@ public class SnakeTest {
         snake.setNextDirection(Direction.RIGHT);
         snake.move();
         snake.increaseSize();
-        assertEquals("Cabeça: [(10,4), (10,2), (8,2), (8,4)] Tail: [[(8,4), (8,2), (6,2), (6,4)]]", snake.toString());
+        assertEquals("Cabeça: [(10.0,4.0), (10.0,2.0), (8.0,2.0), (8.0,4.0)] Tail: [[(8,4), (8,2), (6,2), (6,4)]]", snake.toString());
     }
 
     @Test 
@@ -154,6 +172,5 @@ public class SnakeTest {
         assertFalse(snake.intersectsFood(new Ponto<Number>(0, 3.0)));
         assertFalse(snake.intersectsFood(new Ponto<Number>(9,1)));
         assertTrue(snake.intersectsFood(new Ponto<Number>(9,2)));
-
     }
 }

@@ -12,7 +12,11 @@ import ModelLayer.BoardLayer.FoodCircle;
 import ModelLayer.BoardLayer.FoodSquare;
 import ModelLayer.BoardLayer.FoodType;
 
-
+/** Classe que representa uma classe teste para testar as funcionalidades da classe FactoryFood
+    Responsabilidade: Testar as funcionalidades da classe FactoryFood
+    @version 1.0 12/05/2024
+    @author Hugo Conceição, João Ventura, Eduarda Pereira
+ */
 public class FactoryFoodTest {
     @Test
     public void createFoodTest() {

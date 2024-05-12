@@ -136,7 +136,7 @@ public class Ponto<T extends Number> implements Cloneable {
         double x = this.x.doubleValue() + dx;
         double y = this.y.doubleValue() + dy;
         setX((T) Double.valueOf(x));
-        setY((T) Integer.valueOf((int) Math.round(y)));
+        setY((T) Double.valueOf(y));
     }
 
     @Override

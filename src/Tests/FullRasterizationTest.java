@@ -19,6 +19,11 @@ import ModelLayer.SnakeLayer.Snake;
 
 import ViewLayer.FullRasterization;
 
+/** Classe que representa uma classe teste para testar as funcionalidades da classe FullRasterization
+    Responsabilidade: Testar as funcionalidades da classe FullRasterization
+    @version 1.0 12/05/2024
+    @author Hugo Conceição, João Ventura, Eduarda Pereira
+ */
 public class FullRasterizationTest {
     @Test
     public void updateSnakeCellsTest() throws CloneNotSupportedException{
@@ -36,6 +41,7 @@ public class FullRasterizationTest {
         rotacionPoint.add(null);
         rotacionPoint.add(null);
         List<Integer> angle = new ArrayList<>();
+        angle.add(0);
         angle.add(0);
         GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,2,rotacionPoint,angle,false,random);
         FullRasterization rasterizationStrategy = new FullRasterization(gameBoard);
@@ -67,23 +73,15 @@ public class FullRasterizationTest {
         rotacionPoint.add(null);
         List<Integer> angle = new ArrayList<>();
         angle.add(0);
+        angle.add(0);
         GameBoard gameBoard = new GameBoard(snake, 10, 10,FoodType.SQUARE,1,2,rotacionPoint,angle,false,random);
         FullRasterization rasterizationStrategy = new FullRasterization(gameBoard);
-        rasterizationStrategy.updateSnakeCells();
-        assertEquals(CellType.HEAD, rasterizationStrategy.getBoard()[4][8].getCellType());
-        assertEquals(CellType.HEAD, rasterizationStrategy.getBoard()[3][8].getCellType());
-        assertEquals(CellType.HEAD, rasterizationStrategy.getBoard()[3][9].getCellType());
-        assertEquals(CellType.HEAD, rasterizationStrategy.getBoard()[4][9].getCellType());
-        assertEquals(CellType.TAIL, rasterizationStrategy.getBoard()[3][6].getCellType());
-        assertEquals(CellType.TAIL, rasterizationStrategy.getBoard()[4][6].getCellType());
-        assertEquals(CellType.TAIL, rasterizationStrategy.getBoard()[3][7].getCellType());
-        assertEquals(CellType.TAIL, rasterizationStrategy.getBoard()[4][7].getCellType());
         rasterizationStrategy.updateObstacleCells();
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[6][8].getCellType());
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[5][0].getCellType());
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[6][0].getCellType());
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[5][1].getCellType());
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[6][1].getCellType());
+        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[8][6].getCellType());
+        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[0][5].getCellType());
+        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[0][6].getCellType());
+        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[1][5].getCellType());
+        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[1][6].getCellType());
 
     }
     

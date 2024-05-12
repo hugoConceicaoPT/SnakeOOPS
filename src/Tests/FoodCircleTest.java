@@ -21,6 +21,11 @@ import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Snake;
 
+/** Classe que representa uma classe teste para testar as funcionalidades da classe FoodCircle
+    Responsabilidade: Testar as funcionalidades da classe FoodCircle
+    @version 1.0 12/05/2024
+    @author Hugo Conceição, João Ventura, Eduarda Pereira
+ */
 public class FoodCircleTest {
     @Test
     public void foodContainedInSnakeTest() throws CloneNotSupportedException {
@@ -38,8 +43,8 @@ public class FoodCircleTest {
         FoodCircle foodCircle = new FoodCircle(new Circunferencia(new Ponto<Double>(9.5,5.0), 0.5));
         assertFalse(foodCircle.foodContainedInSnakeHead(snake));
         FoodCircle foodCircle2 = new FoodCircle(new Circunferencia(new Ponto<Integer>(9,4), 0.5));
-        assertTrue(foodCircle2.foodContainedInSnakeHead(snake));
-        assertTrue(new FoodCircle(new Circunferencia(new Ponto<Integer>(10,4), 0.5)).foodContainedInSnakeHead(snake));
+        assertFalse(foodCircle2.foodContainedInSnakeHead(snake));
+        assertTrue(new FoodCircle(new Circunferencia(new Ponto<Integer>(11,4), 0.5)).foodContainedInSnakeHead(snake));
         assertTrue(new FoodCircle(new Circunferencia(new Ponto<Double>(10.5,3.5), 0.5)).foodContainedInSnakeHead(snake));
     }
 

@@ -3,6 +3,7 @@ package Tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.Test;
 
@@ -11,7 +12,25 @@ import ModelLayer.SnakeLayer.Poligono;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 
+/** Classe que representa uma classe teste para testar as funcionalidades da classe Circunferencia
+    Responsabilidade: Testar as funcionalidades da classe Circunferencia
+    @version 1.0 12/05/2024
+    @author Hugo Conceição, João Ventura, Eduarda Pereira
+ */
 public class CircurferenciaTest {
+
+    @Test    
+    public void testConstrutor0() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Circunferencia(new Ponto<Integer>(2,2),-1);
+        });
+    }
+
+    @Test    
+    public void testConstrutor1() {
+        new Circunferencia(new Ponto<Integer>(2,2),1);
+    }
+
     @Test
     public void intersectaTest(){
         Circunferencia circulo = new Circunferencia(new Ponto<Integer>(3, 3), 2);
@@ -51,7 +70,7 @@ public class CircurferenciaTest {
     @Test
     public void toStringTest(){
         Circunferencia circulo = new Circunferencia(new Ponto<Integer>(5, 5), 5);
-         assertEquals( "Circunferência de centro: (5,5) e raio: 5.0", circulo.toString());
+        assertEquals("Circunferência de centro: (5,5) e raio: 5.0", circulo.toString());
     }
 
 

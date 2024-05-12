@@ -26,7 +26,9 @@ public class FactoryFood {
      */
     public Food createFood(int x, int y, FoodType foodType, int foodDimension) {
         if (foodType == FoodType.CIRCLE) {
-            return new FoodCircle(new Circunferencia(new Ponto<>(x, y), foodDimension / 2));
+            double xCenter = x + foodDimension/2.0;
+            double yCenter = y + foodDimension/2.0;
+            return new FoodCircle(new Circunferencia(new Ponto<>(xCenter, yCenter), foodDimension / 2.0));
         } else if (foodType == FoodType.SQUARE) {
             return new FoodSquare(new Quadrado(createSquarePoints(x, y, foodDimension)));
         } else {
@@ -42,15 +44,12 @@ public class FactoryFood {
      * @param size O tamanho do quadrado (comprimento da aresta).
      * @return Uma lista de pontos que representam os vértices do quadrado.
      */
-    private List<Ponto<? extends Number>> createSquarePoints(int x, int y, double size) {
+    private List<Ponto<? extends Number>> createSquarePoints(int x, int y, int size) {
         List<Ponto<? extends Number>> pontos = new ArrayList<>();
-        double halfSize = size / 2.0;
-        
-        pontos.add(new Ponto<>(x - halfSize, y - halfSize));
-        pontos.add(new Ponto<>(x - halfSize, y + halfSize));
-        pontos.add(new Ponto<>(x + halfSize, y + halfSize));
-        pontos.add(new Ponto<>(x + halfSize, y - halfSize));
-
+        pontos.add(new Ponto<Integer>(x, y));
+        pontos.add(new Ponto<Integer>(x + size, y));
+        pontos.add(new Ponto<Integer>(x + size, y + size));
+        pontos.add(new Ponto<Integer>(x, y + size));
         return pontos;
     }
 }

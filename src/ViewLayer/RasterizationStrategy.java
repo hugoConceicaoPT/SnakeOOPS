@@ -6,16 +6,13 @@ import ModelLayer.BoardLayer.GameBoard;
 /**
  * Classe abstrata que define a estratégia de rasterização para representar o tabuleiro do jogo.
  * Responsabilidade: Fornecer um layout base para as classes derivadas, que implementam estratégias de rasterização específicas.
- * @version 1.0 10/05/2024
+ * @version 1.0 12/05/2024
  * @autor Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public abstract class RasterizationStrategy {
 
-    // Matriz que representa o tabuleiro, com células de diferentes tipos
     protected Cell[][] board;
-    // O tabuleiro do jogo que contém os elementos a serem representados
     protected GameBoard gameBoard;
-    // Número de linhas e colunas no tabuleiro
     protected int rows;
     protected int cols;
 
@@ -28,7 +25,6 @@ public abstract class RasterizationStrategy {
         this.gameBoard = gameBoard;
         this.rows = this.gameBoard.getHeightBoard();
         this.cols = this.gameBoard.getWidthBoard();
-        // Inicializa a matriz de células
         this.board = new Cell[this.rows][this.cols];
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
@@ -37,10 +33,6 @@ public abstract class RasterizationStrategy {
         }
     }
 
-    /**
-     * Representa o tabuleiro como uma string. Cada classe derivada deve implementar seu próprio formato.
-     * @return Uma string que representa o tabuleiro.
-     */
     @Override
     public abstract String toString();
 

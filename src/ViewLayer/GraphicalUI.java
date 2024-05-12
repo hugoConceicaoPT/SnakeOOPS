@@ -22,12 +22,7 @@ public class GraphicalUI extends JFrame implements UI {
     public GraphicalUI() {
     }
 
-    /**
-     * Exibe o placar e o tabuleiro do jogo.
-     * Esta função pode ser aprimorada para desenhar os elementos do tabuleiro e o score usando gráficos.
-     * @param score O placar atual do jogo.
-     * @param gameBoard O tabuleiro do jogo, contendo os elementos a serem desenhados.
-     */
+    @Override
     public void display(Score score, GameBoard gameBoard) {
         
     }

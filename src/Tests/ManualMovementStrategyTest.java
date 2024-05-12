@@ -13,6 +13,11 @@ import ModelLayer.SnakeLayer.MovementStrategy;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Snake;
 
+/** Classe que representa uma classe teste para testar as funcionalidades da classe ManualMovementStrategy
+    Responsabilidade: Testar as funcionalidades da classe ManualMovementStrategy
+    @version 1.0 12/05/2024
+    @author Hugo Conceição, João Ventura, Eduarda Pereira
+ */
 public class ManualMovementStrategyTest {
     @Test
     public void setNextDirectionTest() {

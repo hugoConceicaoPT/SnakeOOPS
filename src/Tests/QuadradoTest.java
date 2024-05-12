@@ -9,8 +9,8 @@ import ModelLayer.SnakeLayer.Quadrado;
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe Quadrado
     Responsabilidade: Testar as funcionalidades da classe Quadrado
-    @version 1.0 26/03/2024
-    @author Hugo Conceição
+    @version 1.0 12/05/2024
+    @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class QuadradoTest {
     @Test

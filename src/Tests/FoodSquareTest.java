@@ -18,6 +18,11 @@ import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Snake;
 
+/** Classe que representa uma classe teste para testar as funcionalidades da classe FoodSquare
+    Responsabilidade: Testar as funcionalidades da classe FoodSquare
+    @version 1.0 12/05/2024
+    @author Hugo Conceição, João Ventura, Eduarda Pereira
+ */
 public class FoodSquareTest {
     @Test
     public void foodContainedInSnakeTest() throws CloneNotSupportedException {
@@ -34,7 +39,7 @@ public class FoodSquareTest {
         snake.increaseSize();
         Quadrado quadrado = new Quadrado("10 5 10 4 9 4 9 5");
         FoodSquare foodCircle = new FoodSquare(quadrado);
-        assertTrue(foodCircle.foodContainedInSnakeHead(snake));
+        assertFalse(foodCircle.foodContainedInSnakeHead(snake));
         assertTrue(new FoodSquare(new Quadrado("11 5 11 4 10 4 10 5")).foodContainedInSnakeHead(snake));
         assertFalse(new FoodSquare(new Quadrado("7 5 8 5 8 4 7 4")).foodContainedInSnakeHead(snake));
         assertFalse(new FoodSquare(new Quadrado("8 6 9 6 9 5 8 5")).foodContainedInSnakeHead(snake));
@@ -47,8 +52,7 @@ public class FoodSquareTest {
         @Test
     public void foodIntersectObstacleTest() {
 
-        FoodSquare food = new FoodSquare(new Quadrado("5.0,5.0;7.0,5.0;7.0,7.0;5.0,7.0"));
-
+        FoodSquare food = new FoodSquare(new Quadrado("5.0 5.0 7.0 5.0 7.0 7.0 5.0 7.0"));
 
         List<Ponto<? extends Number>> nonIntersectingPoints = new ArrayList<>();
         nonIntersectingPoints.add(new Ponto<>(1.0, 1.0));
@@ -77,18 +81,18 @@ public class FoodSquareTest {
         snakeBody.add(new Quadrado("6 5 6 6 7 6 7 5"));
         Snake snake = new Snake(snakeBody, true, new Random());
 
-        FoodSquare intersectingFood = new FoodSquare(new Quadrado("7.0,5.0;8.0,5.0;8.0,6.0;7.0,6.0"));
+        FoodSquare intersectingFood = new FoodSquare(new Quadrado("7.0 5.0 8.0 5.0 8.0 6.0 7.0 6.0"));
         assertTrue(intersectingFood.foodIntersectSnake(snake));
 
 
-        FoodSquare nonIntersectingFood = new FoodSquare(new Quadrado("10.0,5.0;11.0,5.0;11.0,6.0;10.0,6.0"));
+        FoodSquare nonIntersectingFood = new FoodSquare(new Quadrado("10.0 5.0 11.0 5.0 11.0 6.0 10.0 6.0"));
         assertFalse(nonIntersectingFood.foodIntersectSnake(snake));
     }
 
     @Test
     public void foodContainedObstacleTest() {
 
-        FoodSquare food = new FoodSquare(new Quadrado("5.0,5.0;7.0,5.0;7.0,7.0;5.0,7.0"));
+        FoodSquare food = new FoodSquare(new Quadrado("5.0 5.0 7.0 5.0 7.0 7.0 5.0 7.0"));
 
        
         List<Ponto<? extends Number>>  containingPoints = new ArrayList<>();

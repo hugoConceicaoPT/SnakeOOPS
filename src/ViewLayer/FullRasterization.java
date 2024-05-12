@@ -1,6 +1,5 @@
 package ViewLayer;
 
-import ModelLayer.BoardLayer.Cell;
 import ModelLayer.BoardLayer.CellType;
 import ModelLayer.BoardLayer.GameBoard;
 import ModelLayer.SnakeLayer.Ponto;
@@ -9,7 +8,7 @@ import ModelLayer.SnakeLayer.Quadrado;
 /**
  * Classe que implementa a estratégia de rasterização completa dos elementos no tabuleiro.
  * Responsabilidade: Representar de forma completa todos os elementos no tabuleiro, incluindo a cobra, obstáculos e comida.
- * @version 1.0 10/05/2024
+ * @version 1.0 12/05/2024
  * @autor Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class FullRasterization extends RasterizationStrategy {
@@ -22,10 +21,6 @@ public class FullRasterization extends RasterizationStrategy {
         super(gameBoard);
     }
 
-    /**
-     * Representa o tabuleiro como uma string, incluindo todos os elementos rasterizados.
-     * @return Uma string que representa o tabuleiro.
-     */
     @Override
     public String toString() {
         String result = "";
@@ -43,7 +38,7 @@ public class FullRasterization extends RasterizationStrategy {
      * Diferente da rasterização por contorno, esta abordagem preenche todas as células ocupadas pela cobra.
      */
     public void updateSnakeCells() {
-        // Limpa as células que atualmente representam a cobra
+
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
                 if (board[i][j].getCellType() == CellType.HEAD || board[i][j].getCellType() == CellType.TAIL) {
@@ -52,7 +47,6 @@ public class FullRasterization extends RasterizationStrategy {
             }
         }
 
-        // Preenche completamente as células do corpo da cobra
         for (int i = 1; i < this.gameBoard.getSnake().getBody().size(); i++) {
             for(int w = (int) this.gameBoard.getSnake().getBody().get(i).getMinY(); w < (int) this.gameBoard.getSnake().getBody().get(i).getMaxY(); w++) {
                 for(int j = (int) this.gameBoard.getSnake().getBody().get(i).getMinX() ; j < (int) this.gameBoard.getSnake().getBody().get(i).getMaxX(); j++) {
@@ -61,7 +55,6 @@ public class FullRasterization extends RasterizationStrategy {
             }
         }
 
-        // Preenche completamente as células da cabeça da cobra
         Quadrado head = this.gameBoard.getSnake().getHead();
         for(int w = (int) head.getMinY(); w < (int) head.getMaxY(); w++) {
             for(int j = (int) head.getMinX(); j < (int) head.getMaxX(); j++) {
@@ -133,41 +126,6 @@ public class FullRasterization extends RasterizationStrategy {
                 }
             }
         }
-        // Exibe as informações da nova comida no console
         System.out.println(this.gameBoard.getFood().toString());
-    }
-
-    
-
-    public Cell[][] getBoard() {
-        return board;
-    }
-
-    public void setBoard(Cell[][] board) {
-        this.board = board;
-    }
-
-    public GameBoard getGameBoard() {
-        return gameBoard;
-    }
-
-    public void setGameBoard(GameBoard gameBoard) {
-        this.gameBoard = gameBoard;
-    }
-
-    public int getRows() {
-        return rows;
-    }
-
-    public void setRows(int rows) {
-        this.rows = rows;
-    }
-
-    public int getCols() {
-        return cols;
-    }
-
-    public void setCols(int cols) {
-        this.cols = cols;
     }
 }

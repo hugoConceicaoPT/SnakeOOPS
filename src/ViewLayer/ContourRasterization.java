@@ -12,7 +12,7 @@ import ModelLayer.SnakeLayer.SegmentoReta;
  * Classe que implementa a estratégia de rasterização do contorno dos elementos no tabuleiro.
  * Responsabilidade: Representar os elementos do tabuleiro, como cobra, obstáculos e comida,
  * destacando apenas seus contornos.
- * @version 1.0 10/05/2024
+ * @version 1.0 12/05/2024
  * @autor Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class ContourRasterization extends RasterizationStrategy {
@@ -46,7 +46,6 @@ public class ContourRasterization extends RasterizationStrategy {
      * As células internas são deixadas vazias, enquanto as bordas são marcadas como contornos.
      */
     public void updateSnakeCells() {
-        // Limpa as células que atualmente representam a cobra
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
                 if (board[i][j].getCellType() == CellType.HEAD || board[i][j].getCellType() == CellType.TAIL) {
@@ -55,7 +54,6 @@ public class ContourRasterization extends RasterizationStrategy {
             }
         }
 
-        // Marca os contornos dos segmentos do corpo (exceto a cabeça)
         for (int i = 1; i < this.gameBoard.getSnake().getBody().size(); i++) {
             Quadrado segment = this.gameBoard.getSnake().getBody().get(i);
             int minX = (int) segment.getMinX();
@@ -72,7 +70,6 @@ public class ContourRasterization extends RasterizationStrategy {
             }
         }
 
-        // Marca os contornos da cabeça da cobra
         Quadrado head = this.gameBoard.getSnake().getHead();
         int minX = (int) head.getMinX();
         int maxX = (int) head.getMaxX() - 1;
@@ -93,7 +90,6 @@ public class ContourRasterization extends RasterizationStrategy {
      * As células internas são deixadas vazias, enquanto as bordas são marcadas como contornos.
      */
     public void updateObstacleCells() {
-        // Limpa as células que atualmente representam os obstáculos
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
                 if (board[i][j].getCellType() == CellType.OBSTACLE) {
@@ -102,7 +98,6 @@ public class ContourRasterization extends RasterizationStrategy {
             }
         }
 
-        // Marca os contornos das arestas dos obstáculos
         for (int i = 0; i < this.gameBoard.getObstaclesQuantity(); i++) {
             Poligono poligono = this.gameBoard.getListOfObstacles().get(i).getPoligono();
 
@@ -112,7 +107,6 @@ public class ContourRasterization extends RasterizationStrategy {
                 int minY = (int) aresta.getMinY();
                 int maxY = (int) aresta.getMaxY();
 
-                // Ajusta os limites dos contornos
                 if (minX != maxX) {
                     maxX = maxX - 1;
                 }
@@ -120,7 +114,6 @@ public class ContourRasterization extends RasterizationStrategy {
                     maxY = maxY - 1;
                 }
 
-                // Marca as células que contêm os contornos das arestas
                 for (int y = minY; y <= maxY; y++) {
                     for (int x = minX; x <= maxX; x++) {
                         if (aresta.contemPonto(new Ponto<>(x, y)) && y >= 0 && y < this.rows && x >= 0 && x < this.cols) {
@@ -137,7 +130,6 @@ public class ContourRasterization extends RasterizationStrategy {
      * As células internas são deixadas vazias, enquanto as bordas são marcadas como contornos.
      */
     public void updateFoodCells() {
-        // Limpa as células que atualmente representam a comida
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
                 if (board[i][j].getCellType() == CellType.FOOD) {
@@ -146,7 +138,6 @@ public class ContourRasterization extends RasterizationStrategy {
             }
         }
 
-        // Marca os contornos das células da comida
         Food food = this.gameBoard.getFood();
         int minX = (int) food.getMinX();
         int maxX = (int) food.getMaxX() - 1;

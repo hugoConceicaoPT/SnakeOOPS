@@ -14,8 +14,8 @@ import ModelLayer.SnakeLayer.Triangulo;
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe Poligono
     Responsabilidade: Testar as funcionalidades da classe Poligono
-    @version 1 26/03/2024
-    @author Hugo Conceição
+    @version 1 12/05/2024
+    @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class PoligonoTest {
     
@@ -77,11 +77,11 @@ public class PoligonoTest {
         String input1 = "4 1 1 3 1 3 5 1 5";
         Poligono poligono1 = new Poligono(input1);
         poligono1.rotateAngle(90);
-        assertEquals("[(4,2), (4,4), (0,4), (0,2)]",poligono1.toString());
+        assertEquals("[(4.0,1.9999999999999998), (4.0,4.0), (0.0,4.0), (0.0,2.0)]",poligono1.toString());
         String input2 = "3 2 2 3 4 4 2";
         Poligono poligono2 = new Poligono(input2);
         poligono2.rotateAngle(60);
-        assertEquals("[(3,1), (2,3), (4,3)]", poligono2.toString());
+        assertEquals("[(3.0773502691896253,1.4673079295488947), (1.8452994616207483,3.3333333333333335), (4.077350269189626,3.199358737117772)]", poligono2.toString());
     }
 
     @Test    
@@ -101,11 +101,11 @@ public class PoligonoTest {
         String input1 = "4 1 3 1 1 5 1 5 3";
         Poligono poligono1 = new Poligono(input1);
         poligono1.translateCentroide(8, 2);
-        assertEquals("[(6,3), (6,1), (10,1), (10,3)]",poligono1.toString());
+        assertEquals("[(6.0,3.0), (6.0,1.0), (10.0,1.0), (10.0,3.0)]",poligono1.toString());
         String input2 = "3 2 2 4 4 4 2";
         Poligono poligono2 = new Poligono(input2);
         poligono2.translateCentroide(4, 5);
-        assertEquals("[(3,4), (5,6), (5,4)]", poligono2.toString());
+        assertEquals("[(2.6666666666666665,4.333333333333334), (4.666666666666666,6.333333333333334), (4.666666666666666,4.333333333333334)]", poligono2.toString());
     }
     @Test
     public void testInterseta() {

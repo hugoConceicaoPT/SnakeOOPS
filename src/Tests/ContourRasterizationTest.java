@@ -19,8 +19,14 @@ import ModelLayer.SnakeLayer.Snake;
 import ViewLayer.ContourRasterization;
 
 
+/** Classe que representa uma classe teste para testar as funcionalidades da classe ContourRasterization
+    Responsabilidade: Testar as funcionalidades da classe ContourRasterization
+    @version 1.0 12/05/2024
+    @author Hugo Conceição, João Ventura, Eduarda Pereira
+ */
 public class ContourRasterizationTest {
-        @Test
+    
+    @Test
     public void updateSnakeCellsTest() {
         long seed = 119;
         Random random = new Random(seed);
@@ -36,6 +42,7 @@ public class ContourRasterizationTest {
         rotacionPoint.add(null);
         rotacionPoint.add(null);
         List<Integer> angle = new ArrayList<>();
+        angle.add(0);
         angle.add(0);
         GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,2,rotacionPoint,angle,false,random);
         ContourRasterization rasterizationStrategy = new ContourRasterization(gameBoard);
@@ -75,22 +82,23 @@ public class ContourRasterizationTest {
         rotacionPoint.add(null);
         List<Integer> angle = new ArrayList<>();
         angle.add(0);
-        GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,1,2,rotacionPoint,angle,false,random);
+        angle.add(0);
+        GameBoard gameBoard = new GameBoard(snake, 30, 20,FoodType.SQUARE,1,2,rotacionPoint,angle,false,random);
         ContourRasterization rasterizationStrategy = new ContourRasterization(gameBoard);
         rasterizationStrategy.updateObstacleCells();
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[1][5].getCellType());
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[1][6].getCellType());
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[1][7].getCellType());
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[1][8].getCellType());
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[2][5].getCellType());
-        assertEquals(CellType.EMPTY, rasterizationStrategy.getBoard()[2][6].getCellType());
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[2][7].getCellType());
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[3][5].getCellType());
-        assertEquals(CellType.EMPTY, rasterizationStrategy.getBoard()[3][6].getCellType());
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[3][7].getCellType());
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[4][5].getCellType());
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[4][6].getCellType());
-        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[4][7].getCellType());
+        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[15][20].getCellType());
+        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[15][21].getCellType());
+        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[15][22].getCellType());
+        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[16][20].getCellType());
+        assertEquals(CellType.EMPTY, rasterizationStrategy.getBoard()[16][22].getCellType());
+        assertEquals(CellType.EMPTY, rasterizationStrategy.getBoard()[16][21].getCellType());
+        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[17][20].getCellType());
+        assertEquals(CellType.EMPTY, rasterizationStrategy.getBoard()[17][22].getCellType());
+        assertEquals(CellType.EMPTY, rasterizationStrategy.getBoard()[17][21].getCellType());
+        assertEquals(CellType.OBSTACLE, rasterizationStrategy.getBoard()[18][19].getCellType());
+        assertEquals(CellType.EMPTY, rasterizationStrategy.getBoard()[18][20].getCellType());
+        assertEquals(CellType.EMPTY, rasterizationStrategy.getBoard()[18][21].getCellType());
+        assertEquals(CellType.EMPTY, rasterizationStrategy.getBoard()[18][22].getCellType());
     }
     @Test
     public void updateFoodCellsTest(){
@@ -109,7 +117,7 @@ public class ContourRasterizationTest {
         rotacionPoint.add(null);
         List<Integer> angle = new ArrayList<>();
         angle.add(0);
-        GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,3,0,rotacionPoint,angle,false,random);
+        GameBoard gameBoard = new GameBoard(snake, 20, 10,FoodType.SQUARE,2,0,rotacionPoint,angle,false,random);
         ContourRasterization rasterizationStrategy = new ContourRasterization(gameBoard);
         rasterizationStrategy.updateFoodCells();
         assertEquals(CellType.FOOD, rasterizationStrategy.getBoard()[1][5].getCellType());

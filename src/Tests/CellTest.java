@@ -7,6 +7,11 @@ import org.junit.Test;
 import ModelLayer.BoardLayer.Cell;
 import ModelLayer.BoardLayer.CellType;
 
+/** Classe que representa uma classe teste para testar as funcionalidades da classe Cell
+    Responsabilidade: Testar as funcionalidades da classe Cell
+    @version 1.0 12/05/2024
+    @author Hugo Conceição, João Ventura, Eduarda Pereira
+ */
 public class CellTest {
     @Test
     public void toStringTest() {

@@ -10,8 +10,8 @@ import ModelLayer.SnakeLayer.SegmentoReta;
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe SegmentoReta
     Responsabilidade: Testar as funcionalidades da classe SegmentoReta
-    @version 1.0 26/03/2024
-    @author Hugo Conceição
+    @version 1.0 12/05/2024
+    @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class SegmentoRetaTest {
     

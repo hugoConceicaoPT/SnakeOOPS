@@ -27,25 +27,6 @@ public class Circunferencia {
     }
 
     /**
-     * Move a circunferência pelo plano através de um deslocamento especificado.
-     * @param dx Deslocamento ao longo do eixo x.
-     * @param dy Deslocamento ao longo do eixo y.
-     */
-    public void translate(int dx, int dy) {
-        this.centro.translate(dx, dy);
-    }
-
-    /**
-     * Move a circunferência para um novo centróide, deslocando-a pelo valor
-     * necessário para que seu centro coincida com as novas coordenadas do centróide.
-     * @param centroX Coordenada x do novo centróide.
-     * @param centroY Coordenada y do novo centróide.
-     */
-    public void translateCentroide(int centroX, int centroY) {
-        this.centro.translateCentroide(centroX, centroY, this.centro);
-    }
-
-    /**
      * Verifica se esta circunferência intersecta um polígono fornecido.
      * O método usa a aproximação de colisão entre círculo e retângulo.
      * @param that O polígono a ser verificado.
@@ -66,7 +47,7 @@ public class Circunferencia {
         double distX = this.centro.getX().doubleValue() - testX;
         double distY = this.centro.getY().doubleValue() - testY;
         double distance = Math.sqrt((distX * distX) + (distY * distY));
-        
+
         return distance <= this.raio;
     }
 

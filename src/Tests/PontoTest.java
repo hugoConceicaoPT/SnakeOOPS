@@ -9,8 +9,8 @@ import ModelLayer.SnakeLayer.Ponto;
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe Ponto
     Responsabilidade: Testar as funcionalidades da classe Ponto
-    @version 1.0 26/03/2024
-    @author Hugo Conceição
+    @version 1.0 12/05/2024
+    @author Hugo Conceição, João Ventura, Eduarda Pereira
 */
 public class PontoTest {
     @Test    
@@ -30,11 +30,11 @@ public class PontoTest {
     @Test
     public void testRotate() {
         Ponto<Integer> ponto1 = new Ponto<Integer>(3,3);
-        ponto1.rotate(45, new Ponto<Double>(1.0,1.0));
-        assertEquals("(1,4)",ponto1.toString());
+        ponto1.rotate(45, new Ponto<Integer>(1,1));
+        assertEquals("(1.0000000000000002,3.82842712474619)",ponto1.toString());
         Ponto<Integer> ponto2 = new Ponto<Integer>(1,2);
         ponto2.rotate(90, new Ponto<Double>(0.0, 4.0));
-        assertEquals("(2,5)",ponto2.toString());
+        assertEquals("(2.0,5.0)",ponto2.toString());
     }
 
     @Test
@@ -51,9 +51,9 @@ public class PontoTest {
     public void testTranslateCentroide() {
         Ponto<Integer> ponto1 = new Ponto<Integer>(3,3);
         ponto1.translateCentroide(6, 4, new Ponto<Integer>(4,2));
-        assertEquals("(5,5)",ponto1.toString());
-        Ponto<Integer> ponto2 = new Ponto<Integer>(3,2);
+        assertEquals("(5.0,5.0)",ponto1.toString());
+        Ponto<Integer>ponto2 = new Ponto<Integer>(3,2);
         ponto2.translateCentroide(4, 5, new Ponto<Integer>(6,2));
-        assertEquals("(1,5)",ponto2.toString());
+        assertEquals("(1.0,5.0)",ponto2.toString());
     }
 }

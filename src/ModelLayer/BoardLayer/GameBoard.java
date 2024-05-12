@@ -121,9 +121,9 @@ public class GameBoard {
      * @param y coordenada y da posição da comida.
      * @return verdadeiro se a comida intersecta um obstáculo, falso caso contrário.
      */
-    public boolean foodIntersectObstacle(int x, int y) {
+    public boolean foodIntersectObstacle() {
         for (Obstacle obstacle : listOfObstacles) {
-            if (obstacle.obstacleIntersect(new Ponto<Integer>(x, y))) {
+            if (food.foodIntersectObstacle(obstacle)) {
                 return true;
             }
         }   
@@ -136,8 +136,8 @@ public class GameBoard {
      * @param y coordenada y da posição da comida.
      * @return verdadeiro se a comida intersecta a cobra, falso caso contrário.
      */
-    public boolean foodIntersectSnake(int x, int y) {
-        return snake.intersectsFood(new Ponto<Integer>(x, y));
+    public boolean foodIntersectSnake() {
+        return food.foodIntersectSnake(snake);
     }
 
     /**
@@ -159,14 +159,22 @@ public class GameBoard {
     public void generateFood() {
         boolean isEmpty = true;
         while (isEmpty) {
-            int x = random.nextInt(widthBoard - foodDimension) + (foodDimension / 2);
-            int y = random.nextInt(heightBoard - foodDimension) + (foodDimension / 2);
-            if (!foodIntersectObstacle(x, y) && !foodIntersectSnake(x, y) && x >= 0 && x < widthBoard && y >= 0 && y < heightBoard) {
-                FactoryFood factory = new FactoryFood();
-                this.food = factory.createFood(x, y, foodType, foodDimension);
+            int x = 0;
+            int y = 0;
+            if(this.widthBoard % this.snake.getArestaHeadLength() == 0 && this.snake.getHead().getMaxX() % this.snake.getArestaHeadLength() == 0) 
+                x = this.random.nextInt(this.widthBoard - this.foodDimension);
+            else
+                x = this.random.nextInt(this.widthBoard - this.foodDimension*2) + this.foodDimension;
+            if(this.heightBoard % this.snake.getHead().getMaxY() == 0 && this.snake.getHead().getMaxY() % this.snake.getArestaHeadLength() == 0)
+                y = this.random.nextInt(this.heightBoard - this.foodDimension);
+            else
+                y = this.random.nextInt(this.heightBoard - this.foodDimension*2) + this.foodDimension;
+            FactoryFood factory = new FactoryFood();
+            this.food = factory.createFood(x, y, foodType, foodDimension);
+            if(!foodIntersectObstacle() && !foodContainedInObstacle() && !foodIntersectSnake() && !this.food.foodContainedInSnakeHead(snake)) {
                 boolean isReachable = foodIsInReachableArea();
-                if (isReachable) isEmpty = false;
-                else {
+                if(isReachable) isEmpty = false;
+                else { 
                     this.food = null;
                     isEmpty = true;
                 }
@@ -191,7 +199,9 @@ public class GameBoard {
         double foodX = this.food.getCentroide().getX().doubleValue();
         double foodY = this.food.getCentroide().getY().doubleValue();
         boolean isReachable = false;
-        while (true) {
+        int maxIterations = 100;
+        int iterations = 0;
+        while (iterations < maxIterations) {
             double headX = snakeClone.getHead().getCentroide().getX();
             double headY = snakeClone.getHead().getCentroide().getY();
             Direction nextDirection = calculateDirection(headX, headY, foodX, foodY, snakeClone);
@@ -206,16 +216,14 @@ public class GameBoard {
                     }
                 }
                 if (isReachable)
-                    break;
-            } else if (this.food.foodIntersectSnake(snakeClone)) {
-                isReachable = false;
-                break;
+                    return true;
             }
             snakeClone.setNextDirection(nextDirection);
             snakeClone.move();
+            iterations++;
         }
         snakeClone = null;
-        return isReachable;
+        return false;
     }
 
     /**
@@ -270,8 +278,8 @@ public class GameBoard {
                     case RECTANGLE:
                         if (listRotacionPoint.size() == 0) {
                             pontos = createRectanglePoints(x, y, obstacleSize);
-                        this.listOfObstacles.add(new Obstacle(new Retangulo(pontos),null,0,isDynamic));
-                        break;
+                            this.listOfObstacles.add(new Obstacle(new Retangulo(pontos),null,0,isDynamic));
+                            break;
                         }
                         pontos = createRectanglePoints(x, y, obstacleSize);
                         this.listOfObstacles.add(new Obstacle(new Retangulo(pontos), listRotacionPoint.get(w),listObstacleAngles.get(w) ,isDynamic));
