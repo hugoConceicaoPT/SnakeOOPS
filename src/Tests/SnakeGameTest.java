@@ -1,7 +1,8 @@
 package Tests;
 
 import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -12,8 +13,9 @@ import org.junit.Test;
 import ControllerLayer.SnakeGame;
 import ModelLayer.BoardLayer.CellType;
 import ModelLayer.BoardLayer.FoodSquare;
-
+import ModelLayer.BoardLayer.Obstacle;
 import ModelLayer.SnakeLayer.Direction;
+import ModelLayer.SnakeLayer.Poligono;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 
@@ -72,6 +74,26 @@ public class SnakeGameTest {
         game.foodContainedInSnakeHead(); 
         assertEquals(100, game.getScore().getPoints());
         assertEquals(2, game.getSnake().getBody().size());
+    }
+
+    @Test
+    public void snakeCollidedTest(){
+        long seed = 1;
+        List<Integer> angle = new ArrayList<>();
+        List<Ponto<? extends Number>> rotacionPoint = new ArrayList<>();
+        rotacionPoint.add(null);
+        rotacionPoint.add(null);
+        rotacionPoint.add(null);
+        rotacionPoint.add(null);
+        rotacionPoint.add(null);
+        angle.add(0);
+        angle.add(0);
+        angle.add(0);
+        angle.add(0);
+        angle.add(0);
+        SnakeGame game = new SnakeGame("Player",100, 100, 10, true, "contorno", 5, "quadrados", 100, 5, rotacionPoint, angle ,true, "textual", seed);
+        assertEquals(game.getObstaclesQuantity(), 5);
+        assertFalse(game.snakeCollided());
     }
 
 }
