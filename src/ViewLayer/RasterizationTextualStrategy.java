@@ -7,9 +7,9 @@ import ModelLayer.BoardLayer.GameBoard;
  * Classe abstrata que define a estratégia de rasterização para representar o tabuleiro do jogo.
  * Responsabilidade: Fornecer um layout base para as classes derivadas, que implementam estratégias de rasterização específicas.
  * @version 1.0 12/05/2024
- * @autor Hugo Conceição, João Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
-public abstract class RasterizationStrategy {
+public abstract class RasterizationTextualStrategy  {
 
     protected Cell[][] board;
     protected GameBoard gameBoard;
@@ -21,7 +21,7 @@ public abstract class RasterizationStrategy {
      * Prepara uma matriz de células para representar os elementos no tabuleiro.
      * @param gameBoard O tabuleiro do jogo que contém os elementos a serem representados.
      */
-    public RasterizationStrategy(GameBoard gameBoard) {
+    public RasterizationTextualStrategy(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
         this.rows = this.gameBoard.getHeightBoard();
         this.cols = this.gameBoard.getWidthBoard();
@@ -33,26 +33,21 @@ public abstract class RasterizationStrategy {
         }
     }
 
-    @Override
-    public abstract String toString();
-
     /**
      * Atualiza as células que representam os obstáculos no tabuleiro.
      * Cada estratégia de rasterização deve implementar esta lógica conforme necessário.
      */
-    public abstract void updateObstacleCells();
-
+    public abstract void updateObstacles();
     /**
      * Atualiza as células que representam a cobra no tabuleiro.
      * Cada estratégia de rasterização deve implementar esta lógica conforme necessário.
      */
-    public abstract void updateSnakeCells();
-
+    public abstract void updateSnake();
     /**
      * Atualiza as células que representam a comida no tabuleiro.
      * Cada estratégia de rasterização deve implementar esta lógica conforme necessário.
      */
-    public abstract void updateFoodCells();
+    public abstract void updateFood();
 
     /**
      * Obtém a matriz que representa o tabuleiro.

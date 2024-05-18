@@ -1,7 +1,6 @@
 package ControllerLayer;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,42 +16,42 @@ import ModelLayer.SnakeLayer.Direction;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Snake;
-import ViewLayer.ContourRasterization;
-import ViewLayer.FullRasterization;
-import ViewLayer.GraphicalUI;
-import ViewLayer.RasterizationStrategy;
-import ViewLayer.TextualUI;
-import ViewLayer.UI;
+import ViewLayer.*;
 
-/** 
+import javax.swing.*;
+
+/**
  * Classe principal que gerencia o jogo da cobra.
  * Responsabilidade: Gerenciar o loop de jogo, entradas do usuario e renderizacao do estado do jogo.
  * @version 1.0 12/05/2024
  * @author Hugo Conceicao, Joao Ventura, Eduarda Pereira
  * @inv O jogo termina quando a cobra colide com um obstaculo, com ela mesma, ou a comida acaba.
  */
-    public class SnakeGame implements KeyListener {
-        private Random random;
-        private int widthBoard;
-        private int heightBoard;
-        private int headSnakeDimension;
-        private boolean isSnakeManualMovement;
-        private int foodDimension;
-        private int scorePerFood;
-        private FoodType foodType;
-        private int obstaclesQuantity;
-        private List<Ponto<? extends Number>> listObstacleRotacionPoint;
-        private boolean isObstacleDynamic;
-        private boolean isGameOver;
-        private Score score;
-        private Player player;
-        private Snake snake;
-        private GameBoard gameBoard;
-        private RasterizationStrategy rasterizationStrategy;
-        private UI userInterface;
-        private Leaderboard leaderboard;
-        private boolean isFoodEaten;
-        private List<Integer> listObstacleAngles;
+public class SnakeGame implements KeyListener,ActionListener {
+    private Random random;
+    private int widthBoard;
+    private int heightBoard;
+    private int headSnakeDimension;
+    private boolean isSnakeManualMovement;
+    private int foodDimension;
+    private int scorePerFood;
+    private FoodType foodType;
+    private int obstaclesQuantity;
+    private List<Ponto<? extends Number>> listObstacleRotacionPoint;
+    private boolean isObstacleDynamic;
+    private boolean isGameOver;
+    private Score score;
+    private Player player;
+    private Snake snake;
+    private GameBoard gameBoard;
+    private RasterizationTextualStrategy rasterizationTextualStrategy;
+    private RasterizationGraphicStrategy rasterizationGraphicStrategy;
+    private UI userInterface;
+    private Leaderboard leaderboard;
+    private boolean isFoodEaten;
+    private List<Integer> listObstacleAngles;
+    private boolean isKeyReleased;
+    private Timer gameLoop;
 
     /**
      * Constroi um novo jogo da cobra com configuracoes especificadas.
@@ -94,38 +93,43 @@ import ViewLayer.UI;
         this.score = new Score(0,this.scorePerFood);
         this.player = new Player(playerName, score);
         this.gameBoard = new GameBoard(this.snake, this.widthBoard, this.heightBoard, this.foodType,this.foodDimension, this.obstaclesQuantity, this.listObstacleRotacionPoint,this.listObstacleAngles,this.isObstacleDynamic,this.random);
-        if(rasterizationMode.equals("contorno"))
-            this.rasterizationStrategy = new ContourRasterization(this.gameBoard);
-        else
-            this.rasterizationStrategy = new FullRasterization(this.gameBoard);
-        if ("textual".equals(UIMode))
-            this.userInterface = new TextualUI(this.rasterizationStrategy);
-        else
-            this.userInterface = new GraphicalUI();
-        if (this.userInterface instanceof GraphicalUI)
-            ((GraphicalUI) this.userInterface).addKeyListener(this);
+        if ("textual".equals(UIMode)) {
+            if(rasterizationMode.equals("contorno"))
+                this.rasterizationTextualStrategy = new ContourTextualRasterization(this.gameBoard);
+            else
+                this.rasterizationTextualStrategy = new FullTextualRasterization(this.gameBoard);
+            this.userInterface = new TextualUI(this.rasterizationTextualStrategy,this.gameBoard, this.score);
+        }
+        else {
+            if(rasterizationMode.equals("contorno"))
+                this.rasterizationGraphicStrategy = new ContourGraphicRasterization(this.gameBoard);
+            else
+                this.rasterizationGraphicStrategy = new FullGraphicRasterization(this.gameBoard);
+            this.userInterface = new GraphicalUI(this.rasterizationGraphicStrategy,this.gameBoard, this.score);
+        }
+        if (userInterface instanceof JFrame frame) {
+            frame.addKeyListener(this);
+            this.gameLoop = new Timer(500, this);
+            this.gameLoop.start();
+        }
+
         this.leaderboard = new Leaderboard();
         this.isFoodEaten = false;
+        this.isKeyReleased = false;
     }
 
-    /** 
-     * Inicializa e executa o loop principal do jogo. 
+    /**
+     * Inicializa e executa o loop principal do jogo.
      * @param sc Scanner
      */
     public void runGame(Scanner sc) {
         int iterationCount = 0;
         while (!this.isGameOver) {
             if (iterationCount == 0) {
-                if (this.gameBoard.getFood() == null) {
-                    this.isGameOver = true;
-                    this.score.setPoints(Integer.MAX_VALUE);
-                    System.out.println("Zerou o Jogo! Pontuação final: " + this.score.getPoints());
-                    if (this.isGameOver) break;
-                }
-                this.rasterizationStrategy.updateObstacleCells();
-                this.rasterizationStrategy.updateFoodCells();
-                this.rasterizationStrategy.updateSnakeCells();
-                this.userInterface.display(this.score, this.gameBoard);
+                this.rasterizationTextualStrategy.updateObstacles();
+                this.rasterizationTextualStrategy.updateFood();
+                this.rasterizationTextualStrategy.updateSnake();
+                this.userInterface.display();
             }
             if (this.isSnakeManualMovement) {
                 System.out.println("Pressione as teclas 'W' para cima, 'A' para esquerda, 'S' para baixo, 'D' para direita.");
@@ -155,13 +159,18 @@ import ViewLayer.UI;
 
             if (this.isObstacleDynamic) {
                 this.gameBoard.rotateObstacles();
-                this.rasterizationStrategy.updateObstacleCells();
+                this.rasterizationTextualStrategy.updateObstacles();
             }
 
             foodContainedInSnakeHead();
-            if (this.isGameOver) break;
+            if (this.gameBoard.getFood() == null) {
+                this.isGameOver = true;
+                this.score.setPoints(Integer.MAX_VALUE);
+                System.out.println("Zerou o Jogo! Pontuação final: " + this.score.getPoints());
+                if (this.isGameOver) break;
+            }
             if (this.isFoodEaten) {
-                this.rasterizationStrategy.updateFoodCells();
+                this.rasterizationTextualStrategy.updateFood();
                 this.isFoodEaten = false;
             }
 
@@ -171,35 +180,32 @@ import ViewLayer.UI;
                 break;
             }
 
-            this.rasterizationStrategy.updateSnakeCells();
+            this.rasterizationTextualStrategy.updateSnake();
 
             if (!this.isSnakeManualMovement) {
                 try {
-                    Thread.sleep(1000); 
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                this.userInterface.display(this.score, this.gameBoard);
-                iterationCount++;
-            } else {
-                this.userInterface.display(this.score, this.gameBoard);
-                iterationCount++;
             }
+            this.userInterface.display();
+            iterationCount++;
         }
         sc.close();
     }
 
-    /** 
+    /**
      * Finaliza o jogo e exibe resultados.
      */
     public void endGame() {
         this.leaderboard.updateLeaderboard(this.player);
         System.out.println("Seu jogo acabou. Aqui estão os tops jogadores do jogo:");
         System.out.println(this.leaderboard.generateLeaderboard());
-        System.out.println(this.gameBoard.getListOfObstacles().toString());
         if (this.userInterface instanceof GraphicalUI)
             ((GraphicalUI) this.userInterface).close();
-        this.rasterizationStrategy = null;
+        this.rasterizationGraphicStrategy = null;
+        this.rasterizationTextualStrategy = null;
         this.listObstacleRotacionPoint.clear();
         this.score = null;
         this.snake = null;
@@ -208,7 +214,7 @@ import ViewLayer.UI;
         this.leaderboard = null;
     }
 
-    /** 
+    /**
      * Verifica se a comida esta contida na cabeca da snake, se sim aumenta o tamanho dela e o score do jogador
      */
     public void foodContainedInSnakeHead() {
@@ -224,49 +230,50 @@ import ViewLayer.UI;
         }
     }
 
-    /** 
+    /**
      * Verifica e trata a colisao da cobra com obstaculos, consigo mesma ou saida do tabuleiro.
      * @return verdadeiro se houve colisao.
      */
     public boolean snakeCollided() {
-        if (this.gameBoard.snakeIntersectsObstacle() || this.gameBoard.obstacleContainedInSnake() || this.snake.collidedWithHerself() || this.gameBoard.snakeLeftBoard()) 
+        if (this.gameBoard.snakeIntersectsObstacle() || this.gameBoard.obstacleContainedInSnake() || this.snake.collidedWithHerself() || this.gameBoard.snakeLeftBoard())
             return true;
         return false;
     }
 
-    /** 
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(!isGameOver) {
+            if(!isKeyReleased)
+                this.snake.setNextDirection(this.snake.getCurrentDirection());
+            this.snake.move();
+
+            foodContainedInSnakeHead();
+            if (this.gameBoard.getFood() == null) {
+                this.isGameOver = true;
+                this.score.setPoints(Integer.MAX_VALUE);
+            }
+
+            if (snakeCollided()) {
+                this.isGameOver = true;
+                System.out.println("Game Over! Pontuação final: " + this.score.getPoints());
+            }
+
+            this.userInterface.display();
+        }
+        else {
+            gameLoop.stop();
+            endGame();
+        }
+    }
+    /**
      * Atualiza a direcao da cobra com base nas entradas do teclado.
      * @param e Evento de teclado capturado.
      */
     @Override
-    public void keyReleased(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP:
-                this.snake.setNextDirection(Direction.UP);
-                this.snake.move();
-                this.rasterizationStrategy.updateSnakeCells();
-                break;
-            case KeyEvent.VK_DOWN:
-                this.snake.setNextDirection(Direction.DOWN);
-                this.snake.move();
-                this.rasterizationStrategy.updateSnakeCells();
-                break;
-            case KeyEvent.VK_LEFT:
-                this.snake.setNextDirection(Direction.LEFT);
-                this.snake.move();
-                this.rasterizationStrategy.updateSnakeCells();
-                break;
-            case KeyEvent.VK_RIGHT:
-                this.snake.setNextDirection(Direction.RIGHT);
-                this.snake.move();
-                this.rasterizationStrategy.updateSnakeCells();
-                break;
-            default:
-                break;
-        }
-    }
+    public void keyReleased(KeyEvent e) {}
 
-    /** 
+    /**
      * Move a cobra na direcao especificada.
      * @param nextDirection Nova direcao para a cobra.
      */
@@ -277,11 +284,10 @@ import ViewLayer.UI;
         } else {
             this.snake.setNextDirection(nextDirection);
             this.snake.move();
-            System.out.println(this.snake.toString());
         }
     }
 
-    /** 
+    /**
      * Cria pontos que formarao o quadrado da cabeca da cobra.
      * @param widthBoard Largura do tabuleiro.
      * @param heightBoard Altura do tabuleiro.
@@ -289,8 +295,13 @@ import ViewLayer.UI;
      * @return Lista de pontos que formam o quadrado da cabeca da cobra.
      */
     private List<Ponto<? extends Number>> createSquarePoints(int widthBoard, int heightBoard, int size) {
-        int x = this.random.nextInt(widthBoard - size);
-        int y = this.random.nextInt(heightBoard - size);
+        int y = 1;
+        int x = 1;
+        while(x % size != 0) {
+            x = this.random.nextInt(widthBoard - size);
+        }
+        while(y % size != 0)
+            y = this.random.nextInt(heightBoard - size);
         List<Ponto<? extends Number>> pontos = new ArrayList<>();
         pontos.add(new Ponto<Integer>(x, y));
         pontos.add(new Ponto<Integer>(x + size, y));
@@ -300,10 +311,26 @@ import ViewLayer.UI;
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {}
-    @Override
     public void keyTyped(KeyEvent e) {}
 
+    @Override
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:
+                this.snake.setNextDirection(Direction.DOWN);
+                break;
+            case KeyEvent.VK_DOWN:
+                this.snake.setNextDirection(Direction.UP);
+                break;
+            case KeyEvent.VK_LEFT:
+                this.snake.setNextDirection(Direction.LEFT);
+                break;
+            case KeyEvent.VK_RIGHT:
+                this.snake.setNextDirection(Direction.RIGHT);
+                break;
+        }
+        this.isKeyReleased = true;
+    }
     /** Obtem se acabou o jogo ou nao
      * @return se acabou o jogo ou nao
      */
@@ -332,7 +359,7 @@ import ViewLayer.UI;
         this.score = score;
     }
 
-    /** Obtem a snake do jogo                                                                       
+    /** Obtem a snake do jogo
      * @return a snake do jogo
      */
     public Snake getSnake() {
@@ -390,21 +417,6 @@ import ViewLayer.UI;
         this.gameBoard = gameBoard;
     }
 
-    /**
-     * Obtem o tipo de rasterização do jogo
-     * @return o tipo de rasterização do jogo
-     */
-    public RasterizationStrategy getRasterizationStrategy() {
-        return rasterizationStrategy;
-    }
-
-    /**
-     * Atualiza o tipo de rasterização 
-     * @param rasterizationStrategy o novo tipo de rasterização
-     */
-    public void setRasterizationStrategy(RasterizationStrategy rasterizationStrategy) {
-        this.rasterizationStrategy = rasterizationStrategy;
-    }
 
     /**
      * Obtem o tamanho da cabeça da cobra
@@ -469,7 +481,7 @@ import ViewLayer.UI;
     public void setObstaclesQuantity(int obstaclesQuantity) {
         this.obstaclesQuantity = obstaclesQuantity;
     }
-    
+
     /**
      * Obtem se os obstáculos sao dinamicos ou nao
      * @return os obstáculos dinâmicos ou não
@@ -479,7 +491,7 @@ import ViewLayer.UI;
     }
 
     /**
-     * Atualiza se os obstaculos sao dinamicos ou nao 
+     * Atualiza se os obstaculos sao dinamicos ou nao
      * @param isObstacleDynamic o novo valor logico da dinamicidade dos obstaculos
      */
     public void setObstacleDynamic(boolean isObstacleDynamic) {
@@ -543,7 +555,7 @@ import ViewLayer.UI;
     }
 
     /**
-     * Atualiza os pontos por comida 
+     * Atualiza os pontos por comida
      * @param scorePerFood os novos pontos por comida
      */
     public void setScorePerFood(int scorePerFood) {
@@ -561,7 +573,7 @@ import ViewLayer.UI;
 
     /**
      * Atualiza a leaderboard do jogo
-     * @param leaderboard a nova leaderboard 
+     * @param leaderboard a nova leaderboard
      */
     public void setLeaderboard(Leaderboard leaderboard) {
         this.leaderboard = leaderboard;
@@ -631,5 +643,21 @@ import ViewLayer.UI;
      */
     public void setListObstacleAngles(List<Integer> listObstacleAngles) {
         this.listObstacleAngles = listObstacleAngles;
+    }
+
+    public RasterizationTextualStrategy getRasterizationTextualStrategy() {
+        return rasterizationTextualStrategy;
+    }
+
+    public void setRasterizationTextualStrategy(RasterizationTextualStrategy rasterizationTextualStrategy) {
+        this.rasterizationTextualStrategy = rasterizationTextualStrategy;
+    }
+
+    public RasterizationGraphicStrategy getRasterizationGraphicStrategy() {
+        return rasterizationGraphicStrategy;
+    }
+
+    public void setRasterizationGraphicStrategy(RasterizationGraphicStrategy rasterizationGraphicStrategy) {
+        this.rasterizationGraphicStrategy = rasterizationGraphicStrategy;
     }
 }

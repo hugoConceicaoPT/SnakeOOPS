@@ -11,21 +11,25 @@ import ModelLayer.BoardLayer.Score;
  */
 public class TextualUI implements UI {
 
-    private RasterizationStrategy rasterizationStrategy;
+    private final RasterizationTextualStrategy rasterizationStrategy;
+    private final GameBoard gameBoard;
+    private final Score score;
 
     /**
      * Construtor que inicializa a interface de usuário textual com a estratégia de rasterização fornecida.
      * @param rasterizationStrategy A estratégia de rasterização para representar o tabuleiro.
      */
-    public TextualUI(RasterizationStrategy rasterizationStrategy) {
+    public TextualUI(RasterizationTextualStrategy rasterizationStrategy, GameBoard gameBoard, Score score) {
         this.rasterizationStrategy = rasterizationStrategy;
+        this.gameBoard = gameBoard;
+        this.score = score;
     }
 
-    public void display(Score score, GameBoard gameBoard) {
+    public void display() {
         System.out.println(this.rasterizationStrategy.toString());
 
         int angle = 0;
-        switch (gameBoard.getSnake().getCurrentDirection()) {
+        switch (this.gameBoard.getSnake().getCurrentDirection()) {
             case UP:
                 angle = 90;
                 break;
@@ -42,6 +46,6 @@ public class TextualUI implements UI {
                 break;
         }
 
-        System.out.println("Dir H: " + angle + "\t" + "Pontos: " + score.getPoints());
+        System.out.println("Dir H: " + angle + "\t" + "Pontos: " + this.score.getPoints());
     }
 }

@@ -2,13 +2,15 @@ package ModelLayer.BoardLayer;
 
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Snake;
-import javafx.scene.paint.Color;
+
+import java.awt.Color;
+
 
 /**
  * Classe abstrata que representa comida no tabuleiro do jogo.
  * Responsabilidade: Fornecer métodos base para identificar e manipular comida no jogo.
  * @version 1.0 10/05/2024
- * @autor Hugo Conceição, João Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public abstract class Food {
     protected Color color;

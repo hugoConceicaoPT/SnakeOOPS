@@ -9,7 +9,7 @@ import ModelLayer.SnakeLayer.Ponto;
  * Classe principal que atua como cliente do jogo da Cobra.
  * Responsabilidade: Coletar as preferências do jogador e iniciar o jogo com os parâmetros fornecidos.
  * @version 1.0 12/05/2024
- * @autor Hugo Conceição, João Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class Cliente {
     public static void main(String[] args) {
@@ -87,7 +87,7 @@ public class Cliente {
         long seed = System.currentTimeMillis();
 
         SnakeGame snakeGame = new SnakeGame(name,width, height, headDimension, isSnakeManualMovement ,rasterizationMode, foodDimension, foodType, foodScore, obstaclesQuantity, listObstacleRotacionPoint,listObstacleAngles,isObstacleDynamic, UIMode, seed);
-        snakeGame.runGame(sc);
-        snakeGame.endGame();
+        if("textual".equals(UIMode))
+            snakeGame.runGame(sc);
     }
 }

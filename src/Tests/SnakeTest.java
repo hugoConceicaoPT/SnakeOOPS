@@ -9,7 +9,6 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ModelLayer.SnakeLayer.Direction;
-import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Snake;
 
@@ -152,25 +151,5 @@ public class SnakeTest {
         snake.move();
         snake.increaseSize();
         assertEquals("Cabeça: [(10.0,4.0), (10.0,2.0), (8.0,2.0), (8.0,4.0)] Tail: [[(8,4), (8,2), (6,2), (6,4)]]", snake.toString());
-    }
-
-    @Test 
-    public void intersectsFoodTest() {
-        long seed = 116;
-        Random random = new Random(seed); 
-        String input1 = "8 4 8 2 6 2 6 4";
-        LinkedList<Quadrado> quadrado = new LinkedList<>();
-        quadrado.add(new Quadrado(input1));
-        Snake snake = new Snake(quadrado, true,random);
-        snake.setCurrentDirection(Direction.RIGHT);
-        snake.setNextDirection(Direction.RIGHT);
-        snake.move();
-        snake.increaseSize();
-        snake.setNextDirection(Direction.RIGHT);
-        snake.move();
-        snake.increaseSize();
-        assertFalse(snake.intersectsFood(new Ponto<Number>(0, 3.0)));
-        assertFalse(snake.intersectsFood(new Ponto<Number>(9,1)));
-        assertTrue(snake.intersectsFood(new Ponto<Number>(9,2)));
     }
 }

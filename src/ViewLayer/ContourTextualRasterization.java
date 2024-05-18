@@ -15,13 +15,13 @@ import ModelLayer.SnakeLayer.SegmentoReta;
  * @version 1.0 12/05/2024
  * @autor Hugo Conceição, João Ventura, Eduarda Pereira
  */
-public class ContourRasterization extends RasterizationStrategy {
+public class ContourTextualRasterization extends RasterizationTextualStrategy {
 
     /**
      * Construtor que inicializa a estratégia de rasterização do contorno com um tabuleiro de jogo.
      * @param gameBoard O tabuleiro do jogo que contém os elementos a serem representados.
      */
-    public ContourRasterization(GameBoard gameBoard) {
+    public ContourTextualRasterization(GameBoard gameBoard) {
         super(gameBoard);
     }
 
@@ -45,7 +45,8 @@ public class ContourRasterization extends RasterizationStrategy {
      * Atualiza as células do tabuleiro que representam os contornos do corpo da cobra.
      * As células internas são deixadas vazias, enquanto as bordas são marcadas como contornos.
      */
-    public void updateSnakeCells() {
+    @Override
+    public void updateSnake() {
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
                 if (board[i][j].getCellType() == CellType.HEAD || board[i][j].getCellType() == CellType.TAIL) {
@@ -89,7 +90,8 @@ public class ContourRasterization extends RasterizationStrategy {
      * Atualiza as células do tabuleiro que representam os contornos dos obstáculos.
      * As células internas são deixadas vazias, enquanto as bordas são marcadas como contornos.
      */
-    public void updateObstacleCells() {
+    @Override
+    public void updateObstacles() {
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
                 if (board[i][j].getCellType() == CellType.OBSTACLE) {
@@ -129,7 +131,8 @@ public class ContourRasterization extends RasterizationStrategy {
      * Atualiza as células do tabuleiro que representam os contornos da comida.
      * As células internas são deixadas vazias, enquanto as bordas são marcadas como contornos.
      */
-    public void updateFoodCells() {
+    @Override
+    public void updateFood() {
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
                 if (board[i][j].getCellType() == CellType.FOOD) {

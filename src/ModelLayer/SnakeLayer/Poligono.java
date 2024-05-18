@@ -363,6 +363,22 @@ public class Poligono implements Cloneable {
         return aresta;
     }
 
+    public int[] getXPoints() {
+        int [] xPoints = new int[this.pontos.size()];
+        for (int i = 0; i < this.pontos.size(); i++) {
+            xPoints[i] = this.pontos.get(i).getX().intValue();
+        }
+        return xPoints;
+    }
+
+    public int[] getYPoints() {
+        int [] yPoints = new int[this.pontos.size()];
+        for (int i = 0; i < this.pontos.size(); i++) {
+            yPoints[i] = this.pontos.get(i).getY().intValue();
+        }
+        return yPoints;
+    }
+
     /**
      * Define uma nova lista de pontos para o polígono.
      * @param pontos A nova lista de pontos.

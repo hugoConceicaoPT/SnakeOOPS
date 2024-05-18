@@ -9,15 +9,15 @@ import ModelLayer.SnakeLayer.Quadrado;
  * Classe que implementa a estratégia de rasterização completa dos elementos no tabuleiro.
  * Responsabilidade: Representar de forma completa todos os elementos no tabuleiro, incluindo a cobra, obstáculos e comida.
  * @version 1.0 12/05/2024
- * @autor Hugo Conceição, João Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
-public class FullRasterization extends RasterizationStrategy {
+public class FullTextualRasterization extends RasterizationTextualStrategy {
 
     /**
      * Construtor que inicializa a estratégia de rasterização completa com um tabuleiro de jogo.
      * @param gameBoard O tabuleiro do jogo que contém os elementos a serem representados.
      */
-    public FullRasterization(GameBoard gameBoard) {
+    public FullTextualRasterization(GameBoard gameBoard) {
         super(gameBoard);
     }
 
@@ -37,7 +37,8 @@ public class FullRasterization extends RasterizationStrategy {
      * Atualiza as células do tabuleiro que representam o corpo da cobra.
      * Diferente da rasterização por contorno, esta abordagem preenche todas as células ocupadas pela cobra.
      */
-    public void updateSnakeCells() {
+    @Override
+    public void updateSnake() {
 
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
@@ -67,7 +68,8 @@ public class FullRasterization extends RasterizationStrategy {
      * Atualiza as células do tabuleiro que representam obstáculos.
      * Cada obstáculo é preenchido completamente.
      */
-    public void updateObstacleCells() {
+    @Override
+    public void updateObstacles() {
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
                 if (board[i][j].getCellType() == CellType.OBSTACLE) {
@@ -91,7 +93,8 @@ public class FullRasterization extends RasterizationStrategy {
      * Atualiza as células do tabuleiro que representam a comida.
      * Garante que a comida esteja colocada em uma posição que não coincida com outros elementos.
      */
-    public void updateFoodCells() {
+    @Override
+    public void updateFood() {
         boolean isFoodNotReseted = false;
         while (!isFoodNotReseted) {
             for (int i = 0; i < this.rows; i++) {
