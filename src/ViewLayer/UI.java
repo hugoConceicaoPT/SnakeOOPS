@@ -10,8 +10,6 @@ import ModelLayer.BoardLayer.Score;
 public interface UI {
      /**
      * Exibe os elementos do jogo, como o placar e o tabuleiro.
-     * @param score O placar atual do jogo.
-     * @param gameBoard O tabuleiro do jogo contendo os elementos a serem exibidos.
      */
     void display();
 }
