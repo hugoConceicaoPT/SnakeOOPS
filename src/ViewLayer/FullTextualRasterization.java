@@ -39,7 +39,6 @@ public class FullTextualRasterization extends RasterizationTextualStrategy {
      */
     @Override
     public void updateSnake() {
-
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.cols; j++) {
                 if (board[i][j].getCellType() == CellType.HEAD || board[i][j].getCellType() == CellType.TAIL) {

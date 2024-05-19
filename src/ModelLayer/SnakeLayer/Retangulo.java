@@ -7,7 +7,7 @@ import java.util.List;
  * Classe que representa um retângulo no plano cartesiano.
  * Responsabilidade: Representar um retângulo e verificar se os pontos formam um retângulo válido.
  * @version 1.0 10/05/2024
- * @autor Hugo Conceição, João Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  * @inv O retângulo é válido se todos os ângulos internos forem 90 graus e se houver 4 pontos.
  */
 public class Retangulo extends Poligono {
@@ -31,6 +31,10 @@ public class Retangulo extends Poligono {
                 throw new IllegalArgumentException("Retângulo:vi");
             }
         }
+    }
+
+    public Retangulo(double minX, double minY, double maxX, double maxY) {
+        super(minX,minY,maxX,maxY);
     }
 
     /**

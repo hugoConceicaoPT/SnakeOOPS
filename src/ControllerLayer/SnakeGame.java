@@ -1,21 +1,10 @@
 package ControllerLayer;
 
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
-import ModelLayer.BoardLayer.FoodType;
-import ModelLayer.BoardLayer.GameBoard;
-import ModelLayer.BoardLayer.Player;
-import ModelLayer.BoardLayer.Score;
-import ModelLayer.SnakeLayer.AutomatedMovementStrategy;
-import ModelLayer.SnakeLayer.Direction;
-import ModelLayer.SnakeLayer.Ponto;
-import ModelLayer.SnakeLayer.Quadrado;
-import ModelLayer.SnakeLayer.Snake;
+import ModelLayer.BoardLayer.*;
+import ModelLayer.SnakeLayer.*;
 import ViewLayer.*;
 
 import javax.swing.*;
@@ -28,94 +17,39 @@ import javax.swing.*;
  * @inv O jogo termina quando a cobra colide com um obstaculo, com ela mesma, ou a comida acaba.
  */
 public class SnakeGame implements KeyListener,ActionListener {
-    private Random random;
-    private int widthBoard;
-    private int heightBoard;
-    private int headSnakeDimension;
-    private boolean isSnakeManualMovement;
-    private int foodDimension;
-    private int scorePerFood;
-    private FoodType foodType;
-    private int obstaclesQuantity;
-    private List<Ponto<? extends Number>> listObstacleRotacionPoint;
-    private boolean isObstacleDynamic;
     private boolean isGameOver;
-    private Score score;
-    private Player player;
-    private Snake snake;
     private GameBoard gameBoard;
-    private RasterizationTextualStrategy rasterizationTextualStrategy;
-    private RasterizationGraphicStrategy rasterizationGraphicStrategy;
+    private Player player;
     private UI userInterface;
     private Leaderboard leaderboard;
-    private boolean isFoodEaten;
-    private List<Integer> listObstacleAngles;
     private boolean isKeyReleased;
+    private boolean isFoodEaten;
+    private Score score;
     private Timer gameLoop;
+    private ML mouseListener = new ML();
+    private static boolean isRunning = false;
 
     /**
      * Constroi um novo jogo da cobra com configuracoes especificadas.
      * @param playerName Nome do jogador.
-     * @param widthBoard Largura do tabuleiro.
-     * @param heightBoard Altura do tabuleiro.
-     * @param headSnakeDimension Tamanho da cabeca da cobra.
-     * @param isSnakeManualMovement Se o movimento da cobra e manual.
-     * @param rasterizationMode Modo de rasterizacao.
-     * @param foodDimension Tamanho da comida.
-     * @param foodType Tipo da comida.
-     * @param scorePerFood Pontuacao por comida.
-     * @param obstaclesQuantity Quantidade de obstaculos.
-     * @param listObstacleRotacionPoint Lista de pontos para rotacao dos obstaculos.
-     * @param listObstacleAngles Lista de pontos com os angulos de rotacao dos obstaculos
-     * @param isObstacleDynamic Se os obstaculos sao dinamicos.
-     * @param UIMode Modo da interface de usuario.
-     * @param seed Semente para o gerador aleatorio.
+     * @param gameBoard Tabuleiro do jogo.
+     * @param userInterface Interface do utilizador.
+     * @param foodScore Pontos por comida
      */
-    public SnakeGame (String playerName, int widthBoard, int heightBoard, int headSnakeDimension,boolean isSnakeManualMovement, String rasterizationMode, int foodDimension, String foodType ,int scorePerFood, int obstaclesQuantity, List<Ponto<? extends Number>> listObstacleRotacionPoint, List<Integer> listObstacleAngles,boolean isObstacleDynamic, String UIMode, long seed) {
-        this.random = new Random(seed);
-        this.isGameOver = false;
-        this.widthBoard = widthBoard;
-        this.heightBoard = heightBoard;
-        this.headSnakeDimension = headSnakeDimension;
-        this.isSnakeManualMovement = isSnakeManualMovement;
-        LinkedList<Quadrado> bodySnake = new LinkedList<>();
-        Quadrado quadrado = new Quadrado(createSquarePoints(this.widthBoard, this.heightBoard, this.headSnakeDimension));
-        bodySnake.addFirst(quadrado);
-        this.snake = new Snake(bodySnake, isSnakeManualMovement,this.random);
-        if(foodType.equals("quadrados")) this.foodType = FoodType.SQUARE;
-        else this.foodType = FoodType.CIRCLE;
-        this.foodDimension = foodDimension;
-        this.scorePerFood = scorePerFood;
-        this.obstaclesQuantity = obstaclesQuantity;
-        this.listObstacleRotacionPoint = listObstacleRotacionPoint;
-        this.listObstacleAngles = listObstacleAngles;
-        this.isObstacleDynamic = isObstacleDynamic;
-        this.score = new Score(0,this.scorePerFood);
-        this.player = new Player(playerName, score);
-        this.gameBoard = new GameBoard(this.snake, this.widthBoard, this.heightBoard, this.foodType,this.foodDimension, this.obstaclesQuantity, this.listObstacleRotacionPoint,this.listObstacleAngles,this.isObstacleDynamic,this.random);
-        if ("textual".equals(UIMode)) {
-            if(rasterizationMode.equals("contorno"))
-                this.rasterizationTextualStrategy = new ContourTextualRasterization(this.gameBoard);
-            else
-                this.rasterizationTextualStrategy = new FullTextualRasterization(this.gameBoard);
-            this.userInterface = new TextualUI(this.rasterizationTextualStrategy,this.gameBoard, this.score);
-        }
-        else {
-            if(rasterizationMode.equals("contorno"))
-                this.rasterizationGraphicStrategy = new ContourGraphicRasterization(this.gameBoard);
-            else
-                this.rasterizationGraphicStrategy = new FullGraphicRasterization(this.gameBoard);
-            this.userInterface = new GraphicalUI(this.rasterizationGraphicStrategy,this.gameBoard, this.score);
-        }
-        if (userInterface instanceof JFrame frame) {
+    public SnakeGame (String playerName,GameBoard gameBoard, UI userInterface, int foodScore) {
+        this.leaderboard = new Leaderboard();
+        this.gameBoard = gameBoard;
+        this.userInterface = userInterface;
+        this.score = new Score(0,foodScore);
+        this.player = new Player(playerName,this.score);
+        this.isFoodEaten = false;
+        if(this.userInterface instanceof JFrame frame) {
             frame.addKeyListener(this);
-            this.gameLoop = new Timer(500, this);
+            this.userInterface.addMouseListener(this.mouseListener);
+            this.userInterface.addMouseMotionListener(this.mouseListener);
+            this.gameLoop = new Timer(500,this);
             this.gameLoop.start();
         }
-
-        this.leaderboard = new Leaderboard();
-        this.isFoodEaten = false;
-        this.isKeyReleased = false;
     }
 
     /**
@@ -126,12 +60,12 @@ public class SnakeGame implements KeyListener,ActionListener {
         int iterationCount = 0;
         while (!this.isGameOver) {
             if (iterationCount == 0) {
-                this.rasterizationTextualStrategy.updateObstacles();
-                this.rasterizationTextualStrategy.updateFood();
-                this.rasterizationTextualStrategy.updateSnake();
-                this.userInterface.display();
+                this.userInterface.getTextualRasterizationStrategy().updateObstacles();
+                this.userInterface.getTextualRasterizationStrategy().updateFood();
+                this.userInterface.getTextualRasterizationStrategy().updateSnake();
+                displayGame();
             }
-            if (this.isSnakeManualMovement) {
+            if (this.gameBoard.getSnake().getMovementStrategy() instanceof ManualMovementStrategy) {
                 System.out.println("Pressione as teclas 'W' para cima, 'A' para esquerda, 'S' para baixo, 'D' para direita.");
                 System.out.print("Digite a direção desejada ou pressione Enter para manter a direção atual: ");
                 String input = sc.nextLine();
@@ -142,13 +76,14 @@ public class SnakeGame implements KeyListener,ActionListener {
                         case 'A': moveSnake(Direction.LEFT); break;
                         case 'S': moveSnake(Direction.DOWN); break;
                         case 'D': moveSnake(Direction.RIGHT); break;
-                        default: moveSnake(this.snake.getCurrentDirection()); break;
+                        default: moveSnake(this.gameBoard.getSnake().getCurrentDirection()); break;
                     }
                 } else {
-                    moveSnake(this.snake.getCurrentDirection());
+                    moveSnake(this.gameBoard.getSnake().getCurrentDirection());
                 }
-            } else {
-                moveSnake(this.snake.getCurrentDirection());
+            }
+            else {
+                moveSnake(this.gameBoard.getSnake().getCurrentDirection());
             }
 
             if (snakeCollided()) {
@@ -157,9 +92,9 @@ public class SnakeGame implements KeyListener,ActionListener {
                 break;
             }
 
-            if (this.isObstacleDynamic) {
+            if (this.gameBoard.getListOfObstacles().getFirst().getObstacleMovement() instanceof DynamicMovement) {
                 this.gameBoard.rotateObstacles();
-                this.rasterizationTextualStrategy.updateObstacles();
+                this.userInterface.getTextualRasterizationStrategy().updateObstacles();
             }
 
             foodContainedInSnakeHead();
@@ -170,7 +105,7 @@ public class SnakeGame implements KeyListener,ActionListener {
                 if (this.isGameOver) break;
             }
             if (this.isFoodEaten) {
-                this.rasterizationTextualStrategy.updateFood();
+                this.userInterface.getTextualRasterizationStrategy().updateFood();
                 this.isFoodEaten = false;
             }
 
@@ -180,16 +115,16 @@ public class SnakeGame implements KeyListener,ActionListener {
                 break;
             }
 
-            this.rasterizationTextualStrategy.updateSnake();
+            this.userInterface.getTextualRasterizationStrategy().updateSnake();
 
-            if (!this.isSnakeManualMovement) {
+            if (this.gameBoard.getSnake().getMovementStrategy() instanceof AutomatedMovementStrategy) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            this.userInterface.display();
+            displayGame();
             iterationCount++;
         }
         sc.close();
@@ -204,13 +139,9 @@ public class SnakeGame implements KeyListener,ActionListener {
         System.out.println(this.leaderboard.generateLeaderboard());
         if (this.userInterface instanceof GraphicalUI)
             ((GraphicalUI) this.userInterface).close();
-        this.rasterizationGraphicStrategy = null;
-        this.rasterizationTextualStrategy = null;
-        this.listObstacleRotacionPoint.clear();
-        this.score = null;
-        this.snake = null;
         this.gameBoard = null;
         this.userInterface = null;
+        this.score = null;
         this.leaderboard = null;
     }
 
@@ -219,7 +150,7 @@ public class SnakeGame implements KeyListener,ActionListener {
      */
     public void foodContainedInSnakeHead() {
         if(this.gameBoard.foodContainedInSnakeHead()) {
-            this.snake.increaseSize();
+            this.gameBoard.getSnake().increaseSize();
             this.score.increaseScore();
             this.isFoodEaten = true;
             if(this.gameBoard.getFood() == null) {
@@ -235,31 +166,39 @@ public class SnakeGame implements KeyListener,ActionListener {
      * @return verdadeiro se houve colisao.
      */
     public boolean snakeCollided() {
-        if (this.gameBoard.snakeIntersectsObstacle() || this.gameBoard.obstacleContainedInSnake() || this.snake.collidedWithHerself() || this.gameBoard.snakeLeftBoard())
+        if (this.gameBoard.snakeIntersectsObstacle() || this.gameBoard.obstacleContainedInSnake() || this.gameBoard.getSnake().collidedWithHerself() || this.gameBoard.snakeLeftBoard())
             return true;
         return false;
     }
 
+    public void displayGame() {
+        this.userInterface.display(this.gameBoard,this.score);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        displayGame();
         if(!isGameOver) {
-            if(!isKeyReleased)
-                this.snake.setNextDirection(this.snake.getCurrentDirection());
-            this.snake.move();
+            if (isRunning) {
+                if (!this.isKeyReleased)
+                    this.gameBoard.getSnake().setNextDirection(this.gameBoard.getSnake().getCurrentDirection());
+                else
+                    this.isKeyReleased = false;
+                this.gameBoard.getSnake().move();
 
-            foodContainedInSnakeHead();
-            if (this.gameBoard.getFood() == null) {
-                this.isGameOver = true;
-                this.score.setPoints(Integer.MAX_VALUE);
+                foodContainedInSnakeHead();
+                if (this.gameBoard.getFood() == null) {
+                    this.isGameOver = true;
+                    this.score.setPoints(Integer.MAX_VALUE);
+                }
+
+                if (snakeCollided()) {
+                    this.isGameOver = true;
+                    System.out.println("Game Over! Pontuação final: " + this.score.getPoints());
+                }
+
+                displayGame();
             }
-
-            if (snakeCollided()) {
-                this.isGameOver = true;
-                System.out.println("Game Over! Pontuação final: " + this.score.getPoints());
-            }
-
-            this.userInterface.display();
         }
         else {
             gameLoop.stop();
@@ -278,37 +217,15 @@ public class SnakeGame implements KeyListener,ActionListener {
      * @param nextDirection Nova direcao para a cobra.
      */
     public void moveSnake(Direction nextDirection) {
-        if (this.snake.getMovementStrategy() instanceof AutomatedMovementStrategy) {
-            this.snake.setNextDirection(nextDirection);
-            this.snake.moveAutomated(this.gameBoard);
+        if (this.gameBoard.getSnake().getMovementStrategy() instanceof AutomatedMovementStrategy) {
+            this.gameBoard.getSnake().setNextDirection(nextDirection);
+            this.gameBoard.getSnake().moveAutomated(this.gameBoard);
         } else {
-            this.snake.setNextDirection(nextDirection);
-            this.snake.move();
+            this.gameBoard.getSnake().setNextDirection(nextDirection);
+            this.gameBoard.getSnake().move();
         }
     }
 
-    /**
-     * Cria pontos que formarao o quadrado da cabeca da cobra.
-     * @param widthBoard Largura do tabuleiro.
-     * @param heightBoard Altura do tabuleiro.
-     * @param size Tamanho da cabeca da cobra.
-     * @return Lista de pontos que formam o quadrado da cabeca da cobra.
-     */
-    private List<Ponto<? extends Number>> createSquarePoints(int widthBoard, int heightBoard, int size) {
-        int y = 1;
-        int x = 1;
-        while(x % size != 0) {
-            x = this.random.nextInt(widthBoard - size);
-        }
-        while(y % size != 0)
-            y = this.random.nextInt(heightBoard - size);
-        List<Ponto<? extends Number>> pontos = new ArrayList<>();
-        pontos.add(new Ponto<Integer>(x, y));
-        pontos.add(new Ponto<Integer>(x + size, y));
-        pontos.add(new Ponto<Integer>(x + size, y + size));
-        pontos.add(new Ponto<Integer>(x, y + size));
-        return pontos;
-    }
 
     @Override
     public void keyTyped(KeyEvent e) {}
@@ -317,16 +234,16 @@ public class SnakeGame implements KeyListener,ActionListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP:
-                this.snake.setNextDirection(Direction.DOWN);
+                this.gameBoard.getSnake().setNextDirection(Direction.DOWN);
                 break;
             case KeyEvent.VK_DOWN:
-                this.snake.setNextDirection(Direction.UP);
+                this.gameBoard.getSnake().setNextDirection(Direction.UP);
                 break;
             case KeyEvent.VK_LEFT:
-                this.snake.setNextDirection(Direction.LEFT);
+                this.gameBoard.getSnake().setNextDirection(Direction.LEFT);
                 break;
             case KeyEvent.VK_RIGHT:
-                this.snake.setNextDirection(Direction.RIGHT);
+                this.gameBoard.getSnake().setNextDirection(Direction.RIGHT);
                 break;
         }
         this.isKeyReleased = true;
@@ -359,48 +276,6 @@ public class SnakeGame implements KeyListener,ActionListener {
         this.score = score;
     }
 
-    /** Obtem a snake do jogo
-     * @return a snake do jogo
-     */
-    public Snake getSnake() {
-        return snake;
-    }
-
-    /** Atualiza a snake do jogo
-     * @param snake a nova snake do jogo
-     */
-    public void setSnake(Snake snake) {
-        this.snake = snake;
-    }
-
-    /** Obtem a width da board
-     * @return o valor da width
-     */
-    public int getWidthBoard() {
-        return widthBoard;
-    }
-
-    /** Atualiza a width da board
-     * @param widthBoard a nova width da board
-     */
-    public void setWidthBoard(int widthBoard) {
-        this.widthBoard = widthBoard;
-    }
-
-    /** Obtem a heigth da board
-     * @return a heigth da board
-     */
-    public int getHeightBoard() {
-        return heightBoard;
-    }
-
-    /** Atualiza a height da board
-     * @param heightBoard a nova height da board
-     */
-    public void setHeightBoard(int heightBoard) {
-        this.heightBoard = heightBoard;
-    }
-
     /**
      * Obtem a arena do jogo
      * @return a arena do jogo
@@ -415,87 +290,6 @@ public class SnakeGame implements KeyListener,ActionListener {
      */
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
-    }
-
-
-    /**
-     * Obtem o tamanho da cabeça da cobra
-     * @return o tamanho da cabeça da cobra
-     */
-    public int getHeadSnakeDimension() {
-        return headSnakeDimension;
-    }
-
-    /**
-     * Atualiza o tamanho da cabeça da cobra
-     * @param headDimension o novo tamanho da cabeça da cobra
-     */
-    public void setHeadSnakeDimension(int headDimension) {
-        this.headSnakeDimension = headDimension;
-    }
-
-    /**
-     * Obtem o tamanho da comida
-     * @return o tamanho da comida
-     */
-    public int getFoodDimension() {
-        return foodDimension;
-    }
-
-    /**
-     * Atualiza o tamanho da comida
-     * @param foodDimension o novo tamanho da comida
-     */
-    public void setFoodDimension(int foodDimension) {
-        this.foodDimension = foodDimension;
-    }
-
-    /**
-     * Obtem o tipo de comida
-     * @return o tipo de comida
-     */
-    public FoodType getFoodType() {
-        return foodType;
-    }
-
-    /**
-     * Atualiza o tipo de comida
-     * @param foodType o novo tipo de comida
-     */
-    public void setFoodType(FoodType foodType) {
-        this.foodType = foodType;
-    }
-
-    /**
-     * Obtem a quantidade de obstaculos
-     * @return a quantidade de obstaculos
-     */
-    public int getObstaclesQuantity() {
-        return obstaclesQuantity;
-    }
-
-    /**
-     * Atualiza a quantidade de obstaculos
-     * @param obstaclesQuantity a nova quantidade e obstaculos
-     */
-    public void setObstaclesQuantity(int obstaclesQuantity) {
-        this.obstaclesQuantity = obstaclesQuantity;
-    }
-
-    /**
-     * Obtem se os obstáculos sao dinamicos ou nao
-     * @return os obstáculos dinâmicos ou não
-     */
-    public boolean isObstacleDynamic() {
-        return isObstacleDynamic;
-    }
-
-    /**
-     * Atualiza se os obstaculos sao dinamicos ou nao
-     * @param isObstacleDynamic o novo valor logico da dinamicidade dos obstaculos
-     */
-    public void setObstacleDynamic(boolean isObstacleDynamic) {
-        this.isObstacleDynamic = isObstacleDynamic;
     }
 
     /**
@@ -515,55 +309,6 @@ public class SnakeGame implements KeyListener,ActionListener {
     }
 
     /**
-     * Obtem o gerador de numeros aleatorios
-     * @return o gerador de numeros aleatorios
-     */
-    public Random getRandom() {
-        return random;
-    }
-
-    /**
-     * Atualiza o gerador de numeros aleatorios
-     * @param random o novo gerador de numeros aleatorios
-     */
-    public void setRandom(Random random) {
-        this.random = random;
-    }
-
-    /**
-     * Obtem se o movimento da snake e manual ou automatizado
-     * @return se o movimento da snake e manual ou automatizado
-     */
-    public boolean isSnakeManualMovement() {
-        return isSnakeManualMovement;
-    }
-
-    /**
-     * Atualiza se o movimento da snake e manual ou automatizado
-     * @param isSnakeManualMovement o novo valor logico da automatizacao ou nao do movimento da snake
-     */
-    public void setSnakeManualMovement(boolean isSnakeManualMovement) {
-        this.isSnakeManualMovement = isSnakeManualMovement;
-    }
-
-    /**
-     * Obtem os pontos por comida do jogo
-     * @return os pontos por comida do jogo
-     */
-    public int getScorePerFood() {
-        return scorePerFood;
-    }
-
-    /**
-     * Atualiza os pontos por comida
-     * @param scorePerFood os novos pontos por comida
-     */
-    public void setScorePerFood(int scorePerFood) {
-        this.scorePerFood = scorePerFood;
-    }
-
-
-    /**
      * Obtem a leaderboard do jogo
      * @return a leaderboard do jogo
      */
@@ -577,24 +322,6 @@ public class SnakeGame implements KeyListener,ActionListener {
      */
     public void setLeaderboard(Leaderboard leaderboard) {
         this.leaderboard = leaderboard;
-    }
-
-
-    /**
-     * Obtem a lista de pontos de rotacao dos obstaculos
-     * @return a lista de pontos de rotacao dos obstaculos
-     */
-    public List<Ponto<? extends Number>> getListObstacleRotacionPoint() {
-        return listObstacleRotacionPoint;
-    }
-
-
-    /**
-     * Atualiza a lista de pontos de rotacao dos obstaculos
-     * @param listObstacleRotacionPoint a nova lista de pontos de rotacao dos obstaculos
-     */
-    public void setListObstacleRotacionPoint(List<Ponto<? extends Number>> listObstacleRotacionPoint) {
-        this.listObstacleRotacionPoint = listObstacleRotacionPoint;
     }
 
     /**
@@ -629,35 +356,35 @@ public class SnakeGame implements KeyListener,ActionListener {
         this.isFoodEaten = isFoodEaten;
     }
 
-    /**
-     * Obtem a lista de angulos de rotacao dos obstaculos
-     * @return a lista de ângulos de rotacao dos obstaculos
-     */
-    public List<Integer> getListObstacleAngles() {
-        return listObstacleAngles;
+    public boolean isKeyReleased() {
+        return isKeyReleased;
     }
 
-    /**
-     * Atualiza a lista de angulos de rotacao dos obstaculos
-     * @param listObstacleAngles a nova lista de angulos de rotacao de obstaculos
-     */
-    public void setListObstacleAngles(List<Integer> listObstacleAngles) {
-        this.listObstacleAngles = listObstacleAngles;
+    public void setKeyReleased(boolean keyReleased) {
+        isKeyReleased = keyReleased;
     }
 
-    public RasterizationTextualStrategy getRasterizationTextualStrategy() {
-        return rasterizationTextualStrategy;
+    public Timer getGameLoop() {
+        return gameLoop;
     }
 
-    public void setRasterizationTextualStrategy(RasterizationTextualStrategy rasterizationTextualStrategy) {
-        this.rasterizationTextualStrategy = rasterizationTextualStrategy;
+    public void setGameLoop(Timer gameLoop) {
+        this.gameLoop = gameLoop;
     }
 
-    public RasterizationGraphicStrategy getRasterizationGraphicStrategy() {
-        return rasterizationGraphicStrategy;
+    public static boolean isIsRunning() {
+        return isRunning;
     }
 
-    public void setRasterizationGraphicStrategy(RasterizationGraphicStrategy rasterizationGraphicStrategy) {
-        this.rasterizationGraphicStrategy = rasterizationGraphicStrategy;
+    public static void setIsRunning(boolean isRunning) {
+        SnakeGame.isRunning = isRunning;
+    }
+
+    public ML getMouseListener() {
+        return mouseListener;
+    }
+
+    public void setMouseListener(ML mouseListener) {
+        this.mouseListener = mouseListener;
     }
 }

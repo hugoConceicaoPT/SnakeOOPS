@@ -48,6 +48,18 @@ public class Poligono implements Cloneable {
         this.centroide = getCentroide();
     }
 
+    public Poligono(double minX,double minY,double maxX,double maxY) {
+        this(getPointsFromMax(minX,minY,maxX,maxY));
+    }
+
+    private static List<Ponto<? extends Number>> getPointsFromMax(double minX,double minY,double maxX,double maxY) {
+        List<Ponto<? extends Number>> pontos = new ArrayList<>();
+        pontos.add(new Ponto<Number>(minX,minY));
+        pontos.add(new Ponto<Number>(maxX,minY));
+        pontos.add(new Ponto<Number>(maxX,maxY));
+        pontos.add(new Ponto<Number>(minX,maxY));
+        return pontos;
+    }
     /**
      * Construtor que cria um polígono a partir de uma string representando seus pontos.
      * @param input A string contendo os pontos do polígono.

@@ -9,6 +9,7 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 import ModelLayer.SnakeLayer.Direction;
+import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;
 import ModelLayer.SnakeLayer.Snake;
 

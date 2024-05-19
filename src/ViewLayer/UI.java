@@ -1,5 +1,7 @@
 package ViewLayer;
 
+import ControllerLayer.ML;
+import ControllerLayer.SnakeGame;
 import ModelLayer.BoardLayer.GameBoard;
 import ModelLayer.BoardLayer.Score;
 
@@ -11,5 +13,11 @@ public interface UI {
      /**
      * Exibe os elementos do jogo, como o placar e o tabuleiro.
      */
-    void display();
+    void display(GameBoard gameBoard, Score score);
+    RasterizationTextualStrategy getTextualRasterizationStrategy();
+    RasterizationGraphicStrategy getGraphicRasterizationStrategy();
+
+    void addMouseListener(ML mouseListener);
+
+    void addMouseMotionListener(ML mouseListener);
 }
