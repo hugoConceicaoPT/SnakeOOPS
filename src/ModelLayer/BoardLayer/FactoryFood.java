@@ -26,8 +26,8 @@ public class FactoryFood {
      */
     public Food createFood(int x, int y, FoodType foodType, int foodDimension) {
         if (foodType == FoodType.CIRCLE) {
-            double xCenter = x + foodDimension/2.0;
-            double yCenter = y + foodDimension/2.0;
+            double xCenter = x + foodDimension;
+            double yCenter = y + foodDimension;
             return new FoodCircle(new Circunferencia(new Ponto<>(xCenter, yCenter), foodDimension / 2.0));
         } else if (foodType == FoodType.SQUARE) {
             return new FoodSquare(new Quadrado(createSquarePoints(x, y, foodDimension)));

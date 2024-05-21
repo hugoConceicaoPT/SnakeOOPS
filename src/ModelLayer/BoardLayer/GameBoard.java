@@ -182,7 +182,7 @@ public class GameBoard {
     /** Gera um obstáculo aleatório na board */
     public void generateObstacles(List<Ponto<? extends Number>> listRotacionPoint, List<Integer> listObstacleAngles ,boolean isDynamic) {
         for(int w = 0; w < this.obstaclesQuantity; w++) {
-            int obstacleSize = (random.nextInt(this.snake.getArestaHeadLength()) + this.foodDimension) % this.snake.getArestaHeadLength() + 1;
+            int obstacleSize = this.snake.getArestaHeadLength();
             boolean isEmpty = true; 
             this.obstacleType = ObstacleType.values()[random.nextInt(Direction.values().length)];
             while (isEmpty) {

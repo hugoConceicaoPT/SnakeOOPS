@@ -27,36 +27,37 @@ public class FullGraphicRasterization extends RasterizationGraphicStrategy {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        Graphics2D g2D = (Graphics2D) g;
+        super.paintComponent(g2D);
 
         // Paint obstacles
         for(int i = 0; i < this.gameBoard.getListOfObstacles().size(); i++) {
             Obstacle obstacle = this.gameBoard.getListOfObstacles().get(i);
-            g.setColor(Color.RED);
-            g.fillPolygon(obstacle.getPoligono().getXPoints(),obstacle.getPoligono().getYPoints(),obstacle.getPoligono().getPontos().size());
+            g2D.setColor(Color.RED);
+            g2D.fillPolygon(obstacle.getPoligono().getXPoints(),obstacle.getPoligono().getYPoints(),obstacle.getPoligono().getPontos().size());
         }
 
         // Paint food
-        int xF = this.gameBoard.getFood().getCentroide().getX().intValue();
-        int yF = this.gameBoard.getFood().getCentroide().getY().intValue();
+        int xF = this.gameBoard.getFood().getMinX();
+        int yF = this.gameBoard.getFood().getMinY();
         int sizeF = this.gameBoard.getFoodDimension();
-        g.setColor(this.gameBoard.getFood().getColor());
+        g2D.setColor(this.gameBoard.getFood().getColor());
         if (this.gameBoard.getFoodType() == FoodType.SQUARE) {
-            g.fillRect(xF, yF, sizeF, sizeF);
+            g2D.fillRect(xF, yF, sizeF, sizeF);
         } else {
-            g.fillOval(xF, yF, sizeF, sizeF);
+            g2D.fillOval(xF, yF, sizeF, sizeF);
         }
 
         // Paint snake
         for(int i = 0; i < this.gameBoard.getSnake().getBody().size(); i++){
-            int x = gameBoard.getSnake().getBody().get(i).getCentroide().getX().intValue();
-            int y = gameBoard.getSnake().getBody().get(i).getCentroide().getY().intValue();
+            int x = (int) gameBoard.getSnake().getBody().get(i).getMinX();
+            int y = (int) gameBoard.getSnake().getBody().get(i).getMinY();
             int size = gameBoard.getSnake().getArestaHeadLength();
             if(i == 0)
-                g.setColor(Color.BLACK);
+                g2D.setColor(new Color(20, 90, 50));
             else
-                g.setColor(Color.GREEN);
-            g.fillRect(x,y,size,size);
+                g2D.setColor(Color.GREEN);
+            g2D.fillRect(x,y,size,size);
         }
     }
 }

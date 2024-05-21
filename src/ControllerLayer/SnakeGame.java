@@ -47,7 +47,7 @@ public class SnakeGame implements KeyListener,ActionListener {
             frame.addKeyListener(this);
             this.userInterface.addMouseListener(this.mouseListener);
             this.userInterface.addMouseMotionListener(this.mouseListener);
-            this.gameLoop = new Timer(500,this);
+            this.gameLoop = new Timer(300,this);
             this.gameLoop.start();
         }
     }
@@ -185,6 +185,10 @@ public class SnakeGame implements KeyListener,ActionListener {
                 else
                     this.isKeyReleased = false;
                 this.gameBoard.getSnake().move();
+
+                if (this.gameBoard.getListOfObstacles().getFirst().getObstacleMovement() instanceof DynamicMovement) {
+                    this.gameBoard.rotateObstacles();
+                }
 
                 foodContainedInSnakeHead();
                 if (this.gameBoard.getFood() == null) {

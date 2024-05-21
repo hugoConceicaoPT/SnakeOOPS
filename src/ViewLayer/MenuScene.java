@@ -6,11 +6,12 @@ import ModelLayer.SnakeLayer.Retangulo;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+/** */
 public class MenuScene extends Scene {
+    private static MenuScene instance;
     private BufferedImage title,play,playPressed,exit,exitPressed;
     private Retangulo playRect,exitRect,titleRect;
     private BufferedImage playCurrentImage, exitCurrentImage;
@@ -18,8 +19,8 @@ public class MenuScene extends Scene {
     private int heightWindow;
     private RasterizationGraphicStrategy rasterizationGraphicStrategy;
     public MenuScene(int widthWindow, int heightWindow, RasterizationGraphicStrategy rasterizationGraphicStrategy) {
-        this.widthWindow = widthWindow;
-        this.heightWindow = heightWindow;
+        this.widthWindow = widthWindow + widthWindow/40;
+        this.heightWindow = heightWindow + widthWindow/40;
         this.rasterizationGraphicStrategy = rasterizationGraphicStrategy;
         try {
             BufferedImage spritesheet = ImageIO.read(new File("assets/menuSprite.png"));
@@ -41,13 +42,20 @@ public class MenuScene extends Scene {
         exitRect = new Retangulo(widthWindow/2.5, heightWindow/3.0 + (heightWindow/8.0)*2 + heightWindow/40.0, widthWindow/2.5 + widthWindow/5.0, heightWindow/3.0 + (heightWindow/8.0)*3);
     }
 
+    public static MenuScene getInstance(int width, int height, RasterizationGraphicStrategy strategy) {
+        if (instance == null) {
+            instance = new MenuScene(width, height, strategy);
+        }
+        return instance;
+    }
+
     @Override
     public void update(ML mouseListener) {
         if (mouseListener.getX() >= playRect.getMinX() && mouseListener.getX() <= playRect.getMaxX() &&
                 mouseListener.getY() >= playRect.getMinY() && mouseListener.getY() <= playRect.getMaxY()) {
             playCurrentImage = playPressed;
             if (mouseListener.isPressed()) {
-                GraphicalUI.getInstance(rasterizationGraphicStrategy).changeState(1);
+                GraphicalUI.setCurrentState(1);
             }
         } else {
             playCurrentImage = play;
@@ -57,7 +65,7 @@ public class MenuScene extends Scene {
                 mouseListener.getY() >= exitRect.getMinY() && mouseListener.getY() <= exitRect.getMaxY()) {
             exitCurrentImage = exitPressed;
             if (mouseListener.isPressed()) {
-                GraphicalUI.getInstance(null).close();
+                GraphicalUI.setCurrentState(0);
             }
         } else {
             exitCurrentImage = exit;

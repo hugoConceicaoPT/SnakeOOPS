@@ -1,51 +1,25 @@
 package ViewLayer;
 
 import ControllerLayer.ML;
-import ModelLayer.BoardLayer.GameBoard;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
 
 public class GameScene extends Scene {
-    private JPanel principalPanel;
+    private static GameScene instance;
+    private JPanel gamePanel;
     private RasterizationGraphicStrategy rasterizationGraphicStrategy;
 
     public GameScene(RasterizationGraphicStrategy rasterizationGraphicStrategy) {
         this.rasterizationGraphicStrategy = rasterizationGraphicStrategy;
-        initializeGamePanel();
-
+        this.gamePanel = this.rasterizationGraphicStrategy.getPanel();
     }
 
-    private void initializeGamePanel() {
-        this.principalPanel = new JPanel();
-        JPanel gamePanel = rasterizationGraphicStrategy.getPanel();
-
-        JPanel borderNorth = new JPanel();
-        JPanel borderWest = new JPanel();
-        JPanel borderEast = new JPanel();
-        JPanel borderSouth = new JPanel();
-
-        borderNorth.setBackground(Color.DARK_GRAY);
-        borderSouth.setBackground(Color.DARK_GRAY);
-        borderWest.setBackground(Color.DARK_GRAY);
-        borderEast.setBackground(Color.DARK_GRAY);
-
-        GameBoard gameBoard = rasterizationGraphicStrategy.getGameBoard();
-        int borderThickness = gameBoard.getWidthBoard() / gameBoard.getSnake().getArestaHeadLength();
-
-        borderNorth.setPreferredSize(new Dimension(gameBoard.getWidthBoard(), borderThickness));
-        borderWest.setPreferredSize(new Dimension(borderThickness, gameBoard.getHeightBoard()));
-        borderEast.setPreferredSize(new Dimension(borderThickness, gameBoard.getHeightBoard()));
-        borderSouth.setPreferredSize(new Dimension(gameBoard.getWidthBoard(), borderThickness));
-
-        principalPanel.setLayout(new BorderLayout());
-        principalPanel.add(borderNorth, BorderLayout.NORTH);
-        principalPanel.add(borderWest, BorderLayout.WEST);
-        principalPanel.add(borderEast, BorderLayout.EAST);
-        principalPanel.add(borderSouth, BorderLayout.SOUTH);
-        assert gamePanel != null;
-        principalPanel.add(gamePanel, BorderLayout.CENTER);
+    public static GameScene getInstance(RasterizationGraphicStrategy strategy) {
+        if (instance == null) {
+            instance = new GameScene(strategy);
+        }
+        return instance;
     }
 
     @Override
@@ -60,7 +34,7 @@ public class GameScene extends Scene {
 
     @Override
     public JPanel getPanel() {
-        return principalPanel;
+        return gamePanel;
     }
 
     public RasterizationGraphicStrategy getRasterizationGraphicStrategy() {
@@ -71,7 +45,7 @@ public class GameScene extends Scene {
         this.rasterizationGraphicStrategy = rasterizationGraphicStrategy;
     }
 
-    public void setPrincipalPanel(JPanel principalPanel) {
-        this.principalPanel = principalPanel;
+    public void setPrincipalPanel(JPanel gamePanel) {
+        this.gamePanel = gamePanel;
     }
 }
