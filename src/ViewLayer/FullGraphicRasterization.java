@@ -9,7 +9,7 @@ import java.awt.*;
 /**
  * Classe que representa a rasterização gráfica completa dos objetos no tabuleiro do jogo.
  * Responsabilidade: Renderizar graficamente os obstáculos, comida e cobra no tabuleiro com preenchimento completo.
- * @version 1.0 10/05/2024
+ * @version 1.0 22/05/2024
  */
 public class FullGraphicRasterization extends RasterizationGraphicStrategy {
 

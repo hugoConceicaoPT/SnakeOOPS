@@ -7,7 +7,7 @@ import ModelLayer.BoardLayer.Score;
 /**
  * Interface para implementar uma interface de usuário (UI) para o jogo.
  * Responsabilidade: Definir os métodos necessários para exibir os elementos do jogo e adicionar listeners de mouse.
- * @version 1.0 10/05/2024
+ * @version 1.0 22/05/2024
  */
 public interface UI {
 

@@ -4,7 +4,7 @@ package ModelLayer.SnakeLayer;
  * Classe que representa uma circunferência no plano cartesiano.
  * Responsabilidade: Armazenar o centro e o raio de uma circunferência,
  * e fornecer métodos para translação, interseção e verificação de contenção.
- * @version 1.0 10/05/2024
+ * @version 1.0 22/05/2024
  * @author Hugo Conceição, João Ventura, Eduarda Pereira
  * @inv O raio deve ser positivo para representar uma circunferência válida.
  */

@@ -9,7 +9,7 @@ import java.awt.Color;
 /**
  * Classe abstrata que representa comida no tabuleiro do jogo.
  * Responsabilidade: Fornecer métodos base para identificar e manipular comida no jogo.
- * @version 1.0 10/05/2024
+ * @version 1.0 22/05/2024
  * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public abstract class Food {

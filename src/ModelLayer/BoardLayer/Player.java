@@ -3,7 +3,7 @@ package ModelLayer.BoardLayer;
 /**
  * Classe que representa um jogador no jogo.
  * Responsabilidade: Armazenar e gerenciar as informações do jogador, incluindo seu nome e pontuação.
- * @version 1.0 10/05/2024
+ * @version 1.0 22/05/2024
  * @author Hugo Conceição João Ventura Eduarda Pereira
  * @inv O nome do jogador não deve ser nulo ou vazio, e o objeto Score associado deve sempre ser válido.
  */

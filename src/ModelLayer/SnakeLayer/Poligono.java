@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Classe que representa um polígono formado por uma lista de pontos.
  * Responsabilidade: Representar um polígono e verificar se os pontos formam um polígono válido.
- * @version 1.0 10/05/2024
+ * @version 1.0 22/05/2024
  * @author Hugo Conceição João Ventura Eduarda Pereira
  * @inv O polígono é válido se não existirem três pontos consecutivos colineares,
  * se as arestas não se cruzarem entre si, e se tiver pelo menos 3 pontos.

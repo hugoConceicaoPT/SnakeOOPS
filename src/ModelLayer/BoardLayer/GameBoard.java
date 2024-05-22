@@ -16,7 +16,7 @@ import ModelLayer.SnakeLayer.Triangulo;
 /**
  * Classe que representa o tabuleiro de jogo.
  * Responsabilidade: Gerenciar os elementos de jogo como comida, obstáculos e a cobra.
- * @version 1.0 10/05/2024
+ * @version 1.0 22/05/2024
  * @author Hugo Conceição João Ventura Eduarda Pereira
  * @inv O tabuleiro deve ter uma largura e altura positivas, e deve conter pelo menos um obstáculo e um tipo de comida.
  */

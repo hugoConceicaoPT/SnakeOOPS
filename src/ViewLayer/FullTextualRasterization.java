@@ -8,7 +8,7 @@ import ModelLayer.SnakeLayer.Quadrado;
 /**
  * Classe que implementa a estratégia de rasterização completa dos elementos no tabuleiro.
  * Responsabilidade: Representar de forma completa todos os elementos no tabuleiro, incluindo a cobra, obstáculos e comida.
- * @version 1.0 12/05/2024
+ * @version 1.0 22/05/2024
  * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class FullTextualRasterization extends RasterizationTextualStrategy {

@@ -6,7 +6,7 @@ import ModelLayer.BoardLayer.GameBoard;
 /**
  * Classe abstrata que define a estratégia de rasterização para representar o tabuleiro do jogo.
  * Responsabilidade: Fornecer um layout base para as classes derivadas, que implementam estratégias de rasterização específicas.
- * @version 1.0 12/05/2024
+ * @version 1.0 22/05/2024
  * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public abstract class RasterizationTextualStrategy  {

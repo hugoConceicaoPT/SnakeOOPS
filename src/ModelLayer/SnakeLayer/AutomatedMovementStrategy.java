@@ -11,7 +11,7 @@ import ModelLayer.BoardLayer.Obstacle;
  * Classe que implementa a estratégia de movimento automatizado para a cobra no jogo.
  * Responsabilidade: Definir a próxima direção de movimento da cobra
  * baseando-se em obstáculos e na localização da comida.
- * @version 1.0 10/05/2024
+ * @version 1.0 22/05/2024
  * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class AutomatedMovementStrategy implements MovementStrategy {

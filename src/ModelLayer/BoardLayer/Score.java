@@ -3,7 +3,7 @@ package ModelLayer.BoardLayer;
 /**
  * Classe que representa a pontuação de um jogador no jogo.
  * Responsabilidade: Gerenciar a pontuação do jogador, incluindo a atualização e o acesso aos pontos acumulados.
- * @version 1.0 10/05/2024
+ * @version 1.0 22/05/2024
  * @author Hugo Conceição João Ventura Eduarda Pereira
  * @inv A pontuação (points) nunca deve ser negativa, e a pontuação por comida (scorePerFood) deve ser um valor positivo.
  */

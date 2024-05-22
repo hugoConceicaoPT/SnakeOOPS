@@ -3,7 +3,7 @@ package ModelLayer.BoardLayer;
 /**
  * Classe que representa uma célula no tabuleiro do jogo.
  * Responsabilidade: Armazenar o tipo de conteúdo da célula (cobra, comida, obstáculo, etc.).
- * @version 1.0 10/05/2024
+ * @version 1.0 22/05/2024
  * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class Cell {

@@ -4,7 +4,7 @@ import java.util.List;
 
 /**	Classe que representa um Triângulo
     Responsabilidade: Representar um triângulo e verificar se os pontos formam um triângulo válido
-    @version 1.0 10/05/2024
+    @version 1.0 22/05/2024
     @author Hugo Conceição, João Ventura, Eduarda Pereira
     @inv O triângulo é válido se os pontos recebidos forem 3
 */

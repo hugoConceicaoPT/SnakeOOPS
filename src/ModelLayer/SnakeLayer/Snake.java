@@ -8,7 +8,7 @@ import ModelLayer.BoardLayer.GameBoard;
 /**
  * Classe que representa uma cobra no jogo.
  * Responsabilidade: Representar a cobra, mover seu corpo, aumentar seu tamanho e verificar colisões.
- * @version 1.0 10/05/2024
+ * @version 1.0 22/05/2024
  * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class Snake implements Cloneable {
@@ -331,10 +331,18 @@ public class Snake implements Cloneable {
         this.nextDirection = nextDirection;
     }
 
+    /**
+     * Obtém o ultimo quadrado antes de mover
+     * @return o ultimo quadrado antes de mover
+     */
     public Quadrado getUltimoQuadradoAntesDeMover() {
         return ultimoQuadradoAntesDeMover;
     }
 
+    /**
+     * Atualiza o ultimo quadrados antes de mover
+     * @param ultimoQuadradoAntesDeMover o novo ultimo quadrado antes de mover
+     */
     public void setUltimoQuadradoAntesDeMover(Quadrado ultimoQuadradoAntesDeMover) {
         this.ultimoQuadradoAntesDeMover = ultimoQuadradoAntesDeMover;
     }

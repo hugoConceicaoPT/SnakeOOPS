@@ -7,7 +7,7 @@ import ModelLayer.SnakeLayer.Snake;
 /**
  * Classe que representa um obstáculo no jogo da cobra
  * Responsabilidade: Gerenciar a forma geométrica do obstáculo e sua dinâmica
- * @version 1.0 10/05/2024
+ * @version 1.0 22/05/2024
  * @author Hugo Conceição João Ventura Eduarda Pereira
  */
 public class Obstacle {

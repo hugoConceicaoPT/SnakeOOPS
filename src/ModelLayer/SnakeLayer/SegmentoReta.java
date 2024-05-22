@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Classe que representa um segmento de reta no plano cartesiano.
  * Responsabilidade: Representar um segmento de reta e verificar se os pontos formam um segmento válido.
- * @version 1.0 10/05/2024
+ * @version 1.0 22/05/2024
  * @author Hugo Conceição, João Ventura, Eduarda Pereira
  * @inv Os pontos não podem ser iguais para formar um segmento de reta válido.
  */
