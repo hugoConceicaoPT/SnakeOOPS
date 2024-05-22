@@ -60,6 +60,13 @@ public class Triangulo extends Poligono {
         return (a == b + c + d);
     }
 
+    /**
+     * Calcula a area a partir de 3 pontos
+     * @param a o primeiro ponto
+     * @param b o segundo ponto
+     * @param c o segundo ponto
+     * @return a área a partir de 3 pontos
+     */
     private double area (Ponto<? extends Number> a, Ponto<? extends Number> b, Ponto<? extends Number> c) {
         return Math.abs((a.getX().doubleValue() * (b.getY().doubleValue()-c.getY().doubleValue()) + b.getX().doubleValue() * (c.getY().doubleValue()-a.getY().doubleValue()) + c.getX().doubleValue() * (a.getY().doubleValue()-b.getY().doubleValue()))/2.0);  
     }

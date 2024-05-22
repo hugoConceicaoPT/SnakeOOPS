@@ -86,7 +86,6 @@ public class Ponto<T extends Number> implements Cloneable {
     /** Aplica-se um movimento de rotação ao ponto a partir do ângulo de rotação e um ponto de rotação 
      * @param angle o ângulo de rotação 
      * @param centroide ponto de rotação
-     * @return um novo ponto com o movimento de rotação já aplicado
      * @see <a href="https://www.java2s.com/example/java-utility-method/polygon-rotate/rotatepolygon-polygon-pg-double-rotangle-point-centroid-polygon-original-ee480.html">...</a>
      */
     @SuppressWarnings("unchecked")
@@ -101,9 +100,8 @@ public class Ponto<T extends Number> implements Cloneable {
 
 
     /** Aplica-se um movimento de translação ao ponto a partir de um deslocamento dx e dy
-     * @param dx
-     * @param dy
-     * @return um novo ponto com o movimento de translação já aplicado
+     * @param dx deslocamento em x
+     * @param dy delocamento em y
      */
     @SuppressWarnings("unchecked")
     public void translate(int dx, int dy) {
@@ -127,7 +125,7 @@ public class Ponto<T extends Number> implements Cloneable {
     /** Aplica-se um movimento de translação ao ponto a partir das coordenadas x e y do novo centróide
      * @param centroX coordenada x do novo centróide
      * @param centroY coordenada y do novo centróide
-     * @return um novo ponto com o movimento de translação já aplicado
+     * @param centroide centroide do poligono
      */
     @SuppressWarnings("unchecked")
     public void translateCentroide(double centroX, double centroY, Ponto<? extends Number> centroide) {

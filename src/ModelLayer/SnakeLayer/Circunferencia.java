@@ -31,7 +31,7 @@ public class Circunferencia {
      * O método usa a aproximação de colisão entre círculo e retângulo.
      * @param that O polígono a ser verificado.
      * @return true se houver interseção entre a circunferência e o polígono, false caso contrário.
-     * @see https://www.jeffreythompson.org/collision-detection/circle-rect.php
+     * @see <a href="https://www.jeffreythompson.org/collision-detection/circle-rect.php">Collison Detection</a>
      */
     public boolean interseta(Poligono that) {
         double testX = that.getCentroide().getX().doubleValue();
@@ -81,10 +81,6 @@ public class Circunferencia {
         return dentroDosLimites;
     }
 
-    /**
-     * Retorna a representação em String da circunferência, incluindo seu centro e raio.
-     * @return String representando a circunferência.
-     */
     @Override
     public String toString() {
         return "Circunferência de centro: " + centro.toString() + " e raio: " + raio;

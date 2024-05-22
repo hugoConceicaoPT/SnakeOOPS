@@ -48,10 +48,25 @@ public class Poligono implements Cloneable {
         this.centroide = getCentroide();
     }
 
+    /**
+     * Construtor que cria um polígono das coordenadas máximas.
+     * @param minX x mínimo
+     * @param minY y mínimo
+     * @param maxX x máximo
+     * @param maxY y máximo
+     */
     public Poligono(double minX,double minY,double maxX,double maxY) {
         this(getPointsFromMax(minX,minY,maxX,maxY));
     }
 
+    /**
+     * Obtém uma lista de pontos com as coordenadas máximas
+     * @param minX x minimo
+     * @param minY y minimo
+     * @param maxX x máximo
+     * @param maxY y máximo
+     * @return a lista de pontos
+     */
     private static List<Ponto<? extends Number>> getPointsFromMax(double minX,double minY,double maxX,double maxY) {
         List<Ponto<? extends Number>> pontos = new ArrayList<>();
         pontos.add(new Ponto<Number>(minX,minY));
@@ -199,7 +214,7 @@ public class Poligono implements Cloneable {
 
     /**
      * Calcula o centróide do polígono.
-     * @see https://math.stackexchange.com/questions/90463/how-can-i-calculate-the-centroid-of-polygon
+     * @see <a href="https://math.stackexchange.com/questions/90463/how-can-i-calculate-the-centroid-of-polygon">Calcular o centroide do poligono</a>
      * @return O centróide do polígono.
      */
     public Ponto<Double> getCentroide() {
@@ -278,8 +293,7 @@ public class Poligono implements Cloneable {
      * Verifica se um ponto está contido dentro do polígono.
      * @param ponto O ponto a ser verificado.
      * @return true se o ponto estiver contido no polígono, false caso contrário.
-     * @see https://github.com/viniciusfinger/java-ray-casting/blob/main/RayCasting.java
-     * 
+     * @see <a href="https://github.com/viniciusfinger/java-ray-casting/blob/main/RayCasting.java">RayCasting</a>
      */
     public boolean contemPonto(Ponto<? extends Number> ponto) {
         double x = ponto.getX().doubleValue();
@@ -375,6 +389,10 @@ public class Poligono implements Cloneable {
         return aresta;
     }
 
+    /**
+     * Obtém os pontos x através de uma lista de pontos
+     * @return um array de ints
+     */
     public int[] getXPoints() {
         int [] xPoints = new int[this.pontos.size()];
         for (int i = 0; i < this.pontos.size(); i++) {
@@ -383,6 +401,10 @@ public class Poligono implements Cloneable {
         return xPoints;
     }
 
+    /**
+     * Obtém os pontos y através de uma lista de pontos
+     * @return um array de ints
+     */
     public int[] getYPoints() {
         int [] yPoints = new int[this.pontos.size()];
         for (int i = 0; i < this.pontos.size(); i++) {

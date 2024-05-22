@@ -123,10 +123,18 @@ public class Obstacle {
         this.rotacionPoint = rotacionPoint;
     }
 
+    /**
+     * Obtém o ângulo do obstáculo
+     * @return o ângulo do obstáculo
+     */
     public int getObstacleAngle() {
         return obstacleAngle;
     }
 
+    /**
+     * Atualiza o ângulo do obstáculo
+     * @param obstacleAngle o novo ângulo do obstáculo
+     */
     public void setObstacleAngle(int obstacleAngle) {
         this.obstacleAngle = obstacleAngle;
     }

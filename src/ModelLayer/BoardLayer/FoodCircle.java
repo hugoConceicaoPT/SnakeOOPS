@@ -8,7 +8,7 @@ import ModelLayer.SnakeLayer.Snake;
  * Classe que representa comida no formato circular no tabuleiro do jogo.
  * Responsabilidade: Fornecer métodos para verificar colisões e contenção de comida circular.
  * @version 1.0 10/05/2024
- * @autor Hugo Conceição, João Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class FoodCircle extends Food {
 

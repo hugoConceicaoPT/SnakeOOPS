@@ -8,7 +8,7 @@ import ModelLayer.BoardLayer.Score;
  * Classe que implementa a interface de usuário textual para o jogo.
  * Responsabilidade: Exibir os elementos do jogo como texto no console, incluindo o tabuleiro, direção da cobra e pontuação.
  * @version 1.0 22/05/2024
- * @autor Hugo Conceição, João Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class TextualUI implements UI {
 

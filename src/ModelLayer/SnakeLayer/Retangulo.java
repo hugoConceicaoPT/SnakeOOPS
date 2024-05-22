@@ -33,6 +33,13 @@ public class Retangulo extends Poligono {
         }
     }
 
+    /**
+     * Construtor que cria um retângulo a partir de uma lista de pontos.
+     * @param minX minimo X
+     * @param minY minimo Y
+     * @param maxX maximo X
+     * @param maxY maximo Y
+     */
     public Retangulo(double minX, double minY, double maxX, double maxY) {
         super(minX,minY,maxX,maxY);
     }

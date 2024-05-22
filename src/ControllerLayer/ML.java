@@ -13,28 +13,16 @@ public class ML extends MouseAdapter implements MouseMotionListener {
     public boolean isPressed = false;
     public double x = 0.0, y = 0.0;
 
-    /**
-     * Método chamado quando o botão do mouse é pressionado
-     * @param e Evento de mouse
-     */
     @Override
     public void mousePressed(MouseEvent e) {
         isPressed = true;
     }
 
-    /**
-     * Método chamado quando o botão do mouse é solto
-     * @param e Evento de mouse
-     */
     @Override
     public void mouseReleased(MouseEvent e) {
         isPressed = false;
     }
 
-    /**
-     * Método chamado quando o mouse é movido
-     * @param e Evento de movimento do mouse
-     */
     @Override
     public void mouseMoved(MouseEvent e) {
         this.x = e.getX(); // Atualiza a coordenada x com a posição atual do mouse

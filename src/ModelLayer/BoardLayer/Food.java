@@ -86,11 +86,6 @@ public abstract class Food {
      */
     public abstract int getMaxY();
 
-    /**
-     * Representa a comida como uma string.
-     * Cada subclasse deve implementar uma representação textual específica.
-     * @return A representação textual da comida.
-     */
     @Override
     public abstract String toString();
 
