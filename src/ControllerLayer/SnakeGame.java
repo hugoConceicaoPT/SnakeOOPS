@@ -359,39 +359,76 @@ public class SnakeGame implements KeyListener,ActionListener {
      * Atualiza se a comida foi comida pela cobra ou nao
      * @param isFoodEaten o novo valor logico se a comida foi comida pela cobra ou nao
      */
+    /**
+     * Atualiza se a comida foi comida pela cobra ou não.
+     * @param isFoodEaten o novo valor lógico se a comida foi comida pela cobra ou não.
+     */
     public void setFoodEaten(boolean isFoodEaten) {
         this.isFoodEaten = isFoodEaten;
     }
 
+    /**
+     * Verifica se uma tecla foi liberada.
+     * @return true se uma tecla foi liberada, caso contrário false.
+     */
     public boolean isKeyReleased() {
         return isKeyReleased;
     }
 
+    /**
+     * Atualiza o estado de liberação de tecla.
+     * @param keyReleased o novo estado de liberação de tecla.
+     */
     public void setKeyReleased(boolean keyReleased) {
         isKeyReleased = keyReleased;
     }
 
+    /**
+     * Obtém o loop do jogo.
+     * @return O timer do loop do jogo.
+     */
     public Timer getGameLoop() {
         return gameLoop;
     }
 
+    /**
+     * Define um novo loop de jogo.
+     * @param gameLoop O novo timer do loop do jogo.
+     */
     public void setGameLoop(Timer gameLoop) {
         this.gameLoop = gameLoop;
     }
 
+    /**
+     * Verifica se o jogo está em execução.
+     * @return true se o jogo está em execução, caso contrário false.
+     */
     public static boolean isIsRunning() {
         return isRunning;
     }
 
+    /**
+     * Atualiza o estado de execução do jogo.
+     * @param isRunning o novo estado de execução do jogo.
+     */
     public static void setIsRunning(boolean isRunning) {
         SnakeGame.isRunning = isRunning;
     }
 
+    /**
+     * Obtém o listener de eventos de mouse.
+     * @return O listener de eventos de mouse.
+     */
     public ML getMouseListener() {
         return mouseListener;
     }
 
+    /**
+     * Define um novo listener de eventos de mouse.
+     * @param mouseListener O novo listener de eventos de mouse.
+     */
     public void setMouseListener(ML mouseListener) {
         this.mouseListener = mouseListener;
     }
+
 }
