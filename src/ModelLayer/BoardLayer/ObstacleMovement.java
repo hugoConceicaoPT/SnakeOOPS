@@ -16,6 +16,7 @@ public interface ObstacleMovement {
      * A implementação pode ser expandida para suportar outras formas de movimento dinâmico.
      * @param poligono O polígono que representa o obstáculo a ser rotacionado.
      * @param pontoPivo O ponto pivô ao redor do qual o obstáculo deve girar.
+     * @param obstacleAngle ângulo do obstáculo
      */
     void rotateObstacle(Poligono poligono, Ponto<? extends Number> pontoPivo, int obstacleAngle);
 }

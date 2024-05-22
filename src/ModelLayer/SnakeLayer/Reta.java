@@ -33,6 +33,7 @@ public class Reta {
 
     /** Verifica se três pontos consecutivos são colineares
      * @param ponto Ponto no plano cartesiano
+     * @return verdadeiro se são colineares, falso caso contrário
      */
     public boolean colineares (Ponto<? extends Number> ponto)
     {

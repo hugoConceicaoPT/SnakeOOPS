@@ -8,6 +8,7 @@ import java.awt.event.MouseMotionListener;
  * Classe que lida com eventos de mouse
  * Responsabilidade: Monitorar o estado do mouse (pressionado ou não) e registrar a posição do cursor
  * @version 1.0 22/05/2024
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class ML extends MouseAdapter implements MouseMotionListener {
     public boolean isPressed = false;

@@ -172,6 +172,9 @@ public class SnakeGame implements KeyListener,ActionListener {
         return false;
     }
 
+    /**
+     * Dá disçay do jogo em modo gráfico
+     */
     public void displayGame() {
         this.userInterface.display(this.gameBoard,this.score);
     }

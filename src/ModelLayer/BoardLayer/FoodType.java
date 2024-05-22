@@ -7,7 +7,14 @@ package ModelLayer.BoardLayer;
  * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public enum FoodType {
+	/**
+     * Representa comida em formato de círculo.
+     */
     CIRCLE,
+    
+    /**
+     * Representa comida em formato de quadrado.
+     */
     SQUARE
 }
 

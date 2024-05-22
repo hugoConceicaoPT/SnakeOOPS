@@ -12,7 +12,7 @@ import ModelLayer.BoardLayer.Score;
  * Classe que implementa a interface gráfica para o jogo, utilizando a biblioteca Swing.
  * Responsabilidade: Exibir o tabuleiro do jogo e o placar, além de capturar os eventos do teclado.
  * @version 1.0 22/05/2024
- * Autor: Hugo Conceição, João Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class GraphicalUI extends JFrame implements UI {
     private RasterizationGraphicStrategy rasterizationGraphicStrategy;

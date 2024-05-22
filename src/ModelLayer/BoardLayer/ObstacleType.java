@@ -8,9 +8,24 @@ package ModelLayer.BoardLayer;
  * @inv Cada constante representa uma forma única de obstáculo.
  */
 public enum ObstacleType {
-    POLYGON,  
-    RECTANGLE, 
-    TRIANGLE,  
-    SQUARE   
+	/**
+     * Representa um obstáculo em formato de polígono.
+     */
+    POLYGON,
+    
+    /**
+     * Representa um obstáculo em formato de retângulo.
+     */
+    RECTANGLE,
+    
+    /**
+     * Representa um obstáculo em formato de triângulo.
+     */
+    TRIANGLE,
+    
+    /**
+     * Representa um obstáculo em formato de quadrado.
+     */
+    SQUARE
 }
 

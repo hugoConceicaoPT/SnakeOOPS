@@ -8,9 +8,24 @@ package ModelLayer.SnakeLayer;
  * @inv As direções são utilizadas para controlar a movimentação da cobra no plano do jogo, não sendo alteráveis.
  */
 public enum Direction implements Cloneable {
-    UP,    
-    DOWN,  
-    LEFT,  
-    RIGHT; 
+	/**
+     * Representa a direção para cima.
+     */
+    UP,
+    
+    /**
+     * Representa a direção para baixo.
+     */
+    DOWN,
+    
+    /**
+     * Representa a direção para a esquerda.
+     */
+    LEFT,
+    
+    /**
+     * Representa a direção para a direita.
+     */
+    RIGHT;
 }
 

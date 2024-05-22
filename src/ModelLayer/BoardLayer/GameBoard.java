@@ -42,6 +42,7 @@ public class GameBoard {
      * @param obstaclesQuantity quantidade de obstáculos
      * @param listObstacleRotacionPoint pontos de rotação dos obstáculos
      * @param isObstacleDynamic indica se os obstáculos são dinâmicos
+     * @param listObstacleAngles lista de ângulos dos obstáculos
      * @param random gerador de números aleatórios
      */
     public GameBoard (Snake snake, int widthBoard, int heightBoard, FoodType foodType, int foodDimension,int obstaclesQuantity, List<Ponto<? extends Number>> listObstacleRotacionPoint,List<Integer> listObstacleAngles ,boolean isObstacleDynamic, Random random) {
@@ -179,7 +180,11 @@ public class GameBoard {
         }
     }
 
-    /** Gera um obstáculo aleatório na board */
+    /** Gera um obstáculo aleatório na board
+     * @param listRotacionPoint lista de pontos de rotação 
+     * @param listObstacleAngles lista de ângulos dos obstáculos
+     * @param isDynamic obstáculo é dinâmico ou não
+     */
     public void generateObstacles(List<Ponto<? extends Number>> listRotacionPoint, List<Integer> listObstacleAngles ,boolean isDynamic) {
         for(int w = 0; w < this.obstaclesQuantity; w++) {
             int obstacleSize = this.snake.getArestaHeadLength();
