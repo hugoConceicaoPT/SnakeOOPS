@@ -70,4 +70,8 @@ public class TextualUI implements UI {
     public void setRasterizationTextualStrategy(RasterizationTextualStrategy rasterizationTextualStrategy) {
         this.rasterizationTextualStrategy = rasterizationTextualStrategy;
     }
+
+    public RasterizationTextualStrategy getRasterizationTextualStrategy() {
+        return rasterizationTextualStrategy;
+    }
 }

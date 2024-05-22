@@ -180,11 +180,16 @@ public class SnakeGame implements KeyListener,ActionListener {
         displayGame();
         if(!isGameOver) {
             if (isRunning) {
-                if (!this.isKeyReleased)
-                    this.gameBoard.getSnake().setNextDirection(this.gameBoard.getSnake().getCurrentDirection());
-                else
-                    this.isKeyReleased = false;
-                this.gameBoard.getSnake().move();
+                if(this.gameBoard.getSnake().getMovementStrategy() instanceof ManualMovementStrategy) {
+                    if (!this.isKeyReleased)
+                        this.gameBoard.getSnake().setNextDirection(this.gameBoard.getSnake().getCurrentDirection());
+                    else
+                        this.isKeyReleased = false;
+                    this.gameBoard.getSnake().move();
+                }
+                else {
+                    moveSnake(this.gameBoard.getSnake().getCurrentDirection());
+                }
 
                 if (this.gameBoard.getListOfObstacles().getFirst().getObstacleMovement() instanceof DynamicMovement) {
                     this.gameBoard.rotateObstacles();

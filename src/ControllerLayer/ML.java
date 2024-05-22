@@ -4,6 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
+
 public class ML extends MouseAdapter implements MouseMotionListener {
     public boolean isPressed = false;
     public double x = 0.0, y = 0.0;
@@ -28,4 +29,16 @@ public class ML extends MouseAdapter implements MouseMotionListener {
     public double getY() { return this.y; }
 
     public boolean isPressed() { return this.isPressed; }
+
+    public void setPressed(boolean pressed) {
+        isPressed = pressed;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
 }

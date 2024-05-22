@@ -57,4 +57,8 @@ public abstract class RasterizationGraphicStrategy extends JPanel {
     public void setPanel(JPanel panel) {
         this.panel = panel;
     }
+
+    public Image getBackgroundImage() {
+        return backgroundImage;
+    }
 }

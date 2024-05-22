@@ -122,4 +122,12 @@ public class Obstacle {
     public void setRotacionPoint(Ponto<? extends Number> rotacionPoint) {
         this.rotacionPoint = rotacionPoint;
     }
+
+    public int getObstacleAngle() {
+        return obstacleAngle;
+    }
+
+    public void setObstacleAngle(int obstacleAngle) {
+        this.obstacleAngle = obstacleAngle;
+    }
 }

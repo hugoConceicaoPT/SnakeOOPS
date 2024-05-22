@@ -22,6 +22,22 @@ public class GameScene extends Scene {
         return instance;
     }
 
+    public static GameScene getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(GameScene instance) {
+        GameScene.instance = instance;
+    }
+
+    public JPanel getGamePanel() {
+        return gamePanel;
+    }
+
+    public void setGamePanel(JPanel gamePanel) {
+        this.gamePanel = gamePanel;
+    }
+
     @Override
     public void update(ML mouseListener) {
 

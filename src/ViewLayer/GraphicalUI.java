@@ -30,13 +30,14 @@ public class GraphicalUI extends JFrame implements UI {
     /**
      * Construtor que inicializa a interface gráfica.
      * Pode ser configurado posteriormente para definir a aparência do jogo.
+     * @param rasterizationGraphicStrategy tipo de rasterização para o jogo
      */
     public GraphicalUI(RasterizationGraphicStrategy rasterizationGraphicStrategy) {
         this.rasterizationGraphicStrategy = rasterizationGraphicStrategy;
         this.windowWidth = this.rasterizationGraphicStrategy.getGameBoard().getWidthBoard();
         this.windowHeight = this.rasterizationGraphicStrategy.getGameBoard().getHeightBoard();
         currentState = 0;
-        this.informationPanel = new JPanel(new GridLayout(1, 3));
+        this.informationPanel = new JPanel(new GridLayout(0, 2));
         this.currentDirectionLabel = new JLabel();
         this.currentScoreLabel = new JLabel();
         this.currentDirectionLabel.setFont(new Font("MV Boli", Font.PLAIN, 20));
@@ -50,7 +51,7 @@ public class GraphicalUI extends JFrame implements UI {
         setTitle("SnakeOOPS");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        setPreferredSize(new Dimension(this.windowWidth + 10,this.windowHeight + 10));
+        setPreferredSize(new Dimension(this.windowWidth + 10,this.windowHeight));
         pack();
         setLocationRelativeTo(null);
         setFocusable(true);
@@ -60,8 +61,6 @@ public class GraphicalUI extends JFrame implements UI {
     @Override
     public void display(GameBoard gameBoard,Score score) {
         if(currentState == 0) {
-            if(SnakeGame.isIsRunning())
-                dispose();
             currentScene = MenuScene.getInstance(this.windowWidth, this.windowHeight, this.rasterizationGraphicStrategy);
             Image dbImage = createImage(getWidth(),getHeight());
             Graphics dbg = dbImage.getGraphics();
@@ -177,6 +176,29 @@ public class GraphicalUI extends JFrame implements UI {
         this.mouseListener = mouseListener;
     }
 
+    public JLabel getCurrentDirectionLabel() {
+        return currentDirectionLabel;
+    }
+
+    public void setCurrentDirectionLabel(JLabel currentDirectionLabel) {
+        this.currentDirectionLabel = currentDirectionLabel;
+    }
+
+    public JLabel getCurrentScoreLabel() {
+        return currentScoreLabel;
+    }
+
+    public void setCurrentScoreLabel(JLabel currentScoreLabel) {
+        this.currentScoreLabel = currentScoreLabel;
+    }
+
+    public JPanel getInformationPanel() {
+        return informationPanel;
+    }
+
+    public void setInformationPanel(JPanel informationPanel) {
+        this.informationPanel = informationPanel;
+    }
 }
 
 
