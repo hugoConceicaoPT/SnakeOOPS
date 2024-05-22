@@ -11,8 +11,8 @@ public class Ponto<T extends Number> implements Cloneable {
     private T y;
 
     /** Construtor para criar um ponto com as coordenadas especificadas
-     * @param xDouble A coordenada x do ponto
-     * @param yDouble A coordenada y do ponto
+     * @param x A coordenada x do ponto
+     * @param y A coordenada y do ponto
      */
     public Ponto(T x, T y) {
         check(x, y);
@@ -49,14 +49,14 @@ public class Ponto<T extends Number> implements Cloneable {
     
 
     /** Define a coordenada x do ponto
-     * @param xDouble O novo valor para a coordenada x
+     * @param x O novo valor para a coordenada x
      */
     public void setX(T x) {
         this.x = x;
     }
 
     /** Define a coordenada yDouble do ponto
-     * @param yDouble O novo valor para a coordenada yDouble
+     * @param y O novo valor para a coordenada yDouble
      */
     public void setY(T y) {
         this.y = y;
@@ -85,9 +85,9 @@ public class Ponto<T extends Number> implements Cloneable {
 
     /** Aplica-se um movimento de rotação ao ponto a partir do ângulo de rotação e um ponto de rotação 
      * @param angle o ângulo de rotação 
-     * @param pontoPivo ponto de rotação 
+     * @param centroide ponto de rotação
      * @return um novo ponto com o movimento de rotação já aplicado
-     * @see http://www.java2s.com/example/java-utility-method/polygon-rotate/rotatepolygon-polygon-pg-double-rotangle-point-centroid-polygon-original-ee480.html
+     * @see <a href="https://www.java2s.com/example/java-utility-method/polygon-rotate/rotatepolygon-polygon-pg-double-rotangle-point-centroid-polygon-original-ee480.html">...</a>
      */
     @SuppressWarnings("unchecked")
     public void rotate(int angle, Ponto<? extends Number> centroide) {

@@ -6,38 +6,62 @@ import ModelLayer.BoardLayer.Obstacle;
 
 import java.awt.*;
 
+/**
+ * Classe que representa a rasterização gráfica completa dos objetos no tabuleiro do jogo.
+ * Responsabilidade: Renderizar graficamente os obstáculos, comida e cobra no tabuleiro com preenchimento completo.
+ * @version 1.0 10/05/2024
+ */
 public class FullGraphicRasterization extends RasterizationGraphicStrategy {
+
+    /**
+     * Construtor para criar uma instância de FullGraphicRasterization com o tabuleiro de jogo especificado.
+     * @param gameBoard O tabuleiro de jogo a ser renderizado.
+     */
     public FullGraphicRasterization(GameBoard gameBoard) {
         super(gameBoard);
     }
 
+    /**
+     * Atualiza a renderização dos obstáculos no tabuleiro.
+     */
     @Override
     public void updateObstacles() {
         repaint();
     }
 
+    /**
+     * Atualiza a renderização da cobra no tabuleiro.
+     */
     @Override
     public void updateSnake() {
         repaint();
     }
+
+    /**
+     * Atualiza a renderização da comida no tabuleiro.
+     */
     @Override
     public void updateFood() {
         repaint();
     }
 
+    /**
+     * Método chamado para renderizar os componentes gráficos no tabuleiro.
+     * @param g O contexto gráfico a ser usado para desenhar os componentes.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2D = (Graphics2D) g;
         super.paintComponent(g2D);
 
-        // Paint obstacles
+
         for(int i = 0; i < this.gameBoard.getListOfObstacles().size(); i++) {
             Obstacle obstacle = this.gameBoard.getListOfObstacles().get(i);
             g2D.setColor(Color.RED);
             g2D.fillPolygon(obstacle.getPoligono().getXPoints(),obstacle.getPoligono().getYPoints(),obstacle.getPoligono().getPontos().size());
         }
 
-        // Paint food
+
         int xF = this.gameBoard.getFood().getMinX();
         int yF = this.gameBoard.getFood().getMinY();
         int sizeF = this.gameBoard.getFoodDimension();
@@ -48,7 +72,7 @@ public class FullGraphicRasterization extends RasterizationGraphicStrategy {
             g2D.fillOval(xF, yF, sizeF, sizeF);
         }
 
-        // Paint snake
+
         for(int i = 0; i < this.gameBoard.getSnake().getBody().size(); i++){
             int x = (int) gameBoard.getSnake().getBody().get(i).getMinX();
             int y = (int) gameBoard.getSnake().getBody().get(i).getMinY();
