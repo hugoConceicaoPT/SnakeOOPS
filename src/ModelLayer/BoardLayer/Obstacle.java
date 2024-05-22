@@ -22,7 +22,7 @@ public class Obstacle {
      * @param poligono Figura geométrica do obstáculo
      * @param rotacionPoint Ponto de rotação para transformações geométricas
      * @param isDynamic Indica se o obstáculo possui movimento dinâmico
-     * @param osbtacleAngle ângulo do obstáculo
+     * @param obstacleAngle ângulo do obstáculo
      */
     public Obstacle(Poligono poligono, Ponto<? extends Number> rotacionPoint, int obstacleAngle ,boolean isDynamic) {
         this.poligono = poligono;

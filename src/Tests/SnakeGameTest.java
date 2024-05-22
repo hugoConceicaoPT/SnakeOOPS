@@ -59,7 +59,7 @@ public class SnakeGameTest {
     }
 
     @Test
-    public void foodContainedInSnakeTest() throws CloneNotSupportedException {
+    public void foodContainedInSnakeHeadTest() throws CloneNotSupportedException {
         long seed = 1;
         Random random = new Random();
         List<Integer> angle = new ArrayList<>();

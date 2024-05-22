@@ -72,7 +72,7 @@ public class GameBoardTest {
 
 
     @Test
-    public void foodContainedInSnakeTest() throws CloneNotSupportedException {
+    public void foodContainedInSnakeHeadTest() throws CloneNotSupportedException {
         long seed = 125;
         Random random = new Random(seed);
         String input = "8 5 8 3 6 3 6 5";
