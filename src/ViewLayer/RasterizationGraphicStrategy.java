@@ -4,18 +4,33 @@ import ModelLayer.BoardLayer.GameBoard;
 
 import javax.swing.*;
 import java.awt.*;
-
+/**
+ * Classe abstrata que define a estratégia de rasterização gráfica para o jogo.
+ * Responsabilidade: Definir os métodos abstratos para atualização dos obstáculos, cobra e comida no tabuleiro,
+ * e fornecer a base para a renderização gráfica do tabuleiro do jogo.
+ * @version 1.0 22/05/2024
+ */
 public abstract class RasterizationGraphicStrategy extends JPanel {
 
     protected GameBoard gameBoard;
     protected JPanel panel;
     private final Image backgroundImage = new ImageIcon("assets/backgroundGame.png").getImage();
+
+    /**
+     * Construtor que inicializa a estratégia de rasterização gráfica com o tabuleiro de jogo especificado.
+     * @param gameBoard O tabuleiro de jogo a ser renderizado.
+     */
     public RasterizationGraphicStrategy(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
         this.panel = this;
         this.panel.setPreferredSize(new Dimension(this.gameBoard.getWidthBoard(),this.gameBoard.getHeightBoard()));
     }
 
+
+    /**
+     * Método para renderizar os componentes gráficos do painel.
+     * @param g O contexto gráfico a ser usado para desenhar.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
