@@ -330,4 +330,12 @@ public class Snake implements Cloneable {
     public void setNextDirection(Direction nextDirection) {
         this.nextDirection = nextDirection;
     }
+
+    public Quadrado getUltimoQuadradoAntesDeMover() {
+        return ultimoQuadradoAntesDeMover;
+    }
+
+    public void setUltimoQuadradoAntesDeMover(Quadrado ultimoQuadradoAntesDeMover) {
+        this.ultimoQuadradoAntesDeMover = ultimoQuadradoAntesDeMover;
+    }
 }
