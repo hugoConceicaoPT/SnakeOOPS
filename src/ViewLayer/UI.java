@@ -8,6 +8,7 @@ import ModelLayer.BoardLayer.Score;
 /**
  * Interface para implementar uma interface de usuário (UI) para o jogo.
  * Define o método `display` para exibir os elementos do jogo.
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public interface UI {
      /**

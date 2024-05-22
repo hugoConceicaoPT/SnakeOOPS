@@ -8,7 +8,7 @@ import ModelLayer.SnakeLayer.Snake;
  * Classe que representa comida no formato de quadrado no tabuleiro do jogo.
  * Responsabilidade: Gerenciar as interações da comida quadrada com outros elementos do jogo, como cobra e obstáculos.
  * @version 1.0 10/05/2024
- * @autor Hugo Conceição, João Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class FoodSquare extends Food {
 

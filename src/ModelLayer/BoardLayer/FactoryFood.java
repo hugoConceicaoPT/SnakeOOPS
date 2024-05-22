@@ -11,7 +11,7 @@ import ModelLayer.SnakeLayer.Quadrado;
  * Classe que representa uma fábrica para criar diferentes tipos de comida no jogo.
  * Responsabilidade: Fornecer métodos para criar comida de diferentes tipos, como quadrados e círculos.
  * @version 1.0 10/05/2024
- * @autor Hugo Conceição, João Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class FactoryFood {
     /**

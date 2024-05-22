@@ -12,7 +12,7 @@ import ModelLayer.BoardLayer.Obstacle;
  * Responsabilidade: Definir a próxima direção de movimento da cobra
  * baseando-se em obstáculos e na localização da comida.
  * @version 1.0 10/05/2024
- * @autor Hugo Conceição, João Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class AutomatedMovementStrategy implements MovementStrategy {
 

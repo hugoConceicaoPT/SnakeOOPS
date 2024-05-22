@@ -7,7 +7,7 @@ import ModelLayer.SnakeLayer.Ponto;
  * Classe que implementa o movimento dinâmico dos obstáculos no tabuleiro do jogo.
  * Responsabilidade: Fornecer uma implementação para rotacionar com um certo ângulo, obstáculos dinamicamente ao redor de um ponto pivô.
  * @version 1.0 10/05/2024
- * @autor Hugo Conceição, João Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class DynamicMovement implements ObstacleMovement {
 

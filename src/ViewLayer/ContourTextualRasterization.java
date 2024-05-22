@@ -13,7 +13,7 @@ import ModelLayer.SnakeLayer.SegmentoReta;
  * Responsabilidade: Representar os elementos do tabuleiro, como cobra, obstáculos e comida,
  * destacando apenas seus contornos.
  * @version 1.0 12/05/2024
- * @autor Hugo Conceição, João Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class ContourTextualRasterization extends RasterizationTextualStrategy {
 

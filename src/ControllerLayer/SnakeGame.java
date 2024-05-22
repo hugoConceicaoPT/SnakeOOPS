@@ -13,7 +13,7 @@ import javax.swing.*;
  * Classe principal que gerencia o jogo da cobra.
  * Responsabilidade: Gerenciar o loop de jogo, entradas do usuario e renderizacao do estado do jogo.
  * @version 1.0 12/05/2024
- * @author Hugo Conceicao, Joao Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  * @inv O jogo termina quando a cobra colide com um obstaculo, com ela mesma, ou a comida acaba.
  */
 public class SnakeGame implements KeyListener,ActionListener {
