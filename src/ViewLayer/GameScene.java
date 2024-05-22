@@ -11,7 +11,7 @@ import java.awt.*;
  * @version 1.0 22/05/2024
  */
 public class GameScene extends Scene {
-    private static GameScene instance; 
+    private static GameScene instance;
     private JPanel gamePanel;
 
     private RasterizationGraphicStrategy rasterizationGraphicStrategy; // Estratégia de rasterização gráfica

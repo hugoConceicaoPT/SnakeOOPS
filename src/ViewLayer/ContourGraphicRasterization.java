@@ -54,7 +54,7 @@ public class ContourGraphicRasterization extends RasterizationGraphicStrategy {
         Graphics2D g2D = (Graphics2D) g;
         super.paintComponent(g2D);
 
-        // Renderiza os obstáculos
+
         for(int i = 0; i < this.gameBoard.getListOfObstacles().size(); i++) {
             Obstacle obstacle = this.gameBoard.getListOfObstacles().get(i);
             g2D.setColor(Color.RED);
@@ -62,7 +62,7 @@ public class ContourGraphicRasterization extends RasterizationGraphicStrategy {
             g2D.drawPolygon(obstacle.getPoligono().getXPoints(),obstacle.getPoligono().getYPoints(),obstacle.getPoligono().getPontos().size());
         }
 
-        // Renderiza a comida
+
         int xF = this.gameBoard.getFood().getMinX();
         int yF = this.gameBoard.getFood().getMinY();
         int sizeF = this.gameBoard.getFoodDimension();
@@ -74,7 +74,7 @@ public class ContourGraphicRasterization extends RasterizationGraphicStrategy {
             g2D.drawOval(xF, yF, sizeF, sizeF);
         }
 
-        // Renderiza a cobra
+
         for(int i = 0; i < this.gameBoard.getSnake().getBody().size(); i++){
             int x = (int) gameBoard.getSnake().getBody().get(i).getMinX();
             int y = (int) gameBoard.getSnake().getBody().get(i).getMinY();

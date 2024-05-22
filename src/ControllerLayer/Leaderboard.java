@@ -14,16 +14,16 @@ import ModelLayer.BoardLayer.Score;
  * Classe responsável pela gestão da classificação dos jogadores.
  * Responsabilidade: Gerenciar e atualizar o arquivo de classificação dos jogadores com base em suas pontuações.
  * @version 1.0 10/05/2024
- * @author Hugo Conceição, João Ventura, Eduarda Pereira
+ * @autor Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class Leaderboard {
-    private String filePath; 
-    
+    private String filePath; // Caminho do arquivo de ranking
+
     /**
      * Construtor padrão que inicializa o caminho do arquivo de ranking.
      */
     public Leaderboard() {
-        this.filePath = "src\\ranking.txt"; 
+        this.filePath = "src\\ranking.txt";
     }
 
     /**
@@ -34,14 +34,14 @@ public class Leaderboard {
         String result = "";
         try (Stream<String> lines = Files.lines(Paths.get(this.filePath))) {
             List<Player> topPlayers = lines.filter(line -> !line.trim().isEmpty())
-                .map(line -> {
-                    String[] parts = line.split(" ");
-                    String name = parts[1];
-                    int points = Integer.parseInt(parts[2]);
-                    return new Player(name, new Score(points, 0));
-                })
-                .sorted(Comparator.comparing(player -> player.getScore().getPoints(), Comparator.reverseOrder()))
-                .collect(Collectors.toList());
+                    .map(line -> {
+                        String[] parts = line.split(" ");
+                        String name = parts[1];
+                        int points = Integer.parseInt(parts[2]);
+                        return new Player(name, new Score(points, 0));
+                    })
+                    .sorted(Comparator.comparing(player -> player.getScore().getPoints(), Comparator.reverseOrder()))
+                    .collect(Collectors.toList());
 
             for (int i = 0; i < topPlayers.size(); i++) {
                 result += (i + 1) + "º " + topPlayers.get(i).getName() + " " + topPlayers.get(i).getScore().getPoints() + " Pontos\n";
@@ -60,13 +60,13 @@ public class Leaderboard {
     public void updateLeaderboard(Player newPlayer) {
         try (Stream<String> lines = Files.lines(Paths.get(this.filePath))) {
             List<Player> topPlayers = lines.map(line -> {
-                String[] parts = line.split(" ");
-                String name = parts[1];
-                int points = Integer.parseInt(parts[2]);
-                return new Player(name, new Score(points, 0));
-            })
-            .sorted(Comparator.comparing(player -> player.getScore().getPoints(), Comparator.reverseOrder()))
-            .collect(Collectors.toList());
+                        String[] parts = line.split(" ");
+                        String name = parts[1];
+                        int points = Integer.parseInt(parts[2]);
+                        return new Player(name, new Score(points, 0));
+                    })
+                    .sorted(Comparator.comparing(player -> player.getScore().getPoints(), Comparator.reverseOrder()))
+                    .collect(Collectors.toList());
 
             boolean playerExists = false;
             for (Player player : topPlayers) {
@@ -79,24 +79,33 @@ public class Leaderboard {
                 }
             }
 
-            if (!playerExists)
+            if (!playerExists) {
                 topPlayers.add(newPlayer);
+            }
 
             topPlayers.sort(Comparator.comparing(player -> player.getScore().getPoints(), Comparator.reverseOrder()));
             List<String> formattedScores = topPlayers.stream()
-                .map(topPlayer -> (topPlayers.indexOf(topPlayer) + 1) + "º " + topPlayer.getName() + " " + topPlayer.getScore().getPoints() + " Pontos")
-                .collect(Collectors.toList());
+                    .map(topPlayer -> (topPlayers.indexOf(topPlayer) + 1) + "º " + topPlayer.getName() + " " + topPlayer.getScore().getPoints() + " Pontos")
+                    .collect(Collectors.toList());
 
             Files.write(Paths.get(this.filePath), formattedScores);
         } catch (Exception e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
     }
 
+    /**
+     * Obtém o caminho do arquivo de ranking.
+     * @return O caminho do arquivo de ranking.
+     */
     public String getFilePath() {
         return filePath;
     }
 
+    /**
+     * Define um novo caminho para o arquivo de ranking.
+     * @param filePath O novo caminho do arquivo de ranking.
+     */
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
