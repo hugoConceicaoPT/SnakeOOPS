@@ -1,9 +1,6 @@
 package ViewLayer;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.util.Arrays;
-
 import javax.swing.*;
 
 import ControllerLayer.ML;
@@ -35,14 +32,14 @@ public class GraphicalUI extends JFrame implements UI {
      */
     public GraphicalUI(RasterizationGraphicStrategy rasterizationGraphicStrategy) {
         this.rasterizationGraphicStrategy = rasterizationGraphicStrategy;
-        this.windowWidth = this.rasterizationGraphicStrategy.getGameBoard().getWidthBoard();
-        this.windowHeight = this.rasterizationGraphicStrategy.getGameBoard().getHeightBoard();
+        this.windowWidth = this.rasterizationGraphicStrategy.getGameBoard().getWidthBoard() + 10 ;
+        this.windowHeight = this.rasterizationGraphicStrategy.getGameBoard().getHeightBoard() + 60;
         currentState = 0;
-        this.informationPanel = new JPanel(new GridLayout(1, 3));
+        this.informationPanel = new JPanel(new GridLayout(0, 2));
         this.currentDirectionLabel = new JLabel();
         this.currentScoreLabel = new JLabel();
-        this.currentDirectionLabel.setFont(new Font("MV Boli", Font.PLAIN, 20));
-        this.currentScoreLabel.setFont(new Font("MV Boli", Font.PLAIN, 20));
+        this.currentDirectionLabel.setFont(new Font("MV Boli", Font.PLAIN, 15));
+        this.currentScoreLabel.setFont(new Font("MV Boli", Font.PLAIN, 15));
         this.currentDirectionLabel.setForeground(Color.white);
         this.currentScoreLabel.setForeground(Color.white);
         this.informationPanel.setBackground(new Color (20, 90, 50));
@@ -50,12 +47,11 @@ public class GraphicalUI extends JFrame implements UI {
         this.informationPanel.add(currentScoreLabel);
         add(this.informationPanel, BorderLayout.NORTH);
         setTitle("SnakeOOPS");
+        setPreferredSize(new Dimension(this.windowWidth, this.windowHeight));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        setPreferredSize(new Dimension(this.windowWidth + 10, this.windowHeight + 10));
         pack();
         setLocationRelativeTo(null);
-        setFocusable(true);
         setVisible(true);
     }
 
@@ -76,7 +72,7 @@ public class GraphicalUI extends JFrame implements UI {
             getGraphics().drawImage(dbImage, 0, 0, this);
             this.mouseListener = (ML) getMouseListeners()[0];
             currentScene.update(this.mouseListener);
-        } else {
+        } else if(currentState == 1) {
             SnakeGame.setIsRunning(true);
             currentScene = GameScene.getInstance(this.rasterizationGraphicStrategy);
             add(currentScene.getPanel(), BorderLayout.CENTER);
@@ -101,6 +97,10 @@ public class GraphicalUI extends JFrame implements UI {
             currentScoreLabel.setText("Pontos: " + score.getPoints());
             revalidate();
             repaint();
+        }
+        else {
+            dispose();
+            System.exit(0);
         }
     }
 
@@ -245,5 +245,53 @@ public class GraphicalUI extends JFrame implements UI {
      */
     public void setMouseListener(ML mouseListener) {
         this.mouseListener = mouseListener;
+    }
+
+    /**
+     * Obtém o JLabel que exibe a direção atual.
+     * @return O JLabel que exibe a direção atual.
+     */
+    public JLabel getCurrentDirectionLabel() {
+        return currentDirectionLabel;
+    }
+
+    /**
+     * Define um novo JLabel para exibir a direção atual.
+     * @param currentDirectionLabel O novo JLabel para exibir a direção atual.
+     */
+    public void setCurrentDirectionLabel(JLabel currentDirectionLabel) {
+        this.currentDirectionLabel = currentDirectionLabel;
+    }
+
+    /**
+     * Obtém o JLabel que exibe a pontuação atual.
+     * @return O JLabel que exibe a pontuação atual.
+     */
+    public JLabel getCurrentScoreLabel() {
+        return currentScoreLabel;
+    }
+
+    /**
+     * Define um novo JLabel para exibir a pontuação atual.
+     * @param currentScoreLabel O novo JLabel para exibir a pontuação atual.
+     */
+    public void setCurrentScoreLabel(JLabel currentScoreLabel) {
+        this.currentScoreLabel = currentScoreLabel;
+    }
+
+    /**
+     * Obtém o JPanel que exibe informações como a direção e a pontuação.
+     * @return O JPanel que exibe informações.
+     */
+    public JPanel getInformationPanel() {
+        return informationPanel;
+    }
+
+    /**
+     * Define um novo JPanel para exibir informações.
+     * @param informationPanel O novo JPanel para exibir informações.
+     */
+    public void setInformationPanel(JPanel informationPanel) {
+        this.informationPanel = informationPanel;
     }
 }

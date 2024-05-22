@@ -22,7 +22,7 @@ public class SnakeGame implements KeyListener,ActionListener {
     private Player player;
     private UI userInterface;
     private Leaderboard leaderboard;
-    private boolean isKeyReleased;
+    private boolean isKeyPressed;
     private boolean isFoodEaten;
     private Score score;
     private Timer gameLoop;
@@ -182,10 +182,10 @@ public class SnakeGame implements KeyListener,ActionListener {
         if(!isGameOver) {
             if (isRunning) {
                 if(this.gameBoard.getSnake().getMovementStrategy() instanceof ManualMovementStrategy) {
-                    if (!this.isKeyReleased)
+                    if (!this.isKeyPressed)
                         this.gameBoard.getSnake().setNextDirection(this.gameBoard.getSnake().getCurrentDirection());
                     else
-                        this.isKeyReleased = false;
+                        this.isKeyPressed = false;
                     this.gameBoard.getSnake().move();
                 }
                 else {
@@ -253,7 +253,7 @@ public class SnakeGame implements KeyListener,ActionListener {
                 this.gameBoard.getSnake().setNextDirection(Direction.RIGHT);
                 break;
         }
-        this.isKeyReleased = true;
+        this.isKeyPressed = true;
     }
     /** Obtem se acabou o jogo ou nao
      * @return se acabou o jogo ou nao
@@ -371,16 +371,16 @@ public class SnakeGame implements KeyListener,ActionListener {
      * Verifica se uma tecla foi liberada.
      * @return true se uma tecla foi liberada, caso contrário false.
      */
-    public boolean isKeyReleased() {
-        return isKeyReleased;
+    public boolean isKeyPressed() {
+        return isKeyPressed;
     }
 
     /**
      * Atualiza o estado de liberação de tecla.
-     * @param keyReleased o novo estado de liberação de tecla.
+     * @param keyPressed o novo estado de liberação de tecla.
      */
-    public void setKeyReleased(boolean keyReleased) {
-        isKeyReleased = keyReleased;
+    public void setKeyPressed(boolean keyPressed) {
+        isKeyPressed = keyPressed;
     }
 
     /**

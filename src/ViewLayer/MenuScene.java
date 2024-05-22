@@ -86,7 +86,7 @@ public class MenuScene extends Scene {
                 mouseListener.getY() >= exitRect.getMinY() && mouseListener.getY() <= exitRect.getMaxY()) {
             exitCurrentImage = exitPressed;
             if (mouseListener.isPressed()) {
-                GraphicalUI.setCurrentState(0);
+                GraphicalUI.setCurrentState(2);
             }
         } else {
             exitCurrentImage = exit;
