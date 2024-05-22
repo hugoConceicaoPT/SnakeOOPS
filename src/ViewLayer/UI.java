@@ -14,7 +14,7 @@ public interface UI {
     /**
      * Exibe os elementos do jogo, como o placar e o tabuleiro.
      * @param gameBoard O tabuleiro do jogo.
-     * @param score A pontuação atual.
+     * @param score A pontuação atual
      */
     void display(GameBoard gameBoard, Score score);
 
