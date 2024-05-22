@@ -23,6 +23,7 @@ public class Cliente {
      * @param widthBoard Largura do tabuleiro.
      * @param heightBoard Altura do tabuleiro.
      * @param size Tamanho da cabeca da cobra.
+     * @param random gerador de números aleatórios
      * @return Lista de pontos que formam o quadrado da cabeca da cobra.
      */
     private static List<Ponto<? extends Number>> createSquarePoints(int widthBoard, int heightBoard, int size, Random random) {

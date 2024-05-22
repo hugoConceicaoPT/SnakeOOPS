@@ -14,7 +14,7 @@ import ModelLayer.BoardLayer.Score;
  * Classe responsável pela gestão da classificação dos jogadores.
  * Responsabilidade: Gerenciar e atualizar o arquivo de classificação dos jogadores com base em suas pontuações.
  * @version 1.0 10/05/2024
- * @autor Hugo Conceição, João Ventura, Eduarda Pereira
+ * @author Hugo Conceição, João Ventura, Eduarda Pereira
  */
 public class Leaderboard {
     private String filePath; // Caminho do arquivo de ranking

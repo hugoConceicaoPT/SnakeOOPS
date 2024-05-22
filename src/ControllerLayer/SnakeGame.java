@@ -26,6 +26,7 @@ public class SnakeGame implements KeyListener,ActionListener {
     private boolean isFoodEaten;
     private Score score;
     private Timer gameLoop;
+    private Timer menuLoop;
     private ML mouseListener = new ML();
     private static boolean isRunning = false;
 
@@ -47,7 +48,7 @@ public class SnakeGame implements KeyListener,ActionListener {
             frame.addKeyListener(this);
             this.userInterface.addMouseListener(this.mouseListener);
             this.userInterface.addMouseMotionListener(this.mouseListener);
-            this.gameLoop = new Timer(300,this);
+            this.gameLoop = new Timer(250,this);
             this.gameLoop.start();
         }
     }
@@ -214,10 +215,7 @@ public class SnakeGame implements KeyListener,ActionListener {
             endGame();
         }
     }
-    /**
-     * Atualiza a direcao da cobra com base nas entradas do teclado.
-     * @param e Evento de teclado capturado.
-     */
+
     @Override
     public void keyReleased(KeyEvent e) {}
 
