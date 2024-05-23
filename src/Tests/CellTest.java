@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import ModelLayer.BoardLayer.Cell;
-import ModelLayer.BoardLayer.CellType;
+import ViewLayer.Cell;
+import ViewLayer.CellType;
 
 /** Classe que representa uma classe teste para testar as funcionalidades da classe Cell
     Responsabilidade: Testar as funcionalidades da classe Cell

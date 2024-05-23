@@ -12,6 +12,7 @@ import java.util.Random;
 
 import ModelLayer.BoardLayer.*;
 import ModelLayer.SnakeLayer.*;
+import ViewLayer.CellType;
 import ViewLayer.FullTextualRasterization;
 import ViewLayer.TextualUI;
 import ViewLayer.UI;

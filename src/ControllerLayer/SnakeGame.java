@@ -154,11 +154,6 @@ public class SnakeGame implements KeyListener,ActionListener {
             this.gameBoard.getSnake().increaseSize();
             this.score.increaseScore();
             this.isFoodEaten = true;
-            if(this.gameBoard.getFood() == null) {
-                this.isGameOver = true;
-                score.setPoints(Integer.MAX_VALUE);
-                System.out.println("Zerou o Jogo! Pontuação final: " + score.getPoints());
-            }
         }
     }
 

@@ -1,6 +1,5 @@
 package ViewLayer;
 
-import ModelLayer.BoardLayer.CellType;
 import ModelLayer.BoardLayer.GameBoard;
 import ModelLayer.SnakeLayer.Ponto;
 import ModelLayer.SnakeLayer.Quadrado;

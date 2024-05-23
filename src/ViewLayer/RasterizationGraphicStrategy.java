@@ -35,7 +35,7 @@ public abstract class RasterizationGraphicStrategy extends JPanel {
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         super.paintComponent(g2);
-        g.drawImage(backgroundImage, 0, 0, gameBoard.getWidthBoard(), gameBoard.getHeightBoard(), this);
+        g2.drawImage(backgroundImage, 0, 0, gameBoard.getWidthBoard(), gameBoard.getHeightBoard(), this);
         updateObstacles();
         updateSnake();
         updateFood();

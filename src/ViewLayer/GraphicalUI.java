@@ -21,9 +21,7 @@ public class GraphicalUI extends JFrame implements UI {
     private final int windowWidth;
     private final int windowHeight;
     private ML mouseListener;
-    private JLabel currentDirectionLabel;
-    private JLabel currentScoreLabel;
-    private JPanel informationPanel;
+    private JLabel statusLabel;
 
     /**
      * Construtor que inicializa a interface gráfica.
@@ -35,17 +33,13 @@ public class GraphicalUI extends JFrame implements UI {
         this.windowWidth = this.rasterizationGraphicStrategy.getGameBoard().getWidthBoard() + 10 ;
         this.windowHeight = this.rasterizationGraphicStrategy.getGameBoard().getHeightBoard() + 60;
         currentState = 0;
-        this.informationPanel = new JPanel(new GridLayout(0, 2));
-        this.currentDirectionLabel = new JLabel();
-        this.currentScoreLabel = new JLabel();
-        this.currentDirectionLabel.setFont(new Font("MV Boli", Font.PLAIN, 15));
-        this.currentScoreLabel.setFont(new Font("MV Boli", Font.PLAIN, 15));
-        this.currentDirectionLabel.setForeground(Color.white);
-        this.currentScoreLabel.setForeground(Color.white);
-        this.informationPanel.setBackground(new Color (20, 90, 50));
-        this.informationPanel.add(currentDirectionLabel);
-        this.informationPanel.add(currentScoreLabel);
-        add(this.informationPanel, BorderLayout.NORTH);
+        this.statusLabel = new JLabel("",SwingConstants.CENTER);
+        this.statusLabel.setFont(new Font("MV Boli", Font.PLAIN, 15));
+        this.statusLabel.setForeground(Color.white);
+        this.statusLabel.setOpaque(true);
+        this.statusLabel.setBackground(new Color (20, 90, 50));
+        this.statusLabel.setVisible(true);
+        add(this.statusLabel,BorderLayout.NORTH);
         setTitle("SnakeOOPS");
         setPreferredSize(new Dimension(this.windowWidth, this.windowHeight));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,8 +87,7 @@ public class GraphicalUI extends JFrame implements UI {
                 default:
                     break;
             }
-            currentDirectionLabel.setText("DIR H: " + angle);
-            currentScoreLabel.setText("Pontos: " + score.getPoints());
+            this.statusLabel.setText("DIR H: " + angle + " | " + "Pontos: " + score.getPoints());
             revalidate();
             repaint();
         }
@@ -248,50 +241,18 @@ public class GraphicalUI extends JFrame implements UI {
     }
 
     /**
-     * Obtém o JLabel que exibe a direção atual.
-     * @return O JLabel que exibe a direção atual.
+     * Obtém o JLabel que exibe o status atual.
+     * @return O JLabel que exibe o status atual.
      */
-    public JLabel getCurrentDirectionLabel() {
-        return currentDirectionLabel;
+    public JLabel getStatusLabel() {
+        return statusLabel;
     }
 
     /**
-     * Define um novo JLabel para exibir a direção atual.
-     * @param currentDirectionLabel O novo JLabel para exibir a direção atual.
+     * Define um novo JLabel para exibir a status.
+     * @param statusLabel O novo JLabel para exibir a status.
      */
-    public void setCurrentDirectionLabel(JLabel currentDirectionLabel) {
-        this.currentDirectionLabel = currentDirectionLabel;
-    }
-
-    /**
-     * Obtém o JLabel que exibe a pontuação atual.
-     * @return O JLabel que exibe a pontuação atual.
-     */
-    public JLabel getCurrentScoreLabel() {
-        return currentScoreLabel;
-    }
-
-    /**
-     * Define um novo JLabel para exibir a pontuação atual.
-     * @param currentScoreLabel O novo JLabel para exibir a pontuação atual.
-     */
-    public void setCurrentScoreLabel(JLabel currentScoreLabel) {
-        this.currentScoreLabel = currentScoreLabel;
-    }
-
-    /**
-     * Obtém o JPanel que exibe informações como a direção e a pontuação.
-     * @return O JPanel que exibe informações.
-     */
-    public JPanel getInformationPanel() {
-        return informationPanel;
-    }
-
-    /**
-     * Define um novo JPanel para exibir informações.
-     * @param informationPanel O novo JPanel para exibir informações.
-     */
-    public void setInformationPanel(JPanel informationPanel) {
-        this.informationPanel = informationPanel;
+    public void setStatusLabel(JLabel statusLabel) {
+        this.statusLabel = statusLabel;
     }
 }

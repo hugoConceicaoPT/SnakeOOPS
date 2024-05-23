@@ -1,4 +1,4 @@
-package ModelLayer.BoardLayer;
+package ViewLayer;
 
 /**
  * Classe que representa uma célula no tabuleiro do jogo.

@@ -75,7 +75,6 @@ public class GameScene extends Scene {
      */
     @Override
     public void update(ML mouseListener) {
-        // Implementação necessária para a atualização baseada em eventos de mouse
     }
 
     /**
@@ -84,7 +83,6 @@ public class GameScene extends Scene {
      */
     @Override
     public void draw(Graphics g) {
-        // Implementação necessária para a renderização gráfica da cena do jogo
     }
 
     /**

@@ -9,7 +9,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import ModelLayer.BoardLayer.CellType;
+import ViewLayer.CellType;
 import ModelLayer.BoardLayer.FoodType;
 import ModelLayer.BoardLayer.GameBoard;
 import ModelLayer.SnakeLayer.Direction;

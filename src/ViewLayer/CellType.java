@@ -1,4 +1,4 @@
-package ModelLayer.BoardLayer;
+package ViewLayer;
 
 /**
  * Enumeração que define os tipos de células possíveis no tabuleiro do jogo.
