@@ -3,7 +3,9 @@ package ViewLayer;
 import ModelLayer.BoardLayer.FoodType;
 import ModelLayer.BoardLayer.GameBoard;
 import ModelLayer.BoardLayer.Obstacle;
+import ModelLayer.SnakeLayer.Direction;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -13,6 +15,10 @@ import java.awt.*;
  */
 public class FullGraphicRasterization extends RasterizationGraphicStrategy {
 
+    private final Image snakeHeadDown = new ImageIcon("assets/snake_head.png").getImage();
+    private final Image snakeHeadRight = new ImageIcon("assets/snake_head_left.png").getImage();
+    private final Image snakeHeadLeft = new ImageIcon("assets/snake_head_right.png").getImage();
+    private final Image snakeHeadUp = new ImageIcon("assets/snake_head_up.png").getImage();
     /**
      * Construtor para criar uma instância de FullGraphicRasterization com o tabuleiro de jogo especificado.
      * @param gameBoard O tabuleiro de jogo a ser renderizado.
@@ -77,11 +83,13 @@ public class FullGraphicRasterization extends RasterizationGraphicStrategy {
             int x = (int) gameBoard.getSnake().getBody().get(i).getMinX();
             int y = (int) gameBoard.getSnake().getBody().get(i).getMinY();
             int size = gameBoard.getSnake().getArestaHeadLength();
-            if(i == 0)
+            if(i == 0) {
                 g2D.setColor(new Color(20, 90, 50));
-            else
+            }
+            else {
                 g2D.setColor(Color.GREEN);
-            g2D.fillRect(x,y,size,size);
+            }
+            g2D.fillRect(x, y, size, size);
         }
     }
 }

@@ -1,5 +1,6 @@
 package ViewLayer;
 
+import ControllerLayer.Leaderboard;
 import ControllerLayer.ML;
 
 import javax.swing.*;
@@ -25,6 +26,8 @@ public abstract class Scene {
      * @param g O contexto gráfico a ser usado para desenhar.
      */
     public abstract void draw(Graphics g);
+
+    public abstract void setLeaderboard(Leaderboard leaderboard);
 
     /**
      * Obtém o painel associado à cena.

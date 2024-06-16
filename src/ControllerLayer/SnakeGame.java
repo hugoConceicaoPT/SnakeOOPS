@@ -1,12 +1,15 @@
 package ControllerLayer;
 
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 import ModelLayer.BoardLayer.*;
 import ModelLayer.SnakeLayer.*;
 import ViewLayer.*;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 
 /**
@@ -25,10 +28,16 @@ public class SnakeGame implements KeyListener,ActionListener {
     private boolean isKeyPressed;
     private boolean isFoodEaten;
     private Score score;
-    private Timer gameLoop;
     private Timer menuLoop;
+    private Timer gameLoop;
     private ML mouseListener = new ML();
     private static boolean isRunning = false;
+    private int counter = 0;
+    private boolean isEnterPressed = false;
+    private int enterCounter = 0;
+    private Clip clipMenu;
+    private Clip clipGame;
+    private Clip clipEating;
 
     /**
      * Constroi um novo jogo da cobra com configuracoes especificadas.
@@ -39,6 +48,23 @@ public class SnakeGame implements KeyListener,ActionListener {
      */
     public SnakeGame (String playerName,GameBoard gameBoard, UI userInterface, int foodScore) {
         this.leaderboard = new Leaderboard();
+        File fileGame = new File("assets/backgroundSound.wav");
+        File fileMenu = new File("assets/menuSound.wav");
+        File fileEating = new File("assets/eatingSound.wav");
+        try {
+            AudioInputStream menuAudio = AudioSystem.getAudioInputStream(fileMenu);
+            AudioInputStream gameAudio = AudioSystem.getAudioInputStream(fileGame);
+            AudioInputStream eatingAudio = AudioSystem.getAudioInputStream(fileEating);
+            this.clipMenu = AudioSystem.getClip();
+            this.clipMenu.open(menuAudio);
+            this.clipGame = AudioSystem.getClip();
+            this.clipGame.open(gameAudio);
+            this.clipEating = AudioSystem.getClip();
+            this.clipEating.open(eatingAudio);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         this.gameBoard = gameBoard;
         this.userInterface = userInterface;
         this.score = new Score(0,foodScore);
@@ -48,8 +74,8 @@ public class SnakeGame implements KeyListener,ActionListener {
             frame.addKeyListener(this);
             this.userInterface.addMouseListener(this.mouseListener);
             this.userInterface.addMouseMotionListener(this.mouseListener);
-            this.gameLoop = new Timer(250,this);
-            this.gameLoop.start();
+            this.menuLoop = new Timer(0,this);
+            this.menuLoop.start();
         }
     }
 
@@ -135,11 +161,14 @@ public class SnakeGame implements KeyListener,ActionListener {
      * Finaliza o jogo e exibe resultados.
      */
     public void endGame() {
+        this.clipGame.stop();
+        this.clipGame.close();
+        this.clipEating.close();
         this.leaderboard.updateLeaderboard(this.player);
-        System.out.println("Seu jogo acabou. Aqui estão os tops jogadores do jogo:");
-        System.out.println(this.leaderboard.generateLeaderboard());
-        if (this.userInterface instanceof GraphicalUI)
-            ((GraphicalUI) this.userInterface).close();
+        if (this.userInterface instanceof GraphicalUI) {
+            ((GraphicalUI) this.userInterface).getCurrentScene().setLeaderboard(this.leaderboard);
+            displayGame();
+        }
         this.gameBoard = null;
         this.userInterface = null;
         this.score = null;
@@ -154,7 +183,11 @@ public class SnakeGame implements KeyListener,ActionListener {
             this.gameBoard.getSnake().increaseSize();
             this.score.increaseScore();
             this.isFoodEaten = true;
+            this.clipEating.loop(Clip.LOOP_CONTINUOUSLY);
+            this.clipEating.start();
         }
+        else
+            this.clipEating.stop();
     }
 
     /**
@@ -168,7 +201,7 @@ public class SnakeGame implements KeyListener,ActionListener {
     }
 
     /**
-     * Dá disçay do jogo em modo gráfico
+     * Dá display do jogo em modo gráfico
      */
     public void displayGame() {
         this.userInterface.display(this.gameBoard,this.score);
@@ -177,11 +210,27 @@ public class SnakeGame implements KeyListener,ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         displayGame();
+        this.clipMenu.loop(Clip.LOOP_CONTINUOUSLY);
+        this.clipMenu.start();
         if(!isGameOver) {
+            if(GraphicalUI.getCurrentState() == 1 && this.counter == 0) {
+                    this.menuLoop.stop();
+                    this.gameLoop = new Timer(250, this);
+                    this.gameLoop.start();
+                    this.counter++;
+            }
             if (isRunning) {
+                this.clipMenu.stop();
+                this.clipMenu.close();
+                FloatControl gainControl = (FloatControl) this.clipGame.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(-10.0f);
+                this.clipGame.loop(Clip.LOOP_CONTINUOUSLY);
+                this.clipGame.start();
                 if(this.gameBoard.getSnake().getMovementStrategy() instanceof ManualMovementStrategy) {
-                    if (!this.isKeyPressed)
+                    if (!this.isKeyPressed || this.isEnterPressed) {
                         this.gameBoard.getSnake().setNextDirection(this.gameBoard.getSnake().getCurrentDirection());
+                        this.isEnterPressed = false;
+                    }
                     else
                         this.isKeyPressed = false;
                     this.gameBoard.getSnake().move();
@@ -204,12 +253,13 @@ public class SnakeGame implements KeyListener,ActionListener {
                     this.isGameOver = true;
                     System.out.println("Game Over! Pontuação final: " + this.score.getPoints());
                 }
-
-                displayGame();
+                if(!isGameOver)
+                    displayGame();
             }
         }
         else {
             gameLoop.stop();
+            GraphicalUI.setCurrentState(2);
             endGame();
         }
     }
@@ -249,6 +299,13 @@ public class SnakeGame implements KeyListener,ActionListener {
                 break;
             case KeyEvent.VK_RIGHT:
                 this.gameBoard.getSnake().setNextDirection(Direction.RIGHT);
+                break;
+            case KeyEvent.VK_ENTER:
+                if(!this.isEnterPressed && this.enterCounter == 0) {
+                    isRunning = true;
+                    this.isEnterPressed = true;
+                    this.enterCounter++;
+                }
                 break;
         }
         this.isKeyPressed = true;
@@ -385,16 +442,16 @@ public class SnakeGame implements KeyListener,ActionListener {
      * Obtém o loop do jogo.
      * @return O timer do loop do jogo.
      */
-    public Timer getGameLoop() {
-        return gameLoop;
+    public Timer getMenuLoop() {
+        return menuLoop;
     }
 
     /**
      * Define um novo loop de jogo.
-     * @param gameLoop O novo timer do loop do jogo.
+     * @param menuLoop O novo timer do loop do jogo.
      */
-    public void setGameLoop(Timer gameLoop) {
-        this.gameLoop = gameLoop;
+    public void setMenuLoop(Timer menuLoop) {
+        this.menuLoop = menuLoop;
     }
 
     /**

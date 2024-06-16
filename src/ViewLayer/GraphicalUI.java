@@ -22,6 +22,7 @@ public class GraphicalUI extends JFrame implements UI {
     private final int windowHeight;
     private ML mouseListener;
     private JLabel statusLabel;
+    private TextArea playText;
 
     /**
      * Construtor que inicializa a interface gráfica.
@@ -39,6 +40,10 @@ public class GraphicalUI extends JFrame implements UI {
         this.statusLabel.setOpaque(true);
         this.statusLabel.setBackground(new Color (20, 90, 50));
         this.statusLabel.setVisible(true);
+        this.playText = new TextArea("Clique ENTER para começar a jogar");
+        this.playText.setFont(new Font("MV Boli", Font.PLAIN, 15));
+        this.playText.setForeground(Color.white);
+        this.playText.setVisible(false);
         add(this.statusLabel,BorderLayout.NORTH);
         setTitle("SnakeOOPS");
         setPreferredSize(new Dimension(this.windowWidth, this.windowHeight));
@@ -67,7 +72,9 @@ public class GraphicalUI extends JFrame implements UI {
             this.mouseListener = (ML) getMouseListeners()[0];
             currentScene.update(this.mouseListener);
         } else if(currentState == 1) {
-            SnakeGame.setIsRunning(true);
+            if(SnakeGame.isIsRunning())
+                this.playText.setVisible(false);
+            this.playText.setVisible(true);
             currentScene = GameScene.getInstance(this.rasterizationGraphicStrategy);
             add(currentScene.getPanel(), BorderLayout.CENTER);
             int angle = 0;
@@ -92,8 +99,12 @@ public class GraphicalUI extends JFrame implements UI {
             repaint();
         }
         else {
-            dispose();
-            System.exit(0);
+            currentScene = GameOverScene.getInstance(this.windowWidth, this.windowHeight);
+            JPanel gameOverPanel = currentScene.getPanel();
+            this.getContentPane().removeAll();
+            this.add(gameOverPanel, BorderLayout.CENTER);
+            revalidate();
+            repaint();
         }
     }
 
@@ -149,6 +160,7 @@ public class GraphicalUI extends JFrame implements UI {
      * Pode ser melhorado para limpar recursos ou exibir uma mensagem final antes de sair.
      */
     public void close() {
+        currentState = 3;
         dispose();
     }
 

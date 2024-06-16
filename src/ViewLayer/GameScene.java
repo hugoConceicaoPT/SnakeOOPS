@@ -1,5 +1,6 @@
 package ViewLayer;
 
+import ControllerLayer.Leaderboard;
 import ControllerLayer.ML;
 
 import javax.swing.*;
@@ -84,6 +85,9 @@ public class GameScene extends Scene {
     @Override
     public void draw(Graphics g) {
     }
+
+    @Override
+    public void setLeaderboard(Leaderboard leaderboard) {}
 
     /**
      * Obtém o painel associado à cena.

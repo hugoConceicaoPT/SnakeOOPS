@@ -1,5 +1,6 @@
 package ViewLayer;
 
+import ControllerLayer.Leaderboard;
 import ControllerLayer.ML;
 import ModelLayer.SnakeLayer.Retangulo;
 
@@ -106,6 +107,9 @@ public class MenuScene extends Scene {
         g.drawImage(playCurrentImage, (int) playRect.getMinX(), (int) playRect.getMinY(), (int) playRect.getMaxX() - (int) playRect.getMinX(), (int) playRect.getMaxY() - (int) playRect.getMinY(), null);
         g.drawImage(exitCurrentImage, (int) exitRect.getMinX(), (int) exitRect.getMinY(), (int) exitRect.getMaxX() - (int) exitRect.getMinX(), (int) exitRect.getMaxY() - (int) exitRect.getMinY(), null);
     }
+
+    @Override
+    public void setLeaderboard(Leaderboard leaderboard) {}
 
     /**
      * Atualiza a instância da classe MenuScene

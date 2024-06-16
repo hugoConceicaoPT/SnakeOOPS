@@ -15,7 +15,7 @@ public abstract class RasterizationGraphicStrategy extends JPanel {
 
     protected GameBoard gameBoard;
     protected JPanel panel;
-    private final Image backgroundImage = new ImageIcon("assets/backgroundGame.png").getImage(); // Imagem de fundo do tabuleiro
+    private final Image backgroundImage = new ImageIcon("assets/backgroundGame.png").getImage();
 
     /**
      * Construtor que inicializa a estratégia de rasterização gráfica com o tabuleiro de jogo especificado.
